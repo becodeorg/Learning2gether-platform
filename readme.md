@@ -7,7 +7,15 @@ This readme contains installation instructions and documentation links.
 ## Contributers
 This project was created during our training at [Becode](http://becode.org).
 The main contributers where, in no specific order:
-- 
+- @Anastasiyavyp	Anastasiyavyp
+- @bona-kim	Bona    bona-kim
+- @janvdv96	        janvdv96
+- @joostvannieu	    Joost Vannieuwenhuyse
+- @JosephLindzius	JosephLindzius
+- @Nicnicsai	    Nic Reyes Guttmann
+- @Timmeahj	        Timmeahj
+	
+We got technical support by our coach @grubolsch (Koen Eelen).
 
 ## How to install
 The vhost for this project is more complex than a simple PHP script, and is based on the Symfony Vhost style.
@@ -36,7 +44,7 @@ Please be aware that in this project the root directory for PHP will be public/.
 ```
 
 ### Installing the project
-After cloning this repo, you have to run `composer install` inside the root directory. You might need to install Composer to do this.
+After cloning this repo, you have to run `composer install` inside the root directory. You might need to install [Composer](https://getcomposer.org/download/) to do this.
 
 ### Creating the database
 Inside the `.env` file you can change the `DATABASE_URL` parameter with your database configuration. Make sure to never commit this file!
