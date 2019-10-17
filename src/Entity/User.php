@@ -62,7 +62,7 @@ class User implements UserInterface
 
     public function setPassword($password): void
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $password;//password_hash($password, PASSWORD_DEFAULT);
     }
 
     public function getRoles()

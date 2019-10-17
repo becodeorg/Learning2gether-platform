@@ -5,11 +5,16 @@ security:
             algorithm: bcrypt
     providers:
         in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            provider: app_user_provider
             anonymous: true
             guard:
                 authenticators:
