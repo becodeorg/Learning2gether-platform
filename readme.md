@@ -49,6 +49,12 @@ After cloning this repo, you have to run `composer install` inside the root dire
 ### Creating the database
 Inside the `.env` file you can change the `DATABASE_URL` parameter with your database configuration. Make sure to never commit this file!
 
+### Installing the database.
+Make sure you create a new database `l2g`.
+
+The run in the project root:
+`php bin/console doctrine:migrations:dump-schema`
+
 ## Documentation
 - [Logos](https://drive.google.com/open?id=1vpV13Va6My1ITQnwXOLbVLUsE1hiwB2x)
 - [Summary of the features required](https://docs.google.com/document/d/1Zps_QZvev8AFjrzgFvTFNxEYxrnZHyXtU2FgkRBko6U/edit?usp=sharing)
