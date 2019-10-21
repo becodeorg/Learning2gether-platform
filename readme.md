@@ -52,8 +52,8 @@ Inside the `.env` file you can change the `DATABASE_URL` parameter with your dat
 ### Installing the database.
 Make sure you create a new database `l2g`.
 
-The run in the project root:
-`php bin/console doctrine:migrations:dump-schema`
+The run the following command in the project root:
+`php bin/console doctrine:migrations:migrate`
 
 ## Documentation
 - [Logos](https://drive.google.com/open?id=1vpV13Va6My1ITQnwXOLbVLUsE1hiwB2x)
