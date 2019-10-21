@@ -4,7 +4,8 @@
 
 {% block body %}
     <h1>Welcome to the homepage</h1>
-
+    {{ name }}<br>
     <a href="{{ path('app_login') }}">&raquo; Login</a>
     <a href="{{ path('app_register') }}">&raquo; Register</a>
+
 {% endblock %}
