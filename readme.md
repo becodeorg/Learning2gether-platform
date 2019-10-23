@@ -1,21 +1,22 @@
 # Learning2Gether
 This repository contains the e-learning platform "Learning2Gether".
-This platform will be build on the open source Symfony Framework.
+This platform will be built on the open source Symfony Framework.
 
 This readme contains installation instructions and documentation links.
 
 ## Contributers
 This project was created during our training at [Becode](http://becode.org).
-The main contributers where, in no specific order:
-- @Anastasiyavyp	Anastasiyavyp
-- @bona-kim	Bona    bona-kim
-- @janvdv96	        janvdv96
+The main contributers were, in no specific order:
+- @Anastasiyavyp	Anastasiya Vyprytska
+- @bona-kim	Bona    Bona Kim
+- @janvdv96	        Jan Van de Velde
 - @joostvannieu	    Joost Vannieuwenhuyse
-- @JosephLindzius	JosephLindzius
-- @Nicnicsai	    Nic Reyes Guttmann
-- @Timmeahj	        Timmeahj
+- @JosephLindzius	Joseph Lindzius
+- @Nicnicsai	    Nicole Reyes Guttmann
+- @Timmeahj	        Tim Broos
+- @Lisonallie		Allison Van Linden
 	
-We got technical support by our coach @grubolsch (Koen Eelen).
+We received technical support from our coach @grubolsch (Koen Eelen).
 
 ## How to install
 The vhost for this project is more complex than a simple PHP script, and is based on the Symfony Vhost style.
