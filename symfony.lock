@@ -1,4 +1,10 @@
 {
+    "aptoma/twig-markdown": {
+        "version": "3.2.0"
+    },
+    "avensome/commonmark-bundle": {
+        "version": "0.1.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -98,6 +104,9 @@
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "league/commonmark": {
+        "version": "0.17.5"
     },
     "monolog/monolog": {
         "version": "1.25.1"
