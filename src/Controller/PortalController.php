@@ -15,7 +15,7 @@ class PortalController extends AbstractController
      */
     public function index()
     {
-        $language = $this->getDoctrine()->getRepository(Language::class)->find($_GET['lang']);
+        $language = $this->getDoctrine()->getRepository(Language::class)->find(1);
         $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findBy(['isPublished' => true]);
         return $this->render('portal/index.html.twig', [
             'controller_name' => 'PortalController',
