@@ -28,6 +28,12 @@ class QuizAnswer
      */
     private $translations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\QuizQuestion", inversedBy="answers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $quizQuestion;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
@@ -77,6 +83,18 @@ class QuizAnswer
                 $translation->setQuizAnswer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getQuizQuestion(): ?QuizQuestion
+    {
+        return $this->quizQuestion;
+    }
+
+    public function setQuizQuestion(?QuizQuestion $quizQuestion): self
+    {
+        $this->quizQuestion = $quizQuestion;
 
         return $this;
     }

@@ -28,6 +28,12 @@ class ChapterPage
      */
     private $translations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Chapter", inversedBy="pages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $chapter;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
@@ -77,6 +83,18 @@ class ChapterPage
                 $translation->setChapterPage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getChapter(): ?Chapter
+    {
+        return $this->chapter;
+    }
+
+    public function setChapter(?Chapter $chapter): self
+    {
+        $this->chapter = $chapter;
 
         return $this;
     }

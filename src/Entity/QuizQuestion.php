@@ -28,9 +28,21 @@ class QuizQuestion
      */
     private $translations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz", inversedBy="quizQuestions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $quiz;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizAnswer", mappedBy="quizQuestion", orphanRemoval=true)
+     */
+    private $answers;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +87,49 @@ class QuizQuestion
             // set the owning side to null (unless already changed)
             if ($translation->getQuizQuestion() === $this) {
                 $translation->setQuizQuestion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getQuiz(): ?Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(?Quiz $quiz): self
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QuizAnswer[]
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(QuizAnswer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->setQuizQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(QuizAnswer $answer): self
+    {
+        if ($this->answers->contains($answer)) {
+            $this->answers->removeElement($answer);
+            // set the owning side to null (unless already changed)
+            if ($answer->getQuizQuestion() === $this) {
+                $answer->setQuizQuestion(null);
             }
         }
 

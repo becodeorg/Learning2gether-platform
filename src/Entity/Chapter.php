@@ -28,9 +28,27 @@ class Chapter
      */
     private $translations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\LearningModule", inversedBy="chapters")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $learningModule;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ChapterPage", mappedBy="chapter", orphanRemoval=true)
+     */
+    private $pages;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Quiz", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $quiz;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
+        $this->pages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,6 +95,61 @@ class Chapter
                 $translation->setChapter(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLearningModule(): ?LearningModule
+    {
+        return $this->learningModule;
+    }
+
+    public function setLearningModule(?LearningModule $learningModule): self
+    {
+        $this->learningModule = $learningModule;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ChapterPage[]
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+
+    public function addPage(ChapterPage $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->setChapter($this);
+        }
+
+        return $this;
+    }
+
+    public function removePage(ChapterPage $page): self
+    {
+        if ($this->pages->contains($page)) {
+            $this->pages->removeElement($page);
+            // set the owning side to null (unless already changed)
+            if ($page->getChapter() === $this) {
+                $page->setChapter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getQuiz(): ?Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(Quiz $quiz): self
+    {
+        $this->quiz = $quiz;
 
         return $this;
     }
