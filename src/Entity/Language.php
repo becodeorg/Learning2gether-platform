@@ -28,9 +28,15 @@ class Language
      */
     private $learningModuleTranslations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ChapterTranslation", mappedBy="language", orphanRemoval=true)
+     */
+    private $chapterTranslations;
+
     public function __construct()
     {
         $this->learningModuleTranslations = new ArrayCollection();
+        $this->chapterTranslations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,37 @@ class Language
             // set the owning side to null (unless already changed)
             if ($learningModuleTranslation->getLanguage() === $this) {
                 $learningModuleTranslation->setLanguage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ChapterTranslation[]
+     */
+    public function getChapterTranslations(): Collection
+    {
+        return $this->chapterTranslations;
+    }
+
+    public function addChapterTranslation(ChapterTranslation $chapterTranslation): self
+    {
+        if (!$this->chapterTranslations->contains($chapterTranslation)) {
+            $this->chapterTranslations[] = $chapterTranslation;
+            $chapterTranslation->setLanguage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChapterTranslation(ChapterTranslation $chapterTranslation): self
+    {
+        if ($this->chapterTranslations->contains($chapterTranslation)) {
+            $this->chapterTranslations->removeElement($chapterTranslation);
+            // set the owning side to null (unless already changed)
+            if ($chapterTranslation->getLanguage() === $this) {
+                $chapterTranslation->setLanguage(null);
             }
         }
 
