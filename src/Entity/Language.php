@@ -28,6 +28,11 @@ class Language
      */
     private $learningModuleTranslations;
 
+    /**
+     * @ORM\Column(type="string", length=2)
+     */
+    private $code;
+
     public function __construct()
     {
         $this->learningModuleTranslations = new ArrayCollection();
@@ -77,6 +82,18 @@ class Language
                 $learningModuleTranslation->setLanguage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }
