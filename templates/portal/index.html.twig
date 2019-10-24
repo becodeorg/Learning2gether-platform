@@ -11,10 +11,11 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/l2g-platform/src/Controller/PortalController.php'|file_link(0) }}">src/Controller/PortalController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/l2g-platform/templates/portal/index.html.twig'|file_link(0) }}">templates/portal/index.html.twig</a></code></li>
+    <ul>Dummy Modules <!-- List of modules -->
+        {% for module in modules %}
+        <li><a href="{{ path('app_module', { module : module.id}) }}">{{ module.title(language) }}: {{ module.description(language) }}</a>
+        {% endfor %}
     </ul>
+    <hr>
 </div>
 {% endblock %}
