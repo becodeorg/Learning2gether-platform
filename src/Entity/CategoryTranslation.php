@@ -17,7 +17,7 @@ class CategoryTranslation
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Category", inversedBy="categoryTranslations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="translations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
@@ -28,7 +28,7 @@ class CategoryTranslation
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="categoryTranslations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
