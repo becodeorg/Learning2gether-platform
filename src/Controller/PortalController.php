@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PortalController extends AbstractController
 {
     /**
-     * @Route("/portal", name="app_portal")
+     * @Route("/portal", name="portal")
      */
     public function index()
     {
