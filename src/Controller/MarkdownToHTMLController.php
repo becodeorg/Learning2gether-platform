@@ -21,6 +21,10 @@ class MarkdownToHTMLController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $user_markdown = $form->getData();
         }
+
+        if(preg_match("/(?:https?:\/\/)?www\.(?:youtube\.com|youtu\.be)\S+?v=\K\S+/i", $user_markdown)) {
+            //open youtube iplayer
+        }
         
         return $this->render('markdown_to_html/index.html.twig', [
             'controller_name' => 'MarkdownToHTMLController',
