@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
+use PhpParser\Node\Expr\Cast\Bool_;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuizAnswerRepository")
@@ -34,9 +36,11 @@ class QuizAnswer
      */
     private $quizQuestion;
 
-    public function __construct()
+    public function __construct(bool $isCorrect, QuizQuestion $question)
     {
         $this->translations = new ArrayCollection();
+        $this->isCorrect = $isCorrect;
+        $this->quizQuestion = $question;
     }
 
     public function getId(): ?int
@@ -44,7 +48,7 @@ class QuizAnswer
         return $this->id;
     }
 
-    public function getIsCorrect(): ?bool
+    public function getIsCorrect(): bool
     {
         return $this->isCorrect;
     }
@@ -87,12 +91,12 @@ class QuizAnswer
         return $this;
     }
 
-    public function getQuizQuestion(): ?QuizQuestion
+    public function getQuizQuestion(): QuizQuestion
     {
         return $this->quizQuestion;
     }
 
-    public function setQuizQuestion(?QuizQuestion $quizQuestion): self
+    public function setQuizQuestion(QuizQuestion $quizQuestion): self
     {
         $this->quizQuestion = $quizQuestion;
 

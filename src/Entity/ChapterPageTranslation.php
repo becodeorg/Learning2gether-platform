@@ -17,12 +17,12 @@ class ChapterPageTranslation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="chapterPageTranslations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -43,19 +43,19 @@ class ChapterPageTranslation
         return $this->id;
     }
 
-    public function getLanguage(): ?Language
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(?Language $language): self
+    public function setLanguage(Language $language): self
     {
         $this->language = $language;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -67,11 +67,13 @@ class ChapterPageTranslation
         return $this;
     }
 
+    //a page can be created with just a title but without further content
     public function getContent(): ?array
     {
         return $this->content;
     }
 
+    //a page can be created with just a title but without further content
     public function setContent(?array $content): self
     {
         $this->content = $content;
@@ -79,12 +81,12 @@ class ChapterPageTranslation
         return $this;
     }
 
-    public function getChapterPage(): ?ChapterPage
+    public function getChapterPage(): ChapterPage
     {
         return $this->chapterPage;
     }
 
-    public function setChapterPage(?ChapterPage $chapterPage): self
+    public function setChapterPage(ChapterPage $chapterPage): self
     {
         $this->chapterPage = $chapterPage;
 

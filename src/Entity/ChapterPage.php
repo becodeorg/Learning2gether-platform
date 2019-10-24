@@ -44,7 +44,7 @@ class ChapterPage
         return $this->id;
     }
 
-    public function getPageNumber(): ?int
+    public function getPageNumber(): int
     {
         return $this->pageNumber;
     }
@@ -87,12 +87,12 @@ class ChapterPage
         return $this;
     }
 
-    public function getChapter(): ?Chapter
+    public function getChapter(): Chapter
     {
         return $this->chapter;
     }
 
-    public function setChapter(?Chapter $chapter): self
+    public function setChapter(Chapter $chapter): self
     {
         $this->chapter = $chapter;
 
