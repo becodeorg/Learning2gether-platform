@@ -18,6 +18,10 @@ class MarkdownUserInputType extends AbstractType
         ;
     }
 
+    // public function outputForm() {
+    //     $user_markdown = $_POST['page_content'];
+    // }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

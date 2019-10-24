@@ -17,13 +17,15 @@ class MarkdownToHTMLController extends AbstractController
         $form = $this->createForm(MarkdownUserInputType::class);
 
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-            $form->getData();
-        }
 
+        if($form->isSubmitted() && $form->isValid()) {
+            $user_markdown = $form->getData();
+        }
+        
         return $this->render('markdown_to_html/index.html.twig', [
             'controller_name' => 'MarkdownToHTMLController',
             'form' => $form->createView(),
+            'user_markdown' => $form->getData()['page_content'], 
         ]);
     }
 }
