@@ -4,14 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Language;
 use App\Entity\LearningModule;
-use App\Entity\LearningModuleTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PortalController extends AbstractController
 {
     /**
-     * @Route("/portal", name="app_portal")
+     * @Route("/portal", name="portal")
      */
     public function index()
     {

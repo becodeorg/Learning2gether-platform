@@ -73,14 +73,6 @@ class LearningModule
         return $this;
     }
 
-    /**
-     * @return Collection|LearningModuleTranslation[]
-     */
-    public function getTranslations(): Collection
-    {
-        return $this->translations;
-    }
-
     public function addTranslation(LearningModuleTranslation $translation): self
     {
         if (!$this->translations->contains($translation)) {
@@ -106,17 +98,25 @@ class LearningModule
 
     public function getTitle(Language $language)
     {
-        foreach($this->getTranslations() AS $translation) {
-            if($translation->getLanguage()->getName() === $language->getName()) {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
                 return $translation->getTitle();//change this line if needed when copied
             }
         }
     }
 
+    /**
+     * @return Collection|LearningModuleTranslation[]
+     */
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
     public function getDescription(Language $language)
     {
-        foreach($this->getTranslations() AS $translation) {
-            if($translation->getLanguage()->getName() === $language->getName()) {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
                 return $translation->getDescription();//change this line if needed when copied
             }
         }
