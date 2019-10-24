@@ -51,10 +51,9 @@ class Chapter
         $this->pages = new ArrayCollection();
         $this->chapterNumber = $chapterNumber;
         $this->learningModule = $learningModule;
-        $this->pages = [];
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
