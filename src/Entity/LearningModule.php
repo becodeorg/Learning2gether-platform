@@ -33,9 +33,15 @@ class LearningModule
      */
     private $translations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true)
+     */
+    private $chapters;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
+        $this->chapters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,5 +120,36 @@ class LearningModule
                 return $translation->getDescription();//change this line if needed when copied
             }
         }
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getChapters(): Collection
+    {
+        return $this->chapters;
+    }
+
+    public function addChapter(Chapter $chapter): self
+    {
+        if (!$this->chapters->contains($chapter)) {
+            $this->chapters[] = $chapter;
+            $chapter->setLearningModule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChapter(Chapter $chapter): self
+    {
+        if ($this->chapters->contains($chapter)) {
+            $this->chapters->removeElement($chapter);
+            // set the owning side to null (unless already changed)
+            if ($chapter->getLearningModule() === $this) {
+                $chapter->setLearningModule(null);
+            }
+        }
+
+        return $this;
     }
 }
