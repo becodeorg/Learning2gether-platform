@@ -18,9 +18,10 @@ class ForumController extends AbstractController
     public function index()
     {
         //todo add category_id to topics.
-       $categoryNow = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('2')->getTitle();
+       $categoryNow = $this->getDoctrine()->getRepository(Category::class)->getClassName();
       // $topicNow = $this->getDoctrine()->getRepository(Topic::class)->find('1');
-       //var_dump($topicNow);
+    //  $categoryNow = "";
+        // die($categoryNow);
        $topicNow = 'happy';
         $post = $this->getDoctrine()->getRepository(Post::class)->find('1');
         $postNow = $post->getSubject();
