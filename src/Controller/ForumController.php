@@ -17,27 +17,25 @@ class ForumController extends AbstractController
      */
     public function index()
     {
-        //todo add category_id to topics.
-       $categoryNow = $this->getDoctrine()->getRepository(Category::class)->getClassName();
-      // $topicNow = $this->getDoctrine()->getRepository(Topic::class)->find('1');
-    //  $categoryNow = "";
-        // die($categoryNow);
-       $topicNow = 'happy';
-        $post = $this->getDoctrine()->getRepository(Post::class)->find('1');
-        $postNow = $post->getSubject();
-        $postNowDate = $post->getDate()->format('Y-m-d H:i:s');
-        $post = $this->getDoctrine()->getRepository(Post::class)->find('2');
-        $postNow1 = $post->getSubject();
-       $postNowDate1 = $post->getDate()->format('Y-m-d H:i:s');
-       return $this->render('forum/index.html.twig', [
-            'controller_name' => 'ForumController',
-           'category_now' => $categoryNow,
-          'topic_now' => $topicNow,
-          'post_now' => $postNow,
-           'post_now_date' => $postNowDate,
-           'post_now1' => $postNow1,
-           'post_now_date1' => $postNowDate1,
+        //todo add const to format.
+        //$category = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('1');
+        $category = $this->getDoctrine()->getRepository(Category::class)->find('1');
+        var_dump($category->getTranslations());
+       // $categoryTranslations = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('1');
+       // var_dump($categoryTranslations);
+        $topic = $this->getDoctrine()->getRepository(Topic::class)->find('1')->getSubject();
+        var_dump($topic);
+        $date = $this->getDoctrine()->getRepository(Topic::class)->find('1')->getDate();
+        var_dump($date);
+        $post = $this->getDoctrine()->getRepository(Post::class)->find('1')->getSubject();
+        var_dump($post);
 
+
+
+
+
+        return $this->render('forum/index.html.twig', [
+            'controller_name' => 'ForumController',
 
         ]);
     }
