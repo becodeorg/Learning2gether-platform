@@ -24,19 +24,10 @@ class Language
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\LearningModuleTranslation", mappedBy="language", orphanRemoval=true)
-     */
-    private $learningModuleTranslations;
-
-    /**
      * @ORM\Column(type="string", length=2)
      */
     private $code;
 
-    public function __construct()
-    {
-        $this->learningModuleTranslations = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -55,37 +46,6 @@ class Language
         return $this;
     }
 
-    /**
-     * @return Collection|LearningModuleTranslation[]
-     */
-    public function getLearningModuleTranslations(): Collection
-    {
-        return $this->learningModuleTranslations;
-    }
-
-    public function addLearningModuleTranslation(LearningModuleTranslation $learningModuleTranslation): self
-    {
-        if (!$this->learningModuleTranslations->contains($learningModuleTranslation)) {
-            $this->learningModuleTranslations[] = $learningModuleTranslation;
-            $learningModuleTranslation->setLanguage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLearningModuleTranslation(LearningModuleTranslation $learningModuleTranslation): self
-    {
-        if ($this->learningModuleTranslations->contains($learningModuleTranslation)) {
-            $this->learningModuleTranslations->removeElement($learningModuleTranslation);
-            // set the owning side to null (unless already changed)
-            if ($learningModuleTranslation->getLanguage() === $this) {
-                $learningModuleTranslation->setLanguage(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCode(): ?string
     {
         return $this->code;
@@ -97,4 +57,5 @@ class Language
 
         return $this;
     }
+
 }
