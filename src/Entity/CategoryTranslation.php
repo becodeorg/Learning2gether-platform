@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LearningModuleTranslationsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CategoryTranslationRepository")
  */
-class LearningModuleTranslation
+class CategoryTranslation
 {
     /**
      * @ORM\Id()
@@ -17,10 +17,10 @@ class LearningModuleTranslation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\LearningModule", inversedBy="translations")
+     * @ORM\OneToOne(targetEntity="App\Entity\Category", inversedBy="categoryTranslations")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $learningModule;
+    private $category;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -28,12 +28,7 @@ class LearningModuleTranslation
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="learningModuleTranslations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="categoryTranslations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
@@ -43,14 +38,14 @@ class LearningModuleTranslation
         return $this->id;
     }
 
-    public function getLearningModule(): ?LearningModule
+    public function getCategory(): ?Category
     {
-        return $this->learningModule;
+        return $this->category;
     }
 
-    public function setLearningModule(?LearningModule $learningModule): self
+    public function setCategory(?Category $category): self
     {
-        $this->learningModule = $learningModule;
+        $this->category = $category;
 
         return $this;
     }
@@ -63,18 +58,6 @@ class LearningModuleTranslation
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
