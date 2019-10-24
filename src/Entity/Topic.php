@@ -27,7 +27,7 @@ class Topic
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="topics")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
@@ -39,10 +39,19 @@ class Topic
     private $createdBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="topics_byCategory")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="topics")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $categoryId;
+    private $category;
+
+    public function __construct(string $subject, Language $language, User $createdBy, Category $category)
+    {
+        $this->subject = $subject;
+        $this->language = $language;
+        $this->createdBy = $createdBy;
+        $this->category = $category;
+        $this->setDate(new \DateTimeImmutable());
+    }
 
 
     public function getId(): ?int
@@ -50,7 +59,7 @@ class Topic
         return $this->id;
     }
 
-    public function getSubject(): ?string
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -62,52 +71,53 @@ class Topic
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): \DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    private function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getLanguage(): ?Category
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(?Category $language): self
+    public function setLanguage(Language $language): self
     {
         $this->language = $language;
 
         return $this;
     }
 
-    public function getCreatedBy(): ?User
+    public function getCreatedBy(): User
     {
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): self
+    public function setCreatedBy(User $createdBy): self
     {
         $this->createdBy = $createdBy;
 
         return $this;
     }
 
-    public function getCategoryId(): ?Category
+    public function getCategory(): Category
     {
-        return $this->categoryId;
+        return $this->category;
     }
 
-    public function setCategoryId(?Category $categoryId): self
+    public function setCategory(Category $category): self
     {
-        $this->categoryId = $categoryId;
+        $this->category = $category;
 
         return $this;
     }
+
 
 }

@@ -33,6 +33,13 @@ class CategoryTranslation
      */
     private $language;
 
+    public function __construct(string $title, Category $category, Language $language)
+    {
+        $this->category = $category;
+        $this->title = $title;
+        $this->language = $language;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

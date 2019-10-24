@@ -1,4 +1,4 @@
-qq<?php
+<?php
 
 namespace App\Entity;
 
