@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LanguageSwitcherController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+
+    {{ form_start(switcher, {'action': path('language_switcher')})  }}
+    {{ form_widget(switcher.language) }}
+    {{ form_end(switcher) }}
+
+    <hr>
+
+
+{#    {{ form_widget(switcher.language, {'attr': {'id': 'language-switcher'}}) }}#}
+
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ '/var/www/Learning2gether-platform/src/Controller/LanguageSwitcherController.php'|file_link(0) }}">src/Controller/LanguageSwitcherController.php</a></code></li>
+        <li>Your template at <code><a href="{{ '/var/www/Learning2gether-platform/templates/language_switcher/index.html.twig'|file_link(0) }}">templates/language_switcher/index.html.twig</a></code></li>
+    </ul>
+</div>
+{% endblock %}
