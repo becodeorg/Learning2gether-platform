@@ -22,44 +22,7 @@ class TestController extends AbstractController
      */
     public function index()
     {
-
-
-        /* TEST ISSUER
-        $badge = "vUJPtBepTj6GhUmf9HLjiQ";
-
-        $response = $httpClient->request('GET', 'https://api.badgr.io/v2/issuers/vUJPtBepTj6GhUmf9HLjiQ/badgeclasses', [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer YWKBzcHMvKoiLjb8I8TjJZ7Bkdhl3F',
-            ],
-        ]);
-
-        $badgr = $response->toArray();
-
-        var_dump($badgr);
-
-
-        $recipientObj = (object) [
-            'recipient' => [
-                'type' => 'email',
-                'hashed' => false,
-                'identity' => 'broostim@hotmail.be',
-            ]
-        ];
-
-        $recipient = json_encode($recipientObj);
-        */
-
-        //$assertion = $response->toArray();
-        //var_dump($assertion);
-        //print_r($assertion);
-
-        /*
-        $testModule = new LearningModule();
-        $testModule->setBadge('wlH8g9ALTyyG6YKpheVsuw');
-        $testModule->setIsPublished(true);*/
-
-        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find("1");
+        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find("2");
 
         $badgrObj = new Badgr;
         $user = $this->getUser();
@@ -70,11 +33,10 @@ class TestController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        //$badgrObj->getAllBadges($this->getUser());
+        //$badgrObj->getAllBadges($user);
 
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',
-            //'badgr' => $badgr,
         ]);
     }
 }
