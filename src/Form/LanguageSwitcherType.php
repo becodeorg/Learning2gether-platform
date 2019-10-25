@@ -14,16 +14,13 @@ class LanguageSwitcherType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('language', EntityType::class, [
-            // looks for choices from this entity
-            'class' => Language::class,
+        $builder
+            ->add('language', EntityType::class, [ // build a select drop-down containing all of the entities in that Class
+            'class' => Language::class,             // that class is the Language entities
 
-            // uses the User.username property as the visible option string
-            'choice_label' => 'name',
+            'choice_label' => 'name', // property that should be used for displaying the entities
+            'choice_value' => 'code'  // give the langcode as a value
 
-            // used to render a select box, check boxes or radios
-            // 'multiple' => true,
-            // 'expanded' => true,
         ]);
         $builder->add('Send', SubmitType::class);
 
