@@ -34,9 +34,16 @@ class ChapterPage
      */
     private $chapter;
 
-    public function __construct()
+    /**
+     * ChapterPageTranslation constructor.
+     * @param $pageNumber
+     * @param $chapter
+     */
+    public function __construct(int $pageNumber, Chapter $chapter)
     {
         $this->translations = new ArrayCollection();
+        $this->pageNumber = $pageNumber;
+        $this->chapter = $chapter;
     }
 
     public function getId(): ?int

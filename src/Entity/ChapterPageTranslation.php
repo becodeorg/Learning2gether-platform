@@ -28,15 +28,31 @@ class ChapterPageTranslation
     private $title;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $content = [];
+    private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ChapterPage", inversedBy="language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $chapterPage;
+
+    /**
+     * ChapterPageTranslation constructor.
+     * @param $language
+     * @param $title
+     * @param string $content
+     * @param $chapterPage
+     */
+    public function __construct(Language $language, string $title, string $content, ChapterPage $chapterPage)
+    {
+        $this->language = $language;
+        $this->title = $title;
+        $this->content = $content;
+        $this->chapterPage = $chapterPage;
+    }
+
 
     public function getId(): ?int
     {
@@ -68,13 +84,13 @@ class ChapterPageTranslation
     }
 
     //a page can be created with just a title but without further content
-    public function getContent(): ?array
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
     //a page can be created with just a title but without further content
-    public function setContent(?array $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 

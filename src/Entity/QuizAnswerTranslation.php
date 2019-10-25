@@ -33,6 +33,20 @@ class QuizAnswerTranslation
      */
     private $quizAnswer;
 
+    /**
+     * QuizAnswerTranslation constructor.
+     * @param $language
+     * @param $title
+     * @param $quizAnswer
+     */
+    public function __construct(Language $language, string $title, QuizAnswer $quizAnswer)
+    {
+        $this->language = $language;
+        $this->title = $title;
+        $this->quizAnswer = $quizAnswer;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

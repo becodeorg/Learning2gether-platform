@@ -33,24 +33,38 @@ class QuizQuestionTranslation
      */
     private $quizQuestion;
 
+    /**
+     * QuizQuestionTranslation constructor.
+     * @param $language
+     * @param $title
+     * @param $quizQuestion
+     */
+    public function __construct(Language $language, string $title, QuizQuestion $quizQuestion)
+    {
+        $this->language = $language;
+        $this->title = $title;
+        $this->quizQuestion = $quizQuestion;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLanguage(): ?Language
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(?Language $language): self
+    public function setLanguage(Language $language): self
     {
         $this->language = $language;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -62,12 +76,12 @@ class QuizQuestionTranslation
         return $this;
     }
 
-    public function getQuizQuestion(): ?QuizQuestion
+    public function getQuizQuestion(): QuizQuestion
     {
         return $this->quizQuestion;
     }
 
-    public function setQuizQuestion(?QuizQuestion $quizQuestion): self
+    public function setQuizQuestion(QuizQuestion $quizQuestion): self
     {
         $this->quizQuestion = $quizQuestion;
 

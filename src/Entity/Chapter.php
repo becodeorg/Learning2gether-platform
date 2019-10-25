@@ -45,6 +45,11 @@ class Chapter
      */
     private $quiz;
 
+    /**
+     * ChapterPageTranslation constructor.
+     * @param $chapterNumber
+     * @param $learningModule
+     */
     public function __construct(int $chapterNumber, LearningModule $learningModule)
     {
         $this->translations = new ArrayCollection();

@@ -36,11 +36,16 @@ class QuizAnswer
      */
     private $quizQuestion;
 
-    public function __construct(bool $isCorrect, QuizQuestion $question)
+    /**
+     * ChapterPageTranslation constructor.
+     * @param $isCorrect
+     * @param $quizQuestion
+     */
+    public function __construct(bool $isCorrect, QuizQuestion $quizQuestion)
     {
         $this->translations = new ArrayCollection();
         $this->isCorrect = $isCorrect;
-        $this->quizQuestion = $question;
+        $this->quizQuestion = $quizQuestion;
     }
 
     public function getId(): ?int
