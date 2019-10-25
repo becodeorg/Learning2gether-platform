@@ -29,6 +29,11 @@ class Badgr
                 ]
             ]
         ]);
+
+        //$userId = $user->getId();
+        //$moduleId = $learningModule->getId();
+
+
     }
 
     public function getAllBadges(User $user)

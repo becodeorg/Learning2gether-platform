@@ -33,9 +33,15 @@ class LearningModule
      */
     private $translations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="badges")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,5 +120,33 @@ class LearningModule
                 return $translation->getDescription();//change this line if needed when copied
             }
         }
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addBadge($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeBadge($this);
+        }
+
+        return $this;
     }
 }

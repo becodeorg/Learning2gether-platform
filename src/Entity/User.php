@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -34,6 +36,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $password = '';
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
+     */
+    private $badges;
+
+    public function __construct()
+    {
+        $this->badges = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +101,32 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * @return Collection|LearningModule[]
+     */
+    public function getBadges(): Collection
+    {
+        return $this->badges;
+    }
+
+    public function addBadge(LearningModule $badge): self
+    {
+        if (!$this->badges->contains($badge)) {
+            $this->badges[] = $badge;
+        }
+
+        return $this;
+    }
+
+    public function removeBadge(LearningModule $badge): self
+    {
+        if ($this->badges->contains($badge)) {
+            $this->badges->removeElement($badge);
+        }
+
+        return $this;
     }
 
 }

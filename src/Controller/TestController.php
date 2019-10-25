@@ -54,14 +54,22 @@ class TestController extends AbstractController
         //var_dump($assertion);
         //print_r($assertion);
 
+        /*
         $testModule = new LearningModule();
         $testModule->setBadge('wlH8g9ALTyyG6YKpheVsuw');
-        $testModule->setIsPublished(true);
+        $testModule->setIsPublished(true);*/
+
+        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find("1");
 
         $badgrObj = new Badgr;
-        /* WORKS
-        $badgrObj->addBadgeToUser($testModule, $this->getUser());
-        */
+        $user = $this->getUser();
+
+        $badgrObj->addBadgeToUser($testModule, $user);
+        $user->addBadge($testModule);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
         //$badgrObj->getAllBadges($this->getUser());
 
         return $this->render('test/index.html.twig', [
