@@ -17,6 +17,7 @@ class ChapterPageTranslation
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
