@@ -38,10 +38,12 @@ class LearningModule
      */
     private $chapters;
 
-    public function __construct()
+    public function __construct(string $badge, bool $isPublished=false) //default for isPublished is set to false
     {
         $this->translations = new ArrayCollection();
         $this->chapters = new ArrayCollection();
+        $this->badge = $badge;
+        $this->isPublished = $isPublished;
     }
 
     public function getId(): ?int
@@ -49,7 +51,7 @@ class LearningModule
         return $this->id;
     }
 
-    public function getIsPublished(): ?bool
+    public function getIsPublished(): bool
     {
         return $this->isPublished;
     }
@@ -61,7 +63,7 @@ class LearningModule
         return $this;
     }
 
-    public function getBadge(): ?string
+    public function getBadge(): string
     {
         return $this->badge;
     }
