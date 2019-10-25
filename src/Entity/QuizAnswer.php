@@ -36,11 +36,6 @@ class QuizAnswer
      */
     private $quizQuestion;
 
-    /**
-     * ChapterPageTranslation constructor.
-     * @param $isCorrect
-     * @param $quizQuestion
-     */
     public function __construct(bool $isCorrect, QuizQuestion $quizQuestion)
     {
         $this->translations = new ArrayCollection();
@@ -53,7 +48,7 @@ class QuizAnswer
         return $this->id;
     }
 
-    public function getIsCorrect(): bool
+    public function IsCorrect(): bool
     {
         return $this->isCorrect;
     }
@@ -99,12 +94,5 @@ class QuizAnswer
     public function getQuizQuestion(): QuizQuestion
     {
         return $this->quizQuestion;
-    }
-
-    public function setQuizQuestion(QuizQuestion $quizQuestion): self
-    {
-        $this->quizQuestion = $quizQuestion;
-
-        return $this;
     }
 }

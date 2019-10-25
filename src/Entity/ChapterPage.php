@@ -34,11 +34,6 @@ class ChapterPage
      */
     private $chapter;
 
-    /**
-     * ChapterPageTranslation constructor.
-     * @param $pageNumber
-     * @param $chapter
-     */
     public function __construct(int $pageNumber, Chapter $chapter)
     {
         $this->translations = new ArrayCollection();
@@ -97,12 +92,5 @@ class ChapterPage
     public function getChapter(): Chapter
     {
         return $this->chapter;
-    }
-
-    public function setChapter(Chapter $chapter): self
-    {
-        $this->chapter = $chapter;
-
-        return $this;
     }
 }

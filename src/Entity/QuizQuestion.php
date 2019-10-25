@@ -39,11 +39,6 @@ class QuizQuestion
      */
     private $answers;
 
-    /**
-     * ChapterPageTranslation constructor.
-     * @param $questionNumber
-     * @param $quiz
-     */
     public function __construct(int $questionNumber, Quiz $quiz)
     {
         $this->translations = new ArrayCollection();
@@ -103,13 +98,6 @@ class QuizQuestion
     public function getQuiz(): Quiz
     {
         return $this->quiz;
-    }
-
-    public function setQuiz(Quiz $quiz): self
-    {
-        $this->quiz = $quiz;
-
-        return $this;
     }
 
     /**

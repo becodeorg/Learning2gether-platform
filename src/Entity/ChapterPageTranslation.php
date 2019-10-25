@@ -29,7 +29,7 @@ class ChapterPageTranslation
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text")
      */
     private $content;
 
@@ -39,14 +39,7 @@ class ChapterPageTranslation
      */
     private $chapterPage;
 
-    /**
-     * ChapterPageTranslation constructor.
-     * @param $language
-     * @param $title
-     * @param string $content
-     * @param $chapterPage
-     */
-    public function __construct(Language $language, string $title, string $content, ChapterPage $chapterPage)
+    public function __construct(Language $language, string $title, ChapterPage $chapterPage, string $content ='')
     {
         $this->language = $language;
         $this->title = $title;
@@ -85,13 +78,13 @@ class ChapterPageTranslation
     }
 
     //a page can be created with just a title but without further content
-    public function getContent(): ?string
+    public function getContent(): string
     {
         return $this->content;
     }
 
     //a page can be created with just a title but without further content
-    public function setContent(?string $content): self
+    public function setContent(string $content): self
     {
         $this->content = $content;
 

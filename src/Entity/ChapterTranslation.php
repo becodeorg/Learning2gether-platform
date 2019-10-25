@@ -33,12 +33,6 @@ class ChapterTranslation
      */
     private $chapter;
 
-    /**
-     * ChapterTranslation constructor.
-     * @param $title
-     * @param $language
-     * @param $chapter
-     */
     public function __construct(Language $language, string $title, Chapter $chapter)
     {
         $this->title = $title;
