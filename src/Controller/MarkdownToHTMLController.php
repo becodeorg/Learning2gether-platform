@@ -22,11 +22,10 @@ class MarkdownToHTMLController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $user_markdown;
             if(preg_grep("/(?:https?:\/\/)?www\.(?:youtube\.com|youtu\.be)\S+?v=\K\S+/i", $user_markdown)) {
-                $entire_link = "/(?=https:\/\/www\.(?:youtube\.com|youtu\.be)\/watch\?v=([a-zA-Z0-9\_]{11})&list=([a-zA-Z]{5})-([a-zA-Z]{9})&index=([0-9]+))(?<!([a-zA-Z]))/i";
                 $search = "/(?:youtube\.com|youtu\.be)\/watch\?v=([a-zA-Z0-9]+)/i";
                 $replace = '<center><iframe width="560" height="315" src="http://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe></center>';
 
-                $iPlayer = preg_replace($search, $replace, $entire_link);
+                $iPlayer = preg_replace($search, $replace, $user_markdown);
 
                 echo $iPlayer['page_content'];
                 // ^^returns content of this array
