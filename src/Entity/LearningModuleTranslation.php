@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\AbstractType;
 
@@ -38,6 +39,17 @@ class LearningModuleTranslation extends AbstractType
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
+
+    /**
+     * LearningModuleTranslation constructor.
+     * @param LearningModule $learningModule
+     * @param Language $language
+     */
+    public function __construct(LearningModule $learningModule, Language $language)
+    {
+        $this->learningModule = $learningModule;
+        $this->language = $language;
+    }
 
     public function getId(): ?int
     {

@@ -23,7 +23,7 @@
         {{ form_start(form) }}
 
         {% for translation in form.translations %}
-            {{ form_row(translation) }}
+{#            {{ form_row(translation.title) }}#}
         {% endfor %}
 
         {{ form_row(form.create) }}

@@ -21,17 +21,6 @@ class PartnerController extends AbstractController
     public function Index(Request $request): Response
     {
         $module = new LearningModule();
-        $translationOne = new LearningModuleTranslation();
-        $english = new Language();
-        $english->setName('English');
-        $translationOne->setLanguage($english);
-        $module->getTranslations()->add($translationOne);
-
-        $translationTwo = new LearningModuleTranslation();
-        $spanish = new Language();
-        $english->setName('Spanish');
-        $translationTwo->setLanguage($spanish);
-        $module->getTranslations()->add($translationTwo);
 
         $form = $this->createForm(CreateModuleType::class, $module);
         $form->handleRequest($request);
