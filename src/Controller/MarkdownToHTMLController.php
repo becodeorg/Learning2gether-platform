@@ -17,14 +17,16 @@ class MarkdownToHTMLController extends AbstractController
         $form = $this->createForm(MarkdownUserInputType::class);
 
         $form->handleRequest($request);
+        $user_markdown = $form->getData();
 
         if($form->isSubmitted() && $form->isValid()) {
-            $user_markdown = $form->getData();
+            $user_markdown;
+            if(preg_grep("/(?:https?:\/\/)?www\.(?:youtube\.com|youtu\.be)\S+?v=\K\S+/i", $user_markdown)) {
+                echo "Woohoo";
+                // return open youtube player
+            }
         }
 
-        if(preg_match("/(?:https?:\/\/)?www\.(?:youtube\.com|youtu\.be)\S+?v=\K\S+/i", $user_markdown)) {
-            //open youtube iplayer
-        }
         
         return $this->render('markdown_to_html/index.html.twig', [
             'controller_name' => 'MarkdownToHTMLController',
