@@ -19,24 +19,9 @@ class PartnerController extends AbstractController
      */
     public function Index(Request $request): Response
     {
-        $module = new LearningModule();
-        $form = $this->createForm(CreateModuleType::class, $module);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-//            $module->setIsPublished(0);
-//            $module->setBadge('no badge yet');
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($module);
-            $entityManager->flush();
-
-        }
 
         return $this->render('partner/index.html.twig', [
             'controller_name' => 'PartnerController',
-            'createModule' => $form->createView()
         ]);
     }
 }
