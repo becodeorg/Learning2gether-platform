@@ -20,7 +20,7 @@ class PartnerController extends AbstractController
     public function Index(Request $request): Response
     {
         $module = new LearningModule();
-        $form = $this->createForm(MergeModuleType::class, $module);
+        $form = $this->createForm(CreateModuleType::class, $module);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
