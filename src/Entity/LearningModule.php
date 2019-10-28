@@ -26,7 +26,20 @@ class LearningModule
     /**
      * @ORM\Column(type="string", length=255)
      */
+    //hash to badger.io badge
     private $badge;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    //link to the LM image on the server (for marketing prettifying purposes)
+    private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    //defines the LM type, for example: the LM is for soft skills or hard skills
+    private $type;
 
     /**
      * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true)
@@ -38,10 +51,15 @@ class LearningModule
      */
     private $chapters;
 
-    public function __construct()
+    //default for isPublished is set to false
+    public function __construct(string $badge, string $image, string $type, bool $isPublished=false)
     {
         $this->translations = new ArrayCollection();
         $this->chapters = new ArrayCollection();
+        $this->badge = $badge;
+        $this->image = $image;
+        $this->type = $type;
+        $this->isPublished = $isPublished;
     }
 
     public function getId(): ?int
@@ -49,7 +67,7 @@ class LearningModule
         return $this->id;
     }
 
-    public function getIsPublished(): ?bool
+    public function getIsPublished(): bool
     {
         return $this->isPublished;
     }
@@ -61,7 +79,7 @@ class LearningModule
         return $this;
     }
 
-    public function getBadge(): ?string
+    public function getBadge(): string
     {
         return $this->badge;
     }
@@ -73,9 +91,26 @@ class LearningModule
         return $this;
     }
 
-    /**
-     * @return Collection|LearningModuleTranslation[]
-     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function getType() : string
+    {
+        return $this->type;
+    }
+
+    public function setType($type): void
+    {
+        $this->type = $type;
+    }
+
     public function getTranslations(): Collection
     {
         return $this->translations;
@@ -104,27 +139,6 @@ class LearningModule
         return $this;
     }
 
-    public function getTitle(Language $language)
-    {
-        foreach($this->getTranslations() AS $translation) {
-            if($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getTitle();//change this line if needed when copied
-            }
-        }
-    }
-
-    public function getDescription(Language $language)
-    {
-        foreach($this->getTranslations() AS $translation) {
-            if($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getDescription();//change this line if needed when copied
-            }
-        }
-    }
-
-    /**
-     * @return Collection|Chapter[]
-     */
     public function getChapters(): Collection
     {
         return $this->chapters;
@@ -134,7 +148,6 @@ class LearningModule
     {
         if (!$this->chapters->contains($chapter)) {
             $this->chapters[] = $chapter;
-            $chapter->setLearningModule($this);
         }
 
         return $this;
@@ -144,12 +157,16 @@ class LearningModule
     {
         if ($this->chapters->contains($chapter)) {
             $this->chapters->removeElement($chapter);
-            // set the owning side to null (unless already changed)
-            if ($chapter->getLearningModule() === $this) {
-                $chapter->setLearningModule(null);
             }
-        }
 
         return $this;
     }
+
+
+    //function to flag the module in order to show it requires more content before publishing
+    public function flagPage()
+    {
+        //TODO flesh out this function to do stuff, (that's a separate ticket)
+    }
+    
 }
