@@ -8,10 +8,12 @@ use App\Entity\LearningModuleTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+
 class PortalController extends AbstractController
 {
     /**
-     * @Route("/portal", name="app_portal")
+     * @Route("/{_locale}/portal", name="app_portal")
      */
     public function index()
     {
