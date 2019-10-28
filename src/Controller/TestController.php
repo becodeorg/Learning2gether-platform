@@ -33,10 +33,21 @@ class TestController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        //$badgrObj->getAllBadges($user);
+        $badgesData = $user->getBadges();
+        $badges = $badgesData->getSnapshot();
+
+        $userBadges = [];
+
+        foreach ($badges as &$badgeData) {
+            $badgeKey = $badgeData->getBadge();
+            array_push($userBadges, $badgeKey);
+        }
+
+        $badgrObj->getAllBadges($userBadges, $user);
 
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',
+            'userBadges' => $userBadges,
         ]);
     }
 }
