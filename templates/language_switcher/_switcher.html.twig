@@ -1,0 +1,10 @@
+
+{# make a variable called switcherForm
+= Form view from the function getLanguageSwitcherForm() in LanguageSwitcherController #}
+{% set switcherForm = switcher.getLanguageSwitcherForm() %}
+
+{# display switcherform in the view #}
+{{ form_start(switcherForm) }}
+    {{ form_widget(switcherForm.language) }}
+    <button class="btn">{{ button_label|default('change') }}</button>
+{{ form_end(switcherForm) }}
