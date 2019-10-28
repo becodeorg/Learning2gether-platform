@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -70,6 +72,28 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $created;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="createdBy", orphanRemoval=true)
+     */
+    private $topics;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="createdBy", orphanRemoval=true)
+     */
+    private $posts;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", inversedBy="users")
+     */
+    private $upvote;
+
+    public function __construct()
+    {
+        $this->topics = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->upvote = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -202,6 +226,94 @@ class User implements UserInterface
     public function setCreated(\DateTimeInterface $created): self
     {
         $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Topic[]
+     */
+    public function getTopics(): Collection
+    {
+        return $this->topics;
+    }
+
+    public function addTopic(Topic $topic): self
+    {
+        if (!$this->topics->contains($topic)) {
+            $this->topics[] = $topic;
+            $topic->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopic(Topic $topic): self
+    {
+        if ($this->topics->contains($topic)) {
+            $this->topics->removeElement($topic);
+            // set the owning side to null (unless already changed)
+            if ($topic->getCreatedBy() === $this) {
+                $topic->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            // set the owning side to null (unless already changed)
+            if ($post->getCreatedBy() === $this) {
+                $post->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getUpvote(): Collection
+    {
+        return $this->upvote;
+    }
+
+    public function addUpvote(Post $upvote): self
+    {
+        if (!$this->upvote->contains($upvote)) {
+            $this->upvote[] = $upvote;
+        }
+
+        return $this;
+    }
+
+    public function removeUpvote(Post $upvote): self
+    {
+        if ($this->upvote->contains($upvote)) {
+            $this->upvote->removeElement($upvote);
+        }
 
         return $this;
     }
