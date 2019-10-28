@@ -34,9 +34,11 @@ class ChapterPage
      */
     private $chapter;
 
-    public function __construct()
+    public function __construct(int $pageNumber, Chapter $chapter)
     {
         $this->translations = new ArrayCollection();
+        $this->pageNumber = $pageNumber;
+        $this->chapter = $chapter;
     }
 
     public function getId(): ?int
@@ -44,7 +46,7 @@ class ChapterPage
         return $this->id;
     }
 
-    public function getPageNumber(): ?int
+    public function getPageNumber(): int
     {
         return $this->pageNumber;
     }
@@ -87,15 +89,8 @@ class ChapterPage
         return $this;
     }
 
-    public function getChapter(): ?Chapter
+    public function getChapter(): Chapter
     {
         return $this->chapter;
-    }
-
-    public function setChapter(?Chapter $chapter): self
-    {
-        $this->chapter = $chapter;
-
-        return $this;
     }
 }
