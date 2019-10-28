@@ -45,7 +45,6 @@ class Quiz
     {
         if (!$this->quizQuestions->contains($quizQuestion)) {
             $this->quizQuestions[] = $quizQuestion;
-            $quizQuestion->setQuiz($this);
         }
 
         return $this;
@@ -55,10 +54,6 @@ class Quiz
     {
         if ($this->quizQuestions->contains($quizQuestion)) {
             $this->quizQuestions->removeElement($quizQuestion);
-            // set the owning side to null (unless already changed)
-            if ($quizQuestion->getQuiz() === $this) {
-                $quizQuestion->setQuiz(null);
-            }
         }
 
         return $this;
