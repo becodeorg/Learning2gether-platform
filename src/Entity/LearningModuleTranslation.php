@@ -33,7 +33,7 @@ class LearningModuleTranslation
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="learningModuleTranslations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;

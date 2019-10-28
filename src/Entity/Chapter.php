@@ -45,10 +45,12 @@ class Chapter
      */
     private $quiz;
 
-    public function __construct()
+    public function __construct(int $chapterNumber, LearningModule $learningModule)
     {
         $this->translations = new ArrayCollection();
         $this->pages = new ArrayCollection();
+        $this->chapterNumber = $chapterNumber;
+        $this->learningModule = $learningModule;
     }
 
     public function getId(): ?int
@@ -56,7 +58,7 @@ class Chapter
         return $this->id;
     }
 
-    public function getChapterNumber(): ?int
+    public function getChapterNumber(): int
     {
         return $this->chapterNumber;
     }
@@ -99,16 +101,9 @@ class Chapter
         return $this;
     }
 
-    public function getLearningModule(): ?LearningModule
+    public function getLearningModule(): LearningModule
     {
         return $this->learningModule;
-    }
-
-    public function setLearningModule(?LearningModule $learningModule): self
-    {
-        $this->learningModule = $learningModule;
-
-        return $this;
     }
 
     /**

@@ -17,7 +17,7 @@ class QuizAnswerTranslation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="quizAnswerTranslations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
@@ -33,24 +33,32 @@ class QuizAnswerTranslation
      */
     private $quizAnswer;
 
+    public function __construct(Language $language, string $title, QuizAnswer $quizAnswer)
+    {
+        $this->language = $language;
+        $this->title = $title;
+        $this->quizAnswer = $quizAnswer;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLanguage(): ?Language
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(?Language $language): self
+    public function setLanguage(Language $language): self
     {
         $this->language = $language;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -62,12 +70,12 @@ class QuizAnswerTranslation
         return $this;
     }
 
-    public function getQuizAnswer(): ?QuizAnswer
+    public function getQuizAnswer(): QuizAnswer
     {
         return $this->quizAnswer;
     }
 
-    public function setQuizAnswer(?QuizAnswer $quizAnswer): self
+    public function setQuizAnswer(QuizAnswer $quizAnswer): self
     {
         $this->quizAnswer = $quizAnswer;
 
