@@ -21,29 +21,30 @@ class LearningModule
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPublished = false;
+    private $isPublished;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $badge = '';
+    private $badge;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    //link to the LM image on the server (for marketing prettifying purposes)
     private $image;
+    //link to the LM image on the server (for marketing prettifying purposes)
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    //defines the LM type, for example: the LM is for soft skills or hard skills
     private $type;
+    //defines the LM type, for example: the LM is for soft skills or hard skills
 
     /**
      * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true,cascade={"persist"})
      */
     private $translations;
+    // cascade means a modules translations(titles and descriptions) can be inserted to the DB when their module is flushed. -jan
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true)
@@ -147,14 +148,6 @@ class LearningModule
         }
     }
 
-    /**
-     * @return Collection|LearningModuleTranslation[]
-     */
-    public function getTranslations(): Collection
-    {
-        return $this->translations;
-    }
-
     public function getDescription(Language $language)
     {
         foreach ($this->getTranslations() AS $translation) {
@@ -194,6 +187,7 @@ class LearningModule
     public function flagPage()
     {
         //TODO flesh out this function to do stuff, (that's a separate ticket)
+        //Same function for flagging/unflagging?
     }
 
 }

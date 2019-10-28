@@ -22,9 +22,13 @@
         <h2>To create a new module, please fill in one or more of the translations</h2>
         {{ form_start(form) }}
         {% for translation in form.translations %}
+            <hr>
             <h2>{{translation.vars.value.language.name}}</h2>
             {{ form_row(translation) }}
         {% endfor %}
+        <hr>
+{#        {{ form_row(form.image) }}#}
+        {{ form_row(form.badge) }}
         {{ form_row(form.create) }}
         {{ form_end(form) }}
 

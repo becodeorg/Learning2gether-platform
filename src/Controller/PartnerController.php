@@ -22,8 +22,8 @@ class PartnerController extends AbstractController
     public function Index(Request $request): Response
     {
         $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
-        $module = new LearningModule();
-        $translationArray = [];
+        $module = new LearningModule('', '', '');
+        $translationArray = []; // making a new empty array
 
         // collect all different languages fro the DB
         foreach ($languageAll as $language) {
@@ -37,6 +37,8 @@ class PartnerController extends AbstractController
         $form = $this->createForm(CreateModuleType::class, $module);
         $form->handleRequest($request);
 
+        // The code below is probably going to give Koen a heart attack, but somehow it works
+        // Var names might need refactoring, for sure
         // check if the form is submitted/posted
         if ($form->isSubmitted() && $form->isValid()) {
             $newTranslations = $_POST['create_module']['translations'];
@@ -51,10 +53,10 @@ class PartnerController extends AbstractController
                     $translationArray[$key]->setTitle($tempArray['description']);
                 }
                 // add all translations to the new module
-                foreach ($translationArray as $translation){
+                foreach ($translationArray as $translation) {
                     $module->addTranslation($translation);
                 }
-                // flush the new module to the DB
+                // flush the new module to the DB (the translations are set to cascade with this persist)
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($module);
                 $entityManager->flush();
@@ -69,6 +71,7 @@ class PartnerController extends AbstractController
         ]);
     }
 
+    //  function to check if at least one of the translations is filled in (both fields)
     public function isOneTranslationFilledIn($translations): bool
     {
         foreach ($translations as $translation) {

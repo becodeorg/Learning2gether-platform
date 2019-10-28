@@ -63,7 +63,7 @@ class LearningModuleTranslation extends AbstractType
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string // doesnt work without '?' -jan
     {
         return $this->title;
     }
@@ -75,7 +75,7 @@ class LearningModuleTranslation extends AbstractType
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string // doesnt work without '?' -jan
     {
         return $this->description;
     }
