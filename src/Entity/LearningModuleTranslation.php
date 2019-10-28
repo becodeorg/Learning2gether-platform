@@ -40,11 +40,6 @@ class LearningModuleTranslation extends AbstractType
      */
     private $language;
 
-    /**
-     * LearningModuleTranslation constructor.
-     * @param LearningModule $learningModule
-     * @param Language $language
-     */
     public function __construct(LearningModule $learningModule, Language $language)
     {
         $this->learningModule = $learningModule;

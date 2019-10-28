@@ -21,15 +21,15 @@ class LearningModule
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPublished;
+    private $isPublished = false;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $badge;
+    private $badge = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true,cascade={"persist"})
      */
     private $translations;
 
