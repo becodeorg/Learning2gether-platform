@@ -45,7 +45,7 @@ class CategoryTranslation
         return $this->id;
     }
 
-    public function getCategory(): ?Category
+    public function getCategory(): Category
     {
         return $this->category;
     }
@@ -57,7 +57,7 @@ class CategoryTranslation
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -69,12 +69,12 @@ class CategoryTranslation
         return $this;
     }
 
-    public function getLanguage(): ?Language
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(?Language $language): self
+    public function setLanguage(Language $language): self
     {
         $this->language = $language;
 

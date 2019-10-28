@@ -47,10 +47,16 @@ class User implements UserInterface
      */
     private $posts;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", inversedBy="users")
+     */
+    private $upvote;
+
     public function __construct()
     {
         $this->topics = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->upvote = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,6 +172,32 @@ class User implements UserInterface
             if ($post->getCreatedBy() === $this) {
                 $post->setCreatedBy(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getUpvote(): Collection
+    {
+        return $this->upvote;
+    }
+
+    public function addUpvote(Post $upvote): self
+    {
+        if (!$this->upvote->contains($upvote)) {
+            $this->upvote[] = $upvote;
+        }
+
+        return $this;
+    }
+
+    public function removeUpvote(Post $upvote): self
+    {
+        if ($this->upvote->contains($upvote)) {
+            $this->upvote->removeElement($upvote);
         }
 
         return $this;

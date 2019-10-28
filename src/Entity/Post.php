@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,12 +34,25 @@ class Post
      */
     private $createdBy;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="upvote")
+     */
+    private $users;
+
+    public function __construct(string $subject, User $createdBy)
+    {
+        $this->subject = $subject;
+        $this->createdBy = $createdBy;
+        $this->setDate(new \DateTimeImmutable());
+        $this->users = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getSubject(): ?string
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -49,7 +64,7 @@ class Post
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): \DateTimeInterface
     {
         return $this->date;
     }
@@ -61,14 +76,42 @@ class Post
         return $this;
     }
 
-    public function getCreatedBy(): ?User
+    public function getCreatedBy(): User
     {
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): self
+    public function setCreatedBy(User $createdBy): self
     {
         $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addUpvote($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeUpvote($this);
+        }
 
         return $this;
     }

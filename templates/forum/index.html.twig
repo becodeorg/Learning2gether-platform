@@ -5,4 +5,19 @@
 {% block body %}
 
 <h1>Forum</h1>
+    <h2>Category ID</h2>
+    {{ categoryID }}
+    <h3>Category</h3>
+    {{ category }}
+    <h4>Topic</h4>
+    {{ topic }}
+    {{ topic_date }}
+    <h5>Posts</h5>
+    {{ post }}
+    {{ post_date }}
+
+    <p>create topic</p>
+    <form action="../../src/Controller/ForumController.php" method="post"></form>
+    <input type="text" name="subject">
+    <input type="submit">
 {% endblock %}

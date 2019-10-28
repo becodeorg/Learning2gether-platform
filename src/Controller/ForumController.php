@@ -7,6 +7,7 @@ use App\Entity\CategoryTranslation;
 use App\Entity\Language;
 use App\Entity\Post;
 use App\Entity\Topic;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,24 +18,24 @@ class ForumController extends AbstractController
      */
     public function index()
     {
-        //todo add const to format.
-        //$category = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('1');
-//        $category = $this->getDoctrine()->getRepository(Category::class)->find('1');
-//        var_dump($category);
-//       $categoryTranslations = $this->getDoctrine()->getRepository(CategoryTranslation::class)->findOneBy(['id' => 1]);
-//       echo $categoryTranslations->getTitle();
-//        $topic = $this->getDoctrine()->getRepository(Topic::class)->find('1')->getSubject();
-//        var_dump($topic);
-//        $date = $this->getDoctrine()->getRepository(Topic::class)->find('1')->getDate();
-//        var_dump($date);
-//        $post = $this->getDoctrine()->getRepository(Post::class)->find('1')->getSubject();
-//        var_dump($post);
 
-        $categoryTranslations = $this->getDoctrine()->getRepository(CategoryTranslation::class)->findAll();
-        var_dump($categoryTranslations);
+        $categoryID = $this->getDoctrine()->getRepository(Category::class)->find('1')->getId();
+        $category = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('1')->getTitle();
+        $topic = $this->getDoctrine()->getRepository(Topic::class)->find('1')->getSubject();
+        $topicDate = $this->getDoctrine()->getRepository(Topic::class)->find('1')->getDate()->format('Y-m-d H:i:s');;
+        $post = $this->getDoctrine()->getRepository(Post::class)->find('1')->getSubject();
+        $postDate = $this->getDoctrine()->getRepository(Post::class)->find('1')->getDate()->format('Y-m-d H:i:s');;
+
+
 
         return $this->render('forum/index.html.twig', [
             'controller_name' => 'ForumController',
+            'categoryID' => $categoryID,
+            'category' => $category,
+            'topic' => $topic,
+            'topic_date' => $topicDate,
+            'post' => $post,
+            'post_date' => $postDate
         ]);
     }
 }
