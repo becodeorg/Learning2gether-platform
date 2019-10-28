@@ -17,7 +17,7 @@ class LearningModuleTranslation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\LearningModule", inversedBy="title")
+     * @ORM\ManyToOne(targetEntity="App\Entity\LearningModule", inversedBy="translations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $learningModule;
@@ -33,7 +33,7 @@ class LearningModuleTranslation
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="learningModuleTranslations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
