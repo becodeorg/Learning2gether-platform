@@ -38,6 +38,42 @@ class User implements UserInterface
     private $password = '';
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password_hash;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_partner;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $badgr_key;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $language;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
      */
     private $badges;
@@ -103,6 +139,84 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
+    public function getPasswordHash(): ?string
+    {
+        return $this->password_hash;
+    }
+
+    public function setPasswordHash(string $password_hash): self
+    {
+        $this->password_hash = $password_hash;
+
+        return $this;
+    }
+
+    public function getIsPartner(): ?bool
+    {
+        return $this->is_partner;
+    }
+
+    public function setIsPartner(bool $is_partner): self
+    {
+        $this->is_partner = $is_partner;
+
+        return $this;
+    }
+
+    public function getBadgrKey(): ?string
+    {
+        return $this->badgr_key;
+    }
+
+    public function setBadgrKey(string $badgr_key): self
+    {
+        $this->badgr_key = $badgr_key;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
     /**
      * @return Collection|LearningModule[]
      */

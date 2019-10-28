@@ -34,14 +34,14 @@ class LearningModule
     private $translations;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="badges")
+     * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true)
      */
-    private $users;
+    private $chapters;
 
     public function __construct()
     {
         $this->translations = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->chapters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,28 +123,31 @@ class LearningModule
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|Chapter[]
      */
-    public function getUsers(): Collection
+    public function getChapters(): Collection
     {
-        return $this->users;
+        return $this->chapters;
     }
 
-    public function addUser(User $user): self
+    public function addChapter(Chapter $chapter): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addBadge($this);
+        if (!$this->chapters->contains($chapter)) {
+            $this->chapters[] = $chapter;
+            $chapter->setLearningModule($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function removeChapter(Chapter $chapter): self
     {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            $user->removeBadge($this);
+        if ($this->chapters->contains($chapter)) {
+            $this->chapters->removeElement($chapter);
+            // set the owning side to null (unless already changed)
+            if ($chapter->getLearningModule() === $this) {
+                $chapter->setLearningModule(null);
+            }
         }
 
         return $this;
