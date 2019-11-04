@@ -35,14 +35,12 @@ class CreateModuleController extends AbstractController
             if ($this->isOneTranslationFilledIn($newTranslations)) {
                 $this->makePostedTranslations($newTranslations, $translationArray, $module);
                 $this->flushNewModule($module);
-                $this->addFlash('success','');
                 $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             } else {
                 echo 'Please fill in at least one language!';
             }
         }
 
-        // after creation, go to module edit page?
 
         return $this->render('create_module/index.html.twig', [
             'controller_name' => 'CreateModuleController',
