@@ -10,6 +10,10 @@
 
 <div class="example-wrapper">
     <h1>Wassup {{ user.name }}</h1>
+    <img src="{{ user.avatar }}" alt="avatar">
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Language: {{ user.language.name }}</p>
     <div class="badges">
         {% for badge in userBadges %}
             <h2>{{ badge.result.0.name }}</h2>

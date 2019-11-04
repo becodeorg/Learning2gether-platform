@@ -15,6 +15,7 @@ class ProfileController extends AbstractController
     public function index()
     {
         //initialise badgr object
+        //curl -X POST 'https://api.badgr.io/o/token' -d "username=broostim@hotmail.be&password=loderunner666"
         $badgrObj = new Badgr;
         $user = $this->getUser();
 

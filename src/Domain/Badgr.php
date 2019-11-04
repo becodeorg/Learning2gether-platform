@@ -14,13 +14,14 @@ class Badgr
         //get badge and email for fetch
         $moduleBadge = $learningModule->getBadge();
         $email = $user->getEmail();
+        $authorization = "Dm7CrSehEJTtGUooextyrIWDzhwN82";
 
         //give the badge to email
         $httpClient = HttpClient::create();
         $response = $httpClient->request('POST', 'https://api.badgr.io/v2/badgeclasses/'.$moduleBadge.'/assertions', [
             'headers' => [
                 'Accept' => 'application/json',
-                'Authorization' => 'Bearer VzjoS17oZOSCz9224w2yBgvk30ZXT0',
+                'Authorization' => 'Bearer '.$authorization,
             ],
             'json' => [
                 'recipient' => [
@@ -37,6 +38,7 @@ class Badgr
         //get mail from user
         $email = $user->getEmail();
         $userBadges = [];
+        $authorization = "Dm7CrSehEJTtGUooextyrIWDzhwN82";
 
         //var_dump($badges);
 
@@ -46,7 +48,7 @@ class Badgr
             $response = $httpClient->request('GET', 'https://api.badgr.io/v2/badgeclasses/'.$badgeKey, [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer VzjoS17oZOSCz9224w2yBgvk30ZXT0',
+                    'Authorization' => 'Bearer '.$authorization,
                 ],
                 'json' => [
                     'recipient' => [
