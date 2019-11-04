@@ -11,9 +11,11 @@ class Badgr
 {
     public function addBadgeToUser(LearningModule $learningModule, User $user)
     {
+        //get badge and email for fetch
         $moduleBadge = $learningModule->getBadge();
         $email = $user->getEmail();
 
+        //give the badge to email
         $httpClient = HttpClient::create();
         $response = $httpClient->request('POST', 'https://api.badgr.io/v2/badgeclasses/'.$moduleBadge.'/assertions', [
             'headers' => [
@@ -32,9 +34,13 @@ class Badgr
 
     public function getAllBadges($badges, User $user)
     {
+        //get mail from user
         $email = $user->getEmail();
         $userBadges = [];
 
+        //var_dump($badges);
+
+        //get badges from email user
         $httpClient = HttpClient::create();
         foreach ($badges as &$badgeKey) {
             $response = $httpClient->request('GET', 'https://api.badgr.io/v2/badgeclasses/'.$badgeKey, [
@@ -51,10 +57,11 @@ class Badgr
                 ]
             ]);
 
+            //put each badge in array userBadges
             $badgeData = json_decode($response->getContent(), true);
             array_push($userBadges, $badgeData);
         }
 
-        var_dump($userBadges);
+        return $userBadges;
     }
 }

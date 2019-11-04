@@ -4,21 +4,13 @@ namespace App\Controller;
 
 use App\Domain\Badgr;
 use App\Entity\LearningModule;
-use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Routing\Annotation\Route;
 
-//{"access_token": "YWKBzcHMvKoiLjb8I8TjJZ7Bkdhl3F",
-// "token_type": "Bearer",
-// "expires_in": 86400,
-// "refresh_token": "D1R0p1U4bZXRZe45R8Xc0PVXcQ0JWl",
-// "scope": "rw:profile rw:issuer rw:backpack"}
-
-class TestController extends AbstractController
+class ProfileController extends AbstractController
 {
     /**
-     * @Route("/test", name="test")
+     * @Route("/profile", name="profile")
      */
     public function index()
     {
@@ -34,17 +26,21 @@ class TestController extends AbstractController
         $badgesData = $user->getBadges();
         $badges = $badgesData->getSnapshot();
         //put all badge keys in userBadges
-        $userBadges = [];
+        $badgeKeys = [];
         foreach ($badges as &$badgeData) {
             $badgeKey = $badgeData->getBadge();
-            array_push($userBadges, $badgeKey);
+            array_push($badgeKeys, $badgeKey);
         }
-        //pass userBadges and the user to the getAllBadges method
-        $badgrObj->getAllBadges($userBadges, $user);
+        //pass userBadges with keys and the user to the getAllBadges method
+        $userBadges = $badgrObj->getAllBadges($badgeKeys, $user);
 
-        return $this->render('test/index.html.twig', [
-            'controller_name' => 'TestController',
+        //var_dump($userBadges[0]['result']);
+
+        return $this->render('profile/index.html.twig', [
+            'controller_name' => 'ProfileController',
+            'badgeKeys' => $badgeKeys,
             'userBadges' => $userBadges,
+            'user' => $user,
         ]);
     }
 }
