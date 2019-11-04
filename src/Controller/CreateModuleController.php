@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -34,6 +35,8 @@ class CreateModuleController extends AbstractController
             if ($this->isOneTranslationFilledIn($newTranslations)) {
                 $this->makePostedTranslations($newTranslations, $translationArray, $module);
                 $this->flushNewModule($module);
+                $this->addFlash('success','');
+                $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             } else {
                 echo 'Please fill in at least one language!';
             }
@@ -84,13 +87,9 @@ class CreateModuleController extends AbstractController
     public function makePostedTranslations($newTranslations, array $translationArray, LearningModule $module): void
     {
         // take the posted titles and descriptions, set their values, and add them to the module
-        $tempArray = [];
-        // separate the post values to separate arrays
         foreach ($newTranslations as $key => $translation) {
-            $tempArray['title'] = $translation['title'];
-            $tempArray['description'] = $translation['description'];
-            $translationArray[$key]->setTitle($tempArray['title']);
-            $translationArray[$key]->setDescription($tempArray['description']);
+            $translationArray[$key]->setTitle($translation['title']);
+            $translationArray[$key]->setDescription($translation['description']);
         }
         // add all translations to the new module
         foreach ($translationArray as $translation) {
@@ -103,7 +102,7 @@ class CreateModuleController extends AbstractController
      */
     public function flushNewModule(LearningModule $module): void
     {
-        // flush the new module to the DB (the translations are set to cascade)
+        // flush the new module to the DB (the translations are set to cascade(src/Entity/LearningModule.php:44))
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);
         $entityManager->flush();
