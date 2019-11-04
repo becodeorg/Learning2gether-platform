@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ModuleController!{% endblock %}
+{% block title %}Howdy Partner!{% endblock %}
 
 {% block body %}
     <style>
@@ -18,13 +18,7 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
-
-        <span>Current Module: {{ module.getTitle(language) }}, description: {{ module.getDescription(language) }}</span>
-        <hr>
-        <span><a href="{{ path('portal') }}">Back to Portal</a>
-</span>
-
-
+        <h1>Howdy Partner!</h1>
+        <a href="{{ path('create_module') }}">Create Module</a>
     </div>
 {% endblock %}
