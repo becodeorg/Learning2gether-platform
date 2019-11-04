@@ -23,29 +23,50 @@ class EditModuleController extends AbstractController
         // check the $_GET['module'], has to be set, and an integer, if not, redirects back to partner zone
         if (isset($_GET['module']) && ctype_digit((string)$_GET['module'])) {
             $moduleID = $_GET['module'];
-            $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
         } else {
             return $this->redirectToRoute('partner');
         }
 
-        $languagesAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
-        foreach ($languagesAll as $language) {
-            $translations = $this->getDoctrine()->getRepository(LearningModuleTranslation::class)->findBy([
-                'language' => $language->getId(),
-                'learningModule' => $moduleID]);
-            foreach ($translations as $translation) {
-                $module->addTranslation($translation);
-            }
-        }
+        $module = $this->getModuleAndTranslations($moduleID);
 
         $form = $this->createForm(EditModuleType::class, $module);
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $updatedModule = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($updatedModule);
+            $entityManager->flush();
+        }
+
 
         return $this->render('edit_module/index.html.twig', [
             'controller_name' => 'EditModuleController',
             'module' => $module,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param $moduleID
+     * @return LearningModule|object|null
+     */
+    public function getModuleAndTranslations($moduleID)
+    {
+        // Gets all languages from DB
+        $languagesAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+        // Gets the current module from DB
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
+        // foreach language in the DB, find the translation for the current module
+        foreach ($languagesAll as $language) {
+            $translations = $this->getDoctrine()->getRepository(LearningModuleTranslation::class)->findBy([
+                'language' => $language->getId(),
+                'learningModule' => $moduleID]);
+            // add all found translations to the module object
+            foreach ($translations as $translation) {
+                $module->addTranslation($translation);
+            }
+        }
+        return $module;
     }
 }

@@ -33,9 +33,8 @@ class CreateModuleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $newTranslations = $_POST['create_module']['translations'];
             if ($this->isOneTranslationFilledIn($newTranslations)) {
-                $this->makePostedTranslations($newTranslations, $translationArray, $module);
+                $module = $form->getData();
                 $this->flushNewModule($module);
-                $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             } else {
                 echo 'Please fill in at least one language!';
             }
@@ -75,24 +74,6 @@ class CreateModuleController extends AbstractController
             $module->addTranslation($translation); // adds them to render the form the form
         }
         return $translationArray;
-    }
-
-    /**
-     * @param $newTranslations
-     * @param array $translationArray
-     * @param LearningModule $module
-     */
-    public function makePostedTranslations($newTranslations, array $translationArray, LearningModule $module): void
-    {
-        // take the posted titles and descriptions, set their values, and add them to the module
-        foreach ($newTranslations as $key => $translation) {
-            $translationArray[$key]->setTitle($translation['title']);
-            $translationArray[$key]->setDescription($translation['description']);
-        }
-        // add all translations to the new module
-        foreach ($translationArray as $translation) {
-            $module->addTranslation($translation);
-        }
     }
 
     /**
