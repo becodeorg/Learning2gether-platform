@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 
 session_start();
 
@@ -44,18 +46,36 @@ class LanguageSwitcherController extends AbstractController
 
         $switcher->handleRequest($request);
 
-        if ($switcher->isSubmitted() && $switcher->isValid()){
-            //check if logged in
+        if ($switcher->isSubmitted() && $switcher->isValid()){ // The language is changed,
+            //check if the user logged in
             if(!is_null($this->getUser())) { // if user is logged in
-                // if yes - save the new prefered language
+                $user = $this->getUser(); // user is the person who logged in
+//                var_dump($user);
+//                $language = $user->getLanguage(); // create a new language entity and put in the variable
+//                var_dump($language);
+
+                // Find the new language with the submitted code (post) in database
+                $newLang = $this->getDoctrine()->getRepository(Language::class)
+                    ->findOneBy(['code' => mb_strtolower($_POST['language_switcher']['language'])]); // find the lang class with code '??'($_POST['language_switcher']['language']) and put it in the var $newLang
+//                var_dump($newLang);
+
+                // Update User's language with new chosen one
+                $user->setLanguage($newLang); // put the Language(with chosen lang) to the user's language
+//                var_dump($user);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
 
             } else {
-                // make a cookie
-
+//                var_dump("not logged in!");
+//                var_dump($request); die;
+//                var_dump($request->cookies->all()); // Array of all cookie
+                setcookie('language', mb_strtolower($_POST['language_switcher']['language']));
+                die;
             }
 
             //die($_SERVER['HTTP_REFERER']);
-
 
             return $this->redirectToRoute('app_portal', [
                 '_locale' => mb_strtolower($_POST['language_switcher']['language']) // field from that form
