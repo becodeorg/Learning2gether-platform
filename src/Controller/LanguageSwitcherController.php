@@ -24,7 +24,7 @@ function whatIsHappening() {
     var_dump($_SESSION);
 }
 
-whatIsHappening();
+//whatIsHappening();
 
 
 class LanguageSwitcherController extends AbstractController
@@ -35,9 +35,9 @@ class LanguageSwitcherController extends AbstractController
      */
     public function index(Request $request)
     {
-//        var_dump($request); die;
-//        $locale = $request -> getLocale(); // get locale, null? then get default locale
-//        var_dump($locale); die;
+//        var_dump($request);
+        $locale = $request -> getLocale(); // get locale, null? then get default locale
+        var_dump($locale);
 
         $switcher = $this->createForm(LanguageSwitcherType::class, null, [
             'action' => $this->generateUrl('language_switcher'),
@@ -46,7 +46,10 @@ class LanguageSwitcherController extends AbstractController
 
         $switcher->handleRequest($request);
 
-        if ($switcher->isSubmitted() && $switcher->isValid()){ // The language is changed,
+        $locale = mb_strtolower($_POST['language_switcher']['language']);
+
+        //if language is changed
+        if ($switcher->isSubmitted() && $switcher->isValid()){
             //check if the user logged in
             if(!is_null($this->getUser())) { // if user is logged in
                 $user = $this->getUser(); // user is the person who logged in
@@ -56,13 +59,12 @@ class LanguageSwitcherController extends AbstractController
 
                 // Find the new language with the submitted code (post) in database
                 $newLang = $this->getDoctrine()->getRepository(Language::class)
-                    ->findOneBy(['code' => mb_strtolower($_POST['language_switcher']['language'])]); // find the lang class with code '??'($_POST['language_switcher']['language']) and put it in the var $newLang
+                    ->findOneBy(['code' => $locale ]); // find the lang class with code '??'($_POST['language_switcher']['language']) and put it in the var $newLang
 //                var_dump($newLang);
 
                 // Update User's language with new chosen one
                 $user->setLanguage($newLang); // put the Language(with chosen lang) to the user's language
 //                var_dump($user);
-
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
@@ -71,20 +73,24 @@ class LanguageSwitcherController extends AbstractController
 //                var_dump("not logged in!");
 //                var_dump($request); die;
 //                var_dump($request->cookies->all()); // Array of all cookie
-                setcookie('language', mb_strtolower($_POST['language_switcher']['language']));
-                die;
+                setcookie('language', $locale);
             }
 
             //die($_SERVER['HTTP_REFERER']);
 
             return $this->redirectToRoute('app_portal', [
-                '_locale' => mb_strtolower($_POST['language_switcher']['language']) // field from that form
+                '_locale' => $locale // field from that form
             ]);
         }
 
+        //if not,
         return $this->redirectToRoute('app_portal', [
-            '_locale' => 'en' // TODO ask
+            '_locale' => $locale
         ]);
+
+        //TODO : onchange - without submit button
+        //TODO : redirect to previous page with new language
+
     }
 
     public function getLanguageSwitcherForm(): FormView
