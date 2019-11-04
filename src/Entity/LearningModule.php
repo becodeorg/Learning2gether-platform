@@ -26,25 +26,25 @@ class LearningModule
     /**
      * @ORM\Column(type="string", length=255)
      */
-    //hash to badger.io badge
     private $badge;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    //link to the LM image on the server (for marketing prettifying purposes)
     private $image;
+    //link to the LM image on the server (for marketing prettifying purposes)
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    //defines the LM type, for example: the LM is for soft skills or hard skills
     private $type;
+    //defines the LM type, for example: the LM is for soft skills or hard skills
 
     /**
-     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true,cascade={"persist"})
      */
     private $translations;
+    // cascade means a modules translations(titles and descriptions) can be inserted to the DB when their module is flushed. -jan
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true)
@@ -139,6 +139,27 @@ class LearningModule
         return $this;
     }
 
+    public function getTitle(Language $language)
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getTitle();//change this line if needed when copied
+            }
+        }
+    }
+
+    public function getDescription(Language $language)
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getDescription();//change this line if needed when copied
+            }
+        }
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
     public function getChapters(): Collection
     {
         return $this->chapters;
@@ -162,11 +183,11 @@ class LearningModule
         return $this;
     }
 
-
     //function to flag the module in order to show it requires more content before publishing
     public function flagPage()
     {
         //TODO flesh out this function to do stuff, (that's a separate ticket)
+        //Same function for flagging/unflagging?
     }
-    
+
 }

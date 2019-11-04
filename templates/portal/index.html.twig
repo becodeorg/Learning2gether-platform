@@ -13,9 +13,10 @@
 
     <ul>Dummy Modules <!-- List of modules -->
         {% for module in modules %}
-        <li><a href="{{ path('app_module', { module : module.id}) }}">{{ module.title(language) }}: {{ module.description(language) }}</a>
+        <li><a href="{{ path('module', { module : module.id}) }}">{{ module.title(language) }}: {{ module.description(language) }}</a>
         {% endfor %}
     </ul>
     <hr>
+    <a href="{{ path('partner') }}">Partner Zone</a>
 </div>
 {% endblock %}

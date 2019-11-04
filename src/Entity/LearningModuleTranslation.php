@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\AbstractType;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LearningModuleTranslationsRepository")
  */
-class LearningModuleTranslation
+class LearningModuleTranslation extends AbstractType
 {
     /**
      * @ORM\Id()
@@ -38,14 +40,11 @@ class LearningModuleTranslation
      */
     private $language;
 
-    public function __construct(Language $language, string $title, LearningModule $learningModule, string $description)
+    public function __construct(LearningModule $learningModule, Language $language)
     {
         $this->learningModule = $learningModule;
-        $this->title = $title;
-        $this->description = $description;
         $this->language = $language;
     }
-
 
     public function getId(): ?int
     {
@@ -64,7 +63,7 @@ class LearningModuleTranslation
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string // doesnt work without '?' -jan
     {
         return $this->title;
     }
@@ -76,7 +75,7 @@ class LearningModuleTranslation
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string // doesnt work without '?' -jan
     {
         return $this->description;
     }
