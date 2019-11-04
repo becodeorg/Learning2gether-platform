@@ -9,15 +9,31 @@
     {{ categoryID }}
     <h3>Category</h3>
     {{ category }}
-    <h4>Topic</h4>
+    <h4>All Topics</h4>
+    {% for topic in topics %}
+        <a href="?topic_id={{ topic.id }}">
+            {{ topic.subject }}<br>
+            {{ topic.date.format('m-d-Y H:i:s') }}<br>
+        </a>
+        <br>
+    {% endfor %}
+    <h4>Add New Topic</h4>
+    {{ form_start(topic_now) }}
+    {{ form_end(topic_now) }}
+    <h4>Current Topic</h4>
     {{ topic }}
     {{ topic_date }}
     <h5>Posts</h5>
-    {{ post }}
-    {{ post_date }}
+    {% for post in posts %}
+        {{ post.subject }}<br>
+        {{ form_start(git upvote) }}
+        {{ form_end(upvote) }}<br>
+        {{ post.date.format('m-d-Y H:i:s') }}<br>
+        <br>
+    {% endfor %}
 
-    <p>create topic</p>
-    <form action="../../src/Controller/ForumController.php" method="post"></form>
-    <input type="text" name="subject">
-    <input type="submit">
+    <br>
+    {{ form_start(post_now) }}
+    {{ form_end(post_now) }}
+
 {% endblock %}

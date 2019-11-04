@@ -39,11 +39,26 @@ class Post
      */
     private $users;
 
-    public function __construct(string $subject, User $createdBy)
+    /**
+     * @param Topic $topic
+     */
+    public function setTopic(Topic $topic): void
+    {
+        $this->topic = $topic;
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Topic", inversedBy="posts", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $topic;
+
+    public function __construct(string $subject, User $createdBy, Topic $topic)
     {
         $this->subject = $subject;
         $this->createdBy = $createdBy;
         $this->setDate(new \DateTimeImmutable());
+        $this->topic = $topic;
         $this->users = new ArrayCollection();
     }
 
@@ -115,4 +130,10 @@ class Post
 
         return $this;
     }
+
+    public function getTopic(): Topic
+    {
+        return $this->topic;
+    }
+
 }
