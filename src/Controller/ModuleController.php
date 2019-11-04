@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ModuleController extends AbstractController
 {
     /**
-     * @Route("/module", name="app_module")
+     * @Route("/{_locale}/module", name="app_module")
      */
     public function module(): Response
     {
