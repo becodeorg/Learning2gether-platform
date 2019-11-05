@@ -34,11 +34,9 @@ class EditModuleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $updatedModule = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($updatedModule);
-            $entityManager->flush();
+            $this->flushUpdatedModule($updatedModule);
+            return $this->redirectToRoute('partner');
         }
-
 
         return $this->render('edit_module/index.html.twig', [
             'controller_name' => 'EditModuleController',
@@ -51,8 +49,9 @@ class EditModuleController extends AbstractController
      * @param $moduleID
      * @return LearningModule|object|null
      */
-    public function getModuleAndTranslations($moduleID)
+    public function getModuleAndTranslations(int $moduleID) : LearningModule
     {
+        // Preparing a module object for the form
         // Gets all languages from DB
         $languagesAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
         // Gets the current module from DB
@@ -61,12 +60,24 @@ class EditModuleController extends AbstractController
         foreach ($languagesAll as $language) {
             $translations = $this->getDoctrine()->getRepository(LearningModuleTranslation::class)->findBy([
                 'language' => $language->getId(),
-                'learningModule' => $moduleID]);
+                'learningModule' => $moduleID
+            ]);
             // add all found translations to the module object
             foreach ($translations as $translation) {
                 $module->addTranslation($translation);
             }
         }
         return $module;
+    }
+
+    /**
+     * @param LearningModule $updatedModule
+     */
+    public function flushUpdatedModule(LearningModule $updatedModule): void
+    {
+        // Flush the updated module + translations to the DB
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($updatedModule);
+        $entityManager->flush();
     }
 }
