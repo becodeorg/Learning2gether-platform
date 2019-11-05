@@ -37,20 +37,12 @@ class User implements UserInterface
      */
     private $password = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password_hash;
+
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $is_partner;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $badgr_key;
+    private $is_partner = 0;//TODO default value of is_partner should be 0
 
     /**
      * @ORM\Column(type="string", length=255)

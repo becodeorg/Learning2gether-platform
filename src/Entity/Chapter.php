@@ -118,7 +118,6 @@ class Chapter
     {
         if (!$this->pages->contains($page)) {
             $this->pages[] = $page;
-            $page->setChapter($this);
         }
 
         return $this;
@@ -128,10 +127,6 @@ class Chapter
     {
         if ($this->pages->contains($page)) {
             $this->pages->removeElement($page);
-            // set the owning side to null (unless already changed)
-            if ($page->getChapter() === $this) {
-                $page->setChapter(null);
-            }
         }
 
         return $this;

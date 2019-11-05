@@ -15,12 +15,11 @@ class ProfileController extends AbstractController
     public function index()
     {
         //initialise badgr object
-        //curl -X POST 'https://api.badgr.io/o/token' -d "username=broostim@hotmail.be&password=loderunner666"
         $badgrObj = new Badgr;
         $user = $this->getUser();
 
         //For some unholy reason this is required for the rest to work
-        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find("2");
+        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find("1");
         $user->addBadge($testModule);
 
         //get all badges from user
