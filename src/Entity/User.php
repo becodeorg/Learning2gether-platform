@@ -66,13 +66,34 @@ class User implements UserInterface
     private $created;
 
     /**
+
+     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="createdBy", orphanRemoval=true)
+     */
+    private $topics;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="createdBy", orphanRemoval=true)
+     */
+    private $posts;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", inversedBy="users")
+     */
+    private $upvote;
+
+   
+      
+
      * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
      */
     private $badges;
 
     public function __construct()
-    {
+    {   $this->topics = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->upvote = new ArrayCollection();
         $this->badges = new ArrayCollection();
+r
     }
 
     public function getId(): ?int
@@ -209,6 +230,52 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Topic[]
+     */
+    public function getTopics(): Collection
+    {
+        return $this->topics;
+    }
+
+    public function addTopic(Topic $topic): self
+    {
+        if (!$this->topics->contains($topic)) {
+            $this->topics[] = $topic;
+            $topic->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopic(Topic $topic): self
+    {
+        if ($this->topics->contains($topic)) {
+            $this->topics->removeElement($topic);
+            // set the owning side to null (unless already changed)
+            if ($topic->getCreatedBy() === $this) {
+                $topic->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setCreatedBy($this);
+
     /**
      * @return Collection|LearningModule[]
      */
@@ -221,18 +288,55 @@ class User implements UserInterface
     {
         if (!$this->badges->contains($badge)) {
             $this->badges[] = $badge;
+
         }
 
         return $this;
     }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            // set the owning side to null (unless already changed)
+            if ($post->getCreatedBy() === $this) {
+                $post->setCreatedBy(null);
+            }
 
     public function removeBadge(LearningModule $badge): self
     {
         if ($this->badges->contains($badge)) {
             $this->badges->removeElement($badge);
+
         }
 
         return $this;
     }
 
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getUpvote(): Collection
+    {
+        return $this->upvote;
+    }
+
+    public function addUpvote(Post $upvote): self
+    {
+        if (!$this->upvote->contains($upvote)) {
+            $this->upvote[] = $upvote;
+        }
+
+        return $this;
+    }
+
+    public function removeUpvote(Post $upvote): self
+    {
+        if ($this->upvote->contains($upvote)) {
+            $this->upvote->removeElement($upvote);
+        }
+
+        return $this;
+    }
 }
