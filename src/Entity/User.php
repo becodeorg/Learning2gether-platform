@@ -83,7 +83,7 @@ class User implements UserInterface
 
    
       
-
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
      */
     private $badges;
@@ -93,7 +93,7 @@ class User implements UserInterface
         $this->posts = new ArrayCollection();
         $this->upvote = new ArrayCollection();
         $this->badges = new ArrayCollection();
-r
+
     }
 
     public function getId(): ?int
@@ -275,7 +275,8 @@ r
         if (!$this->posts->contains($post)) {
             $this->posts[] = $post;
             $post->setCreatedBy($this);
-
+        }
+    }
     /**
      * @return Collection|LearningModule[]
      */
@@ -302,7 +303,8 @@ r
             if ($post->getCreatedBy() === $this) {
                 $post->setCreatedBy(null);
             }
-
+        }
+    }
     public function removeBadge(LearningModule $badge): self
     {
         if ($this->badges->contains($badge)) {
