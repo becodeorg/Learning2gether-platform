@@ -27,7 +27,7 @@
     {% for post in posts %}
         {{ post.subject }}<br>
         <form action="#" method="post">
-            <button style="height: 30px; width: 30px;" type="submit" value="" ></button>
+            <button style="height: 30px; width: 60px;" type="submit" name="upvote" value=""  >Upvote</button>
         </form>
         {{ post.date.format('m-d-Y H:i:s') }}<br>
         <br>
