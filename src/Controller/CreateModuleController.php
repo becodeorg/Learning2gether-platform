@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -32,14 +33,13 @@ class CreateModuleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $newTranslations = $_POST['create_module']['translations'];
             if ($this->isOneTranslationFilledIn($newTranslations)) {
-                $this->makePostedTranslations($newTranslations, $translationArray, $module);
+                $module = $form->getData();
                 $this->flushNewModule($module);
             } else {
                 echo 'Please fill in at least one language!';
             }
         }
 
-        // after creation, go to module edit page?
 
         return $this->render('create_module/index.html.twig', [
             'controller_name' => 'CreateModuleController',
@@ -77,33 +77,11 @@ class CreateModuleController extends AbstractController
     }
 
     /**
-     * @param $newTranslations
-     * @param array $translationArray
-     * @param LearningModule $module
-     */
-    public function makePostedTranslations($newTranslations, array $translationArray, LearningModule $module): void
-    {
-        // take the posted titles and descriptions, set their values, and add them to the module
-        $tempArray = [];
-        // separate the post values to separate arrays
-        foreach ($newTranslations as $key => $translation) {
-            $tempArray['title'] = $translation['title'];
-            $tempArray['description'] = $translation['description'];
-            $translationArray[$key]->setTitle($tempArray['title']);
-            $translationArray[$key]->setDescription($tempArray['description']);
-        }
-        // add all translations to the new module
-        foreach ($translationArray as $translation) {
-            $module->addTranslation($translation);
-        }
-    }
-
-    /**
      * @param LearningModule $module
      */
     public function flushNewModule(LearningModule $module): void
     {
-        // flush the new module to the DB (the translations are set to cascade)
+        // flush the new module to the DB (the translations are set to cascade(src/Entity/LearningModule.php:44))
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);
         $entityManager->flush();

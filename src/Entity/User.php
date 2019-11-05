@@ -37,20 +37,12 @@ class User implements UserInterface
      */
     private $password = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password_hash;
+
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $is_partner;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $badgr_key;
+    private $is_partner = 0;//TODO default value of is_partner should be 0
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -74,6 +66,7 @@ class User implements UserInterface
     private $created;
 
     /**
+
      * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="createdBy", orphanRemoval=true)
      */
     private $topics;
@@ -88,11 +81,19 @@ class User implements UserInterface
      */
     private $upvote;
 
+   
+      
+
+     * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
+     */
+    private $badges;
+
     public function __construct()
-    {
-        $this->topics = new ArrayCollection();
+    {   $this->topics = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->upvote = new ArrayCollection();
+        $this->badges = new ArrayCollection();
+r
     }
 
     public function getId(): ?int
@@ -143,7 +144,7 @@ class User implements UserInterface
 
     public function getUsername()
     {
-        return $this->getEmail();
+        return $this->username;
     }
 
     public function eraseCredentials()
@@ -274,6 +275,20 @@ class User implements UserInterface
         if (!$this->posts->contains($post)) {
             $this->posts[] = $post;
             $post->setCreatedBy($this);
+
+    /**
+     * @return Collection|LearningModule[]
+     */
+    public function getBadges(): Collection
+    {
+        return $this->badges;
+    }
+
+    public function addBadge(LearningModule $badge): self
+    {
+        if (!$this->badges->contains($badge)) {
+            $this->badges[] = $badge;
+
         }
 
         return $this;
@@ -287,10 +302,17 @@ class User implements UserInterface
             if ($post->getCreatedBy() === $this) {
                 $post->setCreatedBy(null);
             }
+
+    public function removeBadge(LearningModule $badge): self
+    {
+        if ($this->badges->contains($badge)) {
+            $this->badges->removeElement($badge);
+
         }
 
         return $this;
     }
+
 
     /**
      * @return Collection|Post[]
