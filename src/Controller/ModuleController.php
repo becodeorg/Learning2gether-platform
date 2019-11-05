@@ -27,8 +27,15 @@ class ModuleController extends AbstractController
         $languageId = $user->getLanguage()->getId();
         $language = $this->getDoctrine()->getRepository(Language::class)->find($languageId);
 
-        //get this Module
-        $moduleID = $_GET['module'] ?? null;
+        // check the $_GET['module'], has to be set, and an integer, if not, redirects back to portal
+        if (isset($_GET['module']) && ctype_digit((string)$_GET['module'])) {
+            //get this Module
+            $moduleID = $_GET['module'];
+        } else {
+            return $this->redirectToRoute('partner');
+        }
+
+        $language = $this->getDoctrine()->getRepository(Language::class)->find(1);
         $module = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(['id' => $moduleID]);
         //$moduleBadge = $module->getBadge();
 

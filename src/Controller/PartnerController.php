@@ -20,8 +20,12 @@ class PartnerController extends AbstractController
      */
     public function index(): Response
     {
+        $language = $this->getDoctrine()->getRepository(Language::class)->find(1);
+        $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findAll();
         return $this->render('partner/index.html.twig', [
             'controller_name' => 'PartnerController',
+            'language' => $language,
+            'modules' => $modules,
         ]);
     }
 }
