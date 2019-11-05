@@ -34,7 +34,7 @@ class Category
         $this->topics = new ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -102,7 +102,7 @@ class Category
     {
         foreach($this->getTranslations() AS $translation) {
             if($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getTitle();//change this line if needed when copied
+                return $translation->getTitle();
             }
         }
     }

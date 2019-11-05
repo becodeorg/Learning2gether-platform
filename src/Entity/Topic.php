@@ -92,12 +92,6 @@ class Topic
         return $this->date;
     }
 
-    private function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
 
     public function getLanguage(): Language
     {

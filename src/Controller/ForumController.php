@@ -25,8 +25,9 @@ class ForumController extends AbstractController
         var_dump($_POST);
         //hard coded out of scope of current ticket
         $categoryID = $this->getDoctrine()->getRepository(Category::class)->find('1')->getId();
+
         $category = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('1')->getTitle();
-        //setting up the topic
+        //setting up the topic (hard coded)
         $categoryCurrent = $this->getDoctrine()->getRepository(Category::class)->find('1');
         $language = $this->getDoctrine()->getRepository(Language::class)->find('1');
 
@@ -52,10 +53,11 @@ class ForumController extends AbstractController
             ->add('postPost', SubmitType::class, array('label' => 'Post'))
             ->getForm();
 
+        //problem with twig inplementation for multiuse
         $upvote = $this->createFormBuilder()
             ->add('upvote', SubmitType::class, array('label' => 'Upvote'))
             ->getForm();
-
+        //logic for a topic
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['subjectTopic'])) {
              $topicOut = new Topic($_POST['form']['subjectTopic'], $language, $this->getUser(), $categoryCurrent);
             $topicOut->setCategory($categoryCurrent);
@@ -63,7 +65,7 @@ class ForumController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('forum', ['topic_id' => $topic->getId()]);
         }
-
+        // logic for a post
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['subjectPost'])) {
              $postOut = new Post($_POST['form']['subjectPost'], $this->getUser(), $topic);
              $postOut->setTopic($topic);

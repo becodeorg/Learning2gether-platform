@@ -26,8 +26,9 @@
     <h5>Posts</h5>
     {% for post in posts %}
         {{ post.subject }}<br>
-        {{ form_start(git upvote) }}
-        {{ form_end(upvote) }}<br>
+        <form action="#" method="post">
+            <button style="height: 30px; width: 30px;" type="submit" value="" ></button>
+        </form>
         {{ post.date.format('m-d-Y H:i:s') }}<br>
         <br>
     {% endfor %}
