@@ -16,7 +16,13 @@ class ModuleController extends AbstractController
      */
     public function module(): Response
     {
-        $moduleID = $_GET['module'] ?? null;
+        // check the $_GET['module'], has to be set, and an integer, if not, redirects back to portal
+        if (isset($_GET['module']) && ctype_digit((string)$_GET['module'])) {
+            $moduleID = $_GET['module'];
+        } else {
+            return $this->redirectToRoute('partner');
+        }
+
         $language = $this->getDoctrine()->getRepository(Language::class)->find(1);
         $module = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(['id' => $moduleID]);
         return $this->render('module/index.html.twig', [
