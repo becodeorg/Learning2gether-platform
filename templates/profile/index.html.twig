@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Wassup {{ user.name }}</h1>
+    <img src="{{ user.avatar }}" alt="avatar">
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Language: {{ user.language.name }}</p>
+    <div class="badges">
+        {% for badge in userBadges %}
+            <h2>{{ badge.result.0.name }}</h2>
+            <img src="{{ badge.result.0.image}}" alt="Badge" height="150" width="150">
+            <h3>{{ badge.result.0.description }}</h3>
+            <p>{{ badge.result.0.criteriaNarrative }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
