@@ -17,10 +17,14 @@ class CreateModuleTranslationType extends AbstractType
     {
         $builder
             ->add('title', null, [
+                'attr' => ['placeholder' => 'Title'],
+                'label' => false,
                 'required' => false,
                 'empty_data' => '',
             ])
             ->add('description', TextareaType::class, [
+                'attr' => ['placeholder' => 'Description'],
+                'label' => false,
                 'required' => false,
                 'empty_data' => '',
             ])
