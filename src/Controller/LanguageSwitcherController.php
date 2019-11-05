@@ -35,9 +35,7 @@ class LanguageSwitcherController extends AbstractController
      */
     public function index(Request $request)
     {
-//        var_dump($request);
-        $locale = $request -> getLocale(); // get locale, null? then get default locale
-        var_dump($locale);
+        var_dump($request -> getLocale()); // initial locale
 
         $switcher = $this->createForm(LanguageSwitcherType::class, null, [
             'action' => $this->generateUrl('language_switcher'),
@@ -46,50 +44,44 @@ class LanguageSwitcherController extends AbstractController
 
         $switcher->handleRequest($request);
 
-        $locale = mb_strtolower($_POST['language_switcher']['language']);
+        $newLanguageCode = mb_strtolower($_POST['language_switcher']['language']); // new lang code
+        $newLanguage = $this->getDoctrine()->getRepository(Language::class)
+            ->findOneBy(['code' => $newLanguageCode]);
+        var_dump($newLanguage->getCode());
 
         //if language is changed
         if ($switcher->isSubmitted() && $switcher->isValid()){
-            //check if the user logged in
-            if(!is_null($this->getUser())) { // if user is logged in
-                $user = $this->getUser(); // user is the person who logged in
-//                var_dump($user);
-//                $language = $user->getLanguage(); // create a new language entity and put in the variable
-//                var_dump($language);
-
-                // Find the new language with the submitted code (post) in database
-                $newLang = $this->getDoctrine()->getRepository(Language::class)
-                    ->findOneBy(['code' => $locale ]); // find the lang class with code '??'($_POST['language_switcher']['language']) and put it in the var $newLang
-//                var_dump($newLang);
-
-                // Update User's language with new chosen one
-                $user->setLanguage($newLang); // put the Language(with chosen lang) to the user's language
-//                var_dump($user);
+            // check first if the user logged in
+            // if user is logged in,
+            if(!is_null($this->getUser())) {
+                $user = $this->getUser();
+                // Update User's language in DB with new chosen one
+                $user->setLanguage($newLanguage);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
-
             } else {
-//                var_dump("not logged in!");
-//                var_dump($request); die;
-//                var_dump($request->cookies->all()); // Array of all cookie
-                setcookie('language', $locale);
+                setcookie('language', $newLanguageCode);
             }
+            var_dump($_SERVER['HTTP_REFERER']); // URL before
+            var_dump($request -> getLocale()); // locale before
+            // URL for redirecting (replace url(language code) with new one )
+            $pattern = '/\/[a-z]{2}\//';
+            preg_match($pattern, $_SERVER['HTTP_REFERER'], $matches);
+            var_dump($matches[0]); // is the language part in url include '/' ex) /en/
+            $newURL = (str_replace($matches[0],'/'.$newLanguageCode.'/' ,$_SERVER['HTTP_REFERER']));
+            var_dump($newURL); // URL later
+            // set the local with new code
+            $request->setLocale($newLanguageCode); // change locale in request as wel
+            var_dump($request->getLocale());//locale after
 
-            //die($_SERVER['HTTP_REFERER']);
-
-            return $this->redirectToRoute('app_portal', [
-                '_locale' => $locale // field from that form
-            ]);
+            return $this->redirect($newURL);
         }
 
-        //if not,
+        //if not
         return $this->redirectToRoute('app_portal', [
-            '_locale' => $locale
+            '_locale' => $request -> getLocale()
         ]);
-
-        //TODO : onchange - without submit button
-        //TODO : redirect to previous page with new language
 
     }
 
