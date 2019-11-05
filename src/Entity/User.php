@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,20 +37,12 @@ class User implements UserInterface
      */
     private $password = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password_hash;
+
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $is_partner;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $badgr_key;
+    private $is_partner = 0;//TODO default value of is_partner should be 0
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -70,6 +64,16 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $created;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
+     */
+    private $badges;
+
+    public function __construct()
+    {
+        $this->badges = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,7 +123,7 @@ class User implements UserInterface
 
     public function getUsername()
     {
-        return $this->getEmail();
+        return $this->username;
     }
 
     public function eraseCredentials()
@@ -205,4 +209,30 @@ class User implements UserInterface
 
         return $this;
     }
+    /**
+     * @return Collection|LearningModule[]
+     */
+    public function getBadges(): Collection
+    {
+        return $this->badges;
+    }
+
+    public function addBadge(LearningModule $badge): self
+    {
+        if (!$this->badges->contains($badge)) {
+            $this->badges[] = $badge;
+        }
+
+        return $this;
+    }
+
+    public function removeBadge(LearningModule $badge): self
+    {
+        if ($this->badges->contains($badge)) {
+            $this->badges->removeElement($badge);
+        }
+
+        return $this;
+    }
+
 }
