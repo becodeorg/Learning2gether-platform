@@ -17,20 +17,21 @@ class ChapterPageTranslation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="chapterPageTranslations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="text")
      */
-    private $content = [];
+    private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ChapterPage", inversedBy="language")
@@ -38,24 +39,33 @@ class ChapterPageTranslation
      */
     private $chapterPage;
 
+    public function __construct(Language $language, string $title, ChapterPage $chapterPage, string $content ='')
+    {
+        $this->language = $language;
+        $this->title = $title;
+        $this->content = $content;
+        $this->chapterPage = $chapterPage;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLanguage(): ?Language
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(?Language $language): self
+    public function setLanguage(Language $language): self
     {
         $this->language = $language;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -67,24 +77,26 @@ class ChapterPageTranslation
         return $this;
     }
 
-    public function getContent(): ?array
+    //a page can be created with just a title but without further content
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function setContent(?array $content): self
+    //a page can be created with just a title but without further content
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
         return $this;
     }
 
-    public function getChapterPage(): ?ChapterPage
+    public function getChapterPage(): ChapterPage
     {
         return $this->chapterPage;
     }
 
-    public function setChapterPage(?ChapterPage $chapterPage): self
+    public function setChapterPage(ChapterPage $chapterPage): self
     {
         $this->chapterPage = $chapterPage;
 

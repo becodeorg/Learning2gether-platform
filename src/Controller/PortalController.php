@@ -1,21 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Entity\Language;
 use App\Entity\LearningModule;
-use App\Entity\LearningModuleTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-
 
 class PortalController extends AbstractController
 {
     /**
-     * @Route("/{_locale}/portal", name="app_portal")
+     * @Route("/{_locale}/portal", name="portal")
      */
-    public function index()
+    public function index(): Response
     {
         $language = $this->getDoctrine()->getRepository(Language::class)->find(1);
         $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findBy(['isPublished' => true]);

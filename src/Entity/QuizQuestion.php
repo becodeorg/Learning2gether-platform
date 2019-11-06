@@ -39,10 +39,12 @@ class QuizQuestion
      */
     private $answers;
 
-    public function __construct()
+    public function __construct(int $questionNumber, Quiz $quiz)
     {
         $this->translations = new ArrayCollection();
         $this->answers = new ArrayCollection();
+        $this->questionNumber = $questionNumber;
+        $this->quiz = $quiz;
     }
 
     public function getId(): ?int
@@ -50,7 +52,7 @@ class QuizQuestion
         return $this->id;
     }
 
-    public function getQuestionNumber(): ?int
+    public function getQuestionNumber(): int
     {
         return $this->questionNumber;
     }
@@ -93,16 +95,9 @@ class QuizQuestion
         return $this;
     }
 
-    public function getQuiz(): ?Quiz
+    public function getQuiz(): Quiz
     {
         return $this->quiz;
-    }
-
-    public function setQuiz(?Quiz $quiz): self
-    {
-        $this->quiz = $quiz;
-
-        return $this;
     }
 
     /**
@@ -117,7 +112,6 @@ class QuizQuestion
     {
         if (!$this->answers->contains($answer)) {
             $this->answers[] = $answer;
-            $answer->setQuizQuestion($this);
         }
 
         return $this;
@@ -127,10 +121,6 @@ class QuizQuestion
     {
         if ($this->answers->contains($answer)) {
             $this->answers->removeElement($answer);
-            // set the owning side to null (unless already changed)
-            if ($answer->getQuizQuestion() === $this) {
-                $answer->setQuizQuestion(null);
-            }
         }
 
         return $this;

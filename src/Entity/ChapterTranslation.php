@@ -22,7 +22,7 @@ class ChapterTranslation
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="chapterTranslations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
@@ -33,12 +33,20 @@ class ChapterTranslation
      */
     private $chapter;
 
+    public function __construct(Language $language, string $title, Chapter $chapter)
+    {
+        $this->title = $title;
+        $this->language = $language;
+        $this->chapter = $chapter;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -50,24 +58,24 @@ class ChapterTranslation
         return $this;
     }
 
-    public function getLanguage(): ?Language
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(?Language $language): self
+    public function setLanguage(Language $language): self
     {
         $this->language = $language;
 
         return $this;
     }
 
-    public function getChapter(): ?Chapter
+    public function getChapter(): Chapter
     {
         return $this->chapter;
     }
 
-    public function setChapter(?Chapter $chapter): self
+    public function setChapter(Chapter $chapter): self
     {
         $this->chapter = $chapter;
 

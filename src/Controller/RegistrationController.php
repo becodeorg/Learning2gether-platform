@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Language;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthAuthenticator;
@@ -31,6 +32,13 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            $defaultLang= $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'EN']);
+            $user->setLanguage($defaultLang);
+
+            // TODO pass null to database to get automatic timestamp
+            $dateTime = new \DateTimeImmutable();
+            $user->setCreated($dateTime);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

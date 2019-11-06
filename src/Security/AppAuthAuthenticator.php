@@ -95,7 +95,7 @@ class AppAuthAuthenticator extends AbstractFormLoginAuthenticator
         setcookie('language', $userLangCode, time()+60*60*24*365, '/',$_SERVER['HTTP_HOST']);
 
         // put the user's preferred lang code to the route of Portal
-        return new RedirectResponse($this->urlGenerator->generate('app_portal', [
+        return new RedirectResponse($this->urlGenerator->generate('portal', [
             '_locale' => $userLangCode
         ]));
     }
