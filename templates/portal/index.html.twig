@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PortalController!{% endblock %}
+{% block title %}{{ 'greeting'|trans }} PortalController!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,7 +9,7 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>{{ 'greeting'|trans }} {{ controller_name }}! ✅</h1>
 
     <ul>Dummy Modules <!-- List of modules -->
         {% for module in modules %}
