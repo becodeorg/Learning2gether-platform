@@ -91,6 +91,9 @@ class AppAuthAuthenticator extends AbstractFormLoginAuthenticator
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $_SESSION['_sf2_attributes']['_security.last_username']]);
         $userLangCode =  mb_strtolower($user->getLanguage()->getCode());
 
+        $request->setLocale($userLangCode);
+        setcookie('language', $userLangCode, time()+60*60*24*365, '/',$_SERVER['HTTP_HOST']);
+
         // put the user's preferred lang code to the route of Portal
         return new RedirectResponse($this->urlGenerator->generate('app_portal', [
             '_locale' => $userLangCode
