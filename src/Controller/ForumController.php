@@ -21,8 +21,6 @@ class ForumController extends AbstractController
      */
     public function index()
     {
-        var_dump($_GET);
-        var_dump($_POST);
         $resultsFromPost = "";
         $resultsFromTopic = "";
         if (!isset($_GET['topic_id'])) {
@@ -72,7 +70,6 @@ class ForumController extends AbstractController
 
         //logic for searchbar
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['search'])) {
-          //  echo 'Results in posts<br>';
             $em = $this->getDoctrine()->getManager();
             $repo = $em->getRepository(Post::class);
             $query = $repo->createQueryBuilder('p')
@@ -80,13 +77,7 @@ class ForumController extends AbstractController
                 ->setParameter('keyword', '%'.$_POST['form']['keywords'].'%')
                 ->getQuery();
             $resultsFromPost = $query->getResult();
-        //  var_dump($resultsFromPost);
-          /*  foreach ($results as $word) {
-                echo $word->getSubject();
-                echo '<br>';
-            }*/
-           // echo "<br>";
-           // echo 'Results in topic<br>';
+
             $em = $this->getDoctrine()->getManager();
             $repo = $em->getRepository(Topic::class);
             $query = $repo->createQueryBuilder('p')
@@ -94,35 +85,6 @@ class ForumController extends AbstractController
                 ->setParameter('keyword', '%'.$_POST['form']['keywords'].'%')
                 ->getQuery();
             $resultsFromTopic = $query->getResult();
-
-           /* foreach ($results as $word) {
-                echo $word->getSubject();
-                echo '<br>';
-            }*/
-
-        /*    echo "<br>";
-
-           print_r(array(
-                'sql' => $query->getSQL(),
-            ));
-
-            echo "<br>";
-
-            print_r(array(
-                'parameters' => $query->getParameters()
-            ));
-
-
-            echo '<br><br><br>';
-            $repository = $this->getDoctrine()->getRepository(Post::class);
-            $query = $repository->createQueryBuilder('p')->getQuery();
-            $keywords = $query->getResult();
-            foreach ($keywords as $word) {
-                echo $word->getSubject();
-                echo '<br>';
-            }*/
-
-
         }
 
         //logic for a topic
@@ -141,8 +103,6 @@ class ForumController extends AbstractController
              $this->getDoctrine()->getManager()->flush();
              return $this->redirectToRoute('forum', ['topic_id' => $topic->getId()]);
         }
-
-
 
         return $this->render('forum/index.html.twig', [
             'controller_name' => 'ForumController',

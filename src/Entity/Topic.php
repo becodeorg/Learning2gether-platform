@@ -87,15 +87,13 @@ class Topic
         return $this;
     }
 
-    public function getDate(): \DateTimeInterface
+    public function getDate(): \DateTimeImmutable
     {
         return $this->date;
     }
 
-    /**
-     * @param mixed $date
-     */
-    public function setDate($date): void
+
+    public function setDate(\DateTimeImmutable $date): void
     {
         $this->date = $date;
     }
