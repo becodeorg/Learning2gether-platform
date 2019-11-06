@@ -22,6 +22,11 @@ class ChapterTranslation
     private $title;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -33,13 +38,29 @@ class ChapterTranslation
      */
     private $chapter;
 
-    public function __construct(Language $language, string $title, Chapter $chapter)
+    public function __construct(Language $language, string $title, string $description, Chapter $chapter)
     {
         $this->title = $title;
+        $this->description = $description;
         $this->language = $language;
         $this->chapter = $chapter;
     }
 
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
 
     public function getId(): ?int
     {

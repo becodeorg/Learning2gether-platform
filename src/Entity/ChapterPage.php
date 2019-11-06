@@ -24,7 +24,7 @@ class ChapterPage
     private $pageNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ChapterPageTranslation", mappedBy="chapterPage", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ChapterPageTranslation", mappedBy="chapterPage", orphanRemoval=true,cascade={"persist"})
      */
     private $translations;
 

@@ -35,7 +35,7 @@ class Chapter
     private $learningModule;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ChapterPage", mappedBy="chapter", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ChapterPage", mappedBy="chapter", orphanRemoval=true,cascade={"persist"})
      */
     private $pages;
 

@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Chapter;
+use App\Entity\ChapterPage;
+use App\Entity\ChapterPageTranslation;
+use App\Entity\Language;
 use App\Entity\LearningModule;
+use App\Form\CreateChapterPageType;
 use App\Form\EditChapterType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,10 +26,21 @@ class EditChapterController extends AbstractController
         $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($_GET['module']);
         $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($_GET['chapter']);
 
+        $pageCount = count($chapter->getPages());
+        $newChapterPage = new ChapterPage(++$pageCount, $chapter);
+
         $form = $this->createForm(EditChapterType::class, $chapter);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        $createPageBtn = $this->createForm(CreateChapterPageType::class, $newChapterPage);
+        $createPageBtn->handleRequest($request);
+
+        if ($createPageBtn->isSubmitted() && $createPageBtn->isValid()) {
+            $this->createAndAddNewPage($newChapterPage, $chapter);
+            $this->flushUpdatedChapter($chapter);
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $updatedChapter = $form->getData();
             $this->flushUpdatedChapter($updatedChapter);
         }
@@ -35,6 +50,7 @@ class EditChapterController extends AbstractController
             'module' => $module,
             'chapter' => $chapter,
             'form' => $form->createView(),
+            'createPage' => $createPageBtn->createView(),
         ]);
     }
 
@@ -46,5 +62,19 @@ class EditChapterController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($updatedChapter);
         $em->flush();
+    }
+
+    /**
+     * @param ChapterPage $newChapterPage
+     * @param Chapter|null $chapter
+     */
+    public function createAndAddNewPage(ChapterPage $newChapterPage, ?Chapter $chapter): void
+    {
+        $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+        foreach ($languageAll as $language) {
+            $chapterPageTranslation = new ChapterPageTranslation($language, $newChapterPage, '');
+            $newChapterPage->addTranslation($chapterPageTranslation);
+        }
+        $chapter->addPage($newChapterPage);
     }
 }

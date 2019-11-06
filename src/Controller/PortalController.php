@@ -14,6 +14,8 @@ class PortalController extends AbstractController
 {
     /**
      * @Route("/portal", name="portal")
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request): Response
     {
