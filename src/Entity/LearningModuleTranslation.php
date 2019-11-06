@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\AbstractType;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LearningModuleTranslationsRepository")
  */
-class LearningModuleTranslation
+class LearningModuleTranslation extends AbstractType
 {
     /**
      * @ORM\Id()
@@ -33,29 +35,35 @@ class LearningModuleTranslation
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="learningModuleTranslations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      * @ORM\JoinColumn(nullable=false)
      */
     private $language;
+
+    public function __construct(LearningModule $learningModule, Language $language)
+    {
+        $this->learningModule = $learningModule;
+        $this->language = $language;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLearningModule(): ?LearningModule
+    public function getLearningModule(): LearningModule
     {
         return $this->learningModule;
     }
 
-    public function setLearningModule(?LearningModule $learningModule): self
+    public function setLearningModule(LearningModule $learningModule): self
     {
         $this->learningModule = $learningModule;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): ?string // doesnt work without '?' -jan
     {
         return $this->title;
     }
@@ -67,7 +75,7 @@ class LearningModuleTranslation
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): ?string // doesnt work without '?' -jan
     {
         return $this->description;
     }
@@ -79,12 +87,12 @@ class LearningModuleTranslation
         return $this;
     }
 
-    public function getLanguage(): ?Language
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(?Language $language): self
+    public function setLanguage(Language $language): self
     {
         $this->language = $language;
 

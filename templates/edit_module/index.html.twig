@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EditModuleController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>Howdy Partner!</h1>
+        <hr>
+        <a href="{{ path('partner') }}">Back to Partner Zone</a>
+        <hr>
+        <h3>Currently editing: Module {{ module.id }}</h3>
+
+        {{ form_start(form) }}
+        {% for translation in form.translations %}
+            <hr>
+            <h2>{{ translation.vars.value.language.name }}</h2>
+            {{ form_row(translation) }}
+        {% endfor %}
+        <hr>
+        {{ form_row(form.edit) }}
+        {{ form_end(form) }}
+        <hr>
+        <h3>Chapters:</h3>
+        {% for chapter in module.chapters %}
+            <ul>
+                <li><a href="{{ path('edit_chapter', {module : module.id , chapter : chapter.id}) }}">Edit Chapter {{ chapter.chapterNumber }}</a></li>
+            </ul>
+        {% endfor %}
+        {{ form_start(addchapter) }}
+        {{ form_widget(addchapter) }}
+        {{ form_end(addchapter) }}
+
+    </div>
+{% endblock %}

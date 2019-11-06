@@ -20,19 +20,9 @@
     <div class="example-wrapper">
         <h1>Hello {{ controller_name }}! ✅</h1>
 
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at <code><a
-                            href="{{ '/var/www/l2g-platform/src/Controller/ModuleController.php'|file_link(0) }}">src/Controller/ModuleController.php</a></code>
-            </li>
-            <li>Your template at <code><a
-                            href="{{ '/var/www/l2g-platform/templates/module/index.html.twig'|file_link(0) }}">templates/module/index.html.twig</a></code>
-            </li>
-        </ul>
-
-        <span>Current Module: {{ module }}</span>
+        <span>Current Module: {{ module.getTitle(language) }}, description: {{ module.getDescription(language) }}</span>
         <hr>
-        <span><a href="{{ path('app_portal') }}">Back to Portal</a>
+        <span><a href="{{ path('portal') }}">Back to Portal</a>
 </span>
 
 

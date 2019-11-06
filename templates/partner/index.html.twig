@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Howdy Partner!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+
+        table td {
+            border: 1px solid black;
+            width: 500px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>Howdy Partner!</h1>
+        <hr>
+        <a href="{{ path('portal') }}">Back to Portal</a>
+
+        <hr>
+        <h2>Edit a module:</h2>
+        <h4>Showing all {{ language.name|lower }} modules</h4>
+        <table>
+            {% for module in modules %}
+                <tr>
+                    <td>
+                        <span><a href="{{ path('edit_module', { module : module.id }) }}">{{ module.title(language) }}</a></span><br>
+                        <ul>
+                            <li><span>isPublished: {{ module.isPublished ? 'true':'false' }}</span><br>
+                            <li><span>Chapters: {{ module.chapters|length }}</span><br>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <hr>
+        <a href="{{ path('create_module') }}">Create Module</a>
+
+    </div>
+{% endblock %}

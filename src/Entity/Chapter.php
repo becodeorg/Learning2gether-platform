@@ -24,7 +24,7 @@ class Chapter
     private $chapterNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ChapterTranslation", mappedBy="chapter", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ChapterTranslation", mappedBy="chapter", orphanRemoval=true ,cascade={"persist"})
      */
     private $translations;
 
@@ -45,10 +45,11 @@ class Chapter
      */
     private $quiz;
 
-    public function __construct()
+    public function __construct(LearningModule $learningModule)
     {
         $this->translations = new ArrayCollection();
         $this->pages = new ArrayCollection();
+        $this->learningModule = $learningModule;
     }
 
     public function getId(): ?int
@@ -56,7 +57,7 @@ class Chapter
         return $this->id;
     }
 
-    public function getChapterNumber(): ?int
+    public function getChapterNumber(): int
     {
         return $this->chapterNumber;
     }
@@ -99,16 +100,9 @@ class Chapter
         return $this;
     }
 
-    public function getLearningModule(): ?LearningModule
+    public function getLearningModule(): LearningModule
     {
         return $this->learningModule;
-    }
-
-    public function setLearningModule(?LearningModule $learningModule): self
-    {
-        $this->learningModule = $learningModule;
-
-        return $this;
     }
 
     /**
@@ -123,7 +117,6 @@ class Chapter
     {
         if (!$this->pages->contains($page)) {
             $this->pages[] = $page;
-            $page->setChapter($this);
         }
 
         return $this;
@@ -133,10 +126,6 @@ class Chapter
     {
         if ($this->pages->contains($page)) {
             $this->pages->removeElement($page);
-            // set the owning side to null (unless already changed)
-            if ($page->getChapter() === $this) {
-                $page->setChapter(null);
-            }
         }
 
         return $this;

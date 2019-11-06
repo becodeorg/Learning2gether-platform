@@ -29,19 +29,37 @@ class LearningModule
     private $badge;
 
     /**
-     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $translations;
+    private $image;
+    //link to the LM image on the server (for marketing prettifying purposes)
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true)
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
+    //defines the LM type, for example: the LM is for soft skills or hard skills
+
+    /**
+     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true,cascade={"persist"})
+     */
+    private $translations;
+    // cascade means a modules translations(titles and descriptions) can be inserted to the DB when their module is flushed. -jan
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
      */
     private $chapters;
 
-    public function __construct()
+    //default for isPublished is set to false
+    public function __construct(string $badge, string $image, string $type, bool $isPublished=false)
     {
         $this->translations = new ArrayCollection();
         $this->chapters = new ArrayCollection();
+        $this->badge = $badge;
+        $this->image = $image;
+        $this->type = $type;
+        $this->isPublished = $isPublished;
     }
 
     public function getId(): ?int
@@ -49,7 +67,12 @@ class LearningModule
         return $this->id;
     }
 
-    public function getIsPublished(): ?bool
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getIsPublished(): bool
     {
         return $this->isPublished;
     }
@@ -61,7 +84,7 @@ class LearningModule
         return $this;
     }
 
-    public function getBadge(): ?string
+    public function getBadge(): string
     {
         return $this->badge;
     }
@@ -73,9 +96,26 @@ class LearningModule
         return $this;
     }
 
-    /**
-     * @return Collection|LearningModuleTranslation[]
-     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function getType() : string
+    {
+        return $this->type;
+    }
+
+    public function setType($type): void
+    {
+        $this->type = $type;
+    }
+
     public function getTranslations(): Collection
     {
         return $this->translations;
@@ -106,8 +146,8 @@ class LearningModule
 
     public function getTitle(Language $language)
     {
-        foreach($this->getTranslations() AS $translation) {
-            if($translation->getLanguage()->getName() === $language->getName()) {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
                 return $translation->getTitle();//change this line if needed when copied
             }
         }
@@ -115,8 +155,8 @@ class LearningModule
 
     public function getDescription(Language $language)
     {
-        foreach($this->getTranslations() AS $translation) {
-            if($translation->getLanguage()->getName() === $language->getName()) {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
                 return $translation->getDescription();//change this line if needed when copied
             }
         }
@@ -134,7 +174,6 @@ class LearningModule
     {
         if (!$this->chapters->contains($chapter)) {
             $this->chapters[] = $chapter;
-            $chapter->setLearningModule($this);
         }
 
         return $this;
@@ -144,12 +183,16 @@ class LearningModule
     {
         if ($this->chapters->contains($chapter)) {
             $this->chapters->removeElement($chapter);
-            // set the owning side to null (unless already changed)
-            if ($chapter->getLearningModule() === $this) {
-                $chapter->setLearningModule(null);
             }
-        }
 
         return $this;
     }
+
+    //function to flag the module in order to show it requires more content before publishing
+    public function flagPage()
+    {
+        //TODO flesh out this function to do stuff, (that's a separate ticket)
+        //Same function for flagging/unflagging?
+    }
+
 }
