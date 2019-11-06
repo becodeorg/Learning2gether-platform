@@ -39,17 +39,8 @@ class EditModuleController extends AbstractController
         $chapterBtn = $this->createForm(CreateChapterType::class, $newChapter);
         $chapterBtn->handleRequest($request);
 
-        if ($chapterBtn->isSubmitted() && $chapterBtn->isValid()){
-            $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
-            foreach ($languageAll as $language) {
-                $emptyChapterTranslation = new ChapterTranslation($language, '', $newChapter);
-                $newChapter->addTranslation($emptyChapterTranslation);
-            }
-            $chapterCount = count($module->getChapters());
-            $newChapter->setChapterNumber(++$chapterCount);
-            $newQuiz = new Quiz();
-            $newChapter->setQuiz($newQuiz);
-            $module->addChapter($newChapter);
+        if ($chapterBtn->isSubmitted() && $chapterBtn->isValid()) {
+            $this->createAndAddChapter($newChapter, $module);
             $this->flushUpdatedModule($module);
         }
 
@@ -71,7 +62,7 @@ class EditModuleController extends AbstractController
      * @param $moduleID
      * @return LearningModule|object|null
      */
-    public function getModuleAndTranslations(int $moduleID) : LearningModule
+    public function getModuleAndTranslations(int $moduleID): LearningModule
     {
         // Preparing a module object for the form
         // Gets all languages from DB
@@ -90,6 +81,24 @@ class EditModuleController extends AbstractController
             }
         }
         return $module;
+    }
+
+    /**
+     * @param Chapter $newChapter
+     * @param LearningModule|null $module
+     */
+    public function createAndAddChapter(Chapter $newChapter, ?LearningModule $module): void
+    {
+        $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+        foreach ($languageAll as $language) {
+            $emptyChapterTranslation = new ChapterTranslation($language, '', $newChapter);
+            $newChapter->addTranslation($emptyChapterTranslation);
+        }
+        $chapterCount = count($module->getChapters());
+        $newChapter->setChapterNumber(++$chapterCount);
+        $newQuiz = new Quiz();
+        $newChapter->setQuiz($newQuiz);
+        $module->addChapter($newChapter);
     }
 
     /**
