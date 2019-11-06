@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PortalController extends AbstractController
 {
     /**
-     * @Route("/portal", name="portal")
+     * @Route("/{_locale}/portal", name="portal")
      */
     public function index(): Response
     {

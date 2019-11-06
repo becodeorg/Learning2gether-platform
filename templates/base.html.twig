@@ -6,6 +6,9 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <header>
+            {{ include('language_switcher/_switcher.html.twig') }} {# have switcherForm in the header of every page#}
+        </header>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
