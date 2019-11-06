@@ -24,6 +24,14 @@
     <hr>
     {{ form_row(form.edit) }}
     {{ form_end(form) }}
+    <hr>
+    <h3>Chapters:</h3>
+    {% for chapter in module.chapters %}
+        {{ 'cool' }}
+    {% endfor %}
+    {{ form_start(addchapter) }}
+    {{ form_widget(addchapter) }}
+    {{ form_end(addchapter) }}
 
 </div>
 {% endblock %}

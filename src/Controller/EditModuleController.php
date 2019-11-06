@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Chapter;
+use App\Entity\ChapterTranslation;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Entity\LearningModuleTranslation;
+use App\Entity\Quiz;
+use App\Form\CreateChapterType;
 use App\Form\EditModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,9 +32,26 @@ class EditModuleController extends AbstractController
         }
 
         $module = $this->getModuleAndTranslations($moduleID);
+        $newChapter = new Chapter($module);
 
         $form = $this->createForm(EditModuleType::class, $module);
         $form->handleRequest($request);
+        $chapterBtn = $this->createForm(CreateChapterType::class, $newChapter);
+        $chapterBtn->handleRequest($request);
+
+        if ($chapterBtn->isSubmitted() && $chapterBtn->isValid()){
+            $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+            foreach ($languageAll as $language) {
+                $emptyChapterTranslation = new ChapterTranslation($language, '', $newChapter);
+                $newChapter->addTranslation($emptyChapterTranslation);
+            }
+            $chapterCount = count($module->getChapters());
+            $newChapter->setChapterNumber(++$chapterCount);
+            $newQuiz = new Quiz();
+            $newChapter->setQuiz($newQuiz);
+            $module->addChapter($newChapter);
+            $this->flushUpdatedModule($module);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $updatedModule = $form->getData();
@@ -42,6 +63,7 @@ class EditModuleController extends AbstractController
             'controller_name' => 'EditModuleController',
             'module' => $module,
             'form' => $form->createView(),
+            'addchapter' => $chapterBtn->createView(),
         ]);
     }
 

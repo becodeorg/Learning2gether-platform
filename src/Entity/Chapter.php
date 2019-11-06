@@ -24,7 +24,7 @@ class Chapter
     private $chapterNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ChapterTranslation", mappedBy="chapter", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ChapterTranslation", mappedBy="chapter", orphanRemoval=true ,cascade={"persist"})
      */
     private $translations;
 
@@ -45,11 +45,10 @@ class Chapter
      */
     private $quiz;
 
-    public function __construct(int $chapterNumber, LearningModule $learningModule)
+    public function __construct(LearningModule $learningModule)
     {
         $this->translations = new ArrayCollection();
         $this->pages = new ArrayCollection();
-        $this->chapterNumber = $chapterNumber;
         $this->learningModule = $learningModule;
     }
 
