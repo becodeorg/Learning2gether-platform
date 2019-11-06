@@ -93,6 +93,12 @@ class Topic
     }
 
 
+    public function setDate(\DateTimeImmutable $date): void
+    {
+        $this->date = $date;
+    }
+
+
     public function getLanguage(): Language
     {
         return $this->language;
