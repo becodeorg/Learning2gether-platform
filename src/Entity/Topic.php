@@ -92,6 +92,14 @@ class Topic
         return $this->date;
     }
 
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date): void
+    {
+        $this->date = $date;
+    }
+
 
     public function getLanguage(): Language
     {

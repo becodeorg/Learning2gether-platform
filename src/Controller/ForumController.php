@@ -23,6 +23,12 @@ class ForumController extends AbstractController
     {
         var_dump($_GET);
         var_dump($_POST);
+        $resultsFromPost = "";
+        $resultsFromTopic = "";
+        if (!isset($_GET['topic_id'])) {
+            $_GET['topic_id'] = 1;
+        }
+
         //hard coded out of scope of current ticket
         $categoryID = $this->getDoctrine()->getRepository(Category::class)->find('1')->getId();
 
@@ -53,10 +59,72 @@ class ForumController extends AbstractController
             ->add('postPost', SubmitType::class, array('label' => 'Post'))
             ->getForm();
 
-        //problem with twig inplementation for multiuse
+        //fixme problem with twig inplementation for multiuse
         $upvote = $this->createFormBuilder()
             ->add('upvote', SubmitType::class, array('label' => 'Upvote'))
             ->getForm();
+
+        //searchbar
+        $searchbar = $this->createFormBuilder()
+            ->add('keywords', TextType::class)
+            ->add('search', SubmitType::class, array('label' => 'Search Now'))
+            ->getForm();
+
+        //logic for searchbar
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['search'])) {
+          //  echo 'Results in posts<br>';
+            $em = $this->getDoctrine()->getManager();
+            $repo = $em->getRepository(Post::class);
+            $query = $repo->createQueryBuilder('p')
+                ->where('p.subject LIKE :keyword')
+                ->setParameter('keyword', '%'.$_POST['form']['keywords'].'%')
+                ->getQuery();
+            $resultsFromPost = $query->getResult();
+        //  var_dump($resultsFromPost);
+          /*  foreach ($results as $word) {
+                echo $word->getSubject();
+                echo '<br>';
+            }*/
+           // echo "<br>";
+           // echo 'Results in topic<br>';
+            $em = $this->getDoctrine()->getManager();
+            $repo = $em->getRepository(Topic::class);
+            $query = $repo->createQueryBuilder('p')
+                ->where('p.subject LIKE :keyword')
+                ->setParameter('keyword', '%'.$_POST['form']['keywords'].'%')
+                ->getQuery();
+            $resultsFromTopic = $query->getResult();
+
+           /* foreach ($results as $word) {
+                echo $word->getSubject();
+                echo '<br>';
+            }*/
+
+        /*    echo "<br>";
+
+           print_r(array(
+                'sql' => $query->getSQL(),
+            ));
+
+            echo "<br>";
+
+            print_r(array(
+                'parameters' => $query->getParameters()
+            ));
+
+
+            echo '<br><br><br>';
+            $repository = $this->getDoctrine()->getRepository(Post::class);
+            $query = $repository->createQueryBuilder('p')->getQuery();
+            $keywords = $query->getResult();
+            foreach ($keywords as $word) {
+                echo $word->getSubject();
+                echo '<br>';
+            }*/
+
+
+        }
+
         //logic for a topic
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['subjectTopic'])) {
              $topicOut = new Topic($_POST['form']['subjectTopic'], $language, $this->getUser(), $categoryCurrent);
@@ -74,6 +142,8 @@ class ForumController extends AbstractController
              return $this->redirectToRoute('forum', ['topic_id' => $topic->getId()]);
         }
 
+
+
         return $this->render('forum/index.html.twig', [
             'controller_name' => 'ForumController',
             'categoryID' => $categoryID,
@@ -85,6 +155,9 @@ class ForumController extends AbstractController
             'post_now' => $postNow->createView(),
             'topic_now' => $topicNow->createView(),
             'upvote' => $upvote->createView(),
+            'searchbar' => $searchbar->createView(),
+            'resultsFromPost' => $resultsFromPost,
+            'resultsFromTopic' => $resultsFromTopic,
 
         ]);
     }

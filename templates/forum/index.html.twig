@@ -3,6 +3,21 @@
 {% block title %}L2G Forums{% endblock %}
 
 {% block body %}
+    {{ form_start(searchbar) }}
+    {{ form_end(searchbar) }}
+    <h5>Search results</h5>
+    <p>From Topics</p>
+    {% for results in resultsFromTopic %}
+    <a href="?topic_id={{ results.id }}">
+        {{ results.subject }}<br>
+    </a>
+    {% endfor %}
+    <p>From Posts</p>
+    {% for results in resultsFromPost %}
+    <a href="?topic_id={{ results.topic.id }}">
+        {{ results.subject }}<br>
+    </a>
+    {% endfor %}
 
 <h1>Forum</h1>
     <h2>Category ID</h2>
