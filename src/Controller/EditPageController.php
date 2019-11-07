@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ChapterPage;
+use Parsedown;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -36,6 +37,12 @@ class EditPageController extends AbstractController
             ->getForm();
 
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            var_dump($form->getData());
+            $parsedown = new ParseDown();
+            var_dump($parsedown->text($form->getData()['editor']));
+        }
 
         return $this->render('edit_page/index.html.twig', [
             'controller_name' => 'EditPageController',
