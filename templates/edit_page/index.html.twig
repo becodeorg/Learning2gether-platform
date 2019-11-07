@@ -23,6 +23,8 @@
             edit?</p>
         <hr>
         {{ form(form) }}
+        <hr>
+        <a href="{{ path('edit_chapter', {module : module.id , chapter : chapter.id}) }}">Back to chapter</a>
     </div>
 
     <!-- cdn for the beautiful markdown editor -->

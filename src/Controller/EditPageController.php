@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Chapter;
 use App\Entity\ChapterPage;
-use Parsedown;
+use App\Entity\ChapterPageTranslation;
+use App\Entity\Language;
+use App\Entity\LearningModule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +25,10 @@ class EditPageController extends AbstractController
     public function index(Request $request): Response
     {
         $page = $this->getDoctrine()->getRepository(ChapterPage::class)->find($_GET['page']);
-        $pageTl = $page->getTranslations()->getValues()[0]; // the 0 is the language id -1 (array) english hardcoded for now
+        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($_GET['chapter']);
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($chapter->getLearningModule());
+        $language = $this->getDoctrine()->getRepository(Language::class)->find(1); // only english hardcoded for now
+        $pageTl = $this->getDoctrine()->getRepository(ChapterPageTranslation::class)->findOneBy(['language' => $language, 'chapterPage' => $page]);
 
         $form = $this->createFormBuilder()
             ->add('title', TextType::class, [
@@ -39,9 +43,13 @@ class EditPageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            var_dump($form->getData());
-            $parsedown = new ParseDown();
-            var_dump($parsedown->text($form->getData()['editor']));
+            $pageTl->setTitle($form->getData()['title']);
+            $pageTl->setContent($form->getData()['editor']);
+            $pageTl->setId($pageTl->getId());
+            $page->addTranslation($pageTl);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($page);
+            $em->flush();
         }
 
         return $this->render('edit_page/index.html.twig', [
@@ -49,6 +57,8 @@ class EditPageController extends AbstractController
             'page' => $page,
             'pageTl' => $pageTl,
             'form' => $form->createView(),
+            'chapter' => $chapter,
+            'module' => $module,
         ]);
     }
 }
