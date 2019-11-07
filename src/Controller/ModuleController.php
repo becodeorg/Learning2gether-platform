@@ -35,7 +35,6 @@ class ModuleController extends AbstractController
             return $this->redirectToRoute('partner');
         }
 
-        $language = $this->getDoctrine()->getRepository(Language::class)->find(1);
         $module = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(['id' => $moduleID]);
         //$moduleBadge = $module->getBadge();
 

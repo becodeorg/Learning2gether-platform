@@ -142,4 +142,22 @@ class Chapter
 
         return $this;
     }
+
+    public function getTitle(Language $language)
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getTitle();//change this line if needed when copied
+            }
+        }
+    }
+
+    public function getDescription(Language $language)
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getDescription();//change this line if needed when copied
+            }
+        }
+    }
 }

@@ -22,6 +22,16 @@
 
         <span>Current Module: {{ module.getTitle(language) }}, description: {{ module.getDescription(language) }}</span>
         <hr>
+        <ul>
+            {% if module.chapters|length > 0 %}
+                {% for chapter in module.chapters %}
+                    <li>{{ chapter.getTitle(language)}} : {{ chapter.getDescription(language) }}
+                {% endfor %}
+            {% else %}
+                <li>no chapters yet!</li>
+            {% endif %}
+        </ul>
+        <hr>
         <span><a href="{{ path('portal') }}">Back to Portal</a>
 </span>
 

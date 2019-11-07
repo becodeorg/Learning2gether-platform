@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,10 +34,14 @@ class EditPageController extends AbstractController
 
         $form = $this->createFormBuilder()
             ->add('title', TextType::class, [
-                'data' => $pageTl->getTitle(), // ignore warning, it works
+                'data' => $pageTl->getTitle(),
+                'required' => false,
+                'empty_data' => '',
             ])
             ->add('editor', TextareaType::class, [
-                'data' => $pageTl->getContent(), // ignore warning, it works
+                'data' => $pageTl->getContent(),
+                'required' => false,
+                'empty_data' => '',
             ])
             ->add('submit_changes', SubmitType::class)
             ->getForm();
