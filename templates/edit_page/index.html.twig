@@ -3,13 +3,44 @@
 {% block title %}Hello EditPageController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-<div class="example-wrapper">
-    <h1>Howdy Partner!</h1>
-    <p>Here we want to edit a page's content using markdown. How do we let the user select/decide which language to edit?</p>
-</div>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+
+    <div class="example-wrapper">
+        <h1>Howdy Partner!</h1>
+        <p>Here we want to edit a page's content using markdown. How do we let the user select/decide which language to
+            edit?</p>
+        <hr>
+        {{ form(form) }}
+    </div>
+
+    <!-- cdn for the beautiful markdown editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+    <!-- js to create the editor -->
+    <script>
+
+        // create new editor, on default it binds itself to the first textarea on the page
+        let editor = new SimpleMDE();
+
+        // onchange function for the editor, for testing purposes
+        editor.codemirror.on("change", function(){
+            console.log(editor.value());
+        });
+
+    </script>
+
 {% endblock %}
