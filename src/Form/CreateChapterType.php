@@ -13,7 +13,7 @@ class CreateChapterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('add_chapter', SubmitType::class)
+            ->add('add_a_chapter', SubmitType::class)
         ;
     }
 

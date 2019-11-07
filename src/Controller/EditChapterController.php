@@ -23,26 +23,43 @@ class EditChapterController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($_GET['module']);
-        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($_GET['chapter']);
+        // check the $_GET vars, they have to be set, and integers, if not, redirects back to partner
+        if (isset($_GET['module'], $_GET['chapter']) && ctype_digit((string)$_GET['module']) && ctype_digit((string)$_GET['chapter'])) {
+            //get this Module
+            $moduleID = $_GET['module'];
+            $chapterID = $_GET['chapter'];
+        } else {
+            return $this->redirectToRoute('partner');
+        }
 
-        $pageCount = count($chapter->getPages());
-        $newChapterPage = new ChapterPage(++$pageCount, $chapter);
+        // find the current module and the current chapter
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
+        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($chapterID);
 
+        // Create translation form
         $form = $this->createForm(EditChapterType::class, $chapter);
         $form->handleRequest($request);
 
+        // make a new chapterPage for the form to generate
+        $pageCount = count($chapter->getPages());
+        $newChapterPage = new ChapterPage(++$pageCount, $chapter);
+
+        // Create form (button) to add a new page
         $createPageBtn = $this->createForm(CreateChapterPageType::class, $newChapterPage);
         $createPageBtn->handleRequest($request);
 
+        // check if the button was pressed
         if ($createPageBtn->isSubmitted() && $createPageBtn->isValid()) {
             $this->createAndAddNewPage($newChapterPage, $chapter);
             $this->flushUpdatedChapter($chapter);
+            // should it now redirect to the new page ?
         }
 
+        // check if the form was submitted
         if ($form->isSubmitted() && $form->isValid()) {
             $updatedChapter = $form->getData();
             $this->flushUpdatedChapter($updatedChapter);
+            return $this->redirectToRoute('edit_module', ['module' => $moduleID]);
         }
 
         return $this->render('edit_chapter/index.html.twig', [
