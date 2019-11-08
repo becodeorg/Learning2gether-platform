@@ -38,7 +38,7 @@ class ChapterTranslation
      */
     private $chapter;
 
-    public function __construct(Language $language, string $title, string $description, Chapter $chapter)
+    public function __construct(Language $language, Chapter $chapter, string $title='', string $description='')
     {
         $this->title = $title;
         $this->description = $description;

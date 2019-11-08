@@ -41,8 +41,7 @@ class EditChapterController extends AbstractController
         $form->handleRequest($request);
 
         // make a new chapterPage for the form to generate
-        $pageCount = count($chapter->getPages());
-        $newChapterPage = new ChapterPage(++$pageCount, $chapter);
+        $newChapterPage = $chapter->createNewPage();
 
         // Create form (button) to add a new page
         $createPageBtn = $this->createForm(CreateChapterPageType::class, $newChapterPage);
@@ -52,7 +51,7 @@ class EditChapterController extends AbstractController
         if ($createPageBtn->isSubmitted() && $createPageBtn->isValid()) {
             $this->createAndAddNewPage($newChapterPage, $chapter);
             $this->flushUpdatedChapter($chapter);
-            // should it now redirect to the new page ?
+            return $this->redirectToRoute('edit_page', ['chapter' => $chapter->getId(), 'page' => $newChapterPage->getId()]);
         }
 
         // check if the form was submitted
@@ -89,7 +88,7 @@ class EditChapterController extends AbstractController
     {
         $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
         foreach ($languageAll as $language) {
-            $chapterPageTranslation = new ChapterPageTranslation($language, $newChapterPage, '');
+            $chapterPageTranslation = new ChapterPageTranslation($language, $newChapterPage);
             $newChapterPage->addTranslation($chapterPageTranslation);
         }
         $chapter->addPage($newChapterPage);

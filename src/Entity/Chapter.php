@@ -160,4 +160,10 @@ class Chapter
             }
         }
     }
+
+    public function createNewPage(): ChapterPage
+    {
+        $pageCount = count($this->getPages());
+        return new ChapterPage(++$pageCount, $this);
+    }
 }

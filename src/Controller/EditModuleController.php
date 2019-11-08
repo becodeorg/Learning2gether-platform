@@ -91,7 +91,7 @@ class EditModuleController extends AbstractController
     {
         $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
         foreach ($languageAll as $language) {
-            $emptyChapterTranslation = new ChapterTranslation($language, '', '', $newChapter);
+            $emptyChapterTranslation = new ChapterTranslation($language, $newChapter);
             $newChapter->addTranslation($emptyChapterTranslation);
         }
         $chapterCount = count($module->getChapters());
