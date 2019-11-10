@@ -18,23 +18,19 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
-
         <span>Current Module: {{ module.getTitle(language) }}, description: {{ module.getDescription(language) }}</span>
         <hr>
+        <h3>Chapter List</h3>
         <ul>
             {% if module.chapters|length > 0 %}
                 {% for chapter in module.chapters %}
-                    <li>{{ chapter.getTitle(language)}} : {{ chapter.getDescription(language) }}
+                    <li>{{ chapter.getTitle(language) }} : {{ chapter.getDescription(language) }}
                 {% endfor %}
             {% else %}
                 <li>no chapters yet!</li>
             {% endif %}
         </ul>
         <hr>
-        <span><a href="{{ path('portal') }}">Back to Portal</a>
-</span>
-
-
+        <a href="{{ path('portal') }}">Back to Portal</a>
     </div>
 {% endblock %}

@@ -26,10 +26,21 @@ class EditPageController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $page = $this->getDoctrine()->getRepository(ChapterPage::class)->find($_GET['page']);
-        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($_GET['chapter']);
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($chapter->getLearningModule());
         $language = $this->getDoctrine()->getRepository(Language::class)->find(1); // only english hardcoded for now
+        // dropdown menu for language select ??
+
+        // check the $_GET vars, they have to be set, and integers, if not, redirects back to partner
+        if (isset($_GET['page'], $_GET['chapter']) && ctype_digit((string)$_GET['page']) && ctype_digit((string)$_GET['chapter'])) {
+            //get this Module
+            $pageID = $_GET['page'];
+            $chapterID = $_GET['chapter'];
+        } else {
+            return $this->redirectToRoute('partner');
+        }
+
+        $page = $this->getDoctrine()->getRepository(ChapterPage::class)->find($pageID);
+        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($chapterID);
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($chapter->getLearningModule());
         $pageTl = $this->getDoctrine()->getRepository(ChapterPageTranslation::class)->findOneBy(['language' => $language, 'chapterPage' => $page]);
 
         $form = $this->createFormBuilder()
@@ -51,11 +62,11 @@ class EditPageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $pageTl->setTitle($form->getData()['title']);
             $pageTl->setContent($form->getData()['editor']);
-            $pageTl->setId($pageTl->getId());
             $page->addTranslation($pageTl);
             $em = $this->getDoctrine()->getManager();
             $em->persist($page);
             $em->flush();
+            return $this->redirectToRoute('edit_chapter', ['module' => $module->getId(), 'chapter' => $chapterID]);
         }
 
         return $this->render('edit_page/index.html.twig', [
