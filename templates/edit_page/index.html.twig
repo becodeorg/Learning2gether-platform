@@ -37,6 +37,17 @@
         // create new editor, on default it binds itself to the first textarea on the page
         let editor = new SimpleMDE();
 
+        // the next few lines remove their guide manual from the toolbar so we can add our own personal one.
+        editor.gui.toolbar.remove();
+        editor.toolbar.splice(editor.toolbar.length - 2 , 2);
+        editor.toolbar.push({
+            name : "Link",
+            action: "http://google.com",
+            className : "fa fa-question-circle",
+            title : "Our Markdown Guide",
+        });
+        editor.createToolbar();
+
         // onchange function for the editor, for testing purposes
         editor.codemirror.on("change", function(){
             console.log(editor.value());

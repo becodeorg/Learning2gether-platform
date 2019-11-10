@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Domain\Badgr;
+use App\Domain\MdParser;
 use App\Entity\LearningModule;
 use App\Entity\Language;
+use Parsedown;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +38,8 @@ class ModuleController extends AbstractController
         //user = logged in user
         $user = $this->getUser();
 
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->findOneBy(['id' => $moduleID]);
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
+
         //$moduleBadge = $module->getBadge();
 
         //when module completed, give badge
@@ -50,10 +53,16 @@ class ModuleController extends AbstractController
             $entityManager->flush();
         }
 
+        // create the classes needed for parsing markdown to html, and finding and replacing yt links with an iplayer
+        $parsedown = new Parsedown();
+        $mdparser = new MdParser();
+
         return $this->render('module/index.html.twig', [
             'controller_name' => 'ModuleController',
             'language' => $language,
             'module' => $module,
+            'parsedown' => $parsedown,
+            'mdparser' => $mdparser,
         ]);
     }
 }
