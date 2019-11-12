@@ -8,19 +8,23 @@ use App\Entity\Language;
 use App\Entity\Post;
 use App\Entity\Topic;
 use App\Entity\User;
+use App\Form\UpvoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Tests\Fixtures\FooBundle\Controller\OptionalArgumentsController;
 
 class ForumController extends AbstractController
 {
+
     /**
-     * @Route("/forum", name="forum")
+     * @Route("/forum/topic/{topic}", name="forum", requirements={"topic"="\d+"})
      */
-    public function index()
+    public function index(Topic $topic)
     {
+        var_dump($_POST);
         $resultsFromPost = "";
         $resultsFromTopic = "";
         if (!isset($_GET['topic_id'])) {
@@ -39,8 +43,8 @@ class ForumController extends AbstractController
         $topics = $this->getDoctrine()->getRepository(Topic::class)->findAll();
 
         //display the current topic by Getter
-        $topic = $this->getDoctrine()->getRepository(Topic::class)->find($_GET['topic_id']);
-        $topicDate = $this->getDoctrine()->getRepository(Topic::class)->find($_GET['topic_id'])->getDate()->format('Y-m-d H:i:s');;
+        //$topic = $this->getDoctrine()->getRepository(Topic::class)->find($_GET['topic_id']);
+        $topicDate = $topic->getDate()->format('Y-m-d H:i:s');;
 
         //small form to post topic
         $topicNow = $this->createFormBuilder()
@@ -57,10 +61,16 @@ class ForumController extends AbstractController
             ->add('postPost', SubmitType::class, array('label' => 'Post'))
             ->getForm();
 
-        //fixme problem with twig inplementation for multiuse
-        $upvote = $this->createFormBuilder()
-            ->add('upvote', SubmitType::class, array('label' => 'Upvote'))
-            ->getForm();
+        $upvoteForms = [];
+        foreach ($posts AS $post) {
+            $upvoteForms[$post->getId()] = $this->createForm(
+                UpvoteType::class, [
+                    'post_id' => $post->getId()
+                ],[
+                    'action' => $this->generateUrl('upvote'),
+                ]
+            )->createView();
+        }
 
         //searchbar
         $searchbar = $this->createFormBuilder()
@@ -68,13 +78,14 @@ class ForumController extends AbstractController
             ->add('search', SubmitType::class, array('label' => 'Search Now'))
             ->getForm();
 
+
         //logic for searchbar
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['search'])) {
             $em = $this->getDoctrine()->getManager();
             $repo = $em->getRepository(Post::class);
             $query = $repo->createQueryBuilder('p')
                 ->where('p.subject LIKE :keyword')
-                ->setParameter('keyword', '%'.$_POST['form']['keywords'].'%')
+                ->setParameter('keyword', '%' . $_POST['form']['keywords'] . '%')
                 ->getQuery();
             $resultsFromPost = $query->getResult();
 
@@ -82,27 +93,28 @@ class ForumController extends AbstractController
             $repo = $em->getRepository(Topic::class);
             $query = $repo->createQueryBuilder('p')
                 ->where('p.subject LIKE :keyword')
-                ->setParameter('keyword', '%'.$_POST['form']['keywords'].'%')
+                ->setParameter('keyword', '%' . $_POST['form']['keywords'] . '%')
                 ->getQuery();
             $resultsFromTopic = $query->getResult();
         }
 
         //logic for a topic
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['subjectTopic'])) {
-             $topicOut = new Topic($_POST['form']['subjectTopic'], $language, $this->getUser(), $categoryCurrent);
+            $topicOut = new Topic($_POST['form']['subjectTopic'], $language, $this->getUser(), $categoryCurrent);
             $topicOut->setCategory($categoryCurrent);
             $this->getDoctrine()->getManager()->persist($topicOut);
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('forum', ['topic_id' => $topic->getId()]);
+            return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
         }
         // logic for a post
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['subjectPost'])) {
-             $postOut = new Post($_POST['form']['subjectPost'], $this->getUser(), $topic);
-             $postOut->setTopic($topic);
-             $this->getDoctrine()->getManager()->persist($postOut);
-             $this->getDoctrine()->getManager()->flush();
-             return $this->redirectToRoute('forum', ['topic_id' => $topic->getId()]);
+            $postOut = new Post($_POST['form']['subjectPost'], $this->getUser(), $topic);
+            $postOut->setTopic($topic);
+            $this->getDoctrine()->getManager()->persist($postOut);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
         }
+
 
         return $this->render('forum/index.html.twig', [
             'controller_name' => 'ForumController',
@@ -114,11 +126,44 @@ class ForumController extends AbstractController
             'posts' => $posts,
             'post_now' => $postNow->createView(),
             'topic_now' => $topicNow->createView(),
-            'upvote' => $upvote->createView(),
+            'upvotes' => $upvoteForms,
             'searchbar' => $searchbar->createView(),
             'resultsFromPost' => $resultsFromPost,
             'resultsFromTopic' => $resultsFromTopic,
 
+
         ]);
+    }
+
+
+    /**
+     * @Route("/forum/upvote", name="upvote")
+     */
+    public function upvote(Request $request)
+    {
+        $form = $this->createForm(UpvoteType::class);
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->redirectToRoute('home');
+        }
+
+        /** @var Post $post */
+        $post = $this->getDoctrine()->getManager()->getRepository(Post::Class)->findOneBy(['id' => $form->get('post_id')->getData()]);
+
+        if ($post === null) {
+            $this->addFlash('error', 'This post does not exist!');
+            return $this->redirectToRoute('home');
+        }
+
+        if ($post->getUsers()->contains($this->getUser())) {
+            $this->addFlash('error', 'You already voted!');
+        } else {
+            $post->addUser($this->getUser());
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Your vote was registered!');
+        }
+
+        return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
     }
 }

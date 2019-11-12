@@ -26,9 +26,9 @@
     {{ category }}
     <h4>All Topics</h4>
     {% for topic in topics %}
-        <a href="?topic_id={{ topic.id }}">
+        <a href="{{ path('forum', {'topic': topic.id}) }}">
             {{ topic.subject }}<br>
-            {{ topic.date.format('m-d-Y H:i:s') }}<br>
+            {{  topic.date.format('m-d-Y H:i:s') }}<br>
         </a>
         <br>
     {% endfor %}
@@ -39,11 +39,20 @@
     {{ topic }}
     {{ topic_date }}
     <h5>Posts</h5>
+
     {% for post in posts %}
+        {% set current_post_id = post.id %}
+        {% set arrayUsers = post.users %}
         {{ post.subject }}<br>
-        <form action="#" method="post">
-            <button style="height: 30px; width: 60px;" type="submit" name="upvote" value=""  >Upvote</button>
-        </form>
+        {{ form_start(upvotes[post.id]) }}
+        <p>{{ arrayUsers|length }} users have upvoted on this post</p>
+        {% if arrayUsers|length > 0 %}
+            {% for user in arrayUsers|slice(0,5) %}
+                <p>{{ user.username }}</p>
+        {% endfor %}
+        {% endif %}
+        <p>Current Post ID: {{ current_post_id }}</p>
+        {{ form_end(upvotes[post.id]) }}
         {{ post.date.format('m-d-Y H:i:s') }}<br>
         <br>
     {% endfor %}
@@ -53,3 +62,5 @@
     {{ form_end(post_now) }}
 
 {% endblock %}
+
+

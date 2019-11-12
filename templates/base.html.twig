@@ -6,6 +6,18 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            {% if type == 'error' %}
+                <p style="color: red;">{{ message }}</p>
+            {% endif %}
+            {% if type == 'success' %}
+                <p style="color: green;">{{ message }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
