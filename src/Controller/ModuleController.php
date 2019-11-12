@@ -20,6 +20,29 @@ class ModuleController extends AbstractController
         //initialise badgr object
         $badgrObj = new Badgr;
 
+        function getSession(Badgr $badgrObj){
+            //check if we already have refreshtoken
+            if(isset($_SESSION['refreshToken'])){
+                $refreshToken = $_SESSION['refreshToken'];
+                $badgrObj->getTokenData($refreshToken);
+            }
+            //if we don't, do the initial authentication to get it
+            else{
+                //this getPassword is so I don't reveal my personal pass, we use my (Tim) account for badgr atm
+                $password = $badgrObj->getPassword();
+                $badgrObj->initialise($password);
+            }
+        }
+
+        function getTokens(Badgr $badgrObj){
+            $accessToken = $_SESSION['accessToken'];
+            $refreshToken = $_SESSION['refreshToken'];
+        }
+
+        getSession($badgrObj);
+        getTokens($badgrObj);
+
+
         //user = logged in user
         $user = $this->getUser();
 
@@ -43,7 +66,7 @@ class ModuleController extends AbstractController
         $completed = false;
         if($completed === true){
             //add badge from this module to user
-            $badgrObj->addBadgeToUser($module, $user);
+            $badgrObj->addBadgeToUser($module, $user, $accessToken);
             $user->addBadge($module);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

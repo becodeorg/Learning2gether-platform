@@ -10,7 +10,11 @@
 
 <div class="example-wrapper">
     <h1>Wassup {{ user.name }}</h1>
-    <img src="{{ user.avatar }}" alt="avatar">
+    <img src="{{ asset('uploads/') ~ user.avatar }}" alt="avatar">
+    {{ form_start(profileForm) }}
+        {{ form_row(profileForm.avatar) }}
+        <button class="btn">Change avatar</button>
+    {{ form_end(profileForm) }}
     <p>Username: {{ user.username }}</p>
     <p>Email: {{ user.email }}</p>
     <p>Language: {{ user.language.name }}</p>
