@@ -28,7 +28,7 @@
                      {% for page in chapter.pages %}
                          <div style="border: 1px solid red">
                          {% set html = parsedown.text(page.translations[0].content) %}
-                             {{ mdparser.youtubeParser(html) | raw }}
+                             {{ html | raw }}
                          </div>
                          {% endfor %}
                 {% endfor %}
