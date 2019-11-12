@@ -55,14 +55,12 @@ class ModuleController extends AbstractController
 
         // create the classes needed for parsing markdown to html, and finding and replacing yt links with an iplayer
         $parsedown = new Parsedown();
-        $mdparser = new MdParser();
 
         return $this->render('module/index.html.twig', [
             'controller_name' => 'ModuleController',
             'language' => $language,
             'module' => $module,
             'parsedown' => $parsedown,
-            'mdparser' => $mdparser,
         ]);
     }
 }
