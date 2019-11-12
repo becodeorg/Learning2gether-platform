@@ -24,12 +24,8 @@ class ForumController extends AbstractController
      */
     public function index(Topic $topic)
     {
-        var_dump($_POST);
         $resultsFromPost = "";
         $resultsFromTopic = "";
-        if (!isset($_GET['topic_id'])) {
-            $_GET['topic_id'] = 1;
-        }
 
         //hard coded out of scope of current ticket
         $categoryID = $this->getDoctrine()->getRepository(Category::class)->find('1')->getId();
@@ -112,7 +108,7 @@ class ForumController extends AbstractController
             $postOut->setTopic($topic);
             $this->getDoctrine()->getManager()->persist($postOut);
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
+            return $this->redirectToRoute('forum', ['topic' => $topic->getId()]);
         }
 
 
@@ -145,7 +141,7 @@ class ForumController extends AbstractController
         $form->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
         }
 
         /** @var Post $post */
@@ -153,7 +149,7 @@ class ForumController extends AbstractController
 
         if ($post === null) {
             $this->addFlash('error', 'This post does not exist!');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
         }
 
         if ($post->getUsers()->contains($this->getUser())) {

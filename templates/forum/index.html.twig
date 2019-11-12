@@ -8,22 +8,26 @@
     <h5>Search results</h5>
     <p>From Topics</p>
     {% for results in resultsFromTopic %}
-    <a href="?topic_id={{ results.id }}">
+    <a href="{{ path('forum', {'topic': results.id}) }}">
         {{ results.subject }}<br>
     </a>
     {% endfor %}
     <p>From Posts</p>
     {% for results in resultsFromPost %}
-    <a href="?topic_id={{ results.topic.id }}">
+    <a href="{{ path('forum', {'topic': results.topic.id}) }}">
         {{ results.subject }}<br>
     </a>
     {% endfor %}
 
 <h1>Forum</h1>
+
+
     <h2>Category ID</h2>
     {{ categoryID }}
     <h3>Category</h3>
     {{ category }}
+
+
     <h4>All Topics</h4>
     {% for topic in topics %}
         <a href="{{ path('forum', {'topic': topic.id}) }}">
@@ -32,14 +36,16 @@
         </a>
         <br>
     {% endfor %}
+
     <h4>Add New Topic</h4>
     {{ form_start(topic_now) }}
     {{ form_end(topic_now) }}
     <h4>Current Topic</h4>
     {{ topic }}
     {{ topic_date }}
-    <h5>Posts</h5>
 
+
+    <h5>Posts</h5>
     {% for post in posts %}
         {% set current_post_id = post.id %}
         {% set arrayUsers = post.users %}
