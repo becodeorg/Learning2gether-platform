@@ -84,11 +84,16 @@ class PasswordResetController extends AbstractController
                 return  $this->redirect($_SERVER['HTTP_REFERER']);
             }
 
+            //step2 : find exact that token from DB (using selector)
 
-
-            $entityManager = $this->getDoctrine()->getManager();
-
-            //TODO step2 : find exact that token from DB (using selector)
+            $token = $this->getDoctrine()->getRepository(PwdResetToken::class)->findOneBy(['selector' => $selector]);
+            if(!$token){
+                $this->addFlash(
+                    'info',
+                    'invalid request, please request new mail to reset your password!'
+                );
+                return $this->render('password_reset/index.html.twig');
+            }
 
             //TODO step3 : check time (token is expired or not), validator
 
