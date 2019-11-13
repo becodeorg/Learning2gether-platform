@@ -7,6 +7,7 @@ use App\Entity\LearningModule;
 use App\Form\EditProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
@@ -14,7 +15,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         //initialise badgr object
         $badgrObj = new Badgr;
@@ -44,7 +45,7 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         //For some unholy reason this is required for the rest to work
-        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find("1");
+        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find('1');
         $user->addBadge($testModule);
 
         //get all badges from user
@@ -54,7 +55,7 @@ class ProfileController extends AbstractController
         $badgeKeys = [];
         foreach ($badges as &$badgeData) {
             $badgeKey = $badgeData->getBadge();
-            array_push($badgeKeys, $badgeKey);
+            $badgeKeys[] = $badgeKey;
         }
         //pass userBadges with keys and the user to the getAllBadges method
         $userBadges = $badgrObj->getAllBadges($badgeKeys, $user, $accessToken);
@@ -70,7 +71,7 @@ class ProfileController extends AbstractController
             //get upload dir
             $uploads_directory = $this->getParameter('uploads_directory');
             //hash unique new avatar
-            $filename = md5(uniqid()) . "." . $avatar->guessExtension();
+            $filename = md5(uniqid('', true)) . '.' . $avatar->guessExtension();
             //put new avatar in upload dir
             $avatar->move(
                 $uploads_directory,
@@ -84,7 +85,7 @@ class ProfileController extends AbstractController
             $entityManager->flush();
 
             //delete old avatar from upload dir
-            unlink($uploads_directory."/".$deleteFile);
+            unlink($uploads_directory. '/' .$deleteFile);
         }
 
         //var_dump($userBadges[0]['result']);
