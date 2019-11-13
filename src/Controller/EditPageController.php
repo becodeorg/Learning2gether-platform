@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Chapter;
 use App\Entity\ChapterPage;
 use App\Entity\ChapterPageTranslation;
+use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,6 +70,8 @@ class EditPageController extends AbstractController
             return $this->redirectToRoute('edit_chapter', ['module' => $module->getId(), 'chapter' => $chapterID]);
         }
 
+        $imagesAll = $this->getDoctrine()->getRepository(Image::class)->findAll();
+
         return $this->render('edit_page/index.html.twig', [
             'controller_name' => 'EditPageController',
             'page' => $page,
@@ -76,6 +79,7 @@ class EditPageController extends AbstractController
             'form' => $form->createView(),
             'chapter' => $chapter,
             'module' => $module,
+            'imagesAll' => $imagesAll,
         ]);
     }
 }

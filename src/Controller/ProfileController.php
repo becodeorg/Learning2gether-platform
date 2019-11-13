@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Domain\Badgr;
+use App\Entity\Image;
 use App\Entity\LearningModule;
 use App\Form\EditProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,47 +19,49 @@ class ProfileController extends AbstractController
     public function index(Request $request): Response
     {
         //initialise badgr object
-        $badgrObj = new Badgr;
-
-        function getSession(Badgr $badgrObj){
-            //check if we already have refreshtoken
-            if(isset($_SESSION['refreshToken'])){
-                $refreshToken = $_SESSION['refreshToken'];
-                $badgrObj->getTokenData($refreshToken);
-            }
-            //if we don't, do the initial authentication to get it
-            else{
-                //this getPassword is so I don't reveal my personal pass, we use my (Tim) account for badgr atm
-                $password = $badgrObj->getPassword();
-                $badgrObj->initialise('loderunner666');
-            }
-        }
-
-        function getAccessToken(Badgr $badgrObj){
-            $accessToken = $_SESSION['accessToken'];
-            return $accessToken;
-        }
-
-        getSession($badgrObj);
-        $accessToken = getAccessToken($badgrObj);
-
+//        $badgrObj = new Badgr;
+//
+//        function getSession(Badgr $badgrObj){
+//            //check if we already have refreshtoken
+//            if(isset($_SESSION['refreshToken'])){
+//                $refreshToken = $_SESSION['refreshToken'];
+//                $badgrObj->getTokenData($refreshToken);
+//            }
+//            //if we don't, do the initial authentication to get it
+//            else{
+//                //this getPassword is so I don't reveal my personal pass, we use my (Tim) account for badgr atm
+//                $password = $badgrObj->getPassword();
+//                $badgrObj->initialise('loderunner666');
+//            }
+//        }
+//
+//        function getAccessToken(Badgr $badgrObj){
+//            $accessToken = $_SESSION['accessToken'];
+//            return $accessToken;
+//        }
+//
         $user = $this->getUser();
-
-        //For some unholy reason this is required for the rest to work
-        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find('1');
-        $user->addBadge($testModule);
-
-        //get all badges from user
-        $badgesData = $user->getBadges();
-        $badges = $badgesData->getSnapshot();
-        //put all badge keys in userBadges
-        $badgeKeys = [];
-        foreach ($badges as &$badgeData) {
-            $badgeKey = $badgeData->getBadge();
-            $badgeKeys[] = $badgeKey;
-        }
-        //pass userBadges with keys and the user to the getAllBadges method
-        $userBadges = $badgrObj->getAllBadges($badgeKeys, $user, $accessToken);
+//
+//        getSession($badgrObj);
+//        $accessToken = getAccessToken($badgrObj);
+//
+//
+//
+//        //For some unholy reason this is required for the rest to work
+//        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find('1');
+//        $user->addBadge($testModule);
+//
+//        //get all badges from user
+//        $badgesData = $user->getBadges();
+//        $badges = $badgesData->getSnapshot();
+//        //put all badge keys in userBadges
+//        $badgeKeys = [];
+//        foreach ($badges as &$badgeData) {
+//            $badgeKey = $badgeData->getBadge();
+//            $badgeKeys[] = $badgeKey;
+//        }
+//        //pass userBadges with keys and the user to the getAllBadges method
+//        $userBadges = $badgrObj->getAllBadges($badgeKeys, $user, $accessToken);
 
         $form = $this->createForm(EditProfileType::class, $user);
         $form->handleRequest($request);
@@ -72,6 +75,14 @@ class ProfileController extends AbstractController
             $uploads_directory = $this->getParameter('uploads_directory');
             //hash unique new avatar
             $filename = md5(uniqid('', true)) . '.' . $avatar->guessExtension();
+            $originalPath = pathinfo($request->files->get('edit_profile')['avatar']);
+
+            $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'id' => $user->getId()]);
+            $avatarImage->setName($avatar->getClientOriginalName());
+            $avatarImage->setType('avatar');
+            $avatarImage->setSrc($filename);
+            $user->addImage($avatarImage);
+
             //put new avatar in upload dir
             $avatar->move(
                 $uploads_directory,
@@ -92,8 +103,8 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
-            'badgeKeys' => $badgeKeys,
-            'userBadges' => $userBadges,
+//            'badgeKeys' => $badgeKeys,
+//            'userBadges' => $userBadges,
             'user' => $user,
             'profileForm' => $form->createView(),
         ]);

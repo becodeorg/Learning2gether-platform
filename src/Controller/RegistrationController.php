@@ -6,6 +6,7 @@ use App\Entity\Language;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthAuthenticator;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,13 +38,12 @@ class RegistrationController extends AbstractController
             $user->setLanguage($defaultLang);
 
             // TODO pass null to database to get automatic timestamp
-            $dateTime = new \DateTimeImmutable();
+            $dateTime = new DateTimeImmutable();
             $user->setCreated($dateTime);
 
             $avatar = $request->files->get('registration_form')['avatar'];
             $uploads_directory = $this->getParameter('uploads_directory');
-            var_dump($avatar);
-            $filename = md5(uniqid()) . "." . $avatar->guessExtension();
+            $filename = md5(uniqid('', true)) . '.' . $avatar->guessExtension();
             $avatar->move(
                 $uploads_directory,
                 $filename
