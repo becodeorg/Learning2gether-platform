@@ -75,10 +75,14 @@ class PasswordResetController extends AbstractController
             $pwdRepeat = $_POST['reset_password']['passwordRepeat'];
             $currentDate = date("U"); //TODO recheck the correct type (string, int)
 
-            die;
-
-            //TODO step1 : Input validation (password not empty? are they same?)
-            if($_password)
+            //step1 : Input validation (password not empty? are they same?)
+            if(!$pwd || !$pwdRepeat || ($pwd!=$pwdRepeat)){
+                $this->addFlash(
+                    'info',
+                    'Enter your password correctly!'
+                );
+                return  $this->redirect($_SERVER['HTTP_REFERER']);
+            }
 
 
 
