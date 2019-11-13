@@ -11,13 +11,6 @@
             {{ include('language_switcher/_switcher.html.twig') }} {# have switcherForm in the header of every page#}
             {{ 'language test' | trans }}
         </header>
-        <nav>
-            <ul>
-                <li><a href="{{ path('index') }}">Home</a></li>
-                <li><a href="{{ path('module') }}">Modules</a></li>
-                <li><a href="{{ path('profile') }}">Profile</a></li>
-            </ul>
-        </nav>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
