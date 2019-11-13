@@ -81,8 +81,6 @@ class User implements UserInterface
      */
     private $upvote;
 
-   
-      
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
      */
