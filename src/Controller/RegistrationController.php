@@ -40,6 +40,16 @@ class RegistrationController extends AbstractController
             $dateTime = new \DateTimeImmutable();
             $user->setCreated($dateTime);
 
+            $avatar = $request->files->get('registration_form')['avatar'];
+            $uploads_directory = $this->getParameter('uploads_directory');
+            var_dump($avatar);
+            $filename = md5(uniqid()) . "." . $avatar->guessExtension();
+            $avatar->move(
+                $uploads_directory,
+                $filename
+            );
+            $user->setAvatar($filename);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

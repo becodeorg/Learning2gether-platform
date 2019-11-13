@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -20,7 +21,10 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('name')
             ->add('email')
-            ->add('avatar')
+            ->add('avatar', FileType::class, [
+                'mapped' => false,
+                'label' => 'Upload image'
+            ])
             ->add('username')
             //->add('language', LanguageType::class, [])
             ->add('plainPassword', PasswordType::class, [

@@ -86,12 +86,17 @@ class User implements UserInterface
      */
     private $badges;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter")
+     */
+    private $progress;
+
     public function __construct()
     {   $this->topics = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->upvote = new ArrayCollection();
         $this->badges = new ArrayCollection();
-
+        $this->progress = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -334,6 +339,32 @@ class User implements UserInterface
     {
         if ($this->upvote->contains($upvote)) {
             $this->upvote->removeElement($upvote);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getProgress(): Collection
+    {
+        return $this->progress;
+    }
+
+    public function addProgress(Chapter $progress): self
+    {
+        if (!$this->progress->contains($progress)) {
+            $this->progress[] = $progress;
+        }
+
+        return $this;
+    }
+
+    public function removeProgress(Chapter $progress): self
+    {
+        if ($this->progress->contains($progress)) {
+            $this->progress->removeElement($progress);
         }
 
         return $this;
