@@ -47,7 +47,7 @@ class LearningModule
     // cascade means a modules translations(titles and descriptions) can be inserted to the DB when their module is flushed. -jan
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
      */
     private $chapters;
 
@@ -65,6 +65,11 @@ class LearningModule
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     public function getIsPublished(): bool

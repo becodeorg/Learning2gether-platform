@@ -118,7 +118,7 @@ class Badgr
 
             //put each badge in array userBadges
             $badgeData = json_decode($response->getContent(), true);
-            array_push($userBadges, $badgeData);
+            $userBadges[] = $badgeData;
         }
 
         return $userBadges;

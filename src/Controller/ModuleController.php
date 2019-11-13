@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ModuleController extends AbstractController
 {
     /**
-     * @Route("/module", name="module")
+     * @Route("/{_locale}/module", name="module")
      */
     public function module(): Response
     {
