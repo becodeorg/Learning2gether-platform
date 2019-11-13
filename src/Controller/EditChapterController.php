@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Chapter;
+use App\Entity\ChapterPage;
+use App\Entity\ChapterPageTranslation;
+use App\Entity\Language;
 use App\Entity\LearningModule;
+use App\Form\CreateChapterPageType;
 use App\Form\EditChapterType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,15 +23,42 @@ class EditChapterController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($_GET['module']);
-        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($_GET['chapter']);
+        // check the $_GET vars, they have to be set, and integers, if not, redirects back to partner
+        if (isset($_GET['module'], $_GET['chapter']) && ctype_digit((string)$_GET['module']) && ctype_digit((string)$_GET['chapter'])) {
+            //get this Module
+            $moduleID = $_GET['module'];
+            $chapterID = $_GET['chapter'];
+        } else {
+            return $this->redirectToRoute('partner');
+        }
 
+        // find the current module and the current chapter
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
+        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($chapterID);
+
+        // Create translation form
         $form = $this->createForm(EditChapterType::class, $chapter);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        // make a new chapterPage for the form to generate
+        $newChapterPage = $chapter->createNewPage();
+
+        // Create form (button) to add a new page
+        $createPageBtn = $this->createForm(CreateChapterPageType::class, $newChapterPage);
+        $createPageBtn->handleRequest($request);
+
+        // check if the button was pressed
+        if ($createPageBtn->isSubmitted() && $createPageBtn->isValid()) {
+            $this->createAndAddNewPage($newChapterPage, $chapter);
+            $this->flushUpdatedChapter($chapter);
+            return $this->redirectToRoute('edit_page', ['chapter' => $chapter->getId(), 'page' => $newChapterPage->getId()]);
+        }
+
+        // check if the form was submitted
+        if ($form->isSubmitted() && $form->isValid()) {
             $updatedChapter = $form->getData();
             $this->flushUpdatedChapter($updatedChapter);
+            return $this->redirectToRoute('edit_module', ['module' => $moduleID]);
         }
 
         return $this->render('edit_chapter/index.html.twig', [
@@ -35,6 +66,7 @@ class EditChapterController extends AbstractController
             'module' => $module,
             'chapter' => $chapter,
             'form' => $form->createView(),
+            'createPage' => $createPageBtn->createView(),
         ]);
     }
 
@@ -46,5 +78,19 @@ class EditChapterController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($updatedChapter);
         $em->flush();
+    }
+
+    /**
+     * @param ChapterPage $newChapterPage
+     * @param Chapter|null $chapter
+     */
+    public function createAndAddNewPage(ChapterPage $newChapterPage, ?Chapter $chapter): void
+    {
+        $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+        foreach ($languageAll as $language) {
+            $chapterPageTranslation = new ChapterPageTranslation($language, $newChapterPage);
+            $newChapterPage->addTranslation($chapterPageTranslation);
+        }
+        $chapter->addPage($newChapterPage);
     }
 }

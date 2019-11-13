@@ -35,7 +35,7 @@ class Chapter
     private $learningModule;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ChapterPage", mappedBy="chapter", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ChapterPage", mappedBy="chapter", orphanRemoval=true,cascade={"persist"})
      */
     private $pages;
 
@@ -141,5 +141,29 @@ class Chapter
         $this->quiz = $quiz;
 
         return $this;
+    }
+
+    public function getTitle(Language $language)
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getTitle();//change this line if needed when copied
+            }
+        }
+    }
+
+    public function getDescription(Language $language)
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getDescription();//change this line if needed when copied
+            }
+        }
+    }
+
+    public function createNewPage(): ChapterPage
+    {
+        $pageCount = count($this->getPages());
+        return new ChapterPage(++$pageCount, $this);
     }
 }
