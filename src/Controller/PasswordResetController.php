@@ -44,6 +44,72 @@ class PasswordResetController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
 
+    /**
+     * @Route("/password-new", name="password_new")
+     */
+    public function reset(Request $request)
+    {
+        $selector= $request->query->get('selector');
+        $validator= $request->query->get('selector');
+
+        if(!isset($selector) || !isset($validator)){
+            $this->addFlash(
+                'info',
+                'Your request is not valid, please make new request again!'
+            );
+            return $this->redirectToRoute('password_reset');
+        }
+
+//        var_dump(ctype_xdigit($selector));
+//        var_dump(ctype_xdigit($selector));
+//        die;
+
+        $form = $this->createForm(resetPasswordType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //step0 : hold all data I need to update - selector,validator,pwd,pwd-repeat,current date
+            $selector = $form ->getData()['selector']; // $_POST['reset_password']['selector']
+            $validator = $form ->getData()['validator']; // $_POST['reset_password']['validator']
+            $pwd = $_POST['reset_password']['password'];
+            $pwdRepeat = $_POST['reset_password']['passwordRepeat'];
+            $currentDate = date("U"); //TODO recheck the correct type (string, int)
+
+            die;
+
+            //TODO step1 : Input validation (password not empty? are they same?)
+            if($_password)
+
+
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+            //TODO step2 : find exact that token from DB (using selector)
+
+            //TODO step3 : check time (token is expired or not), validator
+
+            //TODO step4 : find the user of that token and update the password with new
+
+            //TODO step5 : remove the token
+
+            $this->addFlash(
+                'info',
+                'Updated your password successfully!'
+            );
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('password_reset/create-new-password.html.twig', [
+            'resetPasswordForm' => $form->createView(),
+        ]);
+    }
+
+
+
+
+
+
     private function createPwdResetToken(User $user)
     {
         $em = $this->getDoctrine()->getManager();
@@ -62,7 +128,6 @@ class PasswordResetController extends AbstractController
         $token = random_bytes(32); // for user authentication
         $expires = date("U") + 1800; // 1hour
         $url = "http://l2g.local/index.php/password-new?selector=" . $selector . "&validator=" . bin2hex($token);
-
         $pwdToken = new PwdResetToken();
         $pwdToken->setUser($user);
         $pwdToken->setSelector($selector);
@@ -80,5 +145,6 @@ class PasswordResetController extends AbstractController
     {
        // TODO code to send pwdResetEmail
     }
+
 
 }
