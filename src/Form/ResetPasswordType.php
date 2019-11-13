@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,6 +15,12 @@ class ResetPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('selector', HiddenType::class, [
+                'data' => $_GET["selector"],
+            ])
+            ->add('validator', HiddenType::class, [
+                'data' => $_GET["validator"]
+            ])
             ->add('password', PasswordType::class, [
                 'mapped' => false,
                 'constraints' => [
