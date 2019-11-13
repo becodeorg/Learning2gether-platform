@@ -91,14 +91,6 @@ class ChapterPageTranslation
         return $this;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
     public function getChapterPage(): ChapterPage
     {
         return $this->chapterPage;
