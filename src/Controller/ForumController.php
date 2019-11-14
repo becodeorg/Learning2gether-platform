@@ -20,10 +20,14 @@ class ForumController extends AbstractController
 {
 
     /**
-     * @Route("/forum/category/{category}", name="forum", requirements={"category"="\d+"})
+     * @Route("/forum/category/{category}/topic/{chapter}", name="forum", requirements={
+     *     "category"="\d+",
+     *     "chapter"="\d+",
+     *     })
      */
-    public function index(Category $category)
+    public function index(Category $category, Chapter $chapter)
     {
+
         $languageDummy = $this->getDoctrine()->getRepository(Language::class)->find('1');
         //hard coded out of scope of current ticket
         $categoryRepo = $this->getDoctrine()->getRepository(Category::class)->find($category);
@@ -32,7 +36,7 @@ class ForumController extends AbstractController
         $categoryDescription = $categoryRepo->getLearningModule()->getDescription($this->getDoctrine()->getRepository(Language::class)->find('1'));
         $chapters = $this->getDoctrine()->getRepository(Chapter::class)->findBy(['learningModule' => $categoryRepo->getId()]);
 
-        $questions = $this->getDoctrine()->getRepository(Question::class)->findAll();
+        $questions = $this->getDoctrine()->getRepository(Question::class)->findBy(['chapter' => $chapter]);
 
         $addQuestion = $this->createForm(
             QuestionType::class, [

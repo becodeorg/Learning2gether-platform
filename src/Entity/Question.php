@@ -53,6 +53,11 @@ class Question
      */
     private $posts;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Chapter")
+     */
+    private $chapter;
+
     public function __construct(string $subject, Language $language, User $createdBy, Category $category)
     {
         $this->subject = $subject;
@@ -168,6 +173,18 @@ class Question
                 $post->setTopic(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getChapter(): ?Chapter
+    {
+        return $this->chapter;
+    }
+
+    public function setChapter(?Chapter $chapter): self
+    {
+        $this->chapter = $chapter;
 
         return $this;
     }
