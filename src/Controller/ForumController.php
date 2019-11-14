@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\CategoryTranslation;
+use App\Entity\Chapter;
 use App\Entity\Language;
 use App\Entity\Post;
 use App\Entity\Question;
@@ -11,29 +12,26 @@ use App\Entity\User;
 use App\Form\PostType;
 use App\Form\SearchbarType;
 use App\Form\QuestionType;
-use App\Form\UpvoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 
 class ForumController extends AbstractController
 {
 
     /**
-     * @Route("/forum", name="forum")
+     * @Route("/forum/category/{category}", name="forum", requirements={"category"="\d+"})
      */
-    public function index()
+    public function index(Category $category)
     {
-
+        $languageDummy = $this->getDoctrine()->getRepository(Language::class)->find('1');
         //hard coded out of scope of current ticket
-        $categoryID = $this->getDoctrine()->getRepository(Category::class)->find('1')->getId();
-        $category = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('1')->getTitle();
+        $categoryRepo = $this->getDoctrine()->getRepository(Category::class)->find($category);
 
-        //display all topics
+        $categoryTitle = $categoryRepo->getLearningModule()->getTitle($this->getDoctrine()->getRepository(Language::class)->find('1'));
+        $categoryDescription = $categoryRepo->getLearningModule()->getDescription($this->getDoctrine()->getRepository(Language::class)->find('1'));
+        $chapters = $this->getDoctrine()->getRepository(Chapter::class)->findBy(['learningModule' => $categoryRepo->getId()]);
+
         $questions = $this->getDoctrine()->getRepository(Question::class)->findAll();
 
         $addQuestion = $this->createForm(
@@ -56,8 +54,10 @@ class ForumController extends AbstractController
 
         return $this->render('forum/index.html.twig', [
             'controller_name' => 'ForumController',
-           'categoryID' => $categoryID,
-            'category' => $category,
+            'categoryTitle' => $categoryTitle,
+            'categoryDescription' => $categoryDescription,
+            'chapters' => $chapters,
+            'language' => $languageDummy,
             'questions' => $questions,
             'addQuestion' => $addQuestion,
             'searchbar' => $searchbar,
@@ -108,7 +108,6 @@ class ForumController extends AbstractController
         //I hard coded this because we are still updating the forum...
         $categoryCurrent = $this->getDoctrine()->getRepository(Category::class)->find('1');
         $language = $this->getDoctrine()->getRepository(Language::class)->find('1');
-
 
         $questionOut = new Question($form->get('subjectTopic')->getData(),$language, $this->getUser(), $categoryCurrent);
         $questionOut->setCategory($categoryCurrent);

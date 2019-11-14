@@ -9,13 +9,20 @@
     {{ form_start(searchbar) }}
     {{ form_end(searchbar) }} <br>
 
-    <h2>Category ID</h2>
-    {{ categoryID }}
-    <h3>Category</h3>
-    {{ category }}
+
+    <h2>Current Category</h2>
+    {{ categoryTitle }}<br>
+    {{ categoryDescription }} <br><br>
+
+    <h2>Topics</h2>
+
+    {% for chapter in chapters %}
+            {{ chapter.title(language) }}<br>
+        <br>
+    {% endfor %}
 
 
-    <h4>All Topics</h4>
+    <h4>All Questions</h4>
     {% for question in questions %}
         <a href="{{ path('question', {'question': question.id}) }}">
             {{ question.subject }}<br>
