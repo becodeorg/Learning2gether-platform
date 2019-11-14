@@ -37,7 +37,7 @@ class TestController extends AbstractController
         $userBadges = [];
         foreach ($badges as &$badgeData) {
             $badgeKey = $badgeData->getBadge();
-            array_push($userBadges, $badgeKey);
+            $userBadges[] = $badgeKey;
         }
         //pass userBadges and the user to the getAllBadges method
         $badgrObj->getAllBadges($userBadges, $user);

@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -10,13 +11,22 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             {% if type == 'error' %}
-                <p style="color: red;">{{ message }}</p>
+              <div class="alert alert-danger" role="alert">
+                {{ message }}
+              </div>
             {% endif %}
             {% if type == 'success' %}
-                <p style="color: green;">{{ message }}</p>
+              <div class="alert alert-success" role="alert">
+                {{ message }}
+              </div>
             {% endif %}
         {% endfor %}
     {% endfor %}
+
+        <header>
+            {{ include('language_switcher/_switcher.html.twig') }} {# have switcherForm in the header of every page#}
+            {{ 'language test' | trans }}
+        </header>
 
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}

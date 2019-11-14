@@ -35,9 +35,9 @@ class CreateModuleController extends AbstractController
             if ($this->isOneTranslationFilledIn($newTranslations)) {
                 $module = $form->getData();
                 $this->flushNewModule($module);
-            } else {
-                echo 'Please fill in at least one language!';
+                return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             }
+            echo 'Please fill in at least one language!';
         }
 
 

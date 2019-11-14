@@ -15,6 +15,11 @@
             background: #F5F5F5;
             padding: 2px 6px;
         }
+
+        table td {
+            border: 1px solid black;
+            width: 500px;
+        }
     </style>
 
     <div class="example-wrapper">
@@ -25,12 +30,20 @@
         <hr>
         <h2>Edit a module:</h2>
         <h4>Showing all {{ language.name|lower }} modules</h4>
-        {% for module in modules %}
-        <li>
-            <a href="{{ path('edit_module', { module : module.id , language : language.code}) }}">{{ module.title(language) }}
-                : {{ module.description(language) }}, published: {{ module.isPublished ? 'true':'false' }}</a>
+        <table>
+            {% for module in modules %}
+                <tr>
+                    <td>
+                        <span><a href="{{ path('edit_module', { module : module.id }) }}">{{ module.title(language) }}</a></span><br>
+                        <ul>
+                            <li><span>isPublished: {{ module.isPublished ? 'true':'false' }}</span><br>
+                            <li><span>Chapters: {{ module.chapters|length }}</span><br>
+                        </ul>
+                    </td>
+                </tr>
             {% endfor %}
-            <hr>
-            <a href="{{ path('create_module') }}">Create Module</a>
+        </table>
+        <hr>
+        <a href="{{ path('create_module') }}">Create Module</a>
     </div>
 {% endblock %}
