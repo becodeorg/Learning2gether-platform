@@ -28,7 +28,7 @@ final class Version20191106132556 extends AbstractMigration
         $this->addSql('ALTER TABLE user_post ADD CONSTRAINT FK_200B20444B89032C FOREIGN KEY (post_id) REFERENCES post (id) ON DELETE CASCADE');
        // $this->addSql('ALTER TABLE user_learning_module ADD CONSTRAINT FK_D80A015EA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
        // $this->addSql('ALTER TABLE user_learning_module ADD CONSTRAINT FK_D80A015E55E9F8F6 FOREIGN KEY (learning_module_id) REFERENCES learning_module (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE post RENAME INDEX post_topic_id_fk TO IDX_5A8A6C8D1F55203D');
+
         $this->addSql('ALTER TABLE user DROP password_hash, DROP badgr_key');
         $this->addSql('ALTER TABLE learning_module ADD image VARCHAR(255) NOT NULL, ADD type VARCHAR(255) NOT NULL');
     }
@@ -41,7 +41,6 @@ final class Version20191106132556 extends AbstractMigration
         $this->addSql('DROP TABLE user_post');
         $this->addSql('DROP TABLE user_learning_module');
         $this->addSql('ALTER TABLE learning_module DROP image, DROP type');
-        $this->addSql('ALTER TABLE post RENAME INDEX idx_5a8a6c8d1f55203d TO post_topic_id_fk');
         $this->addSql('ALTER TABLE user ADD password_hash VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, ADD badgr_key VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci');
     }
 }
