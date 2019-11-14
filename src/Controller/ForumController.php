@@ -6,7 +6,7 @@ use App\Entity\Category;
 use App\Entity\CategoryTranslation;
 use App\Entity\Language;
 use App\Entity\Post;
-use App\Entity\Topic;
+use App\Entity\Question;
 use App\Entity\User;
 use App\Form\PostType;
 use App\Form\SearchbarType;
@@ -29,28 +29,12 @@ class ForumController extends AbstractController
     public function index()
     {
 
-
         //hard coded out of scope of current ticket
         $categoryID = $this->getDoctrine()->getRepository(Category::class)->find('1')->getId();
-
         $category = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('1')->getTitle();
-        //setting up the topic (hard coded)
-        $categoryCurrent = $this->getDoctrine()->getRepository(Category::class)->find('1');
-        $language = $this->getDoctrine()->getRepository(Language::class)->find('1');
 
         //display all topics
-        $topics = $this->getDoctrine()->getRepository(Topic::class)->findAll();
-
-        //display the current topic by Getter
-        //$topic = $this->getDoctrine()->getRepository(Topic::class)->find($_GET['topic_id']);
-       // $topicDate = $topic->getDate()->format('Y-m-d H:i:s');;
-
-        //small form to post topic
-     /*   $topicNow = $this->createFormBuilder()
-            ->add('subjectTopic', TextType::class)
-            ->add('postTopic', SubmitType::class, array('label' => 'Add Topic'))
-            ->getForm()->createView();  */
-
+        $topics = $this->getDoctrine()->getRepository(Question::class)->findAll();
 
         $topicNow = $this->createForm(
             TopicType::class, [
@@ -97,7 +81,7 @@ class ForumController extends AbstractController
         $resultsFromPost = $query->getResult();
 
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Topic::class);
+        $repo = $em->getRepository(Question::class);
         $query = $repo->createQueryBuilder('p')
             ->where('p.subject LIKE :keyword')
             ->setParameter('keyword', '%' . $form->get('keywords')->getData() . '%')
@@ -126,7 +110,7 @@ class ForumController extends AbstractController
         $language = $this->getDoctrine()->getRepository(Language::class)->find('1');
 
 
-        $topicOut = new Topic($form->get('subjectTopic')->getData(),$language, $this->getUser(), $categoryCurrent);
+        $topicOut = new Question($form->get('subjectTopic')->getData(),$language, $this->getUser(), $categoryCurrent);
         $topicOut->setCategory($categoryCurrent);
         $this->getDoctrine()->getManager()->persist($topicOut);
         $this->getDoctrine()->getManager()->flush();

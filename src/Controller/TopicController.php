@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
-use App\Entity\Topic;
+use App\Entity\Question;
 use App\Form\PostType;
 use App\Form\UpvoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +15,7 @@ class TopicController extends AbstractController
     /**
      * @Route("/forum/topic/{topic}", name="topic", requirements={"topic"="\d+"})
      */
-    public function index(Topic $topic)
+    public function index(Question $topic)
     {
 
         $topicDate = $topic->getDate()->format('Y-m-d H:i:s');;
@@ -91,8 +91,8 @@ class TopicController extends AbstractController
         $form = $this->createForm(PostType::class);
         $form->handleRequest($request);
 
-        /** @var Topic $topic */
-        $topic = $this->getDoctrine()->getManager()->getRepository(Topic::Class)->findOneBy(['id' => $form->get('topic_id')->getData()]);
+        /** @var Question $topic */
+        $topic = $this->getDoctrine()->getManager()->getRepository(Question::Class)->findOneBy(['id' => $form->get('topic_id')->getData()]);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             return $this->redirectToRoute('topic', ['topic' => $topic->getId()]);

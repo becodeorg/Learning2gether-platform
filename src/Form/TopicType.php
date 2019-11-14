@@ -19,7 +19,7 @@ class TopicType  extends AbstractType
             ->add('subjectTopic', TextType::class)
             ->add('language', HiddenType::class)
             ->add('category', HiddenType::class)
-            ->add('postTopic', SubmitType::class, array('label' => 'Topic'));
+            ->add('postTopic', SubmitType::class, array('label' => 'Question'));
 
         $builder->setMethod('POST');
 
