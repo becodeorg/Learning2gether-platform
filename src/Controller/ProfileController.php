@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Domain\Badgr;
-use App\Entity\LearningModule;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,17 +14,13 @@ class ProfileController extends AbstractController
      */
     public function index()
     {
-        //initialise badgr object
-        $badgrObj = new Badgr;
+        $badgrHandler = new Badgr;
+
+        /** @var User $user */
         $user = $this->getUser();
 
-        //For some unholy reason this is required for the rest to work
-        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find("1");
-        $user->addBadge($testModule);
-
         //get all badges from user
-        $badgesData = $user->getBadges();
-        $badges = $badgesData->getSnapshot();
+        $badges = $user->getBadges()->getSnapshot();
         //put all badge keys in userBadges
         $badgeKeys = [];
         foreach ($badges as &$badgeData) {
@@ -32,9 +28,7 @@ class ProfileController extends AbstractController
             array_push($badgeKeys, $badgeKey);
         }
         //pass userBadges with keys and the user to the getAllBadges method
-        $userBadges = $badgrObj->getAllBadges($badgeKeys, $user);
-
-        //var_dump($userBadges[0]['result']);
+        $userBadges = $badgrHandler->getAllBadges($badgeKeys, $user);
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',

@@ -9,8 +9,12 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Wassup {{ user.name }}</h1>
-    <img src="{{ user.avatar }}" alt="avatar">
+    <h1>Welcome {{ user.name }}</h1>
+
+    {% if user.avatar %}
+    <img src="{{ user.avatar }}" alt="avatar of {{ user.name }}">
+    {% endif %}
+
     <p>Username: {{ user.username }}</p>
     <p>Email: {{ user.email }}</p>
     <p>Language: {{ user.language.name }}</p>
