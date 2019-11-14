@@ -3,53 +3,31 @@
 {% block title %}L2G Forums{% endblock %}
 
 {% block body %}
-    {{ form_start(searchbar) }}
-    {{ form_end(searchbar) }}
-    <h5>Search results</h5>
-    <p>From Topics</p>
-    {% for results in resultsFromTopic %}
-    <a href="?topic_id={{ results.id }}">
-        {{ results.subject }}<br>
-    </a>
-    {% endfor %}
-    <p>From Posts</p>
-    {% for results in resultsFromPost %}
-    <a href="?topic_id={{ results.topic.id }}">
-        {{ results.subject }}<br>
-    </a>
-    {% endfor %}
 
-<h1>Forum</h1>
+   <h1>Forum</h1>
+    <br>
+    {{ form_start(searchbar) }}
+    {{ form_end(searchbar) }} <br>
+
     <h2>Category ID</h2>
     {{ categoryID }}
     <h3>Category</h3>
     {{ category }}
+
+
     <h4>All Topics</h4>
     {% for topic in topics %}
-        <a href="?topic_id={{ topic.id }}">
+        <a href="{{ path('topic', {'topic': topic.id}) }}">
             {{ topic.subject }}<br>
-            {{ topic.date.format('m-d-Y H:i:s') }}<br>
+            {{  topic.date.format('m-d-Y H:i:s') }}<br>
         </a>
         <br>
     {% endfor %}
+
     <h4>Add New Topic</h4>
     {{ form_start(topic_now) }}
     {{ form_end(topic_now) }}
-    <h4>Current Topic</h4>
-    {{ topic }}
-    {{ topic_date }}
-    <h5>Posts</h5>
-    {% for post in posts %}
-        {{ post.subject }}<br>
-        <form action="#" method="post">
-            <button style="height: 30px; width: 60px;" type="submit" name="upvote" value=""  >Upvote</button>
-        </form>
-        {{ post.date.format('m-d-Y H:i:s') }}<br>
-        <br>
-    {% endfor %}
-
-    <br>
-    {{ form_start(post_now) }}
-    {{ form_end(post_now) }}
 
 {% endblock %}
+
+

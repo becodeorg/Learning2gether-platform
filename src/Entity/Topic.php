@@ -92,6 +92,10 @@ class Topic
         return $this->date;
     }
 
+    public function getDateFormatted()
+    {
+        
+    }
 
     public function setDate(\DateTimeImmutable $date): void
     {
