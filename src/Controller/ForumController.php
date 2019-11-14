@@ -10,7 +10,7 @@ use App\Entity\Question;
 use App\Entity\User;
 use App\Form\PostType;
 use App\Form\SearchbarType;
-use App\Form\TopicType;
+use App\Form\QuestionType;
 use App\Form\UpvoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -34,15 +34,15 @@ class ForumController extends AbstractController
         $category = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('1')->getTitle();
 
         //display all topics
-        $topics = $this->getDoctrine()->getRepository(Question::class)->findAll();
+        $questions = $this->getDoctrine()->getRepository(Question::class)->findAll();
 
-        $topicNow = $this->createForm(
-            TopicType::class, [
+        $addQuestion = $this->createForm(
+            QuestionType::class, [
             'subjectTopic' => '',
             'language' => "",
             'category' => "",
         ], [
-                'action' => $this->generateUrl('addTopic')
+                'action' => $this->generateUrl('addQuestion')
             ]
         )->createView();
 
@@ -58,8 +58,8 @@ class ForumController extends AbstractController
             'controller_name' => 'ForumController',
            'categoryID' => $categoryID,
             'category' => $category,
-            'topics' => $topics,
-            'topic_now' => $topicNow,
+            'questions' => $questions,
+            'addQuestion' => $addQuestion,
             'searchbar' => $searchbar,
         ]);
     }
@@ -86,23 +86,23 @@ class ForumController extends AbstractController
             ->where('p.subject LIKE :keyword')
             ->setParameter('keyword', '%' . $form->get('keywords')->getData() . '%')
             ->getQuery();
-        $resultsFromTopic = $query->getResult();
+        $resultsFromQuestion = $query->getResult();
 
         return $this->render('forum/searchResult.html.twig', [
             'controller_name' => 'ForumController',
             'resultsFromPost' => $resultsFromPost,
-            'resultsFromTopic' => $resultsFromTopic,
+            'resultsFromQuestion' => $resultsFromQuestion,
 
         ]);
     }
 
     /**
-     * @Route("/forum/addTopic", name="addTopic")
+     * @Route("/forum/addQuestion", name="addQuestion")
      */
-    public function addTopic (Request $request)
+    public function addQuestion (Request $request)
     {
 
-        $form = $this->createForm(TopicType::class);
+        $form = $this->createForm(QuestionType::class);
         $form->handleRequest($request);
 
         //I hard coded this because we are still updating the forum...
@@ -110,9 +110,9 @@ class ForumController extends AbstractController
         $language = $this->getDoctrine()->getRepository(Language::class)->find('1');
 
 
-        $topicOut = new Question($form->get('subjectTopic')->getData(),$language, $this->getUser(), $categoryCurrent);
-        $topicOut->setCategory($categoryCurrent);
-        $this->getDoctrine()->getManager()->persist($topicOut);
+        $questionOut = new Question($form->get('subjectTopic')->getData(),$language, $this->getUser(), $categoryCurrent);
+        $questionOut->setCategory($categoryCurrent);
+        $this->getDoctrine()->getManager()->persist($questionOut);
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('forum');
     }

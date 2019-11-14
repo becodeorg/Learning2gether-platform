@@ -16,17 +16,17 @@
 
 
     <h4>All Topics</h4>
-    {% for topic in topics %}
-        <a href="{{ path('topic', {'topic': topic.id}) }}">
-            {{ topic.subject }}<br>
-            {{  topic.date.format('m-d-Y H:i:s') }}<br>
+    {% for question in questions %}
+        <a href="{{ path('question', {'question': question.id}) }}">
+            {{ question.subject }}<br>
+            {{  question.dateFormatted }}<br>
         </a>
         <br>
     {% endfor %}
 
     <h4>Add New Question</h4>
-    {{ form_start(topic_now) }}
-    {{ form_end(topic_now) }}
+    {{ form_start(addQuestion) }}
+    {{ form_end(addQuestion) }}
 
 {% endblock %}
 

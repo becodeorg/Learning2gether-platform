@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Post
 {
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -84,9 +86,9 @@ class Post
         return $this->date;
     }
 
-    public function getFormattedDate(): \DateTimeInterface
+    public function getDateFormatted()
     {
-        return $this->date;
+        return $this->getDate()->format(self::DATE_FORMAT);
     }
 
     public function setDate(\DateTimeInterface $date): self
