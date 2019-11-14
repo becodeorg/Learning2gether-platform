@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class PasswordResetController extends AbstractController
@@ -47,10 +48,10 @@ class PasswordResetController extends AbstractController
     /**
      * @Route("/password-new", name="password_new")
      */
-    public function reset(Request $request)
+    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $selector= $request->query->get('selector');
-        $validator= $request->query->get('selector');
+        $validator= $request->query->get('validator');
 
         if(!isset($selector) || !isset($validator)){
             $this->addFlash(
@@ -62,7 +63,6 @@ class PasswordResetController extends AbstractController
 
 //        var_dump(ctype_xdigit($selector));
 //        var_dump(ctype_xdigit($selector));
-//        die;
 
         $form = $this->createForm(resetPasswordType::class);
         $form->handleRequest($request);
@@ -85,8 +85,8 @@ class PasswordResetController extends AbstractController
             }
 
             //step2 : find exact that token from DB (using selector)
-
             $token = $this->getDoctrine()->getRepository(PwdResetToken::class)->findOneBy(['selector' => $selector]);
+
             if(!$token){
                 $this->addFlash(
                     'info',
@@ -95,15 +95,28 @@ class PasswordResetController extends AbstractController
                 return $this->render('password_reset/index.html.twig');
             }
 
-            //TODO step3 : check time (token is expired or not), validator
+            //step3 : check time (token is expired or not), validator
+            if($currentDate > $token->getExpires()){
+                $this->addFlash(
+                    'info',
+                    'your request is expired, please request new mail to reset your password!'
+                );
+                return $this->render('password_reset/index.html.twig');
+            }
 
-            //TODO step4 : find the user of that token and update the password with new
+            //step4 : find the user of that token and update the password with new
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $token->getUser()->getID()]);
+            $user->setPassword($passwordEncoder->encodePassword($user, $form->get('password')->getData()));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
 
-            //TODO step5 : remove the token
+            //step5 : remove the token
+            $entityManager->remove($token);
+            $entityManager->flush();
 
             $this->addFlash(
                 'info',
-                'Updated your password successfully!'
+                'Updated your password successfully!, '. $user->getName()
             );
 
             return $this->redirectToRoute('app_login');
@@ -113,11 +126,7 @@ class PasswordResetController extends AbstractController
             'resetPasswordForm' => $form->createView(),
         ]);
     }
-
-
-
-
-
+    
 
     private function createPwdResetToken(User $user)
     {
