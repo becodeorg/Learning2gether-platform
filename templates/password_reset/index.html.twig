@@ -14,12 +14,6 @@
         {{ "If you've forgotten your password, enter your e-mail address and we'll send you an e-mail telling you how to recover it." | trans }}
     </p>
 
-    {% for message in app.flashes('info') %}
-        <div class="alert alert-warning">
-            {{ message }}
-        </div>
-    {% endfor %}
-
     <form action="" method="post">
         <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Enter your e-mail address" required autofocus>
         <button class="btn btn-lg btn-primary" type="submit" name="reset-request-submit">

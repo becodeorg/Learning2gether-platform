@@ -19,16 +19,12 @@ class PasswordResetController extends AbstractController
     public function index(\Swift_Mailer $mailer)
     {
         if (!isset($_POST["reset-request-submit"])) {
-            return $this->render('password_reset/index.html.twig', [
-            ]);
+            return $this->render('password_reset/index.html.twig');
         }
 
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $_POST["email"]]);
         if (!$user) {
-            $this->addFlash(
-                'info',
-                'Please enter your correct email address again!'
-            );
+            $this->addFlash('error', 'Please enter your correct email address again!');
             return $this->render('password_reset/index.html.twig');
         }
         // Create Password reset token & URL
@@ -55,10 +51,7 @@ class PasswordResetController extends AbstractController
 
         // Throw error to the user with wrong URL
         if (!isset($selector) || !isset($validator)) {
-            $this->addFlash(
-                'info',
-                'Your request is not valid, please make new request again!'
-            );
+            $this->addFlash('error', 'Your request is not valid, please make new request again!');
             return $this->redirectToRoute('password_reset');
         }
 
@@ -75,10 +68,7 @@ class PasswordResetController extends AbstractController
 
             //step1 : Input validation (not empty? both are same?)
             if (!$pwd || !$pwdRepeat || ($pwd != $pwdRepeat)) {
-                $this->addFlash(
-                    'info',
-                    'Enter your password correctly again!'
-                );
+                $this->addFlash('error', 'Enter your password correctly again!');
                 return $this->redirect($_SERVER['HTTP_REFERER']);
             }
 
@@ -86,18 +76,13 @@ class PasswordResetController extends AbstractController
             $token = $this->getDoctrine()->getRepository(PwdResetToken::class)->findOneBy(['selector' => $selector]);
 
             if (!$token) {
-                $this->addFlash(
-                    'info',
-                    'invalid request, please request new mail to reset your password!'
-                );
+                $this->addFlash('error', 'invalid request, please request new mail to reset your password!');
                 return $this->render('password_reset/index.html.twig');
             }
 
             //step3 : check the token is expired or not
             if ($currentDate > $token->getExpires()) {
-                $this->addFlash(
-                    'info',
-                    'your request is expired, please request new mail to reset your password!'
+                $this->addFlash('error', 'your request is expired, please request new mail to reset your password!'
                 );
                 return $this->render('password_reset/index.html.twig');
             }
@@ -105,8 +90,7 @@ class PasswordResetController extends AbstractController
             //step4 : Find the user of that token and validate
             if (!password_verify(hex2bin($validator), $token->getToken())) {
                 $this->addFlash(
-                    'info',
-                    'invalid request, please request new mail to reset your password!'
+                    'error', 'invalid request, please request new mail to reset your password!'
                 );
                 return $this->render('password_reset/index.html.twig');
             }
@@ -121,9 +105,7 @@ class PasswordResetController extends AbstractController
             $em->remove($token);
             $em->flush();
 
-            $this->addFlash(
-                'info',
-                'Updated your password successfully, ' . $user->getName()
+            $this->addFlash('success', 'Updated your password successfully, ' . $user->getName()
             );
 
             return $this->redirectToRoute('app_login');
