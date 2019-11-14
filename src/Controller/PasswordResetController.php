@@ -154,15 +154,27 @@ class PasswordResetController extends AbstractController
         $em->persist($pwdToken);
         $em->flush();
 
+        // SEND EMAIL TO USER WITH THE URL
+        $this->sendPwdResetEmail($user, $url);
 
-        // TODO SEND EMAIL TO USER WITH THE URL
-//        $this->sendPwdResetEmail();
     }
 
-    private function sendPwdResetEmail()
+    private function sendPwdResetEmail(User $user, String $url)
     {
-       // TODO code to send pwdResetEmail
+        $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', '25','tls'))
+        ->setUsername('bona.kim.dev@gmail.com')
+        ->setPassword('becode1!');
+
+        $mailer= new\Swift_Mailer(($transport));
+        $message = (new \Swift_Message('Reset Password'))
+            ->setFrom('no-reply@example.com')
+            ->setTo($user->getEmail())
+            ->setBody($this->renderView(
+                'password_reset/pwdmail.html.twig',
+                ['name' => $user->getName(), 'url' => $url]
+            ),
+                'text/html'
+            );
+        $mailer->send($message);
     }
-
-
 }
