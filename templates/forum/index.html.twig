@@ -3,24 +3,11 @@
 {% block title %}L2G Forums{% endblock %}
 
 {% block body %}
+
+   <h1>Forum</h1>
+    <br>
     {{ form_start(searchbar) }}
-    {{ form_end(searchbar) }}
-    <h5>Search results</h5>
-    <p>From Topics</p>
-    {% for results in resultsFromTopic %}
-    <a href="{{ path('forum', {'topic': results.id}) }}">
-        {{ results.subject }}<br>
-    </a>
-    {% endfor %}
-    <p>From Posts</p>
-    {% for results in resultsFromPost %}
-    <a href="{{ path('forum', {'topic': results.topic.id}) }}">
-        {{ results.subject }}<br>
-    </a>
-    {% endfor %}
-
-<h1>Forum</h1>
-
+    {{ form_end(searchbar) }} <br>
 
     <h2>Category ID</h2>
     {{ categoryID }}
@@ -30,7 +17,7 @@
 
     <h4>All Topics</h4>
     {% for topic in topics %}
-        <a href="{{ path('forum', {'topic': topic.id}) }}">
+        <a href="{{ path('topic', {'topic': topic.id}) }}">
             {{ topic.subject }}<br>
             {{  topic.date.format('m-d-Y H:i:s') }}<br>
         </a>
@@ -40,32 +27,6 @@
     <h4>Add New Topic</h4>
     {{ form_start(topic_now) }}
     {{ form_end(topic_now) }}
-    <h4>Current Topic</h4>
-    {{ topic }}
-    {{ topic_date }}
-
-
-    <h5>Posts</h5>
-    {% for post in posts %}
-        {% set current_post_id = post.id %}
-        {% set arrayUsers = post.users %}
-        {{ post.subject }}<br>
-        {{ form_start(upvotes[post.id]) }}
-        <p>{{ arrayUsers|length }} users have upvoted on this post</p>
-        {% if arrayUsers|length > 0 %}
-            {% for user in arrayUsers|slice(0,5) %}
-                <p>{{ user.username }}</p>
-        {% endfor %}
-        {% endif %}
-        <p>Current Post ID: {{ current_post_id }}</p>
-        {{ form_end(upvotes[post.id]) }}
-        {{ post.date.format('m-d-Y H:i:s') }}<br>
-        <br>
-    {% endfor %}
-
-    <br>
-    {{ form_start(post_now) }}
-    {{ form_end(post_now) }}
 
 {% endblock %}
 

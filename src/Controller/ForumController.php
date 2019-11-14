@@ -8,6 +8,9 @@ use App\Entity\Language;
 use App\Entity\Post;
 use App\Entity\Topic;
 use App\Entity\User;
+use App\Form\PostType;
+use App\Form\SearchbarType;
+use App\Form\TopicType;
 use App\Form\UpvoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -15,17 +18,17 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class ForumController extends AbstractController
 {
 
     /**
-     * @Route("/forum/topic/{topic}", name="forum", requirements={"topic"="\d+"})
+     * @Route("/forum", name="forum")
      */
-    public function index(Topic $topic)
+    public function index()
     {
-        $resultsFromPost = "";
-        $resultsFromTopic = "";
+
 
         //hard coded out of scope of current ticket
         $categoryID = $this->getDoctrine()->getRepository(Category::class)->find('1')->getId();
@@ -40,126 +43,94 @@ class ForumController extends AbstractController
 
         //display the current topic by Getter
         //$topic = $this->getDoctrine()->getRepository(Topic::class)->find($_GET['topic_id']);
-        $topicDate = $topic->getDate()->format('Y-m-d H:i:s');;
+       // $topicDate = $topic->getDate()->format('Y-m-d H:i:s');;
 
         //small form to post topic
-        $topicNow = $this->createFormBuilder()
+     /*   $topicNow = $this->createFormBuilder()
             ->add('subjectTopic', TextType::class)
             ->add('postTopic', SubmitType::class, array('label' => 'Add Topic'))
-            ->getForm();
-
-        //display posts that are needed to be displayed
-        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['topic' => $topic->getId()]);
-
-        //reply to a topic here with Post
-        $postNow = $this->createFormBuilder()
-            ->add('subjectPost', TextType::class)
-            ->add('postPost', SubmitType::class, array('label' => 'Post'))
-            ->getForm();
-
-        $upvoteForms = [];
-        foreach ($posts AS $post) {
-            $upvoteForms[$post->getId()] = $this->createForm(
-                UpvoteType::class, [
-                    'post_id' => $post->getId()
-                ],[
-                    'action' => $this->generateUrl('upvote'),
-                ]
-            )->createView();
-        }
-
-        //searchbar
-        $searchbar = $this->createFormBuilder()
-            ->add('keywords', TextType::class)
-            ->add('search', SubmitType::class, array('label' => 'Search Now'))
-            ->getForm();
+            ->getForm()->createView();  */
 
 
-        //logic for searchbar
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['search'])) {
-            $em = $this->getDoctrine()->getManager();
-            $repo = $em->getRepository(Post::class);
-            $query = $repo->createQueryBuilder('p')
-                ->where('p.subject LIKE :keyword')
-                ->setParameter('keyword', '%' . $_POST['form']['keywords'] . '%')
-                ->getQuery();
-            $resultsFromPost = $query->getResult();
+        $topicNow = $this->createForm(
+            TopicType::class, [
+            'subjectTopic' => '',
+            'language' => "",
+            'category' => "",
+        ], [
+                'action' => $this->generateUrl('addTopic')
+            ]
+        )->createView();
 
-            $em = $this->getDoctrine()->getManager();
-            $repo = $em->getRepository(Topic::class);
-            $query = $repo->createQueryBuilder('p')
-                ->where('p.subject LIKE :keyword')
-                ->setParameter('keyword', '%' . $_POST['form']['keywords'] . '%')
-                ->getQuery();
-            $resultsFromTopic = $query->getResult();
-        }
-
-        //logic for a topic
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['subjectTopic'])) {
-            $topicOut = new Topic($_POST['form']['subjectTopic'], $language, $this->getUser(), $categoryCurrent);
-            $topicOut->setCategory($categoryCurrent);
-            $this->getDoctrine()->getManager()->persist($topicOut);
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
-        }
-        // logic for a post
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['form']['subjectPost'])) {
-            $postOut = new Post($_POST['form']['subjectPost'], $this->getUser(), $topic);
-            $postOut->setTopic($topic);
-            $this->getDoctrine()->getManager()->persist($postOut);
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('forum', ['topic' => $topic->getId()]);
-        }
-
+        $searchbar = $this->createForm(
+            SearchbarType::class, [
+                'search' => ''
+            ], [
+                'action' => $this->generateUrl('searchbar')
+            ]
+        )->createView();
 
         return $this->render('forum/index.html.twig', [
             'controller_name' => 'ForumController',
-            'categoryID' => $categoryID,
+           'categoryID' => $categoryID,
             'category' => $category,
             'topics' => $topics,
-            'topic' => $topic->getSubject(),
-            'topic_date' => $topicDate,
-            'posts' => $posts,
-            'post_now' => $postNow->createView(),
-            'topic_now' => $topicNow->createView(),
-            'upvotes' => $upvoteForms,
-            'searchbar' => $searchbar->createView(),
+            'topic_now' => $topicNow,
+            'searchbar' => $searchbar,
+        ]);
+    }
+
+    /**
+     * @Route("/forum/searchbar", name="searchbar")
+     */
+    public function searchbar(Request $request)
+    {
+        $form = $this->createForm(SearchbarType::class);
+        $form->handleRequest($request);
+
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Post::class);
+        $query = $repo->createQueryBuilder('p')
+            ->where('p.subject LIKE :keyword')
+            ->setParameter('keyword', '%' . $form->get('keywords')->getData() . '%')
+            ->getQuery();
+        $resultsFromPost = $query->getResult();
+
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Topic::class);
+        $query = $repo->createQueryBuilder('p')
+            ->where('p.subject LIKE :keyword')
+            ->setParameter('keyword', '%' . $form->get('keywords')->getData() . '%')
+            ->getQuery();
+        $resultsFromTopic = $query->getResult();
+
+        return $this->render('forum/searchResult.html.twig', [
+            'controller_name' => 'ForumController',
             'resultsFromPost' => $resultsFromPost,
             'resultsFromTopic' => $resultsFromTopic,
-
 
         ]);
     }
 
-
     /**
-     * @Route("/forum/upvote", name="upvote")
+     * @Route("/forum/addTopic", name="addTopic")
      */
-    public function upvote(Request $request)
+    public function addTopic (Request $request)
     {
-        $form = $this->createForm(UpvoteType::class);
+
+        $form = $this->createForm(TopicType::class);
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
-        }
+        //I hard coded this because we are still updating the forum...
+        $categoryCurrent = $this->getDoctrine()->getRepository(Category::class)->find('1');
+        $language = $this->getDoctrine()->getRepository(Language::class)->find('1');
 
-        /** @var Post $post */
-        $post = $this->getDoctrine()->getManager()->getRepository(Post::Class)->findOneBy(['id' => $form->get('post_id')->getData()]);
 
-        if ($post === null) {
-            $this->addFlash('error', 'This post does not exist!');
-            return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
-        }
-
-        if ($post->getUsers()->contains($this->getUser())) {
-            $this->addFlash('error', 'You already voted!');
-        } else {
-            $post->addUser($this->getUser());
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Your vote was registered!');
-        }
-
-        return $this->redirectToRoute('forum', ['topic' => $post->getTopic()->getId()]);
+        $topicOut = new Topic($form->get('subjectTopic')->getData(),$language, $this->getUser(), $categoryCurrent);
+        $topicOut->setCategory($categoryCurrent);
+        $this->getDoctrine()->getManager()->persist($topicOut);
+        $this->getDoctrine()->getManager()->flush();
+        return $this->redirectToRoute('forum');
     }
+
 }
