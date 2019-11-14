@@ -66,8 +66,7 @@ class User implements UserInterface
     private $created;
 
     /**
-
-     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="createdBy", orphanRemoval=true)
+ * @ORM\OneToMany(targetEntity="Question", mappedBy="createdBy", orphanRemoval=true)
      */
     private $topics;
 
@@ -81,8 +80,6 @@ class User implements UserInterface
      */
     private $upvote;
 
-   
-      
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
      */
@@ -232,14 +229,14 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Topic[]
+     * @return Collection|Question[]
      */
     public function getTopics(): Collection
     {
         return $this->topics;
     }
 
-    public function addTopic(Topic $topic): self
+    public function addTopic(Question $topic): self
     {
         if (!$this->topics->contains($topic)) {
             $this->topics[] = $topic;
@@ -249,7 +246,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeTopic(Topic $topic): self
+    public function removeTopic(Question $topic): self
     {
         if ($this->topics->contains($topic)) {
             $this->topics->removeElement($topic);

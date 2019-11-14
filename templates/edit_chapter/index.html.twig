@@ -11,7 +11,6 @@
 <div class="example-wrapper">
     <h1>Howdy Partner!</h1>
     <h3>Currently editing: Module {{ module.id }}, Chapter {{ chapter.chapterNumber }}</h3>
-    <hr>
     {{ form_start(form) }}
     {% for translation in form.translations %}
         <hr>
@@ -22,6 +21,14 @@
     {{ form_row(form.edit) }}
     {{ form_end(form) }}
     <hr>
+    <h3>This chapter contains {{ chapter.pages|length }} pages</h3>
+    <ul>
+        {% for page in chapter.pages %}
+            <li><a href="{{ path('edit_page', {chapter: chapter.id , page : page.id}) }}">Edit page {{ page.pageNumber }}</a></li>
+        {% endfor %}
+    </ul>
+    {{ form_start(createPage) }}
+    {{ form_end(createPage) }}
     <a href="{{ path('edit_module', {module : module.id}) }}">Back to Module</a>
 </div>
 {% endblock %}

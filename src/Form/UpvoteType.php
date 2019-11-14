@@ -1,26 +1,31 @@
 <?php
 
+
 namespace App\Form;
 
-use App\Entity\Chapter;
+
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CreateChapterType extends AbstractType
+class UpvoteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('add_a_chapter', SubmitType::class)
-        ;
+            ->add('post_id', HiddenType::class)
+            ->add('upvote', SubmitType::class, array('label' => 'Upvote'));
+
+        $builder->setMethod('POST');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Chapter::class,
+            'data_class' => null,
         ]);
     }
 }
