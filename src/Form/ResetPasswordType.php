@@ -35,7 +35,7 @@ class ResetPasswordType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('passwordRepeat')
+            ->add('passwordRepeat', PasswordType::class)
         ;
     }
 
