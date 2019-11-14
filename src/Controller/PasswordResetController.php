@@ -5,10 +5,8 @@ namespace App\Controller;
 use App\Entity\PwdResetToken;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
-use Doctrine\DBAL\Event\SchemaAlterTableEventArgs;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -18,7 +16,7 @@ class PasswordResetController extends AbstractController
     /**
      * @Route("/password-reset", name="password_reset")
      */
-    public function index()
+    public function index(\Swift_Mailer $mailer)
     {
         if (!isset($_POST["reset-request-submit"])) {
             return $this->render('password_reset/index.html.twig', [
@@ -26,17 +24,19 @@ class PasswordResetController extends AbstractController
         }
 
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $_POST["email"]]);
-        if(!$user){
+        if (!$user) {
             $this->addFlash(
                 'info',
                 'Please enter your correct email address again!'
             );
             return $this->render('password_reset/index.html.twig');
         }
+        // Create Password reset token & URL
+        $url = $this->createPwdResetToken($user);
+        // Send an E-mail to the user
+        $this->sendPwdResetEmail($user, $url, $mailer);
 
-        $this->createPwdResetToken($user);
-
-        // If everything(token creating; sending email) is fine then
+        // If everything is done, show the msg and take user to login page
         $this->addFlash(
             'info',
             'Email is sent, check your mail box!'
@@ -50,10 +50,11 @@ class PasswordResetController extends AbstractController
      */
     public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $selector= $request->query->get('selector');
-        $validator= $request->query->get('validator');
+        $selector = $request->query->get('selector');
+        $validator = $request->query->get('validator');
 
-        if(!isset($selector) || !isset($validator)){
+        // Throw error to the user with wrong URL
+        if (!isset($selector) || !isset($validator)) {
             $this->addFlash(
                 'info',
                 'Your request is not valid, please make new request again!'
@@ -61,33 +62,30 @@ class PasswordResetController extends AbstractController
             return $this->redirectToRoute('password_reset');
         }
 
-//        var_dump(ctype_xdigit($selector));
-//        var_dump(ctype_xdigit($selector));
-
         $form = $this->createForm(resetPasswordType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //step0 : hold all data I need to update - selector,validator,pwd,pwd-repeat,current date
-            $selector = $form ->getData()['selector']; // $_POST['reset_password']['selector']
-            $validator = $form ->getData()['validator']; // $_POST['reset_password']['validator']
+            //step0 : Hold all necessary data - selector,validator,pwd,pwd-repeat,current date
+            $selector = $form->getData()['selector'];
+            $validator = $form->getData()['validator'];
             $pwd = $_POST['reset_password']['password'];
             $pwdRepeat = $_POST['reset_password']['passwordRepeat'];
-            $currentDate = date("U"); //TODO recheck the correct type (string, int)
+            $currentDate = date("U");
 
-            //step1 : Input validation (password not empty? are they same?)
-            if(!$pwd || !$pwdRepeat || ($pwd!=$pwdRepeat)){
+            //step1 : Input validation (not empty? both are same?)
+            if (!$pwd || !$pwdRepeat || ($pwd != $pwdRepeat)) {
                 $this->addFlash(
                     'info',
-                    'Enter your password correctly!'
+                    'Enter your password correctly again!'
                 );
-                return  $this->redirect($_SERVER['HTTP_REFERER']);
+                return $this->redirect($_SERVER['HTTP_REFERER']);
             }
 
-            //step2 : find exact that token from DB (using selector)
+            //step2 : Find the right token from DB (using selector)
             $token = $this->getDoctrine()->getRepository(PwdResetToken::class)->findOneBy(['selector' => $selector]);
 
-            if(!$token){
+            if (!$token) {
                 $this->addFlash(
                     'info',
                     'invalid request, please request new mail to reset your password!'
@@ -95,8 +93,8 @@ class PasswordResetController extends AbstractController
                 return $this->render('password_reset/index.html.twig');
             }
 
-            //step3 : check time (token is expired or not), validator
-            if($currentDate > $token->getExpires()){
+            //step3 : check the token is expired or not
+            if ($currentDate > $token->getExpires()) {
                 $this->addFlash(
                     'info',
                     'your request is expired, please request new mail to reset your password!'
@@ -104,19 +102,28 @@ class PasswordResetController extends AbstractController
                 return $this->render('password_reset/index.html.twig');
             }
 
-            //step4 : find the user of that token and update the password with new
+            //step4 : Find the user of that token and validate
+            if (!password_verify(hex2bin($validator), $token->getToken())) {
+                $this->addFlash(
+                    'info',
+                    'invalid request, please request new mail to reset your password!'
+                );
+                return $this->render('password_reset/index.html.twig');
+            }
+
+            //step 5 : Update the password with new
             $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $token->getUser()->getID()]);
             $user->setPassword($passwordEncoder->encodePassword($user, $form->get('password')->getData()));
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
 
-            //step5 : remove the token
-            $entityManager->remove($token);
-            $entityManager->flush();
+            //step5 : Remove the token
+            $em->remove($token);
+            $em->flush();
 
             $this->addFlash(
                 'info',
-                'Updated your password successfully!, '. $user->getName()
+                'Updated your password successfully, ' . $user->getName()
             );
 
             return $this->redirectToRoute('app_login');
@@ -126,12 +133,13 @@ class PasswordResetController extends AbstractController
             'resetPasswordForm' => $form->createView(),
         ]);
     }
-    
 
-    private function createPwdResetToken(User $user)
+
+    private function createPwdResetToken(User $user): string
     {
         $em = $this->getDoctrine()->getManager();
-        // First, clean up old tokens if it exist
+
+        // Clean up old tokens if it exist
         $oldTokens = $this->getDoctrine()->getRepository(PwdResetToken::class)->findby(['user' => $user->getID()]);
 
         if ($oldTokens) {
@@ -139,33 +147,22 @@ class PasswordResetController extends AbstractController
                 $em->remove($oldToken);
             }
         }
+        // We have to flush because we removed all old tokens
         $em->flush();
 
-        // create new tokens(+ expires) for that email
+        // Create and save new tokens & return URL with them
         $selector = bin2hex(random_bytes(8));
         $token = random_bytes(32); // for user authentication
-        $expires = date("U") + 1800; // 1hour
         $url = "http://l2g.local/index.php/password-new?selector=" . $selector . "&validator=" . bin2hex($token);
-        $pwdToken = new PwdResetToken();
-        $pwdToken->setUser($user);
-        $pwdToken->setSelector($selector);
-        $pwdToken->setToken(password_hash($token, PASSWORD_DEFAULT)); // hashed token
-        $pwdToken->setExpires($expires);
+        $pwdToken = new PwdResetToken($user, $selector, $token);
         $em->persist($pwdToken);
         $em->flush();
 
-        // SEND EMAIL TO USER WITH THE URL
-        $this->sendPwdResetEmail($user, $url);
-
+        return $url;
     }
 
-    private function sendPwdResetEmail(User $user, String $url)
+    private function sendPwdResetEmail(User $user, String $url, \Swift_Mailer $mailer)
     {
-        $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', '25','tls'))
-        ->setUsername('bona.kim.dev@gmail.com')
-        ->setPassword('becode1!');
-
-        $mailer= new\Swift_Mailer(($transport));
         $message = (new \Swift_Message('Reset Password'))
             ->setFrom('no-reply@example.com')
             ->setTo($user->getEmail())
