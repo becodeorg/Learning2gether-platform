@@ -23,7 +23,7 @@ editor.toolbar.push(
             let stat = editor.getState(cm);
             let url = prompt('youtube link:');
 
-            const regex = /(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'> \r\n]+)(?![^<]*>)/;
+            const regex = /(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^?&"'> \r\n]+)(?![^<]*>)/;
             let m;
 
             if ((m = regex.exec(url)) !== null) {
@@ -34,8 +34,7 @@ editor.toolbar.push(
                 let videoId = m[1];
                 console.log(videoId);
 
-                let iframe = ['<iframe width=560 height=315 src="https://www.youtube.com/embed/', videoId, '" allowfullscreen></iframe>'];
-                _replaceSelection(cm, stat.image, iframe, url);
+                cm.replaceSelection('!!{embed}(' + videoId + ')');
             }
 
         },
@@ -98,7 +97,7 @@ function insertImage(src) {
 function setupImages() {
     let images = document.querySelectorAll('.imageClick');
     console.log(images);
-    if (remove === false){
+    if (remove === false) {
         images.forEach(function (item) {
             item.addEventListener('click', function () {
                 insertImage(item.currentSrc);
