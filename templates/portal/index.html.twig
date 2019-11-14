@@ -26,9 +26,13 @@
                     : {{ module.description(language) }}</a>
                 {% endfor %}
         </ul>
+        {% if is_granted('ROLE_PARTNER') %}
         <hr>
         <a href="{{ path('partner') }}">Partner Zone</a>
+        {% endif %}
         <hr>
         <a href="{{ path('profile') }}">My Profile</a>
+        <hr>
+        <a href="{{ path('app_logout') }}">Logout</a>
     </div>
 {% endblock %}
