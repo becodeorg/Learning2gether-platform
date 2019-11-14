@@ -9,8 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TopicRepository")
  */
-class Topic
+class Question
 {
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -94,7 +96,7 @@ class Topic
 
     public function getDateFormatted()
     {
-        
+        return $this->getDate()->format(self::DATE_FORMAT);
     }
 
     public function setDate(\DateTimeImmutable $date): void

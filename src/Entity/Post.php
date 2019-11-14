@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Post
 {
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -40,20 +42,20 @@ class Post
     private $users;
 
     /**
-     * @param Topic $topic
+     * @param Question $topic
      */
-    public function setTopic(Topic $topic): void
+    public function setTopic(Question $topic): void
     {
         $this->topic = $topic;
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Topic", inversedBy="posts", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Question", inversedBy="posts", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $topic;
 
-    public function __construct(string $subject, User $createdBy, Topic $topic)
+    public function __construct(string $subject, User $createdBy, Question $topic)
     {
         $this->subject = $subject;
         $this->createdBy = $createdBy;
@@ -82,6 +84,11 @@ class Post
     public function getDate(): \DateTimeInterface
     {
         return $this->date;
+    }
+
+    public function getDateFormatted()
+    {
+        return $this->getDate()->format(self::DATE_FORMAT);
     }
 
     public function setDate(\DateTimeInterface $date): self
@@ -131,7 +138,7 @@ class Post
         return $this;
     }
 
-    public function getTopic(): Topic
+    public function getTopic(): Question
     {
         return $this->topic;
     }

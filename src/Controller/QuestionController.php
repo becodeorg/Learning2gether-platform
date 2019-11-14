@@ -3,23 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Post;
-use App\Entity\Topic;
+use App\Entity\Question;
 use App\Form\PostType;
 use App\Form\UpvoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TopicController extends AbstractController
+class QuestionController extends AbstractController
 {
     /**
-     * @Route("/forum/topic/{topic}", name="topic", requirements={"topic"="\d+"})
+     * @Route("/forum/question/{question}", name="question", requirements={"question"="\d+"})
      */
-    public function index(Topic $topic)
+    public function index(Question $question)
     {
 
-        $topicDate = $topic->getDate()->format('Y-m-d H:i:s');;
-        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['topic' => $topic->getId()]);
+        $questionDate = $question->getDateFormatted();
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['topic' => $question->getId()]);
 
         $upvoteForms = [];
         foreach ($posts AS $post) {
@@ -35,16 +35,16 @@ class TopicController extends AbstractController
         $postForm = $this->createForm(
             PostType::class, [
             'subjectPost' => '',
-            'topic_id' => $topic->getId(),
+            'topic_id' => $question->getId(),
         ], [
                 'action' => $this->generateUrl('post')
             ]
         )->createView();
 
         return $this->render('topic/index.html.twig', [
-            'controller_name' => 'TopicController',
-            'topic' => $topic->getSubject(),
-            'topic_date' => $topicDate,
+            'controller_name' => 'QuestionController',
+            'topic' => $question->getSubject(),
+            'topic_date' => $questionDate,
             'posts' => $posts,
             'upvotes' => $upvoteForms,
             'postForm' => $postForm,
@@ -60,7 +60,7 @@ class TopicController extends AbstractController
         $form->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->redirectToRoute('topic', ['topic' => $post->getTopic()->getId()]);
+            return $this->redirectToRoute('question', ['topic' => $post->getTopic()->getId()]);
         }
 
         /** @var Post $post */
@@ -68,19 +68,19 @@ class TopicController extends AbstractController
 
         if ($post === null) {
             $this->addFlash('error', 'This post does not exist!');
-            return $this->redirectToRoute('topic', ['topic' => $post->getTopic()->getId()]);
+            return $this->redirectToRoute('question', ['question' => $post->getTopic()->getId()]);
         }
 
         if ($post->getUsers()->contains($this->getUser())) {
             $this->addFlash('error', 'You already voted!');
-            return $this->redirectToRoute('topic', ['topic' => $post->getTopic()->getId()]);
+            return $this->redirectToRoute('question', ['question' => $post->getTopic()->getId()]);
         } else {
             $post->addUser($this->getUser());
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Your vote was registered!');
         }
 
-        return $this->redirectToRoute('topic', ['topic' => $post->getTopic()->getId()]);
+        return $this->redirectToRoute('question', ['question' => $post->getTopic()->getId()]);
     }
 
     /**
@@ -91,11 +91,11 @@ class TopicController extends AbstractController
         $form = $this->createForm(PostType::class);
         $form->handleRequest($request);
 
-        /** @var Topic $topic */
-        $topic = $this->getDoctrine()->getManager()->getRepository(Topic::Class)->findOneBy(['id' => $form->get('topic_id')->getData()]);
+        /** @var Question $topic */
+        $topic = $this->getDoctrine()->getManager()->getRepository(Question::Class)->findOneBy(['id' => $form->get('topic_id')->getData()]);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->redirectToRoute('topic', ['topic' => $topic->getId()]);
+            return $this->redirectToRoute('question', ['question' => $topic->getId()]);
         }
 
 
@@ -105,6 +105,6 @@ class TopicController extends AbstractController
 
         $this->getDoctrine()->getManager()->persist($postOut);
         $this->getDoctrine()->getManager()->flush();
-        return $this->redirectToRoute('topic', ['topic' => $topic->getId()]);
+        return $this->redirectToRoute('question', ['question' => $topic->getId()]);
     }
 }

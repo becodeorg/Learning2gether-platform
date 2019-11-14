@@ -24,7 +24,7 @@ class Category
     private $translations;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="category", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="category", orphanRemoval=true)
      */
     private $topics;
 
@@ -75,7 +75,7 @@ class Category
         return $this->topics;
     }
 
-    public function addTopic(Topic $topic): self
+    public function addTopic(Question $topic): self
     {
         if (!$this->topics->contains($topic)) {
             $this->topics[] = $topic;
@@ -85,7 +85,7 @@ class Category
         return $this;
     }
 
-    public function removeTopic(Topic $topic): self
+    public function removeTopic(Question $topic): self
     {
         if ($this->topics->contains($topic)) {
             $this->topics->removeElement($topic);

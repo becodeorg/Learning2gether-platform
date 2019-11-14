@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TopicType  extends AbstractType
+class QuestionType  extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,7 +19,7 @@ class TopicType  extends AbstractType
             ->add('subjectTopic', TextType::class)
             ->add('language', HiddenType::class)
             ->add('category', HiddenType::class)
-            ->add('postTopic', SubmitType::class, array('label' => 'Topic'));
+            ->add('postTopic', SubmitType::class, array('label' => 'Question'));
 
         $builder->setMethod('POST');
 

@@ -6,15 +6,15 @@
 
 <h3>Search results</h3>
 <p>From Topics</p>
-{% for results in resultsFromTopic %}
-    <a href="{{ path('topic', {'topic': results.id}) }}"><br>
+{% for results in resultsFromQuestion %}
+    <a href="{{ path('question', {'question': results.id}) }}"><br>
         {{ results.subject }}<br>
     </a>
 {% endfor %}
 <br><br>
 <p>From Posts</p>
 {% for results in resultsFromPost %}
-    <a href="{{ path('topic', {'topic': results.topic.id}) }}"><br>
+    <a href="{{ path('question', {'question': results.topic.id}) }}"><br>
         {{ results.subject }}<br>
     </a>
 {% endfor %}

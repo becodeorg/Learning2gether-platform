@@ -6,11 +6,11 @@ use App\Entity\Category;
 use App\Entity\CategoryTranslation;
 use App\Entity\Language;
 use App\Entity\Post;
-use App\Entity\Topic;
+use App\Entity\Question;
 use App\Entity\User;
 use App\Form\PostType;
 use App\Form\SearchbarType;
-use App\Form\TopicType;
+use App\Form\QuestionType;
 use App\Form\UpvoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -29,36 +29,20 @@ class ForumController extends AbstractController
     public function index()
     {
 
-
         //hard coded out of scope of current ticket
         $categoryID = $this->getDoctrine()->getRepository(Category::class)->find('1')->getId();
-
         $category = $this->getDoctrine()->getRepository(CategoryTranslation::class)->find('1')->getTitle();
-        //setting up the topic (hard coded)
-        $categoryCurrent = $this->getDoctrine()->getRepository(Category::class)->find('1');
-        $language = $this->getDoctrine()->getRepository(Language::class)->find('1');
 
         //display all topics
-        $topics = $this->getDoctrine()->getRepository(Topic::class)->findAll();
+        $questions = $this->getDoctrine()->getRepository(Question::class)->findAll();
 
-        //display the current topic by Getter
-        //$topic = $this->getDoctrine()->getRepository(Topic::class)->find($_GET['topic_id']);
-       // $topicDate = $topic->getDate()->format('Y-m-d H:i:s');;
-
-        //small form to post topic
-     /*   $topicNow = $this->createFormBuilder()
-            ->add('subjectTopic', TextType::class)
-            ->add('postTopic', SubmitType::class, array('label' => 'Add Topic'))
-            ->getForm()->createView();  */
-
-
-        $topicNow = $this->createForm(
-            TopicType::class, [
+        $addQuestion = $this->createForm(
+            QuestionType::class, [
             'subjectTopic' => '',
             'language' => "",
             'category' => "",
         ], [
-                'action' => $this->generateUrl('addTopic')
+                'action' => $this->generateUrl('addQuestion')
             ]
         )->createView();
 
@@ -74,8 +58,8 @@ class ForumController extends AbstractController
             'controller_name' => 'ForumController',
            'categoryID' => $categoryID,
             'category' => $category,
-            'topics' => $topics,
-            'topic_now' => $topicNow,
+            'questions' => $questions,
+            'addQuestion' => $addQuestion,
             'searchbar' => $searchbar,
         ]);
     }
@@ -97,28 +81,28 @@ class ForumController extends AbstractController
         $resultsFromPost = $query->getResult();
 
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Topic::class);
+        $repo = $em->getRepository(Question::class);
         $query = $repo->createQueryBuilder('p')
             ->where('p.subject LIKE :keyword')
             ->setParameter('keyword', '%' . $form->get('keywords')->getData() . '%')
             ->getQuery();
-        $resultsFromTopic = $query->getResult();
+        $resultsFromQuestion = $query->getResult();
 
         return $this->render('forum/searchResult.html.twig', [
             'controller_name' => 'ForumController',
             'resultsFromPost' => $resultsFromPost,
-            'resultsFromTopic' => $resultsFromTopic,
+            'resultsFromQuestion' => $resultsFromQuestion,
 
         ]);
     }
 
     /**
-     * @Route("/forum/addTopic", name="addTopic")
+     * @Route("/forum/addQuestion", name="addQuestion")
      */
-    public function addTopic (Request $request)
+    public function addQuestion (Request $request)
     {
 
-        $form = $this->createForm(TopicType::class);
+        $form = $this->createForm(QuestionType::class);
         $form->handleRequest($request);
 
         //I hard coded this because we are still updating the forum...
@@ -126,9 +110,9 @@ class ForumController extends AbstractController
         $language = $this->getDoctrine()->getRepository(Language::class)->find('1');
 
 
-        $topicOut = new Topic($form->get('subjectTopic')->getData(),$language, $this->getUser(), $categoryCurrent);
-        $topicOut->setCategory($categoryCurrent);
-        $this->getDoctrine()->getManager()->persist($topicOut);
+        $questionOut = new Question($form->get('subjectTopic')->getData(),$language, $this->getUser(), $categoryCurrent);
+        $questionOut->setCategory($categoryCurrent);
+        $this->getDoctrine()->getManager()->persist($questionOut);
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('forum');
     }
