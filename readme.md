@@ -61,3 +61,11 @@ The run the following command in the project root:
 - [Summary of the features required](https://docs.google.com/document/d/1Zps_QZvev8AFjrzgFvTFNxEYxrnZHyXtU2FgkRBko6U/edit?usp=sharing)
 - [Symfony documentation](https://symfony.com/doc/current/index.html)
 - [The symfony maker bundle](https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html)
+
+### Security 
+It is easy to prevent pages to be accessible only for logged in user or partners.
+
+If you want to protect a page you need to start the route with a certain prefix:
+
+- portal/ (only for logged in users)
+- partner/ (only for partners)
