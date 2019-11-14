@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PwdResetToken
 {
+    const TOKEN_DURATION_IN_HOURS = 1800;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -36,6 +38,21 @@ class PwdResetToken
      * @ORM\Column(type="string", length=255)
      */
     private $expires;
+
+    /**
+     * PwdResetToken constructor.
+     * @param $user
+     * @param $selector
+     * @param $token
+     */
+    public function __construct(User $user, string $selector, string $token)
+    {
+        $this->user = $user;
+        $this->selector = $selector;
+        $this->token = password_hash($token, PASSWORD_DEFAULT);
+        $this->expires = date("U") + self::TOKEN_DURATION_IN_HOURS;
+    }
+
 
     public function getId(): ?int
     {
