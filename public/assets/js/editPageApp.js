@@ -86,3 +86,7 @@ function _replaceSelection(cm, active, startEnd, url) {
     cm.setSelection(startPoint, endPoint);
     cm.focus();
 }
+
+function insertImage(url) {
+    console.log('test');
+}

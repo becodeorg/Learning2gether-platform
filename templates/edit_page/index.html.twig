@@ -39,7 +39,7 @@
                         {# {{ form_end(uploader) }}#}
                         {# <hr>#}
                         {% for image in imagesAll %}
-                            <img src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
+                            <img onclick="insertImage({{ image.src }})" src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
