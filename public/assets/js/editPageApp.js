@@ -1,8 +1,9 @@
-
 // create new editor, on default it binds itself to the first textarea on the page
 let editor = new SimpleMDE();
 
-// the next few lines remove their guide manual from the toolbar so we can add our own personal one.
+let remove = false; // bool for eventlisteners
+
+// the next lines remove their guide manual from the toolbar so we can add our own personal one.
 editor.gui.toolbar.remove();
 editor.toolbar.splice(editor.toolbar.length - 2, 2);
 editor.toolbar.push(
@@ -10,6 +11,7 @@ editor.toolbar.push(
         name: "Link",
         action: function showImageModal() {
             $("#imageModal").modal('show');
+            setupImages();
         },
         className: "fa fa-picture-o",
         title: "Add image",
@@ -87,6 +89,21 @@ function _replaceSelection(cm, active, startEnd, url) {
     cm.focus();
 }
 
-function insertImage(url) {
-    console.log('test');
+function insertImage(src) {
+    let cm = editor.codemirror;
+    cm.replaceSelection("![image](" + src + ")");
+    $("#imageModal").modal('hide');
+}
+
+function setupImages() {
+    let images = document.querySelectorAll('.imageClick');
+    console.log(images);
+    if (remove === false){
+        images.forEach(function (item) {
+            item.addEventListener('click', function () {
+                insertImage(item.currentSrc);
+            })
+        });
+        remove = true;
+    }
 }
