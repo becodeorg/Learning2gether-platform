@@ -40,11 +40,6 @@
     </button>
     <p>
     <a href= {{ path('password_reset') }}>Forgot your password?</a>
-    {% for message in app.flashes('info') %}
-        <div class="alert alert-warning">
-            {{ message }}
-        </div>
-    {% endfor %}
     </p>
 
 </form>
