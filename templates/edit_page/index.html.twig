@@ -18,24 +18,32 @@
     </style>
 
     <!-- Modal -->
-    <div id="imageModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="imageModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Select a picture to insert</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
+                        <a class="btn btn-success" href="{{ path('upload_content') }}">Upload an image</a><br/>
+                        <strong>You have to reload the page for images to appear in this window, use the save button to
+                            store any changes.</strong>
+                        <hr>
+                        {# code to create form #}
+                        {# {{ form_start(uploader) }}#}
+                        {# {{ form_end(uploader) }}#}
+                        {# <hr>#}
                         {% for image in imagesAll %}
-                        <img src="{{ asset('uploads/' ~ image.src) }}" width="500px" height="500px" alt="">
+                            <img src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -44,6 +52,9 @@
 
     <div class="example-wrapper">
         <h1>Howdy Partner!</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
         <p>Here we want to edit a page's content using markdown. How do we let the user select/decide which language to
             edit?</p>
         <hr>
@@ -53,10 +64,12 @@
     </div>
 
 
-    <!-- cdn for the beautiful markdown editor -->
+    <!-- markdown editor -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <!-- /markdown editor -->
 
+    <!-- bootstrap js -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -66,97 +79,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
             integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
             crossorigin="anonymous"></script>
+    <!-- /bootstrap js -->
 
-    <!-- js to create the editor and customize the toolbar -->
-    <script>
-
-        // create new editor, on default it binds itself to the first textarea on the page
-        let editor = new SimpleMDE();
-
-        // the next few lines remove their guide manual from the toolbar so we can add our own personal one.
-        editor.gui.toolbar.remove();
-        editor.toolbar.splice(editor.toolbar.length - 2, 2);
-        editor.toolbar.push(
-            {
-                name: "Link",
-                action: function showImageModal() {
-                    $("#imageModal").modal('show');
-                },
-                className: "fa fa-picture-o",
-                title: "Add image",
-            },
-            {
-                name: "youtube link",
-                action: function addYoutubeEmbed() {
-                    const cm = editor.codemirror;
-                    let stat = editor.getState(cm);
-                    let url = prompt('youtube link:');
-
-                    const regex = /(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'> \r\n]+)(?![^<]*>)/;
-                    let m;
-
-                    if ((m = regex.exec(url)) !== null) {
-                        // The result can be accessed through the `m`-variable.
-                        m.forEach((match, groupIndex) => {
-                            console.log(`Found match, group ${groupIndex}: ${match}`);
-                        });
-                        let videoId = m[1];
-                        console.log(videoId);
-
-                        let iframe = ['<iframe width=560 height=315 src="https://www.youtube.com/embed/', videoId, '" allowfullscreen></iframe>'];
-                        _replaceSelection(cm, stat.image, iframe, url);
-                    }
-
-                },
-                className: "fa fa-star",
-                title: "Youtube",
-            },
-            {
-                name: "Link",
-                action: "http://google.com", // here the link to our markdown manual would be
-                className: "fa fa-question-circle",
-                title: "Our Markdown Guide",
-            },
-        );
-        editor.createToolbar();
-
-        // onchange function for the editor, for testing purposes
-        editor.codemirror.on("change", function () {
-            console.log(editor.value());
-        });
-
-        function _replaceSelection(cm, active, startEnd, url) {
-            if (/editor-preview-active/.test(cm.getWrapperElement().lastChild.className))
-                return;
-
-            let text;
-            let start = startEnd[0];
-            let mid = startEnd[1];
-            let end = startEnd[2];
-            let startPoint = cm.getCursor("start");
-            let endPoint = cm.getCursor("end");
-            if (url) {
-                mid = mid.replace("#url#", url);
-            }
-            if (active) {
-                text = cm.getLine(startPoint.line);
-                start = text.slice(0, startPoint.ch);
-                mid = text.slice(startPoint.ch);
-                cm.replaceRange(start + mid, {
-                    line: startPoint.line,
-                    ch: 0
-                });
-            } else {
-                text = cm.getSelection();
-                cm.replaceSelection(start + text + mid + end);
-                startPoint.ch += start.length;
-                if (startPoint !== endPoint) {
-                    endPoint.ch += start.length;
-                }
-            }
-            cm.setSelection(startPoint, endPoint);
-            cm.focus();
-        }
-    </script>
+    <!-- custom js for this page -->
+    <script src="{{ asset('assets/js/editPageApp.js') }}"></script>
 
 {% endblock %}
