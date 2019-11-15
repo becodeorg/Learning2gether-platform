@@ -23,6 +23,8 @@
         <a href="{{ path('partner') }}">Back to Partner Zone</a>
         <hr>
         <h3>Currently editing: Module {{ module.id }}</h3>
+        <img src="{{ asset('uploads/' ~ module.image) }}" alt="module image">
+        {{ form(uploader) }}
 
         {{ form_start(form) }}
         {% for translation in form.translations %}

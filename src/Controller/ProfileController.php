@@ -75,7 +75,6 @@ class ProfileController extends AbstractController
             $uploads_directory = $this->getParameter('uploads_directory');
             //hash unique new avatar
             $filename = md5(uniqid('', true)) . '.' . $avatar->guessExtension();
-            $originalPath = pathinfo($request->files->get('edit_profile')['avatar']);
 
             $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'id' => $user->getId()]);
             $avatarImage->setName($avatar->getClientOriginalName());

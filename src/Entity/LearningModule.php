@@ -52,7 +52,7 @@ class LearningModule
     private $chapters;
 
     //default for isPublished is set to false
-    public function __construct(string $badge, string $image, string $type, bool $isPublished=false)
+    public function __construct(string $badge, string $image, string $type, bool $isPublished = false)
     {
         $this->translations = new ArrayCollection();
         $this->chapters = new ArrayCollection();
@@ -106,7 +106,7 @@ class LearningModule
         $this->image = $image;
     }
 
-    public function getType() : string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -116,18 +116,12 @@ class LearningModule
         $this->type = $type;
     }
 
-    public function getTranslations(): Collection
-    {
-        return $this->translations;
-    }
-
     public function addTranslation(LearningModuleTranslation $translation): self
     {
         if (!$this->translations->contains($translation)) {
             $this->translations[] = $translation;
             $translation->setLearningModule($this);
         }
-
         return $this;
     }
 
@@ -140,7 +134,6 @@ class LearningModule
                 $translation->setLearningModule(null);
             }
         }
-
         return $this;
     }
 
@@ -151,6 +144,11 @@ class LearningModule
                 return $translation->getTitle();//change this line if needed when copied
             }
         }
+    }
+
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
     }
 
     public function getDescription(Language $language)
@@ -175,7 +173,6 @@ class LearningModule
         if (!$this->chapters->contains($chapter)) {
             $this->chapters[] = $chapter;
         }
-
         return $this;
     }
 
@@ -183,8 +180,7 @@ class LearningModule
     {
         if ($this->chapters->contains($chapter)) {
             $this->chapters->removeElement($chapter);
-            }
-
+        }
         return $this;
     }
 

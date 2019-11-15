@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Chapter;
 use App\Entity\ChapterTranslation;
+use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Entity\LearningModuleTranslation;
@@ -11,6 +12,8 @@ use App\Entity\Quiz;
 use App\Form\CreateChapterType;
 use App\Form\EditModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,15 +31,47 @@ class EditModuleController extends AbstractController
 
         $module = $this->getModuleAndTranslations($module);
         $newChapter = new Chapter($module);
+        $user = $this->getUser();
 
         $form = $this->createForm(EditModuleType::class, $module);
         $form->handleRequest($request);
         $chapterBtn = $this->createForm(CreateChapterType::class, $newChapter);
         $chapterBtn->handleRequest($request);
 
+        $uploader = $this->createFormBuilder()
+            ->add('upload', FileType::class)
+            ->add('submit', SubmitType::class)
+            ->getForm();
+
+        $uploader->handleRequest($request);
+
         if ($chapterBtn->isSubmitted() && $chapterBtn->isValid()) {
             $this->createAndAddChapter($newChapter, $module);
             $this->flushUpdatedModule($module);
+        }
+
+        if ($uploader->isSubmitted() && $uploader->isValid()){
+            $fileToDelete = $module->getImage();
+            $uploadedImage = $uploader->getData()['upload'];
+            $uploads_directory = $this->getParameter('uploads_directory');
+            $filename = md5(uniqid('', true)) . '.' . $uploadedImage->guessExtension();
+            $prevImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'module', 'src' => $fileToDelete]);
+            $prevImage->setSrc($filename);
+            $prevImage->setName($uploadedImage->getClientOriginalName());
+            $user->addImage($prevImage);
+            $module->setImage($filename);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $uploadedImage->move(
+                $uploads_directory,
+                $filename
+            );
+
+            unlink($uploads_directory. '/' .$fileToDelete);
+
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -50,6 +85,7 @@ class EditModuleController extends AbstractController
             'module' => $module,
             'form' => $form->createView(),
             'addchapter' => $chapterBtn->createView(),
+            'uploader' => $uploader->createView(),
         ]);
     }
 

@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Entity\LearningModuleTranslation;
 use App\Form\CreateModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,8 +34,11 @@ class CreateModuleController extends AbstractController
         // check if the form is submitted/posted
         if ($form->isSubmitted() && $form->isValid()) {
             $newTranslations = $_POST['create_module']['translations'];
+
             if ($this->isOneTranslationFilledIn($newTranslations)) {
                 $module = $form->getData();
+                $filename = $this->createImage($request->files->get('create_module')['image']);
+                $module->setImage($filename);
                 $this->flushNewModule($module);
                 return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             }
@@ -84,5 +89,24 @@ class CreateModuleController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);
         $entityManager->flush();
+    }
+
+    public function createImage(UploadedFile $uploadedImage): string
+    {
+        $uploads_directory = $this->getParameter('uploads_directory');
+
+        $filename = md5(uniqid('', true)) . '.' . $uploadedImage->guessExtension();
+        $newImage = new Image($uploadedImage->getClientOriginalName(), $filename, $this->getUser(), 'module');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newImage);
+        $em->flush();
+
+        $uploadedImage->move(
+            $uploads_directory,
+            $filename
+        );
+
+        return $filename;
     }
 }
