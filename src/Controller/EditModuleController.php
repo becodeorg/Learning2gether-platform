@@ -18,20 +18,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class EditModuleController extends AbstractController
 {
     /**
-     * @Route("/edit/module", name="edit_module")
+     * @Route("/partner/edit/module/{module}", name="edit_module", requirements={"module"= "\d+"})
      * @param Request $request
+     * @param LearningModule $module
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, LearningModule $module): Response
     {
-        // check the $_GET['module'], has to be set, and an integer, if not, redirects back to partner zone
-        if (isset($_GET['module']) && ctype_digit((string)$_GET['module'])) {
-            $moduleID = $_GET['module'];
-        } else {
-            return $this->redirectToRoute('partner');
-        }
 
-        $module = $this->getModuleAndTranslations($moduleID);
+        $module = $this->getModuleAndTranslations($module);
         $newChapter = new Chapter($module);
 
         $form = $this->createForm(EditModuleType::class, $module);
@@ -59,21 +54,21 @@ class EditModuleController extends AbstractController
     }
 
     /**
-     * @param $moduleID
-     * @return LearningModule|object|null
+     * @param LearningModule $module
+     * @return LearningModule
      */
-    public function getModuleAndTranslations(int $moduleID): LearningModule
+    public function getModuleAndTranslations(LearningModule $module): LearningModule
     {
         // Preparing a module object for the form
         // Gets all languages from DB
         $languagesAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
         // Gets the current module from DB
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($module);
         // foreach language in the DB, find the translation for the current module
         foreach ($languagesAll as $language) {
             $translations = $this->getDoctrine()->getRepository(LearningModuleTranslation::class)->findBy([
                 'language' => $language->getId(),
-                'learningModule' => $moduleID
+                'learningModule' => $module->getId()
             ]);
             // add all found translations to the module object
             foreach ($translations as $translation) {

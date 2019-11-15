@@ -1,7 +1,8 @@
 // create new editor, on default it binds itself to the first textarea on the page
 let editor = new SimpleMDE();
 
-let remove = false; // bool for eventlisteners
+// bool for eventlisteners
+let remove = false;
 
 // the next lines remove their guide manual from the toolbar so we can add our own personal one.
 editor.gui.toolbar.remove();
@@ -50,43 +51,16 @@ editor.toolbar.push(
 );
 editor.createToolbar();
 
-// onchange function for the editor, for testing purposes
+let changes = false;
+// onchange function to look for changes to prevent leaving without saving
 editor.codemirror.on("change", function () {
-    console.log(editor.value());
+    if (changes === false){
+        window.onbeforeunload = function(event){
+            event.returnValue = true;
+        };
+        changes = true;
+    }
 });
-
-function _replaceSelection(cm, active, startEnd, url) {
-    if (/editor-preview-active/.test(cm.getWrapperElement().lastChild.className))
-        return;
-
-    let text;
-    let start = startEnd[0];
-    let mid = startEnd[1];
-    let end = startEnd[2];
-    let startPoint = cm.getCursor("start");
-    let endPoint = cm.getCursor("end");
-    if (url) {
-        mid = mid.replace("#url#", url);
-    }
-    if (active) {
-        text = cm.getLine(startPoint.line);
-        start = text.slice(0, startPoint.ch);
-        mid = text.slice(startPoint.ch);
-        cm.replaceRange(start + mid, {
-            line: startPoint.line,
-            ch: 0
-        });
-    } else {
-        text = cm.getSelection();
-        cm.replaceSelection(start + text + mid + end);
-        startPoint.ch += start.length;
-        if (startPoint !== endPoint) {
-            endPoint.ch += start.length;
-        }
-    }
-    cm.setSelection(startPoint, endPoint);
-    cm.focus();
-}
 
 function insertImage(src) {
     let cm = editor.codemirror;

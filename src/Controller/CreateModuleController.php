@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CreateModuleController extends AbstractController
 {
     /**
-     * @Route("/create/module", name="create_module")
+     * @Route("/partner/create/module", name="create_module")
      * @param Request $request
      * @return Response
      */
@@ -37,9 +37,8 @@ class CreateModuleController extends AbstractController
                 $this->flushNewModule($module);
                 return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             }
-            echo 'Please fill in at least one language!';
+            $this->addFlash('error', 'please fill in at least one language');
         }
-
 
         return $this->render('create_module/index.html.twig', [
             'controller_name' => 'CreateModuleController',

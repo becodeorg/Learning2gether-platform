@@ -22,27 +22,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class EditPageController extends AbstractController
 {
     /**
-     * @Route("/edit/page", name="edit_page")
+     * @Route("/partner/edit/module/{module}/chapter/{chapter}/page/{page}", name="edit_page", requirements={
+     *     "module" = "\d+",
+     *     "chapter" = "\d+",
+     *     "page" = "\d+"
+     * })
      * @param Request $request
+     * @param LearningModule $module
+     * @param Chapter $chapter
+     * @param ChapterPage $page
      * @return Response
      */
-    public function index(Request $request, Request $test): Response
+    public function index(Request $request, LearningModule $module, Chapter $chapter, ChapterPage $page): Response
     {
-        $language = $this->getDoctrine()->getRepository(Language::class)->find(1); // only english hardcoded for now
-        // dropdown menu for language select ??
+        $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy([
+            'code' => $request->getLocale()
+        ]);
 
-        // check the $_GET vars, they have to be set, and integers, if not, redirects back to partner
-        if (isset($_GET['page'], $_GET['chapter']) && ctype_digit((string)$_GET['page']) && ctype_digit((string)$_GET['chapter'])) {
-            //get this Module
-            $pageID = $_GET['page'];
-            $chapterID = $_GET['chapter'];
-        } else {
-            return $this->redirectToRoute('partner');
-        }
-
-        $page = $this->getDoctrine()->getRepository(ChapterPage::class)->find($pageID);
-        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($chapterID);
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($chapter->getLearningModule());
+        $page = $this->getDoctrine()->getRepository(ChapterPage::class)->find($page);
+        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($chapter);
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($module);
         $pageTl = $this->getDoctrine()->getRepository(ChapterPageTranslation::class)->findOneBy(['language' => $language, 'chapterPage' => $page]);
 
         // form creator for uploader
@@ -67,7 +66,7 @@ class EditPageController extends AbstractController
             ->add('save_changes', SubmitType::class)
             ->getForm();
 
-        $form->handleRequest($test);
+        $form->handleRequest($request);
 
         // code for handling the upload form, if we ever need it
 //        if ($uploader->isSubmitted() && $uploader->isValid()){

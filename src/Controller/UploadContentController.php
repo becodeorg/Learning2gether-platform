@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UploadContentController extends AbstractController
 {
     /**
-     * @Route("/upload/content", name="upload_content")
+     * @Route("partner/upload/content", name="upload_content")
      * @param Request $request
      * @return Response
      */

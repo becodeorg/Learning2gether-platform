@@ -24,7 +24,7 @@
     <h3>This chapter contains {{ chapter.pages|length }} pages</h3>
     <ul>
         {% for page in chapter.pages %}
-            <li><a href="{{ path('edit_page', {chapter: chapter.id , page : page.id}) }}">Edit page {{ page.pageNumber }}</a></li>
+            <li><a href="{{ path('edit_page', {module: module.id , chapter: chapter.id , page : page.id}) }}">Edit page {{ page.pageNumber }}</a></li>
         {% endfor %}
     </ul>
     {{ form_start(createPage) }}

@@ -17,24 +17,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class EditChapterController extends AbstractController
 {
     /**
-     * @Route("/edit/chapter", name="edit_chapter")
+     * @Route("/partner/edit/module/{module}/chapter/{chapter}", name="edit_chapter", requirements={
+     *     "module" = "\d+",
+     *     "chapter" = "\d+"
+     * })
      * @param Request $request
+     * @param LearningModule $module
+     * @param Chapter $chapter
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, LearningModule $module, Chapter $chapter): Response
     {
-        // check the $_GET vars, they have to be set, and integers, if not, redirects back to partner
-        if (isset($_GET['module'], $_GET['chapter']) && ctype_digit((string)$_GET['module']) && ctype_digit((string)$_GET['chapter'])) {
-            //get this Module
-            $moduleID = $_GET['module'];
-            $chapterID = $_GET['chapter'];
-        } else {
-            return $this->redirectToRoute('partner');
-        }
 
         // find the current module and the current chapter
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
-        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($chapterID);
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($module);
+        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($chapter);
 
         // Create translation form
         $form = $this->createForm(EditChapterType::class, $chapter);
@@ -58,7 +55,7 @@ class EditChapterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $updatedChapter = $form->getData();
             $this->flushUpdatedChapter($updatedChapter);
-            return $this->redirectToRoute('edit_module', ['module' => $moduleID]);
+            return $this->redirectToRoute('edit_module/{module}', ['module' => $module->getId()]);
         }
 
         return $this->render('edit_chapter/index.html.twig', [

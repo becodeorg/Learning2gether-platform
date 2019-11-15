@@ -16,9 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class ModuleController extends AbstractController
 {
     /**
-     * @Route("/{_locale}/module", name="module")
+     * @Route("/portal/module/{module}", name="module", requirements={"module" = "\d+"})
+     * @param Request $request
+     * @param LearningModule $module
+     * @return Response
      */
-    public function module(Request $request): Response
+    public function module(Request $request, LearningModule $module): Response
     {
 //        //initialise badgr object
 //        $badgrObj = new Badgr;
@@ -53,14 +56,6 @@ class ModuleController extends AbstractController
         $languageId = $user->getLanguage()->getId();
         $language = $this->getDoctrine()->getRepository(Language::class)->find($languageId);
 
-        // check the $_GET['module'], has to be set, and an integer, if not, redirects back to portal
-        if (isset($_GET['module']) && ctype_digit((string)$_GET['module'])) {
-            //get this Module
-            $moduleID = $_GET['module'];
-        } else {
-            return $this->redirectToRoute('partner');
-        }
-
         //initialise badgr object
         $badgrObj = new Badgr;
 
@@ -71,7 +66,7 @@ class ModuleController extends AbstractController
         //user = logged in user
         $user = $this->getUser();
 
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
+        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($module);
 
         //$moduleBadge = $module->getBadge();
 
