@@ -18,49 +18,49 @@ class ProfileController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        //initialise badgr object
-        $badgrObj = new Badgr;
-
-        function getSession(Badgr $badgrObj){
-            //check if we already have refreshtoken
-            if(isset($_SESSION['refreshToken'])){
-                $refreshToken = $_SESSION['refreshToken'];
-                $badgrObj->getTokenData($refreshToken);
-            }
-            //if we don't, do the initial authentication to get it
-            else{
-                //this getPassword is so I don't reveal my personal pass, we use my (Tim) account for badgr atm
-                $password = $badgrObj->getPassword();
-                $badgrObj->initialise($password);
-            }
-        }
-
-        function getAccessToken(Badgr $badgrObj){
-            $accessToken = $_SESSION['accessToken'];
-            return $accessToken;
-            // disgusting
-        }
-
-        getSession($badgrObj);
-        $accessToken = getAccessToken($badgrObj);
+//        //initialise badgr object
+//        $badgrObj = new Badgr;
+//
+//        function getSession(Badgr $badgrObj){
+//            //check if we already have refreshtoken
+//            if(isset($_SESSION['refreshToken'])){
+//                $refreshToken = $_SESSION['refreshToken'];
+//                $badgrObj->getTokenData($refreshToken);
+//            }
+//            //if we don't, do the initial authentication to get it
+//            else{
+//                //this getPassword is so I don't reveal my personal pass, we use my (Tim) account for badgr atm
+//                $password = $badgrObj->getPassword();
+//                $badgrObj->initialise($password);
+//            }
+//        }
+//
+//        function getAccessToken(Badgr $badgrObj){
+//            $accessToken = $_SESSION['accessToken'];
+//            return $accessToken;
+//            // disgusting
+//        }
+//
+//        getSession($badgrObj);
+//        $accessToken = getAccessToken($badgrObj);
 
         $user = $this->getUser();
 
         //For some unholy reason this is required for the rest to work
-        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find('1');
-        $user->addBadge($testModule);
+//        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find('1');
+//        $user->addBadge($testModule);
 
         //get all badges from user
-        $badgesData = $user->getBadges();
-        $badges = $badgesData->getSnapshot();
-        //put all badge keys in userBadges
-        $badgeKeys = [];
-        foreach ($badges as &$badgeData) {
-            $badgeKey = $badgeData->getBadge();
-            $badgeKeys[] = $badgeKey;
-        }
+//        $badgesData = $user->getBadges();
+//        $badges = $badgesData->getSnapshot();
+//        //put all badge keys in userBadges
+//        $badgeKeys = [];
+//        foreach ($badges as &$badgeData) {
+//            $badgeKey = $badgeData->getBadge();
+//            $badgeKeys[] = $badgeKey;
+//        }
         //pass userBadges with keys and the user to the getAllBadges method
-        $userBadges = $badgrObj->getAllBadges($badgeKeys, $user, $accessToken);
+//        $userBadges = $badgrObj->getAllBadges($badgeKeys, $user, $accessToken);
 
         $form = $this->createForm(EditProfileType::class, $user);
         $form->handleRequest($request);
@@ -101,8 +101,8 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
-            'badgeKeys' => $badgeKeys,
-            'userBadges' => $userBadges,
+//            'badgeKeys' => $badgeKeys,
+//            'userBadges' => $userBadges,
             'user' => $user,
             'profileForm' => $form->createView(),
         ]);
