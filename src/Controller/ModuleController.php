@@ -70,15 +70,20 @@ class ModuleController extends AbstractController
         //$moduleBadge = $module->getBadge();
 
         //when module completed, give badge
-        $completed = false;
-        if($completed === true){
-            //add badge from this module to user
-            $badgrObj->addBadgeToUser($module, $user, $accessToken);
-            $user->addBadge($module);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-        }
+//        $completed = false;
+//        if($completed === true){
+//            //add badge from this module to user
+//            $badgrObj->addBadgeToUser($module, $user, $accessToken);
+//            $user->addBadge($module);
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->persist($user);
+//            $entityManager->flush();
+//        }
+
+        // create the classes needed for parsing markdown to html, and finding and replacing yt links with an iplayer
+        $parsedown = new Parsedown();
+        $parsedown->setSafeMode(true);
+        $mdParser = new MdParser();
 
         return $this->render('module/index.html.twig', [
             'controller_name' => 'ModuleController',

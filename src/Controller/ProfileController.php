@@ -38,6 +38,7 @@ class ProfileController extends AbstractController
         function getAccessToken(Badgr $badgrObj){
             $accessToken = $_SESSION['accessToken'];
             return $accessToken;
+            // disgusting
         }
 
         getSession($badgrObj);
@@ -46,7 +47,7 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         //For some unholy reason this is required for the rest to work
-        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find("1");
+        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find('1');
         $user->addBadge($testModule);
 
         //get all badges from user
@@ -56,7 +57,7 @@ class ProfileController extends AbstractController
         $badgeKeys = [];
         foreach ($badges as &$badgeData) {
             $badgeKey = $badgeData->getBadge();
-            array_push($badgeKeys, $badgeKey);
+            $badgeKeys[] = $badgeKey;
         }
         //pass userBadges with keys and the user to the getAllBadges method
         $userBadges = $badgrObj->getAllBadges($badgeKeys, $user, $accessToken);
