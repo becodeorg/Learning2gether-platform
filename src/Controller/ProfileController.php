@@ -29,7 +29,7 @@ class ProfileController extends AbstractController
             else{
                 //this getPassword is so I don't reveal my personal pass, we use my (Tim) account for badgr atm
                 $password = $badgrObj->getPassword();
-                $badgrObj->initialise('loderunner666');
+                $badgrObj->initialise($password);
             }
         }
 
