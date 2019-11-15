@@ -58,12 +58,13 @@ class Question
      */
     private $chapter;
 
-    public function __construct(string $subject, Language $language, User $createdBy, Category $category)
+    public function __construct(string $subject, Language $language, User $createdBy, Category $category, Chapter $chapter)
     {
         $this->subject = $subject;
         $this->language = $language;
         $this->createdBy = $createdBy;
         $this->category = $category;
+        $this->chapter = $chapter;
         $this->setDate(new \DateTimeImmutable());
         $this->posts = new ArrayCollection();
     }

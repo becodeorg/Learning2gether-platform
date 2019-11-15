@@ -27,7 +27,7 @@ final class Version20191028153510 extends AbstractMigration
      //   $this->addSql('ALTER TABLE user_post ADD CONSTRAINT FK_200B20444B89032C FOREIGN KEY (post_id) REFERENCES post (id) ON DELETE CASCADE');
        // $this->addSql('ALTER TABLE category_translation DROP INDEX UNIQ_3F2070412469DE2, ADD INDEX IDX_3F2070412469DE2 (category_id)');
         $this->addSql('ALTER TABLE post ADD topic_id INT NOT NULL');
-        $this->addSql('ALTER TABLE post ADD CONSTRAINT FK_5A8A6C8D1F55203D FOREIGN KEY (topic_id) REFERENCES topic (id)');
+        $this->addSql('ALTER TABLE post ADD CONSTRAINT FK_5A8A6C8D1F55203D FOREIGN KEY (topic_id) REFERENCES question (id)');
         $this->addSql('CREATE INDEX IDX_5A8A6C8D1F55203D ON post (topic_id)');
     }
 

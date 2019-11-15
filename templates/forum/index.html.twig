@@ -16,25 +16,12 @@
 
     <h2>Topics</h2>
 
-    {% for chapter in chapters %}
-            {{ chapter.title(language) }}<br>
-            {{ chapter.id }}
-        <br>
-    {% endfor %}
-
-
-    <h4>All Questions</h4>
-    {% for question in questions %}
-        <a href="{{ path('question', {'question': question.id}) }}">
-            {{ question.subject }}<br>
-            {{  question.dateFormatted }}<br>
+    {% for topic in topics %}
+        <a href="{{ path('topic', {'category': categoryId, 'chapter': topic.id}) }}">
+                {{ topic.title(language) }}<br>
         </a>
         <br>
     {% endfor %}
-
-    <h4>Add New Question</h4>
-    {{ form_start(addQuestion) }}
-    {{ form_end(addQuestion) }}
 
 {% endblock %}
 
