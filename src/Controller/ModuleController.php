@@ -23,30 +23,29 @@ class ModuleController extends AbstractController
      */
     public function module(Request $request, LearningModule $module): Response
     {
-//        //initialise badgr object
-//        $badgrObj = new Badgr;
-//
-//        function getSession(Badgr $badgrObj){
-//            //check if we already have refreshtoken
-//            if(isset($_SESSION['refreshToken'])){
-//                $refreshToken = $_SESSION['refreshToken'];
-//                $badgrObj->getTokenData($refreshToken);
-//            }
-//            //if we don't, do the initial authentication to get it
-//            else{
-//                //this getPassword is so I don't reveal my personal pass, we use my (Tim) account for badgr atm
-//                $password = $badgrObj->getPassword();
-//                $badgrObj->initialise($password);
-//            }
-//        }
-//
-//        function getTokens(Badgr $badgrObj){
-//            $accessToken = $_SESSION['accessToken'];
-//            $refreshToken = $_SESSION['refreshToken'];
-//        }
-//
-//        getSession($badgrObj);
-//        getTokens($badgrObj);
+        //initialise badgr object
+        $badgrObj = new Badgr;
+
+        function getSession(Badgr $badgrObj){
+            //check if we already have refreshtoken
+            if(isset($_SESSION['refreshToken'])){
+                $refreshToken = $_SESSION['refreshToken'];
+                $badgrObj->getTokenData($refreshToken);
+            }
+            //if we don't, do the initial authentication to get it
+            else{
+                $password = $badgrObj->getPassword();
+                $badgrObj->initialise($password);
+            }
+        }
+
+        function getTokens(Badgr $badgrObj){
+            $accessToken = $_SESSION['accessToken'];
+            $refreshToken = $_SESSION['refreshToken'];
+        }
+
+        getSession($badgrObj);
+        getTokens($badgrObj);
 
 
         //user = logged in user
@@ -71,20 +70,15 @@ class ModuleController extends AbstractController
         //$moduleBadge = $module->getBadge();
 
         //when module completed, give badge
-//        $completed = false;
-//        if($completed === true){
-//            //add badge from this module to user
-//            $badgrObj->addBadgeToUser($module, $user, $accessToken);
-//            $user->addBadge($module);
-//            $entityManager = $this->getDoctrine()->getManager();
-//            $entityManager->persist($user);
-//            $entityManager->flush();
-//        }
-
-        // create the classes needed for parsing markdown to html, and finding and replacing yt links with an iplayer
-        $parsedown = new Parsedown();
-        $parsedown->setSafeMode(true);
-        $mdParser = new MdParser();
+        $completed = false;
+        if($completed === true){
+            //add badge from this module to user
+            $badgrObj->addBadgeToUser($module, $user, $accessToken);
+            $user->addBadge($module);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
 
         return $this->render('module/index.html.twig', [
             'controller_name' => 'ModuleController',

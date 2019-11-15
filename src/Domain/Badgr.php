@@ -12,17 +12,7 @@ class Badgr
     //this function is temporary so my (Tim) personal password of badgr doesn't get revealed
     public function getPassword()
     {
-        //prompt to get password
-        function prompt($prompt_msg){
-            echo("<script type='text/javascript'> var answer = prompt('".$prompt_msg."'); </script>");
-
-            $answer = "<script type='text/javascript'> document.write(answer); </script>";
-            return($answer);
-        }
-
-        $prompt_msg = "I need the badgr password homie";
-        $password = prompt($prompt_msg);
-
+        $password = "LearningSoMuchTogether";
         return $password;
     }
 
@@ -34,7 +24,7 @@ class Badgr
                 'Accept' => 'application/json',
             ],
             'body' =>[
-                'username' => 'broostim@hotmail.be',
+                'username' => 'koen@becode.org',
                 'password' => $password,
             ]
         ]);
