@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}L2G Forums{% endblock %}
+
+{% block body %}
+
+   <h1>Forum</h1>
+    <br>
+    {{ form_start(searchbar) }}
+    {{ form_end(searchbar) }} <br>
+
+
+    <h2>Current Category</h2>
+    {{ categoryTitle }}<br>
+    {{ categoryDescription }} <br><br>
+
+    <h2>Topics</h2>
+
+    {% for topic in topics %}
+        <a href="{{ path('topic', {'category': categoryId, 'chapter': topic.id}) }}">
+                {{ topic.title(language) }}<br>
+        </a>
+        <br>
+    {% endfor %}
+
+{% endblock %}
+
+

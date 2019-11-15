@@ -53,7 +53,7 @@ class TopicController extends AbstractController
         )->createView();
 
         return $this->render('topic/index.html.twig', [
-            'controller_name' => 'ForumController',
+            'controller_name' => 'CategoryController',
             'categoryTitle' => $categoryTitle,
             'categoryDescription' => $categoryDescription,
               'categoryId' => $category,
@@ -66,40 +66,10 @@ class TopicController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/forum/searchbar", name="searchbar")
-     */
-    public function searchbar(Request $request)
-    {
-        $form = $this->createForm(SearchbarType::class);
-        $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Post::class);
-        $query = $repo->createQueryBuilder('p')
-            ->where('p.subject LIKE :keyword')
-            ->setParameter('keyword', '%' . $form->get('keywords')->getData() . '%')
-            ->getQuery();
-        $resultsFromPost = $query->getResult();
-
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Question::class);
-        $query = $repo->createQueryBuilder('p')
-            ->where('p.subject LIKE :keyword')
-            ->setParameter('keyword', '%' . $form->get('keywords')->getData() . '%')
-            ->getQuery();
-        $resultsFromQuestion = $query->getResult();
-
-        return $this->render('forum/searchResult.html.twig', [
-            'controller_name' => 'ForumController',
-            'resultsFromPost' => $resultsFromPost,
-            'resultsFromQuestion' => $resultsFromQuestion,
-
-        ]);
-    }
 
     /**
-     * @Route("/forum/category/{category}/topic/{chapter}/addQuestion", name="addQuestion" , requirements={
+     * @Route("/category/category/{category}/topic/{chapter}/addQuestion", name="addQuestion" , requirements={
      *     "category"="\d+",
      *     "chapter"="\d+",
      *     })
@@ -110,7 +80,7 @@ class TopicController extends AbstractController
         $form = $this->createForm(QuestionType::class);
         $form->handleRequest($request);
 
-        //I hard coded this because we are still updating the forum...
+        //I hard coded this because we are still updating the category...
         $categoryCurrent = $this->getDoctrine()->getRepository(Category::class)->find($category->getId());
         $language = $this->getDoctrine()->getRepository(Language::class)->find('1');
 

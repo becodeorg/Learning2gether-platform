@@ -15,7 +15,7 @@ use App\Entity\Chapter;
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/forum/category/{category}/topic/{chapter}/question/{question}", name="question", requirements={
+     * @Route("/category/category/{category}/topic/{chapter}/question/{question}", name="question", requirements={
      *
      *     "category"="\d+",
      *     "chapter"="\d+",
@@ -60,7 +60,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/forum/category/{category}/topic/{chapter}/question/{question}/upvote", name="upvote", requirements={
+     * @Route("/category/category/{category}/topic/{chapter}/question/{question}/upvote", name="upvote", requirements={
      *
      *     "category"="\d+",
      *     "chapter"="\d+",
@@ -98,7 +98,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/forum/category/{category}/topic/{chapter}/question/{question}/post", name="post", requirements={
+     * @Route("/category/category/{category}/topic/{chapter}/question/{question}/post", name="post", requirements={
      *
      *     "category"="\d+",
      *     "chapter"="\d+",
