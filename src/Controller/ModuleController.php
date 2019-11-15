@@ -28,7 +28,6 @@ class ModuleController extends AbstractController
             }
             //if we don't, do the initial authentication to get it
             else{
-                //this getPassword is so I don't reveal my personal pass, we use my (Tim) account for badgr atm
                 $password = $badgrObj->getPassword();
                 $badgrObj->initialise($password);
             }
