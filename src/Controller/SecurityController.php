@@ -14,9 +14,9 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //    $this->redirectToRoute('target_path');
-        // }
+         if ($this->getUser()) {
+            return $this->redirectToRoute($this->getUser()->isPartner() ? 'partner' : 'portal');
+         }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
