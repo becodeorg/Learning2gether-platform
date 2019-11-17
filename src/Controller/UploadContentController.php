@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Image;
+use App\Form\ImageUploaderType;
 use App\Form\UploadContentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Tests\Compiler\I;
@@ -21,11 +22,7 @@ class UploadContentController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $uploader = $this->createFormBuilder()
-            ->add('upload', FileType::class)
-            ->add('submit', SubmitType::class)
-            ->getForm();
-
+        $uploader = $this->createForm(ImageUploaderType::class);
         $uploader->handleRequest($request);
 
         if ($uploader->isSubmitted() && $uploader->isValid()){

@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -23,7 +24,15 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('avatar', FileType::class, [
                 'mapped' => false,
-                'label' => 'Upload image'
+                'label' => 'Upload image',
+                'constraints' => [new Image([
+                    'maxSize' => '5m',
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'image/png',
+                        'image/gif',
+                    ]
+                ])]
             ])
             ->add('username')
             //->add('language', LanguageType::class, [])
@@ -50,8 +59,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

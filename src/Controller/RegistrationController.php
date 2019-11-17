@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Domain\ImageManager;
 use App\Entity\Language;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -41,17 +42,13 @@ class RegistrationController extends AbstractController
             $dateTime = new DateTimeImmutable();
             $user->setCreated($dateTime);
 
-            $avatar = $request->files->get('registration_form')['avatar'];
-            $uploads_directory = $this->getParameter('uploads_directory');
-            $filename = md5(uniqid('', true)) . '.' . $avatar->guessExtension();
-            $avatar->move(
-                $uploads_directory,
-                $filename
-            );
-            $user->setAvatar($filename);
+            $imageManager = new ImageManager();
+            $newImage = $imageManager->createImage($request->files->get('registration_form')['avatar'], $this->getUser(), $this->getParameter('uploads_directory'), 'avatar');
+            $user->setAvatar($newImage->getSrc());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            $entityManager->persist($newImage);
             $entityManager->flush();
 
             // do anything else you need here, like send an email

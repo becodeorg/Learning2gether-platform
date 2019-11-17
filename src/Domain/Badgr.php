@@ -9,23 +9,21 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class Badgr
 {
-    //this function is temporary so my (Tim) personal password of badgr doesn't get revealed
-    public function getPassword()
-    {
-        $password = "LearningSoMuchTogether";
-        return $password;
-    }
+    // TODO add these constants to a config file
+    private const BADGR_PASSWORD = 'LearningSoMuchTogether';
+    private const BADGR_USERNAME = 'koen@becode.org';
+    private const BADGR_API = 'https://api.badgr.io';
 
     public function initialise(string $password)
     {
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('POST', 'https://api.badgr.io/o/token', [
+        $response = $httpClient->request('POST', self::BADGR_API . '/o/token', [
             'headers' => [
                 'Accept' => 'application/json',
             ],
-            'body' =>[
-                'username' => 'koen@becode.org',
-                'password' => $password,
+            'body' => [
+                'username' => self::BADGR_USERNAME,
+                'password' => self::BADGR_PASSWORD,
             ]
         ]);
 
@@ -40,11 +38,11 @@ class Badgr
     public function getTokenData(string $refreshToken)
     {
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('POST', 'https://api.badgr.io/o/token', [
+        $response = $httpClient->request('POST', self::BADGR_API . '/o/token', [
             'headers' => [
                 'Accept' => 'application/json',
             ],
-            'body' =>[
+            'body' => [
                 'grant_type' => 'refresh_token',
                 'refresh_token' => $refreshToken,
             ]
@@ -58,7 +56,7 @@ class Badgr
         return $tokenData;
     }
 
-    public function addBadgeToUser(LearningModule $learningModule, User $user, string $accessToken)
+    public function addBadgeToUser(LearningModule $learningModule, User $user, string $accessToken): void
     {
         //get badge and email for fetch
         $moduleBadge = $learningModule->getBadge();
@@ -66,10 +64,10 @@ class Badgr
 
         //give the badge to email
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('POST', 'https://api.badgr.io/v2/badgeclasses/'.$moduleBadge.'/assertions', [
+        $response = $httpClient->request('POST', self::BADGR_API.'/v2/badgeclasses/' . $moduleBadge . '/assertions', [
             'headers' => [
                 'Accept' => 'application/json',
-                'Authorization' => 'Bearer '.$accessToken,
+                'Authorization' => 'Bearer ' . $accessToken,
             ],
             'json' => [
                 'recipient' => [
@@ -81,7 +79,7 @@ class Badgr
         ]);
     }
 
-    public function getAllBadges($badges, User $user, string $accessToken)
+    public function getAllBadges($badges, User $user, string $accessToken): array
     {
         //get mail from user
         $email = $user->getEmail();
@@ -92,10 +90,10 @@ class Badgr
         //get badges from email user
         $httpClient = HttpClient::create();
         foreach ($badges as &$badgeKey) {
-            $response = $httpClient->request('GET', 'https://api.badgr.io/v2/badgeclasses/'.$badgeKey, [
+            $response = $httpClient->request('GET', self::BADGR_API.'/v2/badgeclasses/' . $badgeKey, [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer '.$accessToken,
+                    'Authorization' => 'Bearer ' . $accessToken,
                 ],
                 'json' => [
                     'recipient' => [
