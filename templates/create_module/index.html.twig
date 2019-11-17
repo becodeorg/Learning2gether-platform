@@ -22,11 +22,6 @@
         <hr>
         <a href="{{ path('partner') }}">Back to Partner Zone</a>
         <h2>To create a new module, please fill in one or more of the translations</h2>
-        {% for message in app.flashes('error') %}
-            <div class="alert alert-notice">
-                {{ message }}
-            </div>
-        {% endfor %}
         {{ form_start(form) }}
         {% for translation in form.translations %}
             <hr>

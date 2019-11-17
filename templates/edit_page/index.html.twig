@@ -34,10 +34,6 @@
                         <strong>You have to reload the page for images to appear in this window, use the save button to
                             store any changes.</strong>
                         <hr>
-                        {# code to create form #}
-                        {# {{ form_start(uploader) }}#}
-                        {# {{ form_end(uploader) }}#}
-                        {# <hr>#}
                         {% for image in imagesAll %}
                             <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
                         {% endfor %}
@@ -60,7 +56,7 @@
         <hr>
         {{ form(form) }}
         <hr>
-        <a href="{{ path('edit_chapter', {module : module.id , chapter : chapter.id}) }}">Back to chapter</a>
+        <a href="{{ path('edit_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">Back to chapter</a>
     </div>
 
 

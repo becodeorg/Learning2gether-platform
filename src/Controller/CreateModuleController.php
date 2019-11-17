@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Domain\ImageManager;
 use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Entity\LearningModuleTranslation;
 use App\Form\CreateModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +23,8 @@ class CreateModuleController extends AbstractController
      */
     public function index(Request $request): Response
     {
+        $imageManager = new ImageManager();
+
         // make a new module for the form, empty values for now
         $module = new LearningModule('', '', '');
         $translationArray = $this->makeTranslations($module);
@@ -37,8 +39,9 @@ class CreateModuleController extends AbstractController
 
             if ($this->isOneTranslationFilledIn($newTranslations)) {
                 $module = $form->getData();
-                $filename = $this->createImage($request->files->get('create_module')['image']);
-                $module->setImage($filename);
+                $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $this->getUser(), $this->getParameter('uploads_directory'), 'module');
+                $this->flushNewImage($newImage);
+                $module->setImage($newImage->getSrc());
                 $this->flushNewModule($module);
                 return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             }
@@ -46,7 +49,6 @@ class CreateModuleController extends AbstractController
         }
 
         return $this->render('create_module/index.html.twig', [
-            'controller_name' => 'CreateModuleController',
             'form' => $form->createView(),
         ]);
     }
@@ -68,14 +70,13 @@ class CreateModuleController extends AbstractController
      */
     public function makeTranslations(LearningModule $module): array
     {
-        // collects all different languages from the DB, and creates a translation object for each language
         $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
         $translationArray = [];
         foreach ($languageAll as $language) {
             $languageDoctrine = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => $language->getCode()]);
             $translation = new LearningModuleTranslation($module, $languageDoctrine);
             $translationArray[] = $translation;
-            $module->addTranslation($translation); // adds them to render the form the form
+            $module->addTranslation($translation);
         }
         return $translationArray;
     }
@@ -85,28 +86,15 @@ class CreateModuleController extends AbstractController
      */
     public function flushNewModule(LearningModule $module): void
     {
-        // flush the new module to the DB (the translations are set to cascade(src/Entity/LearningModule.php:44))
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);
         $entityManager->flush();
     }
 
-    public function createImage(UploadedFile $uploadedImage): string
+    public function flushNewImage(Image $image): void
     {
-        $uploads_directory = $this->getParameter('uploads_directory');
-
-        $filename = md5(uniqid('', true)) . '.' . $uploadedImage->guessExtension();
-        $newImage = new Image($uploadedImage->getClientOriginalName(), $filename, $this->getUser(), 'module');
-
         $em = $this->getDoctrine()->getManager();
-        $em->persist($newImage);
+        $em->persist($image);
         $em->flush();
-
-        $uploadedImage->move(
-            $uploads_directory,
-            $filename
-        );
-
-        return $filename;
     }
 }

@@ -39,18 +39,7 @@ class EditPageController extends AbstractController
             'code' => $request->getLocale()
         ]);
 
-        $page = $this->getDoctrine()->getRepository(ChapterPage::class)->find($page);
-        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($chapter);
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($module);
         $pageTl = $this->getDoctrine()->getRepository(ChapterPageTranslation::class)->findOneBy(['language' => $language, 'chapterPage' => $page]);
-
-        // form creator for uploader
-//        $uploader = $this->createFormBuilder()
-//            ->add('upload', FileType::class)
-//            ->add('submit', SubmitType::class)
-//            ->getForm();
-//
-//        $uploader->handleRequest($request);
 
         $form = $this->createFormBuilder()
             ->add('title', TextType::class, [
@@ -68,47 +57,32 @@ class EditPageController extends AbstractController
 
         $form->handleRequest($request);
 
-        // code for handling the upload form, if we ever need it
-//        if ($uploader->isSubmitted() && $uploader->isValid()){
-//            //get upload dir
-//            $uploads_directory = $this->getParameter('uploads_directory');
-//            $uploadedImage = $uploader->getData()['upload'];
-//            $filename = md5(uniqid('', true)) . '.' . $uploadedImage->guessExtension();
-//            $newImage = new Image($uploadedImage->getClientOriginalName(), $filename, $this->getUser(), 'content');
-//
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($newImage);
-//            $em->flush();
-//
-//            $uploadedImage->move(
-//                $uploads_directory,
-//                $filename
-//            );
-//            return $this->redirectToRoute('edit_page', ['chapter' => $chapterID, 'page' => $pageID]);
-//        }
-
         if ($form->isSubmitted() && $form->isValid()) {
             $pageTl->setTitle($form->getData()['title']);
             $pageTl->setContent($form->getData()['editor']);
             $page->addTranslation($pageTl);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($page);
-            $em->flush();
+            $this->flushUpdatedPage($page);
             $this->addFlash('success', 'Changes saved.');
-            return $this->redirectToRoute('edit_page', ['chapter' => $chapterID, 'page' => $pageID]);
+            return $this->redirectToRoute('edit_page', ['module' => $module->getId(), 'chapter' => $chapter->getId(), 'page' => $page->getId()]);
         }
 
         $imagesAll = $this->getDoctrine()->getRepository(Image::class)->findAll();
 
         return $this->render('edit_page/index.html.twig', [
-            'controller_name' => 'EditPageController',
             'page' => $page,
             'pageTl' => $pageTl,
             'form' => $form->createView(),
-            'chapter' => $chapter,
-            'module' => $module,
             'imagesAll' => $imagesAll,
-//            'uploader' => $uploader->createView(),
         ]);
+    }
+
+    /**
+     * @param ChapterPage $page
+     */
+    public function flushUpdatedPage(ChapterPage $page): void
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($page);
+        $em->flush();
     }
 }

@@ -28,11 +28,6 @@ class EditChapterController extends AbstractController
      */
     public function index(Request $request, LearningModule $module, Chapter $chapter): Response
     {
-
-        // find the current module and the current chapter
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($module);
-        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($chapter);
-
         // Create translation form
         $form = $this->createForm(EditChapterType::class, $chapter);
         $form->handleRequest($request);
@@ -48,23 +43,36 @@ class EditChapterController extends AbstractController
         if ($createPageBtn->isSubmitted() && $createPageBtn->isValid()) {
             $this->createAndAddNewPage($newChapterPage, $chapter);
             $this->flushUpdatedChapter($chapter);
-            return $this->redirectToRoute('edit_page', ['chapter' => $chapter->getId(), 'page' => $newChapterPage->getId()]);
+            return $this->redirectToRoute('edit_page', ['module' => $module->getId(), 'chapter' => $chapter->getId(), 'page' => $newChapterPage->getId()]);
         }
 
         // check if the form was submitted
         if ($form->isSubmitted() && $form->isValid()) {
             $updatedChapter = $form->getData();
             $this->flushUpdatedChapter($updatedChapter);
-            return $this->redirectToRoute('edit_module/{module}', ['module' => $module->getId()]);
+            return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
         }
 
         return $this->render('edit_chapter/index.html.twig', [
-            'controller_name' => 'EditChapterController',
             'module' => $module,
             'chapter' => $chapter,
             'form' => $form->createView(),
             'createPage' => $createPageBtn->createView(),
         ]);
+    }
+
+    /**
+     * @param ChapterPage $newChapterPage
+     * @param Chapter|null $chapter
+     */
+    public function createAndAddNewPage(ChapterPage $newChapterPage, Chapter $chapter): void
+    {
+        $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+        foreach ($languageAll as $language) {
+            $chapterPageTranslation = new ChapterPageTranslation($language, $newChapterPage);
+            $newChapterPage->addTranslation($chapterPageTranslation);
+        }
+        $chapter->addPage($newChapterPage);
     }
 
     /**
@@ -75,19 +83,5 @@ class EditChapterController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($updatedChapter);
         $em->flush();
-    }
-
-    /**
-     * @param ChapterPage $newChapterPage
-     * @param Chapter|null $chapter
-     */
-    public function createAndAddNewPage(ChapterPage $newChapterPage, ?Chapter $chapter): void
-    {
-        $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
-        foreach ($languageAll as $language) {
-            $chapterPageTranslation = new ChapterPageTranslation($language, $newChapterPage);
-            $newChapterPage->addTranslation($chapterPageTranslation);
-        }
-        $chapter->addPage($newChapterPage);
     }
 }

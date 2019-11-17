@@ -51,7 +51,6 @@ class UploadContentController extends AbstractController
         $imagesAll = $this->getDoctrine()->getRepository(Image::class)->findAll();
 
         return $this->render('upload_content/index.html.twig', [
-            'controller_name' => 'UploadContentController',
             'uploader' => $uploader->createView(),
             'imagesAll' => $imagesAll,
         ]);

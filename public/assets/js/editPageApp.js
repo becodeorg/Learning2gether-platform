@@ -2,7 +2,7 @@
 let editor = new SimpleMDE();
 
 // bool for eventlisteners
-let remove = false;
+let removeEventsForImageUploader = false;
 
 // the next lines remove their guide manual from the toolbar so we can add our own personal one.
 editor.gui.toolbar.remove();
@@ -21,25 +21,17 @@ editor.toolbar.push(
         name: "youtube link",
         action: function addYoutubeEmbed() {
             const cm = editor.codemirror;
-            let stat = editor.getState(cm);
             let url = prompt('youtube link:');
 
             const regex = /(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^?&"'> \r\n]+)(?![^<]*>)/;
             let m;
-
             if ((m = regex.exec(url)) !== null) {
                 // The result can be accessed through the `m`-variable.
-                m.forEach((match, groupIndex) => {
-                    console.log(`Found match, group ${groupIndex}: ${match}`);
-                });
                 let videoId = m[1];
-                console.log(videoId);
-
                 cm.replaceSelection('!!{embed}(' + videoId + ')');
             }
-
         },
-        className: "fa fa-star",
+        className: "fa fa-youtube",
         title: "Youtube",
     },
     {
@@ -70,13 +62,12 @@ function insertImage(src) {
 
 function setupImages() {
     let images = document.querySelectorAll('.imageClick');
-    console.log(images);
-    if (remove === false) {
+    if (removeEventsForImageUploader === false) {
         images.forEach(function (item) {
             item.addEventListener('click', function () {
                 insertImage(item.currentSrc);
             })
         });
-        remove = true;
+        removeEventsForImageUploader = true;
     }
 }

@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Domain\Badgr;
+use App\Domain\ImageManager;
 use App\Entity\Image;
 use App\Entity\LearningModule;
+use App\Entity\User;
 use App\Form\EditProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +17,14 @@ class ProfileController extends AbstractController
 {
     /**
      * @Route("/profile", name="profile")
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request): Response
     {
+
+        $user = $this->getUser();
+
 //        //initialise badgr object
 //        $badgrObj = new Badgr;
 //
@@ -44,7 +51,6 @@ class ProfileController extends AbstractController
 //        getSession($badgrObj);
 //        $accessToken = getAccessToken($badgrObj);
 
-        $user = $this->getUser();
 
         //For some unholy reason this is required for the rest to work
 //        $testModule = $this->getDoctrine()->getRepository(LearningModule::class)->find('1');
@@ -66,46 +72,28 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //get old avatar
-            $deleteFile = $user->getAvatar();
-            //get new avatar
-            $avatar = $request->files->get('edit_profile')['avatar'];
-            //get upload dir
-            $uploads_directory = $this->getParameter('uploads_directory');
-            //hash unique new avatar
-            $filename = md5(uniqid('', true)) . '.' . $avatar->guessExtension();
-
-            $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'id' => $user->getId()]);
-            $avatarImage->setName($avatar->getClientOriginalName());
-            $avatarImage->setType('avatar');
-            $avatarImage->setSrc($filename);
-            $user->addImage($avatarImage);
-
-            //put new avatar in upload dir
-            $avatar->move(
-                $uploads_directory,
-                $filename
-            );
-            //put filename in database
-            $user->setAvatar($filename);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            //delete old avatar from upload dir
-            unlink($uploads_directory. '/' .$deleteFile);
+            $imageManager = new ImageManager();
+            $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'user' => $user->getId()]);
+            $user = $imageManager->changeUserAvatarImage($request->files->get('edit_profile')['avatar'], $avatarImage, $user, $this->getParameter('uploads_directory'));
+            $this->flushUpdatedUser($user);
         }
 
-        //var_dump($userBadges[0]['result']);
-
         return $this->render('profile/index.html.twig', [
-            'controller_name' => 'ProfileController',
 //            'badgeKeys' => $badgeKeys,
 //            'userBadges' => $userBadges,
             'user' => $user,
             'profileForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param User $user
+     */
+    public function flushUpdatedUser(User $user): void
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
     }
 }
 

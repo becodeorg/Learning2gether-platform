@@ -43,7 +43,7 @@ class Image
      * @param $user
      * @param $type
      */
-    public function __construct($name, $src, $user, $type)
+    public function __construct(string $name, string $src, User $user, string $type)
     {
         $this->name = $name;
         $this->src = $src;
@@ -56,7 +56,7 @@ class Image
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -68,7 +68,7 @@ class Image
         return $this;
     }
 
-    public function getSrc(): ?string
+    public function getSrc(): string
     {
         return $this->src;
     }
@@ -80,19 +80,19 @@ class Image
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
