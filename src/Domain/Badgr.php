@@ -14,7 +14,7 @@ class Badgr
     private const BADGR_USERNAME = 'koen@becode.org';
     private const BADGR_API = 'https://api.badgr.io';
 
-    public function initialise(string $password)
+    public function initialise()
     {
         $httpClient = HttpClient::create();
         $response = $httpClient->request('POST', self::BADGR_API . '/o/token', [
