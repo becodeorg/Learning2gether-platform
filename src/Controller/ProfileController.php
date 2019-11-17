@@ -22,7 +22,9 @@ class ProfileController extends AbstractController
      */
     public function index(Request $request): Response
     {
+        $badgrHandler = new Badgr;
 
+        /** @var User $user */
         $user = $this->getUser();
 
 //        //initialise badgr object
@@ -57,15 +59,15 @@ class ProfileController extends AbstractController
 //        $user->addBadge($testModule);
 
         //get all badges from user
-//        $badgesData = $user->getBadges();
-//        $badges = $badgesData->getSnapshot();
-//        //put all badge keys in userBadges
-//        $badgeKeys = [];
-//        foreach ($badges as &$badgeData) {
-//            $badgeKey = $badgeData->getBadge();
-//            $badgeKeys[] = $badgeKey;
-//        }
+        $badges = $user->getBadges()->getSnapshot();
+        //put all badge keys in userBadges
+        $badgeKeys = [];
+        foreach ($badges as &$badgeData) {
+            $badgeKey = $badgeData->getBadge();
+            array_push($badgeKeys, $badgeKey);
+        }
         //pass userBadges with keys and the user to the getAllBadges method
+        $userBadges = $badgrHandler->getAllBadges($badgeKeys, $user);
 //        $userBadges = $badgrObj->getAllBadges($badgeKeys, $user, $accessToken);
 
         $form = $this->createForm(EditProfileType::class, $user);
@@ -96,5 +98,3 @@ class ProfileController extends AbstractController
         $entityManager->flush();
     }
 }
-
-
