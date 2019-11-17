@@ -12,9 +12,8 @@ use App\Entity\LearningModuleTranslation;
 use App\Entity\Quiz;
 use App\Form\CreateChapterType;
 use App\Form\EditModuleType;
+use App\Form\ImageUploaderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,11 +39,7 @@ class EditModuleController extends AbstractController
         $chapterBtn = $this->createForm(CreateChapterType::class, $newChapter);
         $chapterBtn->handleRequest($request);
 
-        $uploader = $this->createFormBuilder()
-            ->add('upload', FileType::class)
-            ->add('submit', SubmitType::class)
-            ->getForm();
-
+        $uploader = $this->createForm(ImageUploaderType::class);
         $uploader->handleRequest($request);
 
         if ($chapterBtn->isSubmitted() && $chapterBtn->isValid()) {
