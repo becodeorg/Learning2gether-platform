@@ -71,8 +71,7 @@ class ModuleController extends AbstractController
         }
         //if we don't, do the initial authentication to get it
         else{
-            $password = $badgrObj->getPassword();
-            $badgrObj->initialise($password);
+            $badgrObj->initialise();
         }
         return $badgrObj;
     }
