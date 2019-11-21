@@ -12,8 +12,13 @@
     <h1>Welcome {{ user.name }}</h1>
 
     {% if user.avatar %}
-    <img src="{{ user.avatar }}" alt="avatar of {{ user.name }}">
+    <img src="{{ asset('uploads/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
     {% endif %}
+
+    {{ form_start(profileForm) }}
+        {{ form_row(profileForm.avatar) }}
+        <button class="btn">Change avatar</button>
+    {{ form_end(profileForm) }}
 
     <p>Username: {{ user.username }}</p>
     <p>Email: {{ user.email }}</p>

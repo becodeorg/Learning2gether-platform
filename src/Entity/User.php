@@ -86,12 +86,23 @@ class User implements UserInterface
      */
     private $badges;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter")
+     */
+    private $progress;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"})
+     */
+    private $images;
+
     public function __construct()
     {   $this->topics = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->upvote = new ArrayCollection();
         $this->badges = new ArrayCollection();
-
+        $this->progress = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -337,6 +348,63 @@ class User implements UserInterface
     {
         if ($this->upvote->contains($upvote)) {
             $this->upvote->removeElement($upvote);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getProgress(): Collection
+    {
+        return $this->progress;
+    }
+
+    public function addProgress(Chapter $progress): self
+    {
+        if (!$this->progress->contains($progress)) {
+            $this->progress[] = $progress;
+        }
+
+        return $this;
+    }
+
+    public function removeProgress(Chapter $progress): self
+    {
+        if ($this->progress->contains($progress)) {
+            $this->progress->removeElement($progress);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
         }
 
         return $this;

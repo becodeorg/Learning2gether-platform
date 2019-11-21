@@ -18,7 +18,7 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>{{ 'greeting'|trans }} {{ controller_name }}! ✅</h1>
+        <h1>{{ 'greeting'|trans |capitalize }}</h1>
 
         <ul>Dummy Modules <!-- List of modules -->
             {% for module in modules %}
