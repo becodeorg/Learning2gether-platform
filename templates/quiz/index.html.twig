@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiz index{% endblock %}
+
+{% block body %}
+    <h2>Hi {{ user.username }}, your language is: {{ user.language.name }}</h2>
+    <h1>Quiz index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Quiz Id</th>
+                <th>Chapter Id</th>
+                <th>Chapter #</th>
+                <th>Chapter Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chapter in chapters %}
+            <tr>
+                <td>{{ chapter.quiz.id }}</td>
+                <td>{{ chapter.id }}</td>
+                <td>{{ chapter.chapterNumber }}</td>
+                <td>{{ translated_titles[loop.index-1] }}</td>
+                <td>
+                    <a class="badge badge-pill badge-primary" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">show</a>
+                    <a class="badge badge-pill badge-dark" href="{{ path('quiz_edit', {'id': chapter.quiz.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

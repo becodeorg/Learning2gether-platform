@@ -36,6 +36,17 @@ class QuizQuestionRepository extends ServiceEntityRepository
     }
     */
 
+    public function findNumberOfQuestionsForGivenID($value)
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.quiz_id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('q.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     /*
     public function findOneBySomeField($value): ?QuizQuestion
     {

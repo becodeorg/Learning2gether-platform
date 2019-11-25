@@ -7,6 +7,7 @@ use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionTranslation;
 use App\Form\QuizQuestionType;
 use App\Repository\QuizQuestionRepository;
+use App\Repository\QuizQuestionTranslationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,29 +38,30 @@ class QuizQuestionController extends AbstractController
     public function new(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $questionNmbr = $em->getRepository(QuizQuestion::class)->createQueryBuilder('q')
-            ->where('q.quiz = 1')
-            ->select('count(q.id)')
+        $repo = $em->getRepository(QuizQuestion::class);
+        $questionNmbr = $repo->createQueryBuilder('q')
+            ->andWhere('q.quiz = 1')
+            ->select('count(q)')
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleScalarResult(); //returns the int value of the count
 
-        $quiz = $em->getRepository(Quiz::class)->find(1);
-
-
+        $quiz = $em->getRepository(Quiz::class)->find(1); //find(id)
         $quizQuestion = new QuizQuestion(++$questionNmbr, $quiz);
+
         $form = $this->createForm(QuizQuestionType::class, $quizQuestion);
         $form->handleRequest($request);
+        var_dump($form);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        /*if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quizQuestion);
             $entityManager->flush();
 
             return $this->redirectToRoute('quiz_question_index');
-        }
+        }*/
 
         return $this->render('quiz_question/new.html.twig', [
-            'quiz_question' => $quizQuestion,
+            //'quiz_question' => $quizQuestion,
             'form' => $form->createView(),
         ]);
     }
