@@ -12,8 +12,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageManager
 {
-    public function fixUploadsFolder(string $uploads_directory): void
+    public function fixUploadsFolder(string $uploads_directory, string $public_directory): void
     {
+        if (is_dir($uploads_directory)){
+            return;
+        }
+
+        if(!chown($public_directory, 'www-data')) {
+            throw new RuntimeException(sprintf('Directory "%s" was not created (chown failed)', $uploads_directory));
+        }
+
         if (!mkdir($uploads_directory, 0755, true) && !is_dir($uploads_directory)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $uploads_directory));
         }
