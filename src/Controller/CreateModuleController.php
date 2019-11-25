@@ -39,6 +39,7 @@ class CreateModuleController extends AbstractController
 
             if ($this->isOneTranslationFilledIn($newTranslations)) {
                 $module = $form->getData();
+                $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
                 $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $this->getUser(), $this->getParameter('uploads_directory'), 'module');
                 $this->flushNewImage($newImage);
                 $module->setImage($newImage->getSrc());
