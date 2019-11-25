@@ -16,9 +16,10 @@ class CreateModuleType extends AbstractType
     {
 
         $builder
-//            ->add('image', FileType::class, [
-//                'label' => 'upload image ',
-//            ])
+            ->add('image', FileType::class, [
+                'label' => 'upload image ',
+                'mapped' => 'false'
+            ])
             ->add('badge', null , [
                 'label' => 'badgr.io badge hash ',
             ])

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}L2G Forums{% endblock %}
+
+{% block body %}
+
+   <h1>Forum</h1>
+    <br>
+    {{ form_start(searchbar) }}
+    {{ form_end(searchbar) }} <br>
+
+    <h2>Category ID</h2>
+    {{ categoryID }}
+    <h3>Category</h3>
+    {{ category }}
+
+
+    <h4>All Topics</h4>
+    {% for question in questions %}
+        <a href="{{ path('question', {'question': question.id}) }}">
+            {{ question.subject }}<br>
+            {{  question.dateFormatted }}<br>
+        </a>
+        <br>
+    {% endfor %}
+
+    <h4>Add New Question</h4>
+    {{ form_start(addQuestion) }}
+    {{ form_end(addQuestion) }}
+
+{% endblock %}
+
+

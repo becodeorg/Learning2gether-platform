@@ -1,0 +1,15 @@
+
+{# make a variable called switcherForm
+= Form view from the function getLanguageSwitcherForm() in LanguageSwitcherController #}
+{% set switcherForm = switcher.getLanguageSwitcherForm() %}
+
+{# display switcherform in the view #}
+{{ form_start(switcherForm, {'attr': {'id': 'language-switcher-form'}}) }}
+    {{ form_widget(switcherForm.language) }}
+{{ form_end(switcherForm) }}
+
+<script>
+    document.querySelector('#language-switcher-form select').addEventListener("change", function () {
+        document.querySelector('#language-switcher-form').submit();
+    });
+</script>

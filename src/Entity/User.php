@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,7 +14,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    //needs to start with ROLE_ to make Symfony recognize it
     const ROLE_USER = 'ROLE_USER';
+    const ROLE_PARTNER = 'ROLE_PARTNER';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -36,19 +41,9 @@ class User implements UserInterface
     private $password = '';
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password_hash;
-
-    /**
      * @ORM\Column(type="boolean")
      */
-    private $is_partner;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $badgr_key;
+    private $is_partner = false;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -70,6 +65,45 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $created;
+
+    /**
+ * @ORM\OneToMany(targetEntity="Question", mappedBy="createdBy", orphanRemoval=true)
+     */
+    private $topics;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="createdBy", orphanRemoval=true)
+     */
+    private $posts;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", inversedBy="users")
+     */
+    private $upvote;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
+     */
+    private $badges;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter")
+     */
+    private $progress;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"})
+     */
+    private $images;
+
+    public function __construct()
+    {   $this->topics = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->upvote = new ArrayCollection();
+        $this->badges = new ArrayCollection();
+        $this->progress = new ArrayCollection();
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,8 +137,11 @@ class User implements UserInterface
 
     public function getRoles()
     {
+        if($this->isPartner()) {
+            return [self::ROLE_PARTNER];
+        }
+
         return [self::ROLE_USER];
-        // TODO: Implement getRoles() method.
     }
 
     public function getPassword() : string
@@ -139,7 +176,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getIsPartner(): ?bool
+    public function isPartner(): bool
     {
         return $this->is_partner;
     }
@@ -202,6 +239,173 @@ class User implements UserInterface
     public function setCreated(\DateTimeInterface $created): self
     {
         $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Question[]
+     */
+    public function getTopics(): Collection
+    {
+        return $this->topics;
+    }
+
+    public function addTopic(Question $topic): self
+    {
+        if (!$this->topics->contains($topic)) {
+            $this->topics[] = $topic;
+            $topic->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopic(Question $topic): self
+    {
+        if ($this->topics->contains($topic)) {
+            $this->topics->removeElement($topic);
+            // set the owning side to null (unless already changed)
+            if ($topic->getCreatedBy() === $this) {
+                $topic->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setCreatedBy($this);
+        }
+    }
+    /**
+     * @return Collection|LearningModule[]
+     */
+    public function getBadges(): Collection
+    {
+        return $this->badges;
+    }
+
+    public function addBadge(LearningModule $badge): self
+    {
+        if (!$this->badges->contains($badge)) {
+            $this->badges[] = $badge;
+
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            // set the owning side to null (unless already changed)
+            if ($post->getCreatedBy() === $this) {
+                $post->setCreatedBy(null);
+            }
+        }
+    }
+    public function removeBadge(LearningModule $badge): self
+    {
+        if ($this->badges->contains($badge)) {
+            $this->badges->removeElement($badge);
+
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getUpvote(): Collection
+    {
+        return $this->upvote;
+    }
+
+    public function addUpvote(Post $upvote): self
+    {
+        if (!$this->upvote->contains($upvote)) {
+            $this->upvote[] = $upvote;
+        }
+
+        return $this;
+    }
+
+    public function removeUpvote(Post $upvote): self
+    {
+        if ($this->upvote->contains($upvote)) {
+            $this->upvote->removeElement($upvote);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getProgress(): Collection
+    {
+        return $this->progress;
+    }
+
+    public function addProgress(Chapter $progress): self
+    {
+        if (!$this->progress->contains($progress)) {
+            $this->progress[] = $progress;
+        }
+
+        return $this;
+    }
+
+    public function removeProgress(Chapter $progress): self
+    {
+        if ($this->progress->contains($progress)) {
+            $this->progress->removeElement($progress);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -47,12 +47,12 @@ class LearningModule
     // cascade means a modules translations(titles and descriptions) can be inserted to the DB when their module is flushed. -jan
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
      */
     private $chapters;
 
     //default for isPublished is set to false
-    public function __construct(string $badge, string $image, string $type, bool $isPublished=false)
+    public function __construct(string $badge, string $image, string $type, bool $isPublished = false)
     {
         $this->translations = new ArrayCollection();
         $this->chapters = new ArrayCollection();
@@ -65,6 +65,11 @@ class LearningModule
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     public function getIsPublished(): bool
@@ -101,7 +106,7 @@ class LearningModule
         $this->image = $image;
     }
 
-    public function getType() : string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -111,18 +116,12 @@ class LearningModule
         $this->type = $type;
     }
 
-    public function getTranslations(): Collection
-    {
-        return $this->translations;
-    }
-
     public function addTranslation(LearningModuleTranslation $translation): self
     {
         if (!$this->translations->contains($translation)) {
             $this->translations[] = $translation;
             $translation->setLearningModule($this);
         }
-
         return $this;
     }
 
@@ -135,7 +134,6 @@ class LearningModule
                 $translation->setLearningModule(null);
             }
         }
-
         return $this;
     }
 
@@ -146,6 +144,11 @@ class LearningModule
                 return $translation->getTitle();//change this line if needed when copied
             }
         }
+    }
+
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
     }
 
     public function getDescription(Language $language)
@@ -170,7 +173,6 @@ class LearningModule
         if (!$this->chapters->contains($chapter)) {
             $this->chapters[] = $chapter;
         }
-
         return $this;
     }
 
@@ -178,8 +180,7 @@ class LearningModule
     {
         if ($this->chapters->contains($chapter)) {
             $this->chapters->removeElement($chapter);
-            }
-
+        }
         return $this;
     }
 

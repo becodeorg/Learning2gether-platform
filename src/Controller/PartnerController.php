@@ -16,12 +16,18 @@ class PartnerController extends AbstractController
 {
     /**
      * @Route("/partner", name="partner")
+     * @param Request $request
      * @return Response
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy([
+            'code' => $request->getLocale()
+        ]);
+        $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findAll();
         return $this->render('partner/index.html.twig', [
-            'controller_name' => 'PartnerController',
+            'language' => $language,
+            'modules' => $modules,
         ]);
     }
 }

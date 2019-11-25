@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}L2G Forum{% endblock %}
+
+{% block body %}
+    <h4>Current Question</h4>
+    {{ topic }}
+    {{ topic_date }}
+
+    <h5>Posts</h5>
+    {% for post in posts %}
+        {% set current_post_id = post.id %}
+        {% set arrayUsers = post.users %}
+        {{ post.subject }}<br>
+        {{ form_start(upvotes[post.id]) }}
+        <p>{{ arrayUsers|length }} users have upvoted on this post</p>
+        {% if arrayUsers|length > 0 %}
+            {% for user in arrayUsers|slice(0,5) %}
+                <p>{{ user.username }}</p>
+            {% endfor %}
+        {% endif %}
+        {{ form_end(upvotes[post.id]) }}<br>
+        {{ post.date.format('m-d-Y H:i:s') }}<br>
+        <br><br>
+
+    {% endfor %}
+    {{ form_start(postForm) }}
+    {{ form_end(postForm) }}<br>
+
+{% endblock %}
