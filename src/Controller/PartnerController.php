@@ -26,7 +26,6 @@ class PartnerController extends AbstractController
         ]);
         $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findAll();
         return $this->render('partner/index.html.twig', [
-            'controller_name' => 'PartnerController',
             'language' => $language,
             'modules' => $modules,
         ]);

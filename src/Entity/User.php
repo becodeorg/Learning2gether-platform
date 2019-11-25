@@ -14,7 +14,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    //needs to start with ROLE_ to make Symfony recognize it
     const ROLE_USER = 'ROLE_USER';
+    const ROLE_PARTNER = 'ROLE_PARTNER';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -37,12 +40,10 @@ class User implements UserInterface
      */
     private $password = '';
 
-
-
     /**
      * @ORM\Column(type="boolean")
      */
-    private $is_partner = 0;//TODO default value of is_partner should be 0
+    private $is_partner = false;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -85,12 +86,23 @@ class User implements UserInterface
      */
     private $badges;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter")
+     */
+    private $progress;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"})
+     */
+    private $images;
+
     public function __construct()
     {   $this->topics = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->upvote = new ArrayCollection();
         $this->badges = new ArrayCollection();
-
+        $this->progress = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,8 +137,11 @@ class User implements UserInterface
 
     public function getRoles()
     {
+        if($this->isPartner()) {
+            return [self::ROLE_PARTNER];
+        }
+
         return [self::ROLE_USER];
-        // TODO: Implement getRoles() method.
     }
 
     public function getPassword() : string
@@ -161,7 +176,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getIsPartner(): ?bool
+    public function isPartner(): bool
     {
         return $this->is_partner;
     }
@@ -333,6 +348,63 @@ class User implements UserInterface
     {
         if ($this->upvote->contains($upvote)) {
             $this->upvote->removeElement($upvote);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getProgress(): Collection
+    {
+        return $this->progress;
+    }
+
+    public function addProgress(Chapter $progress): self
+    {
+        if (!$this->progress->contains($progress)) {
+            $this->progress[] = $progress;
+        }
+
+        return $this;
+    }
+
+    public function removeProgress(Chapter $progress): self
+    {
+        if ($this->progress->contains($progress)) {
+            $this->progress->removeElement($progress);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
         }
 
         return $this;

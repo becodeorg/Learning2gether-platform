@@ -25,12 +25,12 @@
             {% if module.chapters|length > 0 %}
                 {% for chapter in module.chapters %}
                     <li>{{ chapter.getTitle(language) }} : {{ chapter.getDescription(language) }}
-{#                     {% for page in chapter.pages %}#}
-{#                         <div style="border: 1px solid red">#}
-{#                         {% set html = parsedown.text(page.translations[0].content) %}#}
-{#                             {{ html | raw }}#}
-{#                         </div>#}
-{#                         {% endfor %}#}
+                     {% for page in chapter.pages %}
+                         <div style="border: 1px solid red">
+                         {% set html = parsedown.text(page.translations[0].content) %}
+                             {{ mdparser.searchForEmbed(html) | raw }}
+                         </div>
+                         {% endfor %}
                 {% endfor %}
             {% else %}
                 <li>no chapters yet!</li>

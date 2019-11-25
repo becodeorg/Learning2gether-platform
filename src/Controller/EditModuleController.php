@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Domain\ImageManager;
 use App\Entity\Chapter;
 use App\Entity\ChapterTranslation;
+use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Entity\LearningModuleTranslation;
 use App\Entity\Quiz;
 use App\Form\CreateChapterType;
 use App\Form\EditModuleType;
+use App\Form\ImageUploaderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,30 +21,36 @@ use Symfony\Component\Routing\Annotation\Route;
 class EditModuleController extends AbstractController
 {
     /**
-     * @Route("/edit/module", name="edit_module")
+     * @Route("/partner/edit/module/{module}", name="edit_module", requirements={"module"= "\d+"})
      * @param Request $request
+     * @param LearningModule $module
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, LearningModule $module): Response
     {
-        // check the $_GET['module'], has to be set, and an integer, if not, redirects back to partner zone
-        if (isset($_GET['module']) && ctype_digit((string)$_GET['module'])) {
-            $moduleID = $_GET['module'];
-        } else {
-            return $this->redirectToRoute('partner');
-        }
+        $imageManager = new ImageManager();
 
-        $module = $this->getModuleAndTranslations($moduleID);
-        $newChapter = new Chapter($module);
+        $user = $this->getUser();
 
         $form = $this->createForm(EditModuleType::class, $module);
         $form->handleRequest($request);
+
+        $newChapter = new Chapter($module);
         $chapterBtn = $this->createForm(CreateChapterType::class, $newChapter);
         $chapterBtn->handleRequest($request);
+
+        $uploader = $this->createForm(ImageUploaderType::class);
+        $uploader->handleRequest($request);
 
         if ($chapterBtn->isSubmitted() && $chapterBtn->isValid()) {
             $this->createAndAddChapter($newChapter, $module);
             $this->flushUpdatedModule($module);
+        }
+
+        if ($uploader->isSubmitted() && $uploader->isValid()) {
+            $prevImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'module', 'src' => $module->getImage()]);
+            $updatedModule = $imageManager->changeModuleImage($uploader->getData()['upload'], $prevImage, $module, $user, $this->getParameter('uploads_directory'));
+            $this->flushUpdatedModule($updatedModule);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,43 +60,18 @@ class EditModuleController extends AbstractController
         }
 
         return $this->render('edit_module/index.html.twig', [
-            'controller_name' => 'EditModuleController',
             'module' => $module,
             'form' => $form->createView(),
             'addchapter' => $chapterBtn->createView(),
+            'uploader' => $uploader->createView(),
         ]);
-    }
-
-    /**
-     * @param $moduleID
-     * @return LearningModule|object|null
-     */
-    public function getModuleAndTranslations(int $moduleID): LearningModule
-    {
-        // Preparing a module object for the form
-        // Gets all languages from DB
-        $languagesAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
-        // Gets the current module from DB
-        $module = $this->getDoctrine()->getRepository(LearningModule::class)->find($moduleID);
-        // foreach language in the DB, find the translation for the current module
-        foreach ($languagesAll as $language) {
-            $translations = $this->getDoctrine()->getRepository(LearningModuleTranslation::class)->findBy([
-                'language' => $language->getId(),
-                'learningModule' => $moduleID
-            ]);
-            // add all found translations to the module object
-            foreach ($translations as $translation) {
-                $module->addTranslation($translation);
-            }
-        }
-        return $module;
     }
 
     /**
      * @param Chapter $newChapter
      * @param LearningModule|null $module
      */
-    public function createAndAddChapter(Chapter $newChapter, ?LearningModule $module): void
+    public function createAndAddChapter(Chapter $newChapter, LearningModule $module): void
     {
         $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
         foreach ($languageAll as $language) {
@@ -106,7 +90,6 @@ class EditModuleController extends AbstractController
      */
     public function flushUpdatedModule(LearningModule $updatedModule): void
     {
-        // Flush the updated module + translations to the DB
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($updatedModule);
         $entityManager->flush();

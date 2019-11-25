@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Domain\ImageManager;
 use App\Entity\Language;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthAuthenticator;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +22,10 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthAuthenticator $authenticator): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute($this->getUser()->isPartner() ? 'partner' : 'portal');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -37,11 +43,16 @@ class RegistrationController extends AbstractController
             $user->setLanguage($defaultLang);
 
             // TODO pass null to database to get automatic timestamp
-            $dateTime = new \DateTimeImmutable();
+            $dateTime = new DateTimeImmutable();
             $user->setCreated($dateTime);
+
+            $imageManager = new ImageManager();
+            $newImage = $imageManager->createImage($request->files->get('registration_form')['avatar'], $this->getUser(), $this->getParameter('uploads_directory'), 'avatar');
+            $user->setAvatar($newImage->getSrc());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            $entityManager->persist($newImage);
             $entityManager->flush();
 
             // do anything else you need here, like send an email

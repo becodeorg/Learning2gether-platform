@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ResetPassword{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>{{ 'Reset your password!' | trans }}</h1>
+    <p>
+        {{ "If you've forgotten your password, enter your e-mail address and we'll send you an e-mail telling you how to recover it." | trans }}
+    </p>
+
+    <form action="" method="post">
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Enter your e-mail address" required autofocus>
+        <button class="btn btn-lg btn-primary" type="submit" name="reset-request-submit">
+            Send
+        </button>
+    </form>
+</div>
+{% endblock %}
