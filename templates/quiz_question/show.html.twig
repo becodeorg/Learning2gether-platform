@@ -13,16 +13,16 @@
             </tr>
             <tr>
                 <th>Question language code</th>
-                <td>{{ quiz_question.language.code }}</td>
+                <td>{{ user.language.code }}</td>
             </tr>
             <tr>
                 <th>Question</th>
-                <td>{{ quiz_question.getTitle() }}</td>
+                <td>{{ quiz_question.title(user.language) }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_question_index') }}">back to list</a> |
+    <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id}) }}">back to list</a> |
 
     <a href="{{ path('quiz_question_edit', {'id': quiz_question.id}) }}">edit</a>
 

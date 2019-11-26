@@ -48,7 +48,7 @@ class QuizController extends AbstractController
         foreach ($chapterRepository->findAll() as $chapter){
              $chId = $chapter->getId();
              $check = $chaptTranslationRepo->findOneBy(['language'=>$language, 'chapter' => $chId]);
-             if ($check != null) {
+             if ($check !== null) {
                  $title = $chaptTranslationRepo->findOneBy(['language' => $language, 'chapter' => $chId])->getTitle();
                  $titles[] = $title;
              }
@@ -84,7 +84,7 @@ class QuizController extends AbstractController
             $user->setLanguage($language); //FIXME remove me when needed
         }
         //////
-        $language = $user->getLanguage()->getId();
+        //$language = $user->getLanguage()->getId();
 
         $questions = $quiz->getQuizQuestions();
 
@@ -93,7 +93,6 @@ class QuizController extends AbstractController
             'chapter' => $chapterRepository->findOneBy(['quiz'=> $quiz->getId()]),
             'quiz' => $quiz,
             'questions' => $questions,
-            'languages' => $em->getRepository(Language::class)->findAll(),
             'user' => $user,
         ]);
     }

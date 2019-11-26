@@ -3,14 +3,7 @@
 {% block title %}Quiz{% endblock %}
 
 {% block body %}
-    <h1>Quiz {{ quiz.id }} for {{ chapter.translations[user.language.id-1].title }}</h1>
-    <h3>Select language</h3>
-    <label for="language" hidden>Language</label>
-        <select name="language" id="language">
-            {% for language in languages %}
-                <option value="{{ language.id }}">{{ language.name }}</option>
-            {% endfor %}
-        </select>
+    <h1>Quiz {{ quiz.id }} for {{ chapter.title(user.language) }}</h1>
 
 
     <table class="table">
@@ -30,7 +23,7 @@
                     <tr>
                         <td>{{ i }}</td>
                         <td>
-                            <h5>{{ question.translations[user.language.id-1].title }}</h5>
+                            <h5>{{ question.title(user.language) }}</h5>
                             <table>
                                 <tr>
                                     <th>#</th>
@@ -42,7 +35,7 @@
                                     <tr>
                                         <td>{{ j }}</td>
                                         <td>
-                                            {{ answer.translations[user.language.id-1].title }}
+                                            {{ answer.title(user.language) }}
                                         </td>
                                         <td>
                                             {% if answer.isCorrect %}

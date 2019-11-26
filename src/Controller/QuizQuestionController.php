@@ -28,6 +28,7 @@ class QuizQuestionController extends AbstractController
     {
         return $this->render('quiz_question/index.html.twig', [
             'quiz_questions' => $quizQuestionRepository->findAll(),
+            'user' => $this->getUser(),
         ]);
     }
 
@@ -67,12 +68,14 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="quiz_question_show", methods={"GET"})
+     * @Route("/{id}", name="quiz_question_show", methods={"GET"}, requirements={
+     *     "id" = "\d+"})
      */
-    public function show(QuizQuestionTranslation $quizQuestion): Response
+    public function show(QuizQuestionRepository $quizQuestion, int $id): Response
     {
         return $this->render('quiz_question/show.html.twig', [
-            'quiz_question' => $quizQuestion,
+            'quiz_question' => $quizQuestion->find($id),
+            'user' => $this->getUser(),
         ]);
     }
 

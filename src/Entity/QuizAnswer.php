@@ -95,4 +95,14 @@ class QuizAnswer
     {
         return $this->quizQuestion;
     }
+
+    public function getTitle(Language $language): ?string
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getCode() === $language->getCode()) {
+                return $translation->getTitle();//change this line if needed when copied
+            }
+        }
+        return "Not defined";
+    }
 }
