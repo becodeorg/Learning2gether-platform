@@ -44,13 +44,6 @@ class TopicController extends AbstractController
             ]
         )->createView();
 
-        $searchbar = $this->createForm(
-            SearchbarType::class, [
-            'search' => ''
-        ], [
-                'action' => $this->generateUrl('searchbar')
-            ]
-        )->createView();
 
         return $this->render('topic/index.html.twig', [
             'controller_name' => 'CategoryController',
@@ -62,7 +55,6 @@ class TopicController extends AbstractController
             'language' => $languageDummy,
             'questions' => $questions,
             'addQuestion' => $addQuestion,
-            'searchbar' => $searchbar,
         ]);
     }
 

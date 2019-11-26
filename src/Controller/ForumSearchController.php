@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Entity\Question;
 use App\Form\SearchbarType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,7 +15,7 @@ class ForumSearchController extends AbstractController
     /**
      * @Route("/forum/searchbar", name="searchbar")
      */
-    public function searchbar(Request $request)
+    public function index(Request $request)
     {
         $form = $this->createForm(SearchbarType::class);
         $form->handleRequest($request);
@@ -36,10 +37,21 @@ class ForumSearchController extends AbstractController
         $resultsFromQuestion = $query->getResult();
 
         return $this->render('forum_search/index.html.twig', [
-            'controller_name' => 'CategoryController',
             'resultsFromPost' => $resultsFromPost,
             'resultsFromQuestion' => $resultsFromQuestion,
 
         ]);
+    }
+
+    public function getSearchbar(): FormView
+    {
+        $searchbar =  $this->createForm(
+            SearchbarType::class, [
+            'search' => ''
+        ], [
+                'action' => $this->generateUrl('searchbar')
+            ]
+        );
+        return $searchbar->createView();
     }
 }

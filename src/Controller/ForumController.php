@@ -20,19 +20,11 @@ class ForumController extends AbstractController
         //hard coded out of scope of current ticket
         $allCategories = $this->getDoctrine()->getRepository(Category::class)->findall();
 
-        $searchbar = $this->createForm(
-            SearchbarType::class, [
-            'search' => ''
-        ], [
-                'action' => $this->generateUrl('searchbar')
-            ]
-        )->createView();
 
         return $this->render('forum/index.html.twig', [
             'controller_name' => 'CategoryController',
             'allCategories' => $allCategories,
             'language' => $languageDummy,
-            'searchbar' => $searchbar,
         ]);
     }
 }

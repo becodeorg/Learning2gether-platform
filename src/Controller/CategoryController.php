@@ -36,14 +36,6 @@ class CategoryController extends AbstractController
         $categoryDescription = $categoryRepo->getLearningModule()->getDescription($this->getDoctrine()->getRepository(Language::class)->find('1'));
         $topics = $this->getDoctrine()->getRepository(Chapter::class)->findBy(['learningModule' => $categoryRepo->getId()]);
 
-        $searchbar = $this->createForm(
-            SearchbarType::class, [
-                'search' => ''
-            ], [
-                'action' => $this->generateUrl('searchbar')
-            ]
-        )->createView();
-
         return $this->render('category/index.html.twig', [
             'controller_name' => 'CategoryController',
             'categoryId' => $categoryId,
@@ -51,7 +43,6 @@ class CategoryController extends AbstractController
             'categoryDescription' => $categoryDescription,
             'topics' => $topics,
             'language' => $languageDummy,
-            'searchbar' => $searchbar,
         ]);
     }
 
