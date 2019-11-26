@@ -11,11 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Chapter;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/category/category/{category}/topic/{chapter}/question/{question}", name="question", requirements={
+     * @Route("/forum/category/{category}/topic/{chapter}/question/{question}", name="question", requirements={
      *
      *     "category"="\d+",
      *     "chapter"="\d+",
@@ -29,8 +30,10 @@ class QuestionController extends AbstractController
         $questionDate = $question->getDateFormatted();
         $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['topic' => $question->getId()]);
 
+        $upvoters = [];
         $upvoteForms = [];
         foreach ($posts AS $post) {
+            $upvoters[$post->getId()] = $this->countVotes($post->getId());
             $upvoteForms[$post->getId()] = $this->createForm(
                 UpvoteType::class, [
                 'post_id' => $post->getId()
@@ -39,7 +42,7 @@ class QuestionController extends AbstractController
                 ]
             )->createView();
         }
-
+        var_dump($upvoters);
         $postForm = $this->createForm(
             PostType::class, [
             'subjectPost' => '',
@@ -55,6 +58,7 @@ class QuestionController extends AbstractController
             'topic_date' => $questionDate,
             'posts' => $posts,
             'upvotes' => $upvoteForms,
+            'upvoters' => $upvoters,
             'postForm' => $postForm,
         ]);
     }
@@ -127,4 +131,19 @@ class QuestionController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]);
     }
+
+    private function countVotes ($post)
+    {
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('nb', 'totalupvotes');
+        $query = $this->getDoctrine()->getManager()->createNativeQuery('SELECT COUNT(post_id) as nb FROM user_post WHERE post_id = :post_id', $rsm);
+        $query->setParameters([
+            'post_id' => $post
+        ]);
+
+        $upvotes = $query->getSingleScalarResult();
+        return $upvotes;
+    }
+
 }

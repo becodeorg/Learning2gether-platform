@@ -10,17 +10,12 @@
     <h5>Posts</h5>
     {% for post in posts %}
         {% set current_post_id = post.id %}
-        {% set arrayUsers = post.users %}
         {{ post.subject }}<br>
+
         {{ form_start(upvotes[post.id]) }}
-        <p>{{ arrayUsers|length }} users have upvoted on this post</p>
-        {% if arrayUsers|length > 0 %}
-            {% for user in arrayUsers|slice(0,5) %}
-                <p>{{ user.username }}</p>
-            {% endfor %}
-        {% endif %}
+        <p>{{ upvoters[post.id] }} users have upvoted on this post</p>
         {{ form_end(upvotes[post.id]) }}<br>
-        {{ post.date.format('m-d-Y H:i:s') }}<br>
+        {{ post.dateFormatted }}<br>
         <br><br>
 
     {% endfor %}

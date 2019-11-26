@@ -178,7 +178,7 @@ class Question
         return $this;
     }
 
-    public function getChapter(): ?Chapter
+    public function getChapter(): Chapter
     {
         return $this->chapter;
     }
