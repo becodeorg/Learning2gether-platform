@@ -28,6 +28,11 @@ class Language
      */
     private $code;
 
+    public function __construct(string $name, string $code)
+    {
+        $this->name = $name;
+        $this->code = $code;
+    }
 
     public function getId(): ?int
     {

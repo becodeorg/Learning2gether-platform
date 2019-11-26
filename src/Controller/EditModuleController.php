@@ -48,6 +48,7 @@ class EditModuleController extends AbstractController
         }
 
         if ($uploader->isSubmitted() && $uploader->isValid()) {
+            $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
             $prevImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'module', 'src' => $module->getImage()]);
             $updatedModule = $imageManager->changeModuleImage($uploader->getData()['upload'], $prevImage, $module, $user, $this->getParameter('uploads_directory'));
             $this->flushUpdatedModule($updatedModule);

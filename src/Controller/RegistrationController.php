@@ -47,7 +47,8 @@ class RegistrationController extends AbstractController
             $user->setCreated($dateTime);
 
             $imageManager = new ImageManager();
-            $newImage = $imageManager->createImage($request->files->get('registration_form')['avatar'], $this->getUser(), $this->getParameter('uploads_directory'), 'avatar');
+            $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
+            $newImage = $imageManager->createImage($request->files->get('registration_form')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
             $user->setAvatar($newImage->getSrc());
 
             $entityManager = $this->getDoctrine()->getManager();
