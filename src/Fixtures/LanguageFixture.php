@@ -18,7 +18,7 @@ class LanguageFixture extends Fixture
             'bg' => 'български'
         ];
 
-        // create 20 products! Bam!
+        // create 5 languages! Bam!
         foreach ($languages AS $languageCode => $languageName) {
             $language = new Language($languageName, $languageCode);
             $manager->persist($language);
