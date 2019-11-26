@@ -18,14 +18,13 @@ class ImageManager
             return;
         }
 
-        //die($public_directory);
-        /*if(!chown($public_directory, 'www-data')) {
+        if(!chown($public_directory, 'www-data')) {
             throw new RuntimeException(sprintf('Directory "%s" was not created (chown failed)', $uploads_directory));
         }
 
         if (!mkdir($uploads_directory, 0755, true) && !is_dir($uploads_directory)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $uploads_directory));
-        }*/
+        }
     }
     
     public function createImage(UploadedFile $uploadedImage, User $user, string $uploads_directory, string $type): Image

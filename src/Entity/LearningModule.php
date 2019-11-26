@@ -160,14 +160,6 @@ class LearningModule
         }
     }
 
-    /**
-     * @return Collection|Chapter[]
-     */
-    public function getChapters(): Collection
-    {
-        return $this->chapters;
-    }
-
     public function addChapter(Chapter $chapter): self
     {
         if (!$this->chapters->contains($chapter)) {
@@ -184,11 +176,57 @@ class LearningModule
         return $this;
     }
 
-    //function to flag the module in order to show it requires more content before publishing
-    public function flagPage()
+    public function flagPage(): array
     {
-        //TODO flesh out this function to do stuff, (that's a separate ticket)
-        //Same function for flagging/unflagging?
+        //function to flag the module in order to show it requires more content before publishing
+
+        // empty array for storing error
+        $flagData = [];
+
+        // checking all learning module translations
+        $moduleTranslations = $this->getTranslations();
+        foreach ($moduleTranslations as $moduleTranslation) {
+            $flagData['moduleTranslation'] = false;
+            if ($moduleTranslation->getTitle() === '' || $moduleTranslation->getDescription() === '') {
+                $flagData['moduleTranslation'] = true;
+            }
+        }
+
+        //fetching all chapters
+        $chapters = $this->getChapters();
+
+        // checking all the chapter's titles and descriptions
+        foreach ($chapters as $chapter) {
+            $chapterTranslations = $chapter->getTranslations();
+            foreach ($chapterTranslations as $chapterTranslation) {
+                $flagData['chapterTranslation'] = false;
+                if ($chapterTranslation->getTitle() === '' || $chapterTranslation->getDescription() === '') {
+                    $flagData['chapterTranslation'] = true;
+                }
+            }
+            // checking all the pages' translations
+            $chapterPages = $chapter->getPages();
+            foreach ($chapterPages as $chapterPage) {
+                $chapterPageTranslations = $chapterPage->getTranslations();
+                foreach ($chapterPageTranslations as $chapterPageTranslation) {
+                    $flagData['chapterPageTranslation'] = false;
+                    if ($chapterPageTranslation->getTitle() === '' || $chapterPageTranslation->getContent() === '') {
+                        $flagData['chapterPageTranslation'] = true;
+                    }
+                }
+            }
+        }
+
+        // return array of errors
+        return $flagData;
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getChapters(): Collection
+    {
+        return $this->chapters;
     }
 
 }

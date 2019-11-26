@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+
+        table td, th {
+            width: 100px;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        table{
+            width: 100%;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <table>
+            <tr>
+                <th>Module Translations</th>
+                <th>Chapter Translations</th>
+                <th>Page Translations</th>
+                <th>Badgr</th>
+                <th>Published</th>
+            </tr>
+            {% for module in allModules %}
+                <tr>
+                    <td>
+                        {% if module.flagPage['moduleTranslation'] %}
+                            &#10060;
+                        {% else %}
+                            &#9989;
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if module.flagPage['chapterTranslation'] %}
+                            &#10060;
+                        {% else %}
+                            &#9989;
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if module.flagPage['chapterPageTranslation'] %}
+                            &#10060;
+                        {% else %}
+                            &#9989;
+                        {% endif %}
+                    </td>
+                    <td>
+                        TODO
+                    </td>
+                    <td>
+                        {% if not module.isPublished %}
+                            &#10060;
+                        {% else %}
+                            &#9989;
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
