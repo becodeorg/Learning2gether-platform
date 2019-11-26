@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageManager
 {
+    public function removeUpload(string $filename, string $uploads_directory)
+    {
+        unlink($uploads_directory . '/' . $filename);
+    }
+
     public function fixUploadsFolder(string $uploads_directory, string $public_directory): void
     {
         if (is_dir($uploads_directory)){

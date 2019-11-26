@@ -17,8 +17,12 @@
 
     {{ form_start(profileForm) }}
         {{ form_row(profileForm.avatar) }}
-        <button class="btn">Change avatar</button>
+        <button class="btn btn-primary">Change avatar</button>
     {{ form_end(profileForm) }}
+    <br>
+    {{ form_start(delete) }}
+    {{ form_row(delete.delete_user, {'attr': {'class': 'btn-danger'}}) }}
+    {{ form_end(delete) }}
 
     <p>Username: {{ user.username }}</p>
     <p>Email: {{ user.email }}</p>

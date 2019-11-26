@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Domain\Badgr;
 use App\Domain\ImageManager;
 use App\Entity\Image;
-use App\Entity\LearningModule;
 use App\Entity\User;
 use App\Form\EditProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,6 +44,15 @@ class ProfileController extends AbstractController
         $form = $this->createForm(EditProfileType::class, $user);
         $form->handleRequest($request);
 
+        $deleteBtn = $this->createFormBuilder()
+            ->add('delete_user', SubmitType::class)
+            ->getForm();
+        $deleteBtn->handleRequest($request);
+
+        if ($deleteBtn->isSubmitted() && $deleteBtn->isValid()){
+            return $this->deleteUser();
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             $imageManager = new ImageManager();
             $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
@@ -56,6 +66,7 @@ class ProfileController extends AbstractController
             'userBadges' => $userBadges,
             'user' => $user,
             'profileForm' => $form->createView(),
+            'delete' => $deleteBtn->createView(),
         ]);
     }
 
@@ -71,5 +82,23 @@ class ProfileController extends AbstractController
 
     private function getAccessToken(){
         return $_SESSION['accessToken'];
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function deleteUser(): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $imageManager = new ImageManager();
+        $user = $this->getUser();
+        $this->get('security.token_storage')->setToken(null);
+        $userImages = $this->getDoctrine()->getRepository(Image::class)->findBy(['user' => $user]);
+        foreach ($userImages as $userImage) {
+            $imageManager->removeUpload($userImage->getSrc(), $this->getParameter('uploads_directory'));
+        }
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute('portal');
     }
 }

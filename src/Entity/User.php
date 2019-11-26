@@ -67,7 +67,7 @@ class User implements UserInterface
     private $created;
 
     /**
- * @ORM\OneToMany(targetEntity="Question", mappedBy="createdBy", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="createdBy", orphanRemoval=true)
      */
     private $topics;
 
@@ -77,27 +77,28 @@ class User implements UserInterface
     private $posts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Post", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Post", inversedBy="users", orphanRemoval=true)
      */
     private $upvote;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users", orphanRemoval=true)
      */
     private $badges;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter", orphanRemoval=true)
      */
     private $progress;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"}, orphanRemoval=true)
      */
     private $images;
 
     public function __construct()
-    {   $this->topics = new ArrayCollection();
+    {
+        $this->topics = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->upvote = new ArrayCollection();
         $this->badges = new ArrayCollection();
@@ -135,16 +136,16 @@ class User implements UserInterface
         $this->password = $password;
     }
 
-    public function getRoles()
+    public function getRoles() : array
     {
-        if($this->isPartner()) {
+        if ($this->isPartner()) {
             return [self::ROLE_PARTNER];
         }
 
         return [self::ROLE_USER];
     }
 
-    public function getPassword() : string
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -154,7 +155,7 @@ class User implements UserInterface
         // TODO: Implement getSalt() method.
     }
 
-    public function getUsername()
+    public function getUsername() : ?string
     {
         return $this->username;
     }
@@ -162,18 +163,6 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
-    }
-
-    public function getPasswordHash(): ?string
-    {
-        return $this->password_hash;
-    }
-
-    public function setPasswordHash(string $password_hash): self
-    {
-        $this->password_hash = $password_hash;
-
-        return $this;
     }
 
     public function isPartner(): bool
@@ -188,18 +177,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getBadgrKey(): ?string
-    {
-        return $this->badgr_key;
-    }
-
-    public function setBadgrKey(string $badgr_key): self
-    {
-        $this->badgr_key = $badgr_key;
-
-        return $this;
-    }
-
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -207,7 +184,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAvatar(): ?string
+    public function getAvatar(): string
     {
         return $this->avatar;
     }
@@ -219,12 +196,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLanguage(): ?Language
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(?Language $language): self
+    public function setLanguage(Language $language): self
     {
         $this->language = $language;
 
@@ -289,6 +266,7 @@ class User implements UserInterface
             $post->setCreatedBy($this);
         }
     }
+
     /**
      * @return Collection|LearningModule[]
      */
@@ -317,6 +295,7 @@ class User implements UserInterface
             }
         }
     }
+
     public function removeBadge(LearningModule $badge): self
     {
         if ($this->badges->contains($badge)) {
