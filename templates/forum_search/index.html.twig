@@ -14,9 +14,8 @@
     <br><br>
     <p>From Posts</p>
     {% for results in resultsFromPost %}
-        {# todo need to fix this connection category is not known through search #}
-        {{ dump(resultsFromPost) }}
-        <a href="{{ path('question', {'category': results.topic.category.id, 'chapter': results.topic.id, 'question': results.id}) }}"><br>
+
+        <a href="{{ path('question', {'category': results.topic.category.id, 'chapter': results.topic.chapter.id, 'question': results.topic.id}) }}"><br>
             {{ results.subject }}<br>
         </a>
     {% endfor %}
