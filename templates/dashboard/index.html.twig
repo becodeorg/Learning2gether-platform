@@ -23,7 +23,7 @@
             text-align: center;
         }
 
-        table{
+        table {
             width: 100%;
         }
     </style>
@@ -38,26 +38,29 @@
                 <th>Published</th>
             </tr>
             {% for module in allModules %}
+                {% set moduleTranslations = module.flagPage['moduleTranslation'] %}
+                {% set chapterTranslations = module.flagPage['chapterTranslation'] %}
+                {% set chapterPageTranslations = module.flagPage['chapterPageTranslation'] %}
                 <tr>
                     <td>
-                        {% if module.flagPage['moduleTranslation'] %}
-                            &#10060;
+                        {% if moduleTranslations >= 2 %}
+                            &#9989; <br> {{ moduleTranslations }} / {{ allLanguages|length }}
                         {% else %}
-                            &#9989;
+                            &#10060; <br> {{ moduleTranslations }} / {{ allLanguages|length }}
                         {% endif %}
                     </td>
                     <td>
-                        {% if module.flagPage['chapterTranslation'] %}
-                            &#10060;
+                        {% if moduleTranslations >= 2 %}
+                            &#9989; <br> {{ chapterTranslations }} / {{ allLanguages|length }}
                         {% else %}
-                            &#9989;
+                            &#10060; <br> {{ chapterTranslations }} / {{ allLanguages|length }}
                         {% endif %}
                     </td>
                     <td>
-                        {% if module.flagPage['chapterPageTranslation'] %}
-                            &#10060;
+                        {% if moduleTranslations >= 2 %}
+                            &#9989; <br> {{ chapterPageTranslations }} / {{ allLanguages|length }}
                         {% else %}
-                            &#9989;
+                            &#10060; <br> {{ chapterPageTranslations }} / {{ allLanguages|length }}
                         {% endif %}
                     </td>
                     <td>

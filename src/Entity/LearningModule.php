@@ -32,26 +32,22 @@ class LearningModule
      * @ORM\Column(type="string", length=255)
      */
     private $image;
-    //link to the LM image on the server (for marketing prettifying purposes)
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $type;
-    //defines the LM type, for example: the LM is for soft skills or hard skills
 
     /**
-     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true,cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
      */
     private $translations;
-    // cascade means a modules translations(titles and descriptions) can be inserted to the DB when their module is flushed. -jan
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
      */
     private $chapters;
 
-    //default for isPublished is set to false
     public function __construct(string $badge, string $image, string $type, bool $isPublished = false)
     {
         $this->translations = new ArrayCollection();
@@ -60,6 +56,7 @@ class LearningModule
         $this->image = $image;
         $this->type = $type;
         $this->isPublished = $isPublished;
+        //default for isPublished is set to false
     }
 
     public function getId(): ?int
@@ -84,6 +81,9 @@ class LearningModule
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getBadge(): string
     {
         return $this->badge;
@@ -96,6 +96,9 @@ class LearningModule
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getImage(): string
     {
         return $this->image;
@@ -106,6 +109,9 @@ class LearningModule
         $this->image = $image;
     }
 
+    /**
+     * @return string
+     */
     public function getType(): string
     {
         return $this->type;
@@ -137,27 +143,12 @@ class LearningModule
         return $this;
     }
 
-    public function getTitle(Language $language)
-    {
-        foreach ($this->getTranslations() AS $translation) {
-            if ($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getTitle();//change this line if needed when copied
-            }
-        }
-    }
-
+    /**
+     * @return Collection
+     */
     public function getTranslations(): Collection
     {
         return $this->translations;
-    }
-
-    public function getDescription(Language $language)
-    {
-        foreach ($this->getTranslations() AS $translation) {
-            if ($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getDescription();//change this line if needed when copied
-            }
-        }
     }
 
     public function addChapter(Chapter $chapter): self
@@ -176,6 +167,42 @@ class LearningModule
         return $this;
     }
 
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getChapters(): Collection
+    {
+        return $this->chapters;
+    }
+
+    /**
+     * @param Language $language
+     * @return string
+     */
+    public function getTitle(Language $language) : string
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getTitle();//change this line if needed when copied
+            }
+        }
+        return 'Error: Language not found';
+    }
+
+    /**
+     * @param Language $language
+     * @return string
+     */
+    public function getDescription(Language $language) : string
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getDescription();//change this line if needed when copied
+            }
+        }
+        return 'Error: Language not found';
+    }
+
     public function flagPage(): array
     {
         //function to flag the module in order to show it requires more content before publishing
@@ -185,10 +212,10 @@ class LearningModule
 
         // checking all learning module translations
         $moduleTranslations = $this->getTranslations();
+        $flagData['moduleTranslation'] = count($moduleTranslations);
         foreach ($moduleTranslations as $moduleTranslation) {
-            $flagData['moduleTranslation'] = false;
             if ($moduleTranslation->getTitle() === '' || $moduleTranslation->getDescription() === '') {
-                $flagData['moduleTranslation'] = true;
+                --$flagData['moduleTranslation'];
             }
         }
 
@@ -198,35 +225,26 @@ class LearningModule
         // checking all the chapter's titles and descriptions
         foreach ($chapters as $chapter) {
             $chapterTranslations = $chapter->getTranslations();
+            $flagData['chapterTranslation'] = count($chapterTranslations);
             foreach ($chapterTranslations as $chapterTranslation) {
-                $flagData['chapterTranslation'] = false;
                 if ($chapterTranslation->getTitle() === '' || $chapterTranslation->getDescription() === '') {
-                    $flagData['chapterTranslation'] = true;
+                    --$flagData['chapterTranslation'];
                 }
             }
             // checking all the pages' translations
             $chapterPages = $chapter->getPages();
             foreach ($chapterPages as $chapterPage) {
                 $chapterPageTranslations = $chapterPage->getTranslations();
+                $flagData['chapterPageTranslation'] = count($chapterPageTranslations);
                 foreach ($chapterPageTranslations as $chapterPageTranslation) {
-                    $flagData['chapterPageTranslation'] = false;
                     if ($chapterPageTranslation->getTitle() === '' || $chapterPageTranslation->getContent() === '') {
-                        $flagData['chapterPageTranslation'] = true;
+                        --$flagData['chapterPageTranslation'];
                     }
                 }
             }
         }
-
         // return array of errors
         return $flagData;
-    }
-
-    /**
-     * @return Collection|Chapter[]
-     */
-    public function getChapters(): Collection
-    {
-        return $this->chapters;
     }
 
 }
