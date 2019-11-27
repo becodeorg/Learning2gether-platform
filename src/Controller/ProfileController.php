@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Domain\Badgr;
 use App\Domain\ImageManager;
 use App\Entity\Image;
+use App\Entity\PwdResetToken;
 use App\Entity\User;
 use App\Form\EditProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -96,6 +97,12 @@ class ProfileController extends AbstractController
         $userImages = $this->getDoctrine()->getRepository(Image::class)->findBy(['user' => $user]);
         foreach ($userImages as $userImage) {
             $imageManager->removeUpload($userImage->getSrc(), $this->getParameter('uploads_directory'));
+        }
+        $userPwdTokens = $this->getDoctrine()->getRepository(PwdResetToken::class)->findBy(['user' => $user]);
+        if (!empty($userPwdTokens)){
+            foreach ($userPwdTokens as $userPwdToken){
+                $em->remove($userPwdToken);
+            }
         }
         $em->remove($user);
         $em->flush();
