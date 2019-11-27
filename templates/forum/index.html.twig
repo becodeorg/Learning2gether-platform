@@ -6,11 +6,10 @@
 
     <h1>Forum</h1>
 
-
-
     <h2>Categories</h2>
     {% for category in allCategories %}
         <a href="{{ path('category', {'category': category.id}) }}">
+            {#todo need to change language problems#}
             {{ category.title(language) }}<br>
         </a>
         <br>

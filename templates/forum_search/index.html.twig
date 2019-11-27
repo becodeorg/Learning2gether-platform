@@ -7,17 +7,19 @@
     <h3>Search results</h3>
     <p>From Questions</p>
     {% for results in resultsFromQuestion %}
-        <a href="{{ path('topic', {'category': results.category.id, 'chapter': results.id}) }}"><br>
+        <a href="{{ path('question', {'category': results.category.id, 'chapter': results.chapter.id, 'question': results.id}) }}"><br>
             {{ results.subject }}<br>
         </a>
     {% endfor %}
     <br><br>
     <p>From Posts</p>
     {% for results in resultsFromPost %}
-        <a href="{{ path('question', {'category': 1, 'chapter': 1, 'question': results.topic.id}) }}"><br>
+        {# todo need to fix this connection category is not known through search #}
+        {{ dump(resultsFromPost) }}
+        <a href="{{ path('question', {'category': results.topic.category.id, 'chapter': results.topic.id, 'question': results.id}) }}"><br>
             {{ results.subject }}<br>
         </a>
     {% endfor %}
     <br><br>
-    <a href="{{ path('category', {'category': 1}) }}">Return to forums</a>
+    <a href="{{ path('forum') }}">Return to forums</a>
 {% endblock %}

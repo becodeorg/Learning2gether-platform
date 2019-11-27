@@ -16,7 +16,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/forum/category/{category}/topic/{chapter}/question/{question}", name="question", requirements={
+     * @Route("/forum/{category}/{chapter}/{question}", name="question", requirements={
      *
      *     "category"="\d+",
      *     "chapter"="\d+",
@@ -27,7 +27,6 @@ class QuestionController extends AbstractController
     public function index(Category $category, Chapter $chapter, Question $question)
     {
 
-        $questionDate = $question->getDateFormatted();
         $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['topic' => $question->getId()]);
 
         $upvoters = [];
@@ -38,24 +37,32 @@ class QuestionController extends AbstractController
                 UpvoteType::class, [
                 'post_id' => $post->getId()
             ],[
-                    'action' => $this->generateUrl('upvote', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]),
+                    'action' => $this->generateUrl('upvote',
+                        [
+                            'category' => $category->getId(),
+                            'chapter'=> $chapter->getId(),
+                            'question'=> $question->getId()
+                        ]),
                 ]
             )->createView();
         }
-        var_dump($upvoters);
+
         $postForm = $this->createForm(
             PostType::class, [
             'subjectPost' => '',
             'topic_id' => $question->getId(),
         ], [
-                'action' => $this->generateUrl('post', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()])
+                'action' => $this->generateUrl('post',
+                    [
+                        'category' => $category->getId(),
+                        'chapter'=> $chapter->getId(),
+                        'question'=> $question->getId()
+                    ])
             ]
         )->createView();
 
         return $this->render('question/index.html.twig', [
-            'controller_name' => 'QuestionController',
-            'question' => $question->getSubject(),
-            'topic_date' => $questionDate,
+            'question' => $question,
             'posts' => $posts,
             'upvotes' => $upvoteForms,
             'upvoters' => $upvoters,
@@ -64,7 +71,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/category/category/{category}/topic/{chapter}/question/{question}/upvote", name="upvote", requirements={
+     * @Route("/forum/{category}/{chapter}/{question}/upvote", name="upvote", requirements={
      *
      *     "category"="\d+",
      *     "chapter"="\d+",
@@ -102,7 +109,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/category/category/{category}/topic/{chapter}/question/{question}/post", name="post", requirements={
+     * @Route("/forum/{category}/{chapter}/{question}/post", name="post", requirements={
      *
      *     "category"="\d+",
      *     "chapter"="\d+",

@@ -7,13 +7,13 @@
    <h1>Forum</h1>
 
     <h2>Current Category</h2>
-    {{ categoryTitle }}<br>
-    {{ categoryDescription }} <br><br>
+    {{ category.learningModule.title(language) }}<br>
+    {{ category.learningModule.description(language) }} <br><br>
 
     <h2>Topics</h2>
 
     {% for topic in topics %}
-        <a href="{{ path('topic', {'category': categoryId, 'chapter': topic.id}) }}">
+        <a href="{{ path('topic', {'category':  category.id , 'chapter': topic.id}) }}">
                 {{ topic.title(language) }}<br>
         </a>
         <br>

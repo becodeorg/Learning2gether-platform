@@ -4,14 +4,12 @@
 
 {% block body %}
     <h4>Current Question</h4>
-    {{ question }}
-    {{ topic_date }}
+    {{ question.subject }} <br>
+    {{ question.dateFormatted }}
 
     <h5>Posts</h5>
     {% for post in posts %}
-        {% set current_post_id = post.id %}
         {{ post.subject }}<br>
-
         {{ form_start(upvotes[post.id]) }}
         <p>{{ upvoters[post.id] }} users have upvoted on this post</p>
         {{ form_end(upvotes[post.id]) }}<br>

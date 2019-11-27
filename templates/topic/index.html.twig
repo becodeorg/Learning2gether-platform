@@ -7,16 +7,16 @@
     <h1>Forum</h1>
 
     <h2>Current Category</h2>
-    {{ categoryTitle }}<br>
-    {{ categoryDescription }} <br><br>
+    {{ category.learningModule.title(language) }}<br>
+    {{ category.learningModule.description(language) }} <br><br>
 
     <h2>Current Topic</h2>
-        {{ topics.title(language) }}<br>
+        {{ currentTopic.title(language) }}<br>
         <br>
 
     <h4>All in Current Questions</h4>
     {% for question in questions %}
-        <a href="{{ path('question', {'category': categoryId.id, 'chapter': topicId.id, 'question': question.id}) }}">
+        <a href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
           {{ question.subject }}<br>
             {{  question.dateFormatted }}<br>
         </a>
