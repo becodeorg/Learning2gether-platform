@@ -22,14 +22,6 @@
         <hr>
         <h3>Chapter List</h3>
         <ul>
-            {% if module.chapters|length > 0 %}
-                {% for chapter in module.chapters %}
-                    <li>{{ chapter.getTitle(language) }} : {{ chapter.getDescription(language) }}
-                     {% for page in chapter.pages %}
-                         <div style="border: 1px solid red">
-                         {% set html = parsedown.text(page.translations[0].content) %}
-                             {{ mdparser.searchForEmbed(html) | raw }}
-                         </div>
                          {% endfor %}
                 {% endfor %}
             {% else %}
