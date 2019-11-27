@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageManager
 {
-    public function removeUpload(string $filename, string $uploads_directory)
+    public function removeUpload(string $filename, string $uploads_directory): void
     {
         unlink($uploads_directory . '/' . $filename);
     }
@@ -22,6 +22,8 @@ class ImageManager
         if (is_dir($uploads_directory)){
             return;
         }
+
+        umask(0);
 
         if(!chown($public_directory, 'www-data')) {
             throw new RuntimeException(sprintf('Directory "%s" was not created (chown failed)', $uploads_directory));
