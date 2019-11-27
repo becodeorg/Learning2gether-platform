@@ -25,8 +25,6 @@ class TopicController extends AbstractController
     {
 
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code'=> $_COOKIE['language'] ?? 'en']);
-        $categoryRepo = $this->getDoctrine()->getRepository(Category::class)->find($category);
-        $currentTopic = $this->getDoctrine()->getRepository(Chapter::class)->findOneBy(['id' => $chapter]);
         $questions = $this->getDoctrine()->getRepository(Question::class)->findBy([
             'chapter' => $chapter,
             'language'=>  $language->getId()
@@ -47,8 +45,8 @@ class TopicController extends AbstractController
         )->createView();
 
         return $this->render('topic/index.html.twig', [
-            'category' => $categoryRepo,
-            'currentTopic' => $currentTopic,
+            'category' => $category,
+            'currentTopic' => $chapter,
             'language' => $language,
             'questions' => $questions,
             'addQuestion' => $addQuestion,

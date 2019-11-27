@@ -27,13 +27,12 @@ class CategoryController extends AbstractController
     public function index(Request $request, Category $category)
     {
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code'=> $_COOKIE['language'] ?? 'en']);
-        $categoryRepo = $this->getDoctrine()->getRepository(Category::class)->find($category);
         $topics = $this->getDoctrine()->getRepository(Chapter::class)->findBy([
-            'learningModule' => $categoryRepo->getId()
+            'learningModule' => $category
         ]);
 
         return $this->render('category/index.html.twig', [
-            'category' => $categoryRepo,
+            'category' => $category,
             'topics' => $topics,
             'language' => $language,
         ]);
