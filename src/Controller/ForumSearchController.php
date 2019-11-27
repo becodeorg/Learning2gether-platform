@@ -21,7 +21,6 @@ class ForumSearchController extends AbstractController
         $form->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
-
         $repo = $em->getRepository(Post::class);
         $query = $repo->createQueryBuilder('p')
             ->where('p.subject LIKE :keyword')
@@ -29,7 +28,7 @@ class ForumSearchController extends AbstractController
             ->getQuery();
         $resultsFromPost = $query->getResult();
 
-
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Question::class);
         $query = $repo->createQueryBuilder('p')
             ->where('p.subject LIKE :keyword')
