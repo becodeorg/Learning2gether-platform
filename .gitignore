@@ -5,8 +5,7 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
-/public/uploads/*
-!/public/uploads/.gitkeep
+/public/upload/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
