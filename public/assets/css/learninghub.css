@@ -1,0 +1,75 @@
+.nav-bar-color {
+  background-color: #8b54a0; }
+
+h1 {
+  font-family: "Chivo", sans-serif;
+  font-weight: 400; }
+
+.intro-lh {
+  font-family: "Chivo", sans-serif;
+  font-weight: 400; }
+
+.card {
+  -webkit-box-shadow: 0 6px 12px 3px rgba(139, 84, 160, 0.37);
+  box-shadow: 0 6px 12px 3px rgba(139, 84, 160, 0.37);
+  border: none;
+  border-radius: 20px; }
+
+.button_3 {
+  font-family: "Chivo", sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 40px;
+  border: 3pt solid #8b54a0;
+  background-color: #8b54a0;
+  color: #f7f6f6;
+  transition: 0.3s;
+}
+
+.button_3:hover {
+  color: #8b54a0;
+  background: #f7f6f6;
+  border: 3pt solid #f7f6f6; }
+
+.button_4{
+  background: rgb(100, 65, 100);
+  letter-spacing: 1px;
+  padding: 10px 30px;
+  border-radius: 40px;
+  border: none;
+  color: #f7f6f6;
+  transition: 0.3s;
+}
+
+.button_4:hover {
+  color: #8b54a0;
+  background: #f7f6f6;
+  text-decoration: none;
+}
+
+
+/*# sourceMappingURL=learninghub.css.map */
+
+
+/* Tim started here */
+
+.navwrap{
+  background: #8b54a0;
+}
+
+.navbar, .example-wrapper{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.navbar{
+  padding: 10px 0px;
+}
+
+#language_switcher_language{
+  background: #8b54a0;
+  border: 1px solid white;
+  color: white;
+}

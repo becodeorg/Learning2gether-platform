@@ -108,7 +108,6 @@ class Badgr
             $badgeData = json_decode($response->getContent(), true);
             $userBadges[] = $badgeData;
         }
-
         return $userBadges;
     }
 }

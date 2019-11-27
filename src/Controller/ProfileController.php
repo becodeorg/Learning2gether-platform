@@ -31,7 +31,7 @@ class ProfileController extends AbstractController
         $accessToken = $this->getAccessToken();
 
         //get all badges from user
-        $badges = $user->getBadges()->getSnapshot();
+        $badges = $user->getBadges()->getValues();
         //put all badge keys in userBadges
         $badgeKeys = [];
         foreach ($badges as &$badgeData) {

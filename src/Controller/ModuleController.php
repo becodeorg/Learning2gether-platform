@@ -39,7 +39,7 @@ class ModuleController extends AbstractController
 
         // when module completed, give badge
         // maybe put this in a private function instead of hardcoding a boolean -Jan
-        $completed = false;
+        $completed = true;
         if($completed === true){
             //add badge from this module to user
             $badgrObj->addBadgeToUser($module, $user, $tokens['accessToken']);

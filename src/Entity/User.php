@@ -289,6 +289,7 @@ class User implements UserInterface
             $post->setCreatedBy($this);
         }
     }
+
     /**
      * @return Collection|LearningModule[]
      */
