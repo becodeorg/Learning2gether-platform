@@ -23,8 +23,6 @@ class ImageManager
             return;
         }
 
-        umask(0);
-
         if(!chown($public_directory, 'www-data')) {
             throw new RuntimeException(sprintf('Directory "%s" was not created (chown failed)', $uploads_directory));
         }
