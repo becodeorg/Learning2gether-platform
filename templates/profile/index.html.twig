@@ -12,7 +12,7 @@
     <h1>Welcome {{ user.name }}</h1>
 
     {% if user.avatar %}
-    <img src="{{ asset('uploads/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
+    <img src="{{ asset('upload/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
     {% endif %}
 
     {{ form_start(profileForm) }}
