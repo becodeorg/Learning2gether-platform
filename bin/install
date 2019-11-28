@@ -12,6 +12,10 @@ if (!is_dir($uploadDir)) {
         throw new RuntimeException(sprintf('Directory "%s" was not created', $uploadDir));
     }
 
+    if(!chown($uploadDir, 'www-data')) {
+        throw new RuntimeException(sprintf('Directory "%s" was not chowned', $uploadDir));
+    }
+
     echo "Created upload directory";
 }
 
