@@ -50,7 +50,7 @@ class QuestionController extends AbstractController
         $postForm = $this->createForm(
             PostType::class, [
             'subjectPost' => '',
-            'topic_id' => $question->getId(),
+            'question_id' => $question->getId(),
         ], [
                 'action' => $this->generateUrl('post',
                     [
@@ -123,7 +123,7 @@ class QuestionController extends AbstractController
         $form->handleRequest($request);
 
         /** @var Question $question */
-        $question = $this->getDoctrine()->getManager()->getRepository(Question::Class)->findOneBy(['id' => $form->get('topic_id')->getData()]);
+        $question = $this->getDoctrine()->getManager()->getRepository(Question::Class)->findOneBy(['id' => $form->get('question_id')->getData()]);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]);
