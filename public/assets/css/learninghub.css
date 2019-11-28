@@ -49,12 +49,6 @@ h1 {
   text-decoration: none;
 }
 
-
-/*# sourceMappingURL=learninghub.css.map */
-
-
-/* Tim started here */
-
 .navwrap{
   background: #8b54a0;
 }
@@ -74,11 +68,8 @@ h1 {
   color: white;
 }
 
-
-/*Nicole*/
-
 .wrapper {
-  width: 800px;
+  width: 1000px;
   margin: 0 auto;
 }
 
@@ -126,24 +117,7 @@ h2 {
 .chapcontainer {
   margin-top: 50px;
 }
-.button_5 {
-  font-family: 'Chivo', sans-serif;
-  font-size: 18px;
-  letter-spacing: 1px;
-  border-radius: 40px;
-  border: 3pt solid rgb(51,0,61);
-  -webkit-box-shadow: 12px 12px 19px -17px black;
-  -moz-box-shadow: 12px 12px 19px -17px black;
-  box-shadow: 12px 12px 19px -17px black;
-  background-color: rgb(51,0,61);
-  color: #f7f6f6;
-  width: 270px;
-}
-.button_5:hover {
-  color: rgb(51,0,61);
-  background: #f7f6f6;
-  box-shadow: 12px 12px 19px -17px black ;
-}
+
 .chapbutton_2 {
 
   float: right;

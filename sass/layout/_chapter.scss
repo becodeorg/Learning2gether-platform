@@ -1,0 +1,84 @@
+.button_4chap {
+  font-family: 'Chivo', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+
+  border: 1pt solid #b3b3b3;
+  border-radius: 40px;
+  -webkit-box-shadow: 12px 12px 19px -17px;
+  -moz-box-shadow: 12px 12px 19px -17px ;
+  box-shadow: 12px 12px 19px -17px ;
+
+  background-color: #f7f6f6;
+  color: #7a7a7a;
+
+  width: 270px;  //this has to change
+
+  //transition: all 0.3s ease 0s;
+}
+
+.button_4chap:hover {
+  color: #606060;
+  background: #f7f6f6;
+  //box-shadow: 12px 12px 19px -17px black ;
+}
+
+.btnchap {
+  width: 200px;
+  float: right;
+  margin-right: -50px;
+  margin-top: -50px;
+}
+
+h2 {
+  text-align: center;
+}
+.chapcard {
+  padding: 20px 10px 20px 5px;
+  border-radius: 20px;
+  background-color: #460e56;
+  color: #f7f6f6;
+}
+.chapcontainer {
+  margin-top: 50px;
+}
+
+.chapbutton_2 {
+
+  float: right;
+  margin-right: -50px;
+  margin-top: -30px;
+}
+@media only screen and (max-width: 770px) {
+  .wrapper {
+    width: 100%;
+  }
+
+  .btnchap {
+    float: none;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .chapcard {
+    padding: 20px 20px 50px 20px;
+  }
+
+  .chapimg {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .chapinfo {
+    text-align: center;
+  }
+
+  h5 {
+    margin: 0 auto;
+  }
+
+  .chapbutton_2 {
+    float: none;
+    justify-content: center;
+  }
+}

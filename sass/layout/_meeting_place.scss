@@ -1,0 +1,21 @@
+@import "./../variables/variables";
+.cards-container{
+    width: 100%;
+    max-width: 1280px;
+    background-color: pink;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    .card-wrapper{
+      
+        max-width: 415px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: pink;
+        -webkit-box-shadow: -1px -1px 22px -6px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px -1px 22px -6px rgba(0,0,0,0.75);
+        box-shadow: -1px -1px 22px -6px rgba(0,0,0,0.75);
+
+
+    }
+}

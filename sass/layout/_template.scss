@@ -1,0 +1,169 @@
+@import "./../variables/variables";
+
+//BUTTON_1
+
+.button_1 {
+  font-family: $chivofamily;
+  //font-weight: bold;
+  font-size: $buttonfontsize;
+  letter-spacing: 1px;
+
+  border: 3pt solid $purplecolor;
+  border-radius: 40px;
+  -webkit-box-shadow: 12px 12px 19px -17px;
+  -moz-box-shadow: 12px 12px 19px -17px ;
+  box-shadow: 12px 12px 19px -17px ;
+
+  background-color: $whitecolor;
+  color: $purplecolor;
+
+  width: 270px;  //this has to change
+
+  //transition: all 0.3s ease 0s;
+}
+
+.button_1:hover {
+  color: $whitecolor;
+  background: $purplecolor;
+  box-shadow: 12px 12px 19px -17px black ;
+}
+
+//BUTTON_2
+
+.button_2 {
+  font-family: $chivofamily;
+  //font-weight: bold;
+  font-size: $buttonfontsize;
+  letter-spacing: 1px;
+
+
+  border-radius: 40px;
+  border: 3pt solid $darkpurplecolor;
+  -webkit-box-shadow: 12px 12px 19px -17px black;
+  -moz-box-shadow: 12px 12px 19px -17px black ;
+  box-shadow: 12px 12px 19px -17px black ;
+
+  background-color: $darkpurplecolor;
+  color: $whitecolor;
+
+  width: 270px;  //this has to change
+
+  //transition: all 0.3s ease 0s;
+}
+
+.button_2:hover {
+  color: $darkpurplecolor;
+  background: $whitecolor;
+  box-shadow: 12px 12px 19px -17px black ;
+}
+
+//BUTTON_3
+
+.button_3 {
+  font-family: $chivofamily;
+  //font-weight: bold;
+  font-size: $buttonfontsize;
+  letter-spacing: 1px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+
+  border-radius: 40px;
+  border: 3pt solid $purplecolor;
+
+
+  background-color: $purplecolor;
+  color: $whitecolor;
+  width: 270px;  //this has to change
+
+  //transition: all 0.3s ease 0s;
+}
+
+.button_3:hover {
+  color: $purplecolor;
+  background: $whitecolor;
+  border: 3pt solid $whitecolor;
+}
+
+//BUTTON_4
+
+.button_4 {
+  font-family: $chivofamily;
+  font-size: $buttonfontsize;
+  letter-spacing: 1px;
+
+  border: 1pt solid #b3b3b3;
+  border-radius: 40px;
+  -webkit-box-shadow: 12px 12px 19px -17px;
+  -moz-box-shadow: 12px 12px 19px -17px ;
+  box-shadow: 12px 12px 19px -17px ;
+
+  background-color: $whitecolor;
+  color: $darkgreycolor;
+
+  width: 270px;  //this has to change
+
+  //transition: all 0.3s ease 0s;
+}
+
+.button_4:hover {
+  color: #606060;
+  background: $whitecolor;
+  //box-shadow: 12px 12px 19px -17px black ;
+}
+
+//PROGRESS BAR 1
+
+.progress_1{
+  height: 28px;
+  border: 1pt solid $darkpurplecolor;
+  border-radius: 5px;
+}
+
+.progress_1_bar {
+  background-color: $purplecolor;
+}
+
+//PROGRESS BAR 2
+
+/*.progressbar_2 {
+  display: inline-block;
+}*/
+
+            //rounded buttons
+
+.chevron_front {
+  color: $whitecolor;
+  font-weight: bold;
+}
+
+
+.round_back {
+  width: 30px;
+  height: 30px;
+  border: 1pt solid $purplecolor;
+  border-radius: 15px;
+  background-color: $purplecolor;
+}
+
+.round_back:hover {
+  width: 30px;
+  height: 30px;
+  border: 1pt solid $purplecolor;
+  border-radius: 15px;
+  background-color: $purplecolor;
+}
+
+
+            //bar
+.progress_2{
+  width: 200px;
+  height: 12px;
+  border: 1pt solid $darkpurplecolor;
+  border-radius: 40px;
+}
+
+.progress_2_bar {
+  background-color: $purplecolor;
+}
+
