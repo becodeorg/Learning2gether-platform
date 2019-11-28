@@ -102,8 +102,10 @@ class User implements UserInterface
         $this->posts = new ArrayCollection();
         $this->upvote = new ArrayCollection();
         $this->badges = new ArrayCollection();
-        $this->progress = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->progress = new ArrayCollection();
+
+        $this->created = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

@@ -26,7 +26,7 @@ class CreateModuleController extends AbstractController
         $imageManager = new ImageManager();
 
         // make a new module for the form, empty values for now
-        $module = new LearningModule('', '', '');
+        $module = new LearningModule();
         $translationArray = $this->makeTranslations($module);
 
         // create the form
