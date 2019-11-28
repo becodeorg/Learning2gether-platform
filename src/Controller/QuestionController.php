@@ -27,7 +27,7 @@ class QuestionController extends AbstractController
     public function index(Category $category, Chapter $chapter, Question $question)
     {
 
-        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['topic' => $question]);
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['id' => $question->getId()]);
 
         $upvoters = [];
         $upvoteForms = [];
@@ -122,17 +122,17 @@ class QuestionController extends AbstractController
         $form = $this->createForm(PostType::class);
         $form->handleRequest($request);
 
-        /** @var Question $topic */
-        $topic = $this->getDoctrine()->getManager()->getRepository(Question::Class)->findOneBy(['id' => $form->get('topic_id')->getData()]);
+        /** @var Question $question */
+        $question = $this->getDoctrine()->getManager()->getRepository(Question::Class)->findOneBy(['id' => $form->get('topic_id')->getData()]);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]);
         }
 
 
-        $postOut = new Post($form->get('subjectPost')->getData(), $this->getUser(), $topic);
+        $postOut = new Post($form->get('subjectPost')->getData(), $this->getUser(), $question);
 
-        $postOut->setTopic($topic);
+        $postOut->setQuestion($question);
 
         $this->getDoctrine()->getManager()->persist($postOut);
         $this->getDoctrine()->getManager()->flush();
