@@ -143,14 +143,6 @@ class LearningModule
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
-    public function getTranslations(): Collection
-    {
-        return $this->translations;
-    }
-
     public function addChapter(Chapter $chapter): self
     {
         if (!$this->chapters->contains($chapter)) {
@@ -168,18 +160,10 @@ class LearningModule
     }
 
     /**
-     * @return Collection|Chapter[]
-     */
-    public function getChapters(): Collection
-    {
-        return $this->chapters;
-    }
-
-    /**
      * @param Language $language
      * @return string
      */
-    public function getTitle(Language $language) : string
+    public function getTitle(Language $language): string
     {
         foreach ($this->getTranslations() AS $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
@@ -190,10 +174,18 @@ class LearningModule
     }
 
     /**
+     * @return Collection
+     */
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
+    /**
      * @param Language $language
      * @return string
      */
-    public function getDescription(Language $language) : string
+    public function getDescription(Language $language): string
     {
         foreach ($this->getTranslations() AS $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
@@ -205,10 +197,17 @@ class LearningModule
 
     public function flagPage(): array
     {
-        //function to flag the module in order to show it requires more content before publishing
+        //function to check the module in order to show it requires more content before publishing
+        // returns an array of integers based on how many translations are filled in
+        // also returns a bool whether or not the module can be published (2 translations minimum)
 
         // empty array for storing error
         $flagData = [];
+        $flagData['moduleNeededTranslations'] = [];
+        $flagData['chapterNeededTranslations'] = [];
+        $flagData['chapterPageNeededTranslations'] = [];
+        $flagData['quizQuestionNeededTranslations'] = [];
+
 
         // checking all learning module translations
         $moduleTranslations = $this->getTranslations();
@@ -216,6 +215,7 @@ class LearningModule
         foreach ($moduleTranslations as $moduleTranslation) {
             if ($moduleTranslation->getTitle() === '' || $moduleTranslation->getDescription() === '') {
                 --$flagData['moduleTranslation'];
+                $flagData['moduleNeededTranslations'][] = $moduleTranslation->getLanguage()->getName();
             }
         }
 
@@ -229,6 +229,7 @@ class LearningModule
             foreach ($chapterTranslations as $chapterTranslation) {
                 if ($chapterTranslation->getTitle() === '' || $chapterTranslation->getDescription() === '') {
                     --$flagData['chapterTranslation'];
+                    $flagData['chapterNeededTranslations'][] = $chapterTranslation->getLanguage()->getName();
                 }
             }
             // checking all the pages' translations
@@ -239,12 +240,43 @@ class LearningModule
                 foreach ($chapterPageTranslations as $chapterPageTranslation) {
                     if ($chapterPageTranslation->getTitle() === '' || $chapterPageTranslation->getContent() === '') {
                         --$flagData['chapterPageTranslation'];
+                        $flagData['chapterPageNeededTranslations'][] = $chapterPageTranslation->getLanguage()->getName();
+                    }
+                }
+            }
+
+            // checking the question titles
+            $quiz = $chapter->getQuiz();
+            $quizQuestions = $quiz->getQuizQuestions();
+            foreach ($quizQuestions as $quizQuestion) {
+                $quizQuestionTranslations = $quizQuestion->getTranslations();
+                $flagData['quizQuestionTranslation'] = count($quizQuestionTranslations);
+                foreach ($quizQuestionTranslations as $quizQuestionTranslation) {
+                    if ($quizQuestionTranslation->getTitle() === '') {
+                        --$flagData['quizQuestionTranslation'];
+                        $flagData['quizQuestionNeededTranslations'][$quizQuestionTranslation->getQuizQuestion()->getQuestionNumber()][] = $quizQuestionTranslation->getLanguage()->getName();
                     }
                 }
             }
         }
-        // return array of errors
+
+        if ($flagData['moduleTranslation'] < 2 || $flagData['chapterTranslation'] < 2 || $flagData['chapterPageTranslation'] < 2 || $flagData['quizQuestionTranslation'] < 2) {
+            $flagData['canBePublished'] = false;
+            var_dump($flagData);
+            return $flagData;
+        }
+
+        $flagData['canBePublished'] = true;
+        var_dump($flagData);
         return $flagData;
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getChapters(): Collection
+    {
+        return $this->chapters;
     }
 
 }

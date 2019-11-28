@@ -31,40 +31,69 @@
     <div class="example-wrapper">
         <table>
             <tr>
+                <th>Module Name</th>
                 <th>Module Translations</th>
                 <th>Chapter Translations</th>
                 <th>Page Translations</th>
-                <th>Badgr</th>
+                <th>Quiz Translations</th>
                 <th>Published</th>
             </tr>
             {% for module in allModules %}
-                {% set moduleTranslations = module.flagPage['moduleTranslation'] %}
-                {% set chapterTranslations = module.flagPage['chapterTranslation'] %}
-                {% set chapterPageTranslations = module.flagPage['chapterPageTranslation'] %}
+                {% set flagResult = module.flagPage %}
+                {% set moduleTranslations = flagResult['moduleTranslation'] %}
+                {% set chapterTranslations = flagResult['chapterTranslation'] %}
+                {% set chapterPageTranslations = flagResult['chapterPageTranslation'] %}
+                {% set quizQuestionTranslations = flagResult['quizQuestionTranslation'] %}
+                {% set canBePublished = flagResult['canBePublished'] %}
+                {% set moduleNeededTranslations = flagResult['moduleNeededTranslations'] %}
+                {% set chapterNeededTranslations = flagResult['chapterNeededTranslations'] %}
+                {% set chapterPageNeededTranslations = flagResult['chapterPageNeededTranslations'] %}
+                {% set quizQuestionNeededTranslations = flagResult['quizQuestionNeededTranslations'] %}
                 <tr>
+                    <td>
+                        {{ module.title(language) }}
+                    </td>
                     <td>
                         {% if moduleTranslations >= 2 %}
                             &#9989; <br> {{ moduleTranslations }} / {{ allLanguages|length }}
                         {% else %}
                             &#10060; <br> {{ moduleTranslations }} / {{ allLanguages|length }}
                         {% endif %}
+                        {% for moduleNeededTranslation in moduleNeededTranslations %}
+                            <li>{{ moduleNeededTranslation }}</li>
+                        {% endfor %}
                     </td>
                     <td>
-                        {% if moduleTranslations >= 2 %}
+                        {% if chapterTranslations >= 2 %}
                             &#9989; <br> {{ chapterTranslations }} / {{ allLanguages|length }}
                         {% else %}
                             &#10060; <br> {{ chapterTranslations }} / {{ allLanguages|length }}
                         {% endif %}
+                        {% for chapterNeededTranslation in chapterNeededTranslations %}
+                            <li>{{ chapterNeededTranslation }}</li>
+                        {% endfor %}
                     </td>
                     <td>
-                        {% if moduleTranslations >= 2 %}
+                        {% if chapterPageTranslations >= 2 %}
                             &#9989; <br> {{ chapterPageTranslations }} / {{ allLanguages|length }}
                         {% else %}
                             &#10060; <br> {{ chapterPageTranslations }} / {{ allLanguages|length }}
                         {% endif %}
+                        {% for chapterPageNeededTranslation in chapterPageNeededTranslations %}
+                            <li>{{ chapterPageNeededTranslation }}</li>
+                        {% endfor %}
                     </td>
                     <td>
-                        TODO
+                        {% if quizQuestionTranslations >= 2 %}
+                            &#9989; <br> {{ quizQuestionTranslations }} / {{ allLanguages|length }}
+                        {% else %}
+                            &#10060; <br> {{ quizQuestionTranslations }} / {{ allLanguages|length }}
+                        {% endif %}
+                        {% for quizQuestionNeededTranslation in quizQuestionNeededTranslations %}
+                            {% for quizQuestionNeededTranslationLanguage in quizQuestionNeededTranslation %}
+                                <li>{{ quizQuestionNeededTranslationLanguage }}</li>
+                            {% endfor %}
+                        {% endfor %}
                     </td>
                     <td>
                         {% if not module.isPublished %}
@@ -73,6 +102,11 @@
                             &#9989;
                         {% endif %}
                     </td>
+                    {% if canBePublished %}
+                        <td>
+                            button
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

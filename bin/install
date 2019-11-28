@@ -16,7 +16,8 @@ if (!is_dir($uploadDir)) {
         throw new RuntimeException(sprintf('Directory "%s" was not chowned', $uploadDir));
     }
 
-    echo "Created upload directory";
+    echo 'Created upload directory';
+    echo "\n";
 }
 
 echo exec('bin/console doctrine:migrations:migrate --force');
@@ -24,3 +25,5 @@ echo "\n";
 echo exec('php bin/console doctrine:fixtures:load --force');
 echo "\n";
 echo 'Project is installed';
+echo "\n";
+

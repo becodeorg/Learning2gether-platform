@@ -18,12 +18,14 @@ class DashboardController extends AbstractController
      */
     public function index(Request $request): Response
     {
+        $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code'=> $_COOKIE['language'] ?? 'en']);
         $allModules = $this->getDoctrine()->getRepository(LearningModule::class)->findAll();
         $allLanguages = $this->getDoctrine()->getRepository(Language::class)->findAll();
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
             'allModules' => $allModules,
             'allLanguages' => $allLanguages,
+            'language' => $language,
         ]);
     }
 }
