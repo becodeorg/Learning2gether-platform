@@ -32,7 +32,7 @@ class TopicController extends AbstractController
 
         $addQuestion = $this->createForm(
             QuestionType::class, [
-            'subjectTopic' => '',
+            'question' => '',
             'language' => "",
             'category' => "",
         ], [
@@ -68,7 +68,7 @@ class TopicController extends AbstractController
         $categoryCurrent = $this->getDoctrine()->getRepository(Category::class)->find($category->getId());
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code'=> $_COOKIE['language'] ?? 'en']);
 
-        $questionOut = new Question($form->get('subjectTopic')->getData(),$language, $this->getUser(), $categoryCurrent, $chapter);
+        $questionOut = new Question($form->get('question')->getData(),$language, $this->getUser(), $categoryCurrent, $chapter);
 
         $this->getDoctrine()->getManager()->persist($questionOut);
         $this->getDoctrine()->getManager()->flush();
