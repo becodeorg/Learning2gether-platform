@@ -15,7 +15,7 @@
     <p>From Posts</p>
     {% for results in resultsFromPost %}
 
-        <a href="{{ path('question', {'category': results.topic.category.id, 'chapter': results.topic.chapter.id, 'question': results.topic.id}) }}"><br>
+        <a href="{{ path('question', {'category': results.question.category.id, 'chapter': results.question.chapter.id, 'question': results.question.id}) }}"><br>
             {{ results.subject }}<br>
         </a>
     {% endfor %}

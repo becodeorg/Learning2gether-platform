@@ -27,7 +27,7 @@ class QuestionController extends AbstractController
     public function index(Category $category, Chapter $chapter, Question $question)
     {
 
-        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['id' => $question->getId()]);
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['question' => $question->getId()]);
 
         $upvoters = [];
         $upvoteForms = [];
