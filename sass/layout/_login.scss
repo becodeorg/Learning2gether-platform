@@ -1,8 +1,8 @@
 @import "./../variables/variables";
 
 .loginbody{
-  background: #8b54a0;
-  color: white;
+  background: $purplecolor;
+  color: $whitecolor;
 }
 
 .sidebar{
@@ -11,7 +11,7 @@
   width: 300px;
   position: absolute;
   right: 0;
-  background: white;
+  background: $whitecolor;
 }
 
 .logo{
@@ -38,7 +38,7 @@
 footer{
   position: absolute;
   bottom: 0;
-  background: rgb(100, 65, 100);
+  background: $darkpurplecolor;
   width: 100%;
   z-index: -5;
   padding-left: 100px;

@@ -6,25 +6,25 @@
 }
 
 .chevron_front {
-    color: #f7f6f6;
+    color: $whitecolor;
     font-weight: bold; }
 
 .button_1 {
     font-family: "Chivo", sans-serif;
     font-size: 18px;
     letter-spacing: 1px;
-    border: 3pt solid #8b54a0;
+    border: 3pt solid $purplecolor;
     border-radius: 40px;
     -webkit-box-shadow: 12px 12px 19px -17px;
     -moz-box-shadow: 12px 12px 19px -17px;
     box-shadow: 12px 12px 19px -17px;
-    background-color: #f7f6f6;
-    color: #8b54a0;
+    background-color: $whitecolor;
+    color: $purplecolor;
     width: 270px; }
 
 .button_1:hover {
-    color: #f7f6f6;
-    background: #8b54a0;
+    color: $whitecolor;
+    background: $purplecolor;
     box-shadow: 12px 12px 19px -17px black; }
 
 .button_2 {
@@ -32,17 +32,17 @@
     font-size: 18px;
     letter-spacing: 1px;
     border-radius: 40px;
-    border: 3pt solid #460e56;
+    border: 3pt solid $darkpurplecolor;
     -webkit-box-shadow: 12px 12px 19px -17px black;
     -moz-box-shadow: 12px 12px 19px -17px black;
     box-shadow: 12px 12px 19px -17px black;
-    background-color: #460e56;
-    color: #f7f6f6;
+    background-color: $darkpurplecolor;
+    color: $whitecolor;
     width: 270px; }
 
 .button_2:hover {
-    color: #460e56;
-    background: #f7f6f6;
+    color: $darkpurplecolor;
+    background: $whitecolor;
     box-shadow: 12px 12px 19px -17px black; }
 
 .button_3 {
@@ -52,50 +52,50 @@
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 40px;
-    border: 3pt solid #8b54a0;
-    background-color: #8b54a0;
-    color: #f7f6f6;
+    border: 3pt solid $purplecolor;
+    background-color: $purplecolor;
+    color: $whitecolor;
     width: 270px; }
 
 .button_3:hover {
-    color: #8b54a0;
-    background: #f7f6f6;
-    border: 3pt solid #f7f6f6; }
+    color: $purplecolor;
+    background: $whitecolor;
+    border: 3pt solid $whitecolor; }
 
 .button_4 {
     font-family: "Chivo", sans-serif;
     font-size: 18px;
     letter-spacing: 1px;
-    border: 1pt solid #b3b3b3;
+    border: 1pt solid $offwhite;
     border-radius: 40px;
     -webkit-box-shadow: 12px 12px 19px -17px;
     -moz-box-shadow: 12px 12px 19px -17px;
     box-shadow: 12px 12px 19px -17px;
-    background-color: #f7f6f6;
-    color: #7a7a7a;
+    background-color: $whitecolor;
+    color: $darkgreycolor;
     width: 270px; }
 
 .button_4:hover {
     color: #606060;
-    background: #f7f6f6; }
+    background: $whitecolor; }
 
 .button_5 {
     font-family: 'Chivo', sans-serif;
     font-size: 18px;
     letter-spacing: 1px;
     border-radius: 40px;
-    border: 3pt solid rgb(51,0,61);
+    border: 3pt solid $darkestpurple;
     -webkit-box-shadow: 12px 12px 19px -17px black;
     -moz-box-shadow: 12px 12px 19px -17px black;
     box-shadow: 12px 12px 19px -17px black;
-    background-color: rgb(51,0,61);
-    color: #f7f6f6;
+    background-color: $darkestpurple;
+    color: $whitecolor;
     width: 270px;
 }
 
 .button_5:hover {
-    color: rgb(51,0,61);
-    background: #f7f6f6;
+    color: $darkestpurple;
+    background: $whitecolor;
     box-shadow: 12px 12px 19px -17px black ;
 }
 
@@ -108,72 +108,72 @@
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 40px;
-    border: 3pt solid #8b54a0;
-    background-color: #8b54a0;
-    color: #f7f6f6;
+    border: 3pt solid $purplecolor;
+    background-color: $purplecolor;
+    color: $whitecolor;
     transition: 0.3s;
 }
 
 .button_6:hover {
-    color: #8b54a0;
-    background: #f7f6f6;
-    border: 3pt solid #f7f6f6; }
+    color: $purplecolor;
+    background: $whitecolor;
+    border: 3pt solid $whitecolor; }
 
 .button_7{
-    background: rgb(100, 65, 100);
+    background: $darkpurplecolor;
     letter-spacing: 1px;
     padding: 10px 30px;
     border-radius: 40px;
     border: none;
-    color: #f7f6f6;
+    color: $whitecolor;
     transition: 0.3s;
 }
 
 .button_7:hover {
-    color: #8b54a0;
-    background: #f7f6f6;
+    color: $purplecolor;
+    background: $whitecolor;
     text-decoration: none;
 }
 
 .round_button {
     width: 30px;
     height: 30px;
-    border: 1pt solid #8b54a0;
+    border: 1pt solid $purplecolor;
     border-radius: 15px;
-    background-color: #8b54a0; }
+    background-color: $purplecolor; }
 
 .round_button:hover {
     width: 30px;
     height: 30px;
-    border: 1pt solid #8b54a0;
+    border: 1pt solid $purplecolor;
     border-radius: 15px;
-    background-color: #8b54a0; }
+    background-color: $purplecolor; }
 
 .progress_1 {
     height: 28px;
-    border: 1pt solid #460e56;
+    border: 1pt solid $darkpurplecolor;
     border-radius: 5px; }
 
 .progress_1_bar {
-    background-color: #8b54a0; }
+    background-color: $purplecolor; }
 
 .progress_2 {
     width: 200px;
     height: 12px;
-    border: 1pt solid #460e56;
+    border: 1pt solid $darkpurplecolor;
     border-radius: 40px;
 }
 
 .progress_2_bar {
-    background-color: #8b54a0;
+    background-color: $purplecolor;
 }
 
 .navwrap{
-    background: #8b54a0;
+    background: $purplecolor;
 }
 
 .nav-bar-color {
-    background-color: #8b54a0; }
+    background-color: $purplecolor; }
 
 .navbar, .example-wrapper{
     max-width: 1000px;
@@ -185,9 +185,9 @@
 }
 
 #language_switcher_language{
-    background: #8b54a0;
-    border: 1px solid white;
-    color: white;
+    background: $purplecolor;
+    border: 1px solid $whitecolor;
+    color: $whitecolor;
 }
 
 .wrapper {
@@ -196,7 +196,7 @@
 }
 
 .card {
-    -webkit-box-shadow: 0 6px 12px 3px rgba(139, 84, 160, 0.37);
-    box-shadow: 0 6px 12px 3px rgba(139, 84, 160, 0.37);
+    -webkit-box-shadow: 0 6px 12px 3px $cardshadow;
+    box-shadow: 0 6px 12px 3px $cardshadow;
     border: none;
     border-radius: 20px; }
