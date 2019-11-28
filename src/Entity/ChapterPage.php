@@ -93,4 +93,23 @@ class ChapterPage
     {
         return $this->chapter;
     }
+
+
+    public function getTitle(Language $language)
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getTitle();//change this line if needed when copied
+            }
+        }
+    }
+
+    public function getContent(Language $language)
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getName() === $language->getName()) {
+                return $translation->getContent();//change this line if needed when copied
+            }
+        }
+    }
 }

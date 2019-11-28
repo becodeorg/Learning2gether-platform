@@ -42,25 +42,25 @@ class Post
     private $users;
 
     /**
-     * @param Question $topic
+     * @param Question $question
      */
-    public function setTopic(Question $topic): void
+    public function setQuestion(Question $question): void
     {
-        $this->topic = $topic;
+        $this->question = $question;
     }
 
     /**
      * @ORM\ManyToOne(targetEntity="Question", inversedBy="posts", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $topic;
+    private $question;
 
-    public function __construct(string $subject, User $createdBy, Question $topic)
+    public function __construct(string $subject, User $createdBy, Question $question)
     {
         $this->subject = $subject;
         $this->createdBy = $createdBy;
         $this->setDate(new \DateTimeImmutable());
-        $this->topic = $topic;
+        $this->question= $question;
         $this->users = new ArrayCollection();
     }
 
@@ -138,9 +138,9 @@ class Post
         return $this;
     }
 
-    public function getTopic(): Question
+    public function getQuestion(): Question
     {
-        return $this->topic;
+        return $this->question;
     }
 
 }

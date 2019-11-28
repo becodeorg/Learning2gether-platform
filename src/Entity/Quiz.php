@@ -19,7 +19,7 @@ class Quiz
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizQuestion", mappedBy="quiz", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizQuestion", mappedBy="quiz", orphanRemoval=true, cascade={"persist"})
      */
     private $quizQuestions;
 
