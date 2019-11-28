@@ -1,7 +1,13 @@
+@import "./../variables/variables";
+
 *{
     padding: 0;
     margin: 0;
 }
+
+.chevron_front {
+    color: #f7f6f6;
+    font-weight: bold; }
 
 .button_1 {
     font-family: "Chivo", sans-serif;
@@ -73,80 +79,6 @@
     color: #606060;
     background: #f7f6f6; }
 
-.progress_1 {
-    height: 28px;
-    border: 1pt solid #460e56;
-    border-radius: 5px; }
-
-.progress_1_bar {
-    background-color: #8b54a0; }
-
-/*.progressbar_2 {
-  display: inline-block;
-}*/
-.chevron_front {
-    color: #f7f6f6;
-    font-weight: bold; }
-
-.round_back {
-    width: 30px;
-    height: 30px;
-    border: 1pt solid #8b54a0;
-    border-radius: 15px;
-    background-color: #8b54a0; }
-
-.round_back:hover {
-    width: 30px;
-    height: 30px;
-    border: 1pt solid #8b54a0;
-    border-radius: 15px;
-    background-color: #8b54a0; }
-
-.progress_2 {
-    width: 200px;
-    height: 12px;
-    border: 1pt solid #460e56;
-    border-radius: 40px; }
-
-.progress_2_bar {
-    background-color: #8b54a0; }
-
-
-
-.button_3 {
-    font-family: "Chivo", sans-serif;
-    font-size: 18px;
-    letter-spacing: 1px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 40px;
-    border: 3pt solid #8b54a0;
-    background-color: #8b54a0;
-    color: #f7f6f6;
-    transition: 0.3s;
-}
-
-.button_3:hover {
-    color: #8b54a0;
-    background: #f7f6f6;
-    border: 3pt solid #f7f6f6; }
-
-.button_4{
-    background: rgb(100, 65, 100);
-    letter-spacing: 1px;
-    padding: 10px 30px;
-    border-radius: 40px;
-    border: none;
-    color: #f7f6f6;
-    transition: 0.3s;
-}
-
-.button_4:hover {
-    color: #8b54a0;
-    background: #f7f6f6;
-    text-decoration: none;
-}
-
 .button_5 {
     font-family: 'Chivo', sans-serif;
     font-size: 18px;
@@ -160,10 +92,80 @@
     color: #f7f6f6;
     width: 270px;
 }
+
 .button_5:hover {
     color: rgb(51,0,61);
     background: #f7f6f6;
     box-shadow: 12px 12px 19px -17px black ;
+}
+
+
+
+.button_6 {
+    font-family: "Chivo", sans-serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 40px;
+    border: 3pt solid #8b54a0;
+    background-color: #8b54a0;
+    color: #f7f6f6;
+    transition: 0.3s;
+}
+
+.button_6:hover {
+    color: #8b54a0;
+    background: #f7f6f6;
+    border: 3pt solid #f7f6f6; }
+
+.button_7{
+    background: rgb(100, 65, 100);
+    letter-spacing: 1px;
+    padding: 10px 30px;
+    border-radius: 40px;
+    border: none;
+    color: #f7f6f6;
+    transition: 0.3s;
+}
+
+.button_7:hover {
+    color: #8b54a0;
+    background: #f7f6f6;
+    text-decoration: none;
+}
+
+.round_button {
+    width: 30px;
+    height: 30px;
+    border: 1pt solid #8b54a0;
+    border-radius: 15px;
+    background-color: #8b54a0; }
+
+.round_button:hover {
+    width: 30px;
+    height: 30px;
+    border: 1pt solid #8b54a0;
+    border-radius: 15px;
+    background-color: #8b54a0; }
+
+.progress_1 {
+    height: 28px;
+    border: 1pt solid #460e56;
+    border-radius: 5px; }
+
+.progress_1_bar {
+    background-color: #8b54a0; }
+
+.progress_2 {
+    width: 200px;
+    height: 12px;
+    border: 1pt solid #460e56;
+    border-radius: 40px;
+}
+
+.progress_2_bar {
+    background-color: #8b54a0;
 }
 
 .navwrap{
