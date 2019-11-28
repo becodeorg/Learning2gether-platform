@@ -7,7 +7,7 @@
 
     {{ include('quiz_question/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('quiz_question_index') }}">back to list</a>
+    <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id}) }}">back to list</a>
 
     {{ include('quiz_question/_delete_form.html.twig') }}
 {% endblock %}

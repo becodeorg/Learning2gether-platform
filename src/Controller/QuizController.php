@@ -100,7 +100,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}/edit", name="quiz_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Quiz $quiz): Response
+    public function edit(Request $request, Quiz $quiz, ChapterRepository $chapterRepository): Response
     {
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
@@ -112,8 +112,10 @@ class QuizController extends AbstractController
         }
 
         return $this->render('quiz/edit.html.twig', [
+            'chapter' => $chapterRepository->findOneBy(['quiz'=>$quiz->getId()]),
             'quiz' => $quiz,
             'form' => $form->createView(),
+            'user' => $this->getUser(),
         ]);
     }
 

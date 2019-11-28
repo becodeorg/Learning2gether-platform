@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\AbstractType;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuizQuestionTranslationRepository")
  */
-class QuizQuestionTranslation
+class QuizQuestionTranslation extends AbstractType
 {
     /**
      * @ORM\Id()

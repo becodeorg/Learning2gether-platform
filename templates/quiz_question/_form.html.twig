@@ -1,4 +1,11 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+    {#{ form_widget(form.title) }#}
+    {{ form_row(form.questionNumber) }}
+
+    {% for translation in form.translations %}
+        {{ form_row(translation.title) }}
+    {% endfor %}
+
     <button class="btn btn-success">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

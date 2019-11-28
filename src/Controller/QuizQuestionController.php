@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Quiz;
 use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionTranslation;
+use App\Form\QuizQuestionTranslationType;
 use App\Form\QuizQuestionType;
 use App\Repository\QuizQuestionRepository;
 use App\Repository\QuizQuestionTranslationRepository;
@@ -96,6 +97,7 @@ class QuizQuestionController extends AbstractController
         return $this->render('quiz_question/edit.html.twig', [
             'quiz_question' => $quizQuestion,
             'form' => $form->createView(),
+            'user' => $this->getUser(),
         ]);
     }
 
