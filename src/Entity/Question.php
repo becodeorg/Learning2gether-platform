@@ -53,12 +53,18 @@ class Question
      */
     private $posts;
 
-    public function __construct(string $subject, Language $language, User $createdBy, Category $category)
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Chapter")
+     */
+    private $chapter;
+
+    public function __construct(string $subject, Language $language, User $createdBy, Category $category, Chapter $chapter)
     {
         $this->subject = $subject;
         $this->language = $language;
         $this->createdBy = $createdBy;
         $this->category = $category;
+        $this->chapter = $chapter;
         $this->setDate(new \DateTimeImmutable());
         $this->posts = new ArrayCollection();
     }
@@ -168,6 +174,18 @@ class Question
                 $post->setTopic(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getChapter(): Chapter
+    {
+        return $this->chapter;
+    }
+
+    public function setChapter(?Chapter $chapter): self
+    {
+        $this->chapter = $chapter;
 
         return $this;
     }

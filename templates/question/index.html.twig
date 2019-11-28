@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}L2G Forum{% endblock %}
+
+{% block body %}
+    <h4>Current Question</h4>
+    {{ question.subject }} <br>
+    {{ question.dateFormatted }}
+
+    <h5>Posts</h5>
+    {% for post in posts %}
+        {{ post.subject }}<br>
+        {{ form_start(upvotes[post.id]) }}
+        <p>{{ upvoters[post.id] }} users have upvoted on this post</p>
+        {{ form_end(upvotes[post.id]) }}<br>
+        {{ post.dateFormatted }}<br>
+        <br><br>
+
+    {% endfor %}
+    {{ form_start(postForm) }}
+    {{ form_end(postForm) }}<br>
+
+{% endblock %}
