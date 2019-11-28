@@ -197,24 +197,21 @@ class LearningModule
 
     public function flagPage(): array
     {
-        //function to check the module in order to show it requires more content before publishing
-        // returns an array of integers based on how many translations are filled in
-        // also returns a bool whether or not the module can be published (2 translations minimum)
-
-        // empty array for storing error
+        //function to check the module in order to show it requires more translations before publishing
         $flagData = [];
-        $flagData['moduleNeededTranslations'] = [];
-        $flagData['chapters'] = [];
 
         // checking all learning module translations
         $moduleTranslations = $this->getTranslations();
+        $flagData['moduleNeededTranslations'] = [];
         foreach ($moduleTranslations as $moduleTranslation) {
             if ($moduleTranslation->getTitle() === '' || $moduleTranslation->getDescription() === '') {
                 $flagData['moduleNeededTranslations'][] = $moduleTranslation->getLanguage()->getName();
             }
         }
 
+        // checking all chapters
         $chapters = $this->getChapters();
+        $flagData['chapters'] = [];
         foreach ($chapters as $chapter) {
             $flagData['chapters'][$chapter->getChapterNumber()]['chapterNeededTranslations'] = [];
             $chapterTranslations = $chapter->getTranslations();
@@ -224,6 +221,7 @@ class LearningModule
                 }
             }
 
+            // checking all pages
             $chapterPages = $chapter->getPages();
             foreach ($chapterPages as $chapterPage) {
                 $flagData['chapters'][$chapter->getChapterNumber()]['pages'][$chapterPage->getPageNumber()]['pageNeededTranslations'] = [];
@@ -235,9 +233,9 @@ class LearningModule
                 }
             }
 
+            // checking all quizzes
             $quiz = $chapter->getQuiz();
             $flagData['chapters'][$chapter->getChapterNumber()]['quiz'] = [];
-
             $quizQuestions = $quiz->getQuizQuestions();
             foreach ($quizQuestions as $quizQuestion) {
                 $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['questionNeededTranslation'] = [];
@@ -248,6 +246,7 @@ class LearningModule
                     }
                 }
 
+                // checking all answers
                 $answers = $quizQuestion->getAnswers();
                 $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['answers'] = [];
                 foreach ($answers as $answer) {
@@ -260,10 +259,11 @@ class LearningModule
                     }
                 }
             }
+
+            // TODO add canBePublished bool check
         }
 
-        // TODO add canBePublished bool check
-
+        // return the array with all the data
         return $flagData;
     }
 
