@@ -13,16 +13,13 @@
 
   background-color: $whitecolor;
   color: $darkgreycolor;
+  width: 270px;
 
-  width: 270px;  //this has to change
-
-  //transition: all 0.3s ease 0s;
 }
 
 .button_4chap:hover {
   color: #606060;
   background: $whitecolor;
-  //box-shadow: 12px 12px 19px -17px black ;
 }
 
 .btnchap {
@@ -38,7 +35,7 @@
 .chapcard {
   padding: 20px 10px 20px 5px;
   border-radius: 20px;
-  background-color: $darkpurplecolor;
+  background-color: $purplecolor;
   color: $whitecolor;
 }
 .chapcontainer {
