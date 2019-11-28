@@ -6,9 +6,9 @@
     <div class="example-wrapper">
         {% if is_granted('ROLE_PARTNER') %}
             <hr>
-            <a href="{{ path('partner') }}">Partner Zone</a>
+            <a href="{{ path('partner') }}">{{'Partner Zone' | trans}}</a>
         {% endif %}
-        <h1 class="text-center pt-5">LEARNING HUB</h1>
+        <h1 class="text-center pt-5">{{'Learning Hub' | trans}}</h1>
         <p class="text-center intro-lh pb-3">Navigate through our Learninghub and find the appropiate training to reach your full potential.</p>
         <div class="card-columns">
             {% for module in modules %}
