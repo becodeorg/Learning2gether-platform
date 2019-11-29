@@ -9,6 +9,7 @@ use App\Form\PostType;
 use App\Form\UpvoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Chapter;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -138,6 +139,20 @@ class QuestionController extends AbstractController
         $this->getDoctrine()->getManager()->persist($postOut);
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]);
+    }
+
+    /**
+     * @Route("/{id}", name="post_delete", methods={"DELETE"})
+     */
+    public function deletePost(Request $request, Post $post): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($post);
+            $entityManager->flush();
+        }
+
+        return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
     private function countVotes ($post)
