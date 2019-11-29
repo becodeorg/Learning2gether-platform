@@ -9,6 +9,7 @@ use App\Form\PostType;
 use App\Form\UpvoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Chapter;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -27,7 +28,8 @@ class QuestionController extends AbstractController
     public function index(Category $category, Chapter $chapter, Question $question)
     {
 
-        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['topic' => $question]);
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['question' => $question->getId()]);
+
 
         $upvoters = [];
         $upvoteForms = [];
@@ -50,7 +52,7 @@ class QuestionController extends AbstractController
         $postForm = $this->createForm(
             PostType::class, [
             'subjectPost' => '',
-            'topic_id' => $question->getId(),
+            'question_id' => $question->getId(),
         ], [
                 'action' => $this->generateUrl('post',
                     [
@@ -122,21 +124,35 @@ class QuestionController extends AbstractController
         $form = $this->createForm(PostType::class);
         $form->handleRequest($request);
 
-        /** @var Question $topic */
-        $topic = $this->getDoctrine()->getManager()->getRepository(Question::Class)->findOneBy(['id' => $form->get('topic_id')->getData()]);
+        /** @var Question $question */
+        $question = $this->getDoctrine()->getManager()->getRepository(Question::Class)->findOneBy(['id' => $form->get('question_id')->getData()]);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]);
         }
 
 
-        $postOut = new Post($form->get('subjectPost')->getData(), $this->getUser(), $topic);
+        $postOut = new Post($form->get('subjectPost')->getData(), $this->getUser(), $question);
 
-        $postOut->setTopic($topic);
+        $postOut->setQuestion($question);
 
         $this->getDoctrine()->getManager()->persist($postOut);
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $question->getId()]);
+    }
+
+    /**
+     * @Route("/{id}", name="post_delete", methods={"DELETE"})
+     */
+    public function deletePost(Request $request, Post $post): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($post);
+            $entityManager->flush();
+        }
+
+        return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
     private function countVotes ($post)

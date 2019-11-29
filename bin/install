@@ -20,9 +20,9 @@ if (!is_dir($uploadDir)) {
     echo "\n";
 }
 
-echo exec('bin/console doctrine:migrations:migrate --force');
+echo exec('bin/console doctrine:migrations:migrate');
 echo "\n";
-echo exec('php bin/console doctrine:fixtures:load --force');
+echo exec('php bin/console doctrine:fixtures:load');
 echo "\n";
 echo 'Project is installed';
 echo "\n";

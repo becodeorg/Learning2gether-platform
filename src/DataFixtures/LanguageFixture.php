@@ -1,13 +1,19 @@
 <?php
 
-namespace App\Fixtures;
+namespace App\DataFixtures;
 
 use App\Entity\Language;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LanguageFixture extends Fixture
+class LanguageFixture extends Fixture implements OrderedFixtureInterface
 {
+    public function getOrder()
+    {
+        return 1;
+    }
+
     public function load(ObjectManager $manager)
     {
         $languages = [
@@ -18,7 +24,6 @@ class LanguageFixture extends Fixture
             'bg' => 'български'
         ];
 
-        // create 20 products! Bam!
         foreach ($languages AS $languageCode => $languageName) {
             $language = new Language($languageName, $languageCode);
             $manager->persist($language);

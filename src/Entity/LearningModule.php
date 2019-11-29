@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Domain\LearningModuleType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -45,11 +46,16 @@ class LearningModule
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
+     * @ORM\OrderBy({"chapterNumber" = "ASC"})
      */
     private $chapters;
 
     public function __construct(string $badge, string $image, string $type, bool $isPublished = false)
     {
+        if(is_null($type)) {
+            $type = LearningModuleType::hard();
+        }
+
         $this->translations = new ArrayCollection();
         $this->chapters = new ArrayCollection();
         $this->badge = $badge;
@@ -81,9 +87,6 @@ class LearningModule
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getBadge(): string
     {
         return $this->badge;
@@ -96,9 +99,6 @@ class LearningModule
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getImage(): string
     {
         return $this->image;
@@ -109,15 +109,12 @@ class LearningModule
         $this->image = $image;
     }
 
-    /**
-     * @return string
-     */
-    public function getType(): string
+    public function getType(): LearningModuleType
     {
         return $this->type;
     }
 
-    public function setType($type): void
+    public function setType(LearningModuleType $type): void
     {
         $this->type = $type;
     }
@@ -143,39 +140,15 @@ class LearningModule
         return $this;
     }
 
-    public function addChapter(Chapter $chapter): self
-    {
-        if (!$this->chapters->contains($chapter)) {
-            $this->chapters[] = $chapter;
-        }
-        return $this;
-    }
-
-    public function removeChapter(Chapter $chapter): self
-    {
-        if ($this->chapters->contains($chapter)) {
-            $this->chapters->removeElement($chapter);
-        }
-        return $this;
-    }
-
-    /**
-     * @param Language $language
-     * @return string
-     */
-    public function getTitle(Language $language): string
+    public function getTitle(Language $language)
     {
         foreach ($this->getTranslations() AS $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
                 return $translation->getTitle();//change this line if needed when copied
             }
         }
-        return 'Error: Language not found';
     }
 
-    /**
-     * @return Collection
-     */
     public function getTranslations(): Collection
     {
         return $this->translations;
@@ -298,4 +271,43 @@ class LearningModule
         return $this->chapters;
     }
 
+    public function addChapter(Chapter $chapter): self
+    {
+        if (!$this->chapters->contains($chapter)) {
+            if($chapter->getChapterNumber() === 0) {
+                //we don't have a chapter number yet - create one based on the last chapter number + 1
+                $chapter->setChapterNumber($this->fetchLastChapterNumber() + 1);
+            }
+
+            $this->chapters[] = $chapter;
+        }
+        return $this;
+    }
+
+    public function removeChapter(Chapter $chapter): self
+    {
+        if ($this->chapters->contains($chapter)) {
+            $this->chapters->removeElement($chapter);
+        }
+        return $this;
+    }
+
+    //function to flag the module in order to show it requires more content before publishing
+    public function flagPage()
+    {
+        //TODO flesh out this function to do stuff, (that's a separate ticket)
+        //Same function for flagging/unflagging?
+    }
+
+    private function fetchLastChapterNumber() : int
+    {
+        $lastChapterNumber = 0;
+        /** @var Chapter $chapter */
+        foreach($this->chapters AS $chapter) {
+            if($chapter->getChapterNumber() > $lastChapterNumber) {
+                $lastChapterNumber = $chapter->getChapterNumber();
+            }
+        }
+        return $lastChapterNumber;
+    }
 }
