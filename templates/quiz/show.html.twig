@@ -41,8 +41,8 @@
                                             {{ answer.isCorrect ? 'Yes' : 'No' }}
                                         </td>
                                         <td>
-                                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_answer_show', {'id': question.id}) }}">show</a>
-                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_answer_edit', {'id': question.id}) }}">edit</a>
+                                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_answer_show', {'id': answer.id}) }}">show</a>
+                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_answer_edit', {'id': answer.id}) }}">edit</a>
                                         </td>
                                     </tr>
                                     {% set j = j+1 %}

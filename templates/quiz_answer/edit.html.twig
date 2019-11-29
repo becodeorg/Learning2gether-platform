@@ -5,11 +5,10 @@
 {% block body %}
     <h1>Edit QuizAnswer to:</h1>
     <h4>{{ quiz_answer.quizAnswer.quizQuestion.title(user.language) }}</h4>
-    {#<h4>{{ quiz_answer.quizQuestion.title(user.language) }}</h4>#}
 
     {{ include('quiz_answer/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('quiz_answer_index') }}">back to list</a>
+    <a href="{{ path('quiz_show', {'id': quiz_answer.quizAnswer.quizQuestion.quiz.id}) }}">back to list</a>
 
     {{ include('quiz_answer/_delete_form.html.twig') }}
 {% endblock %}
