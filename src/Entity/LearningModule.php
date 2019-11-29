@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Domain\LearningModuleType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -48,12 +49,17 @@ class LearningModule
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
+     * @ORM\OrderBy({"chapterNumber" = "ASC"})
      */
     private $chapters;
 
     //default for isPublished is set to false
-    public function __construct(string $badge, string $image, string $type, bool $isPublished = false)
+    public function __construct(string $badge='', string $image='', LearningModuleType $type=null, bool $isPublished = false)
     {
+        if(is_null($type)) {
+            $type = LearningModuleType::hard();
+        }
+
         $this->translations = new ArrayCollection();
         $this->chapters = new ArrayCollection();
         $this->badge = $badge;
@@ -106,12 +112,12 @@ class LearningModule
         $this->image = $image;
     }
 
-    public function getType(): string
+    public function getType(): LearningModuleType
     {
         return $this->type;
     }
 
-    public function setType($type): void
+    public function setType(LearningModuleType $type): void
     {
         $this->type = $type;
     }
@@ -171,6 +177,11 @@ class LearningModule
     public function addChapter(Chapter $chapter): self
     {
         if (!$this->chapters->contains($chapter)) {
+            if($chapter->getChapterNumber() === 0) {
+                //we don't have a chapter number yet - create one based on the last chapter number + 1
+                $chapter->setChapterNumber($this->fetchLastChapterNumber() + 1);
+            }
+
             $this->chapters[] = $chapter;
         }
         return $this;
@@ -191,4 +202,15 @@ class LearningModule
         //Same function for flagging/unflagging?
     }
 
+    private function fetchLastChapterNumber() : int
+    {
+        $lastChapterNumber = 0;
+        /** @var Chapter $chapter */
+        foreach($this->chapters AS $chapter) {
+            if($chapter->getChapterNumber() > $lastChapterNumber) {
+                $lastChapterNumber = $chapter->getChapterNumber();
+            }
+        }
+        return $lastChapterNumber;
+    }
 }

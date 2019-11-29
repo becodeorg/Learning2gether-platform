@@ -35,7 +35,7 @@ class QuizQuestion
     private $quiz;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizAnswer", mappedBy="quizQuestion", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizAnswer", mappedBy="quizQuestion", orphanRemoval=true, cascade={"persist"})
      */
     private $answers;
 
