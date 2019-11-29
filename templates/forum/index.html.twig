@@ -9,7 +9,6 @@
     <h2>Categories</h2>
     {% for category in allCategories %}
         <a href="{{ path('category', {'category': category.id}) }}">
-            {{ dump(category.learningModule.title(language)) }}
             {{ category.learningModule.title(language) }}<br>
         </a>
         <br>

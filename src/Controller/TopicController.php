@@ -8,7 +8,6 @@ use App\Entity\Language;
 use App\Entity\Post;
 use App\Entity\Question;
 use App\Form\QuestionType;
-use App\Form\SearchbarType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -69,11 +68,15 @@ class TopicController extends AbstractController
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code'=> $_COOKIE['language'] ?? 'en']);
 
         $questionOut = new Question($form->get('question')->getData(),$language, $this->getUser(), $categoryCurrent, $chapter);
+        $postOut = new Post($form->get('questionDescription')->getData(), $this->getUser(), $questionOut);
 
         $this->getDoctrine()->getManager()->persist($questionOut);
+        $this->getDoctrine()->getManager()->persist($postOut);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->redirectToRoute('topic', ['category' => $category->getId(), 'chapter'=> $chapter->getId()]);
+        $question = $this->getDoctrine()->getManager()->getRepository(Question::class)->find($questionOut->getId());
+
+        return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $questionOut->getId()]);
     }
 
 }
