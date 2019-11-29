@@ -292,13 +292,6 @@ class LearningModule
         return $this;
     }
 
-    //function to flag the module in order to show it requires more content before publishing
-    public function flagPage()
-    {
-        //TODO flesh out this function to do stuff, (that's a separate ticket)
-        //Same function for flagging/unflagging?
-    }
-
     private function fetchLastChapterNumber() : int
     {
         $lastChapterNumber = 0;

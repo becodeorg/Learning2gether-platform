@@ -30,7 +30,7 @@
             <tbody>
             {% for chapter in module.chapters %}
                 <tr>
-                    <th scope="row">{{ module.id }}</th>
+                    <th scope="row">{{ loop.index }}</th>
                     <td>{{ chapter.getTitle(language) }}</td>
                     <td>{{ chapter.pages|length }}</td>
                     <td>
