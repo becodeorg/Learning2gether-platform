@@ -5,7 +5,7 @@
 {% block body %}
     <h4>Current Question</h4>
 
-    {% if is_granted('ROLE_PARTNER') %}
+    {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
         {{ include('question/_delete_question.html.twig') }}
     {% endif %}
 
