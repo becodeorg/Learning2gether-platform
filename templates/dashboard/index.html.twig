@@ -3,34 +3,43 @@
 {% block title %}Hello DashboardController!{% endblock %}
 
 {% block body %}
+
+    {# pls put this in the css #}
     <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
-
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
-
-        table td, th {
-            width: 100px;
-            height: 50px;
-            border: 1px solid black;
-            text-align: center;
-        }
-
-        table {
-            width: 100%;
+        tr {
+            cursor: pointer;
         }
     </style>
 
-    <div class="example-wrapper">
-        {% for module in allModules %}
-            {{ dump(module.flagPage) }}
-        {% endfor %}
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Module Name</th>
+                <th scope="col">#chapters</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for module in allModules %}
+                <tr onclick='moduleRedirect("{{ path('dashboard_module', {module: module.id}) }}")'>
+                    <th scope="row">{{ module.id }}</th>
+                    <td>{{ module.getTitle(language) }}</td>
+                    <td>{{ module.chapters|length }}</td>
+                    {% if module.isPublished %}
+                        <td>Published</td>
+                    {% else %}
+                        <td>Unpublished</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/js/dashboardApp.js') }}"></script>
 {% endblock %}
