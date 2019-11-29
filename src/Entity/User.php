@@ -87,14 +87,14 @@ class User implements UserInterface
     private $badges;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter", orphanRemoval=true)
-     */
-    private $progress;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"})
      */
     private $images;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter", inversedBy="users")
+     */
+    private $progress;
 
     public function __construct()
     {
@@ -186,7 +186,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAvatar(): string
+    public function getAvatar():? string
     {
         return $this->avatar;
     }
@@ -335,32 +335,6 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Chapter[]
-     */
-    public function getProgress(): Collection
-    {
-        return $this->progress;
-    }
-
-    public function addProgress(Chapter $progress): self
-    {
-        if (!$this->progress->contains($progress)) {
-            $this->progress[] = $progress;
-        }
-
-        return $this;
-    }
-
-    public function removeProgress(Chapter $progress): self
-    {
-        if ($this->progress->contains($progress)) {
-            $this->progress->removeElement($progress);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Image[]
      */
     public function getImages(): Collection
@@ -386,6 +360,47 @@ class User implements UserInterface
             if ($image->getUser() === $this) {
                 $image->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getProgress(): Collection
+    {
+        return $this->progress;
+    }
+
+    /**
+     * @return array|Chapter[]
+     */
+    public function getProgressByLearningModule(LearningModule $learningModule): array
+    {
+        $progress = [];
+        /** @var Chapter $chapter */
+        foreach($this->progress AS $chapter) {
+            if($chapter->getLearningModule()->getId() === $learningModule->getId()) {
+                $progress[$chapter->getId()] = $chapter;
+            }
+        }
+        return $progress;
+    }
+
+    public function addProgress(Chapter $progress): self
+    {
+        if (!$this->progress->contains($progress)) {
+            $this->progress[] = $progress;
+        }
+
+        return $this;
+    }
+
+    public function removeProgress(Chapter $progress): self
+    {
+        if ($this->progress->contains($progress)) {
+            $this->progress->removeElement($progress);
         }
 
         return $this;

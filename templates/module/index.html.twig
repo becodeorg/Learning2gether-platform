@@ -9,14 +9,20 @@
         <hr>
         <h3>{{ 'Chapter List'|trans }}</h3>
         <ul>
-                {% for chapter in module.chapters %}
-                    <li>
-                        <h4>{{ chapter.getTitle(language) }}</h4>
-                    </li>
-                {% else %}
-                    <li>{{ 'No chapters yet!'|trans }}</li>
-                {% endfor %}
-            {% endif %}
+            {% for userChapter in module.getUserChapters(app.user) %}
+                <li>
+                    {% if userChapter.isUnlocked() %}
+                        <a href="{{ path('module_view_page',
+                            {'chapterPage': userChapter.chapter.getFirstPage().id}) }}">
+                            {{ userChapter.chapter.getTitle(language) }}
+                        </a>
+                    {% else %}
+                        {{ userChapter.chapter.getTitle(language) }}
+                    {% endif %}
+                </li>
+            {% else %}
+                <li>{{ 'No chapters yet!'|trans }}</li>
+            {% endfor %}
         </ul>
         <hr>
         <a href="{{ path('portal') }}">{{ 'Back to Portal'|trans }}</a>

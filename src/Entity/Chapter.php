@@ -36,20 +36,28 @@ class Chapter
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ChapterPage", mappedBy="chapter", orphanRemoval=true,cascade={"persist"})
+     * @ORM\OrderBy({"pageNumber" = "ASC"})
+     *
      */
     private $pages;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Quiz", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Quiz", inversedBy="chapter", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $quiz;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="progress")
+     */
+    private $users;
 
     public function __construct(LearningModule $learningModule)
     {
         $this->translations = new ArrayCollection();
         $this->pages = new ArrayCollection();
         $this->learningModule = $learningModule;
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,5 +173,42 @@ class Chapter
     {
         $pageCount = count($this->getPages());
         return new ChapterPage(++$pageCount, $this);
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addProgress($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeProgress($this);
+        }
+
+        return $this;
+    }
+
+    public function getFirstPage() : ChapterPage
+    {
+        if(count($this->getPages()) === 0) {
+            throw new \DomainException('Chapter does not contain any pages');
+        }
+
+        return $this->getPages()[0];
     }
 }
