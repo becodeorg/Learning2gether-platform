@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Language;
 use App\Entity\QuizAnswer;
 use App\Entity\QuizAnswerTranslation;
+use App\Entity\QuizQuestion;
 use App\Form\QuizAnswerTranslationType;
 use App\Form\QuizAnswerType;
 use App\Repository\QuizAnswerRepository;
@@ -30,20 +31,30 @@ class QuizAnswerController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="quiz_answer_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="quiz_answer_new", methods={"GET","POST"}, requirements={
+     *     "id" = "\d+"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, int $id): Response
     {
-        $quizAnswer = new QuizAnswer();
-        $form = $this->createForm(QuizAnswerType::class, $quizAnswer);
+        $em = $this->getDoctrine()->getManager();
+        $quizQuestion = $em->getRepository(QuizQuestion::class)->find($id);
+        $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+
+
+        $quizAnswer = new QuizAnswer(false, $quizQuestion);
+        $quizAnswerTranslation = new QuizAnswerTranslation($language, '', $quizAnswer);
+
+        $form = $this->createForm(QuizAnswerTranslationType::class, $quizAnswerTranslation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($quizAnswer);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('quiz_answer_index');
+            $quizAnswerTranslation = $form->getData();
+            $quizAnswer->addTranslation($quizAnswerTranslation);
+            $em->persist($quizAnswer);
+            $em->flush();
+
+            return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
         }
 
         return $this->render('quiz_answer/new.html.twig', [
@@ -85,11 +96,12 @@ class QuizAnswerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
-            return $this->redirectToRoute('quiz_answer_index');
+            return $this->redirectToRoute('quiz_show', ['id'=>$quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
         }
 
         return $this->render('quiz_answer/edit.html.twig', [
-            'quiz_answer' => $quizAnswerTrans,
+            'quiz_answer' => $quizAnswer,
+            'quiz_answer_trans' => $quizAnswerTrans,
             'form' => $form->createView(),
             'user' => $this->getUser(),
         ]);
@@ -106,6 +118,6 @@ class QuizAnswerController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('quiz_answer_index');
+        return $this->redirectToRoute('quiz_show', ['id'=>$quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
     }
 }

@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('quiz_answer_delete', {'id': quiz_answer.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('quiz_answer_delete', {'id': quiz_answer.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item? Deleting will remove all translations of it');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ quiz_answer.id) }}">
     <button class="btn btn-danger">Delete</button>

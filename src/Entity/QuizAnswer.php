@@ -26,7 +26,7 @@ class QuizAnswer
     private $isCorrect;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizAnswerTranslation", mappedBy="quizAnswer", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizAnswerTranslation", mappedBy="quizAnswer", orphanRemoval=true,cascade={"persist"})
      */
     private $translations;
 
