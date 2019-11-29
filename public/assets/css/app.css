@@ -380,6 +380,19 @@ h1 {
   margin-right: -50px;
   margin-top: -30px; }
 
+#chapter-overview {
+  position: relative; }
+  #chapter-overview .vertical-line {
+    position: absolute;
+    left: 50%;
+    width: 4px;
+    height: -webkit-calc(100% - 80px);
+    height: -moz-calc(100% - 80px);
+    height: calc(100% - 80px);
+    background-color: #8b54a0;
+    top: 80px;
+    z-index: -1; }
+
 @media only screen and (max-width: 770px) {
   .wrapper {
     width: 100%; }
