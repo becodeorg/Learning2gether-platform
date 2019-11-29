@@ -9,124 +9,107 @@
     color: $whitecolor;
     font-weight: bold; }
 
-.button_1 {
+.button{
+    padding: 5px 20px;
     font-family: "Chivo", sans-serif;
     font-size: 18px;
     letter-spacing: 1px;
-    border: 3pt solid $purplecolor;
     border-radius: 40px;
-    -webkit-box-shadow: 12px 12px 19px -17px;
-    -moz-box-shadow: 12px 12px 19px -17px;
-    box-shadow: 12px 12px 19px -17px;
+    transition: 0.2s;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.buttonwidth{
+    width: 270px;
+}
+
+.buttonshadow{
+    -webkit-box-shadow: 12px 12px 19px -17px $black;
+    -moz-box-shadow: 12px 12px 19px -17px $black;
+    box-shadow: 12px 12px 19px -17px $black;
+}
+
+.buttonshadowhover:hover{
+    -webkit-box-shadow: 12px 12px 19px -17px $black;
+    -moz-box-shadow: 12px 12px 19px -17px $black;
+    box-shadow: 12px 12px 19px -17px $black;
+}
+
+.button_1 {
     background-color: $whitecolor;
     color: $purplecolor;
-    width: 270px; }
+    border: 3pt solid $purplecolor;
+}
 
 .button_1:hover {
     color: $whitecolor;
     background: $purplecolor;
-    box-shadow: 12px 12px 19px -17px black; }
+    border: 3pt solid $purplecolor;
+}
 
 .button_2 {
-    font-family: "Chivo", sans-serif;
-    font-size: 18px;
-    letter-spacing: 1px;
-    border-radius: 40px;
     border: 3pt solid $darkpurplecolor;
-    -webkit-box-shadow: 12px 12px 19px -17px black;
-    -moz-box-shadow: 12px 12px 19px -17px black;
-    box-shadow: 12px 12px 19px -17px black;
-    background-color: $darkpurplecolor;
+    background: $darkpurplecolor;
     color: $whitecolor;
-    width: 270px; }
+}
 
 .button_2:hover {
-    color: $darkpurplecolor;
+    color: $darkpurplecolor!important;
     background: $whitecolor;
-    box-shadow: 12px 12px 19px -17px black; }
+}
 
 .button_3 {
-    font-family: "Chivo", sans-serif;
-    font-size: 18px;
-    letter-spacing: 1px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 40px;
     border: 3pt solid $purplecolor;
     background-color: $purplecolor;
     color: $whitecolor;
-    width: 270px; }
+}
 
 .button_3:hover {
     color: $purplecolor;
     background: $whitecolor;
-    border: 3pt solid $whitecolor; }
+    border: 3pt solid $whitecolor;
+}
 
 .button_4 {
-    font-family: "Chivo", sans-serif;
-    font-size: 18px;
-    letter-spacing: 1px;
     border: 1pt solid $offwhite;
-    border-radius: 40px;
-    -webkit-box-shadow: 12px 12px 19px -17px;
-    -moz-box-shadow: 12px 12px 19px -17px;
-    box-shadow: 12px 12px 19px -17px;
     background-color: $whitecolor;
     color: $darkgreycolor;
-    width: 270px; }
+}
 
 .button_4:hover {
     color: #606060;
     background: $whitecolor; }
 
 .button_5 {
-    font-family: 'Chivo', sans-serif;
-    font-size: 18px;
-    letter-spacing: 1px;
-    border-radius: 40px;
     border: 3pt solid $darkestpurple;
-    -webkit-box-shadow: 12px 12px 19px -17px black;
-    -moz-box-shadow: 12px 12px 19px -17px black;
-    box-shadow: 12px 12px 19px -17px black;
     background-color: $darkestpurple;
     color: $whitecolor;
-    width: 270px;
 }
 
 .button_5:hover {
     color: $darkestpurple;
     background: $whitecolor;
-    box-shadow: 12px 12px 19px -17px black ;
 }
 
-
-
 .button_6 {
-    font-family: "Chivo", sans-serif;
-    font-size: 18px;
-    letter-spacing: 1px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 40px;
     border: 3pt solid $purplecolor;
     background-color: $purplecolor;
     color: $whitecolor;
-    transition: 0.3s;
 }
 
 .button_6:hover {
     color: $purplecolor;
     background: $whitecolor;
-    border: 3pt solid $whitecolor; }
+    border: 3pt solid $whitecolor;
+}
 
 .button_7{
     background: $darkpurplecolor;
-    letter-spacing: 1px;
-    padding: 10px 30px;
-    border-radius: 40px;
     border: none;
     color: $whitecolor;
-    transition: 0.3s;
 }
 
 .button_7:hover {

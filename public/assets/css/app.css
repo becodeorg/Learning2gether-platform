@@ -6,53 +6,53 @@
   color: #f7f6f6;
   font-weight: bold; }
 
-.button_1 {
+.button {
+  padding: 5px 20px;
   font-family: "Chivo", sans-serif;
   font-size: 18px;
   letter-spacing: 1px;
-  border: 3pt solid #8b54a0;
   border-radius: 40px;
-  -webkit-box-shadow: 12px 12px 19px -17px;
-  -moz-box-shadow: 12px 12px 19px -17px;
-  box-shadow: 12px 12px 19px -17px;
+  transition: 0.2s; }
+
+.button:hover {
+  cursor: pointer; }
+
+.buttonwidth {
+  width: 270px; }
+
+.buttonshadow {
+  -webkit-box-shadow: 12px 12px 19px -17px black;
+  -moz-box-shadow: 12px 12px 19px -17px black;
+  box-shadow: 12px 12px 19px -17px black; }
+
+.buttonshadowhover:hover {
+  -webkit-box-shadow: 12px 12px 19px -17px black;
+  -moz-box-shadow: 12px 12px 19px -17px black;
+  box-shadow: 12px 12px 19px -17px black; }
+
+.button_1 {
   background-color: #f7f6f6;
   color: #8b54a0;
-  width: 270px; }
+  border: 3pt solid #8b54a0; }
 
 .button_1:hover {
   color: #f7f6f6;
   background: #8b54a0;
-  box-shadow: 12px 12px 19px -17px black; }
+  border: 3pt solid #8b54a0; }
 
 .button_2 {
-  font-family: "Chivo", sans-serif;
-  font-size: 18px;
-  letter-spacing: 1px;
-  border-radius: 40px;
   border: 3pt solid #460e56;
-  -webkit-box-shadow: 12px 12px 19px -17px black;
-  -moz-box-shadow: 12px 12px 19px -17px black;
-  box-shadow: 12px 12px 19px -17px black;
-  background-color: #460e56;
-  color: #f7f6f6;
-  width: 270px; }
+  background: #460e56;
+  color: #f7f6f6; }
 
 .button_2:hover {
-  color: #460e56;
-  background: #f7f6f6;
-  box-shadow: 12px 12px 19px -17px black; }
+  color: #460e56 !important;
+  background: #f7f6f6; }
 
 .button_3 {
-  font-family: "Chivo", sans-serif;
-  font-size: 18px;
-  letter-spacing: 1px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 40px;
   border: 3pt solid #8b54a0;
   background-color: #8b54a0;
-  color: #f7f6f6;
-  width: 270px; }
+  color: #f7f6f6; }
 
 .button_3:hover {
   color: #8b54a0;
@@ -60,51 +60,27 @@
   border: 3pt solid #f7f6f6; }
 
 .button_4 {
-  font-family: "Chivo", sans-serif;
-  font-size: 18px;
-  letter-spacing: 1px;
   border: 1pt solid #b3b3b3;
-  border-radius: 40px;
-  -webkit-box-shadow: 12px 12px 19px -17px;
-  -moz-box-shadow: 12px 12px 19px -17px;
-  box-shadow: 12px 12px 19px -17px;
   background-color: #f7f6f6;
-  color: #7a7a7a;
-  width: 270px; }
+  color: #7a7a7a; }
 
 .button_4:hover {
   color: #606060;
   background: #f7f6f6; }
 
 .button_5 {
-  font-family: 'Chivo', sans-serif;
-  font-size: 18px;
-  letter-spacing: 1px;
-  border-radius: 40px;
   border: 3pt solid #33003d;
-  -webkit-box-shadow: 12px 12px 19px -17px black;
-  -moz-box-shadow: 12px 12px 19px -17px black;
-  box-shadow: 12px 12px 19px -17px black;
   background-color: #33003d;
-  color: #f7f6f6;
-  width: 270px; }
+  color: #f7f6f6; }
 
 .button_5:hover {
   color: #33003d;
-  background: #f7f6f6;
-  box-shadow: 12px 12px 19px -17px black; }
+  background: #f7f6f6; }
 
 .button_6 {
-  font-family: "Chivo", sans-serif;
-  font-size: 18px;
-  letter-spacing: 1px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 40px;
   border: 3pt solid #8b54a0;
   background-color: #8b54a0;
-  color: #f7f6f6;
-  transition: 0.3s; }
+  color: #f7f6f6; }
 
 .button_6:hover {
   color: #8b54a0;
@@ -113,12 +89,8 @@
 
 .button_7 {
   background: #460e56;
-  letter-spacing: 1px;
-  padding: 10px 30px;
-  border-radius: 40px;
   border: none;
-  color: #f7f6f6;
-  transition: 0.3s; }
+  color: #f7f6f6; }
 
 .button_7:hover {
   color: #8b54a0;
@@ -233,82 +205,130 @@ h1 {
     -moz-box-shadow: -1px -1px 22px -6px rgba(0, 0, 0, 0.75);
     box-shadow: -1px -1px 22px -6px rgba(0, 0, 0, 0.75); }
 
+/* probably not needed
+//BUTTON_1
+
 .button_1 {
-  font-family: "Chivo", sans-serif;
-  font-size: 18px;
+  font-family: $chivofamily;
+  //font-weight: bold;
+  font-size: $buttonfontsize;
   letter-spacing: 1px;
-  border: 3pt solid #8b54a0;
+
+  border: 3pt solid $purplecolor;
   border-radius: 40px;
   -webkit-box-shadow: 12px 12px 19px -17px;
-  -moz-box-shadow: 12px 12px 19px -17px;
-  box-shadow: 12px 12px 19px -17px;
-  background-color: #f7f6f6;
-  color: #8b54a0; }
+  -moz-box-shadow: 12px 12px 19px -17px ;
+  box-shadow: 12px 12px 19px -17px ;
+
+  background-color: $whitecolor;
+  color: $purplecolor;
+
+  //transition: all 0.3s ease 0s;
+}
 
 .button_1:hover {
-  color: #f7f6f6;
-  background: #8b54a0;
-  box-shadow: 12px 12px 19px -17px black; }
+  color: $whitecolor;
+  background: $purplecolor;
+  box-shadow: 12px 12px 19px -17px black ;
+}
+
+//BUTTON_2
 
 .button_2 {
-  font-family: "Chivo", sans-serif;
-  font-size: 18px;
+  font-family: $chivofamily;
+  //font-weight: bold;
+  font-size: $buttonfontsize;
   letter-spacing: 1px;
+
+
   border-radius: 40px;
-  border: 3pt solid #460e56;
+  border: 3pt solid $darkpurplecolor;
   -webkit-box-shadow: 12px 12px 19px -17px black;
-  -moz-box-shadow: 12px 12px 19px -17px black;
-  box-shadow: 12px 12px 19px -17px black;
-  background-color: #460e56;
-  color: #f7f6f6;
-  width: 270px; }
+  -moz-box-shadow: 12px 12px 19px -17px black ;
+  box-shadow: 12px 12px 19px -17px black ;
+
+  background-color: $darkpurplecolor;
+  color: $whitecolor;
+
+  width: 270px;  //this has to change
+
+  //transition: all 0.3s ease 0s;
+}
 
 .button_2:hover {
-  color: #460e56;
-  background: #f7f6f6;
-  box-shadow: 12px 12px 19px -17px black; }
+  color: $darkpurplecolor;
+  background: $whitecolor;
+  box-shadow: 12px 12px 19px -17px black ;
+}
+
+//BUTTON_3
 
 .button_3 {
-  font-family: "Chivo", sans-serif;
-  font-size: 18px;
+  font-family: $chivofamily;
+  //font-weight: bold;
+  font-size: $buttonfontsize;
   letter-spacing: 1px;
   padding-top: 10px;
   padding-bottom: 10px;
+
+
   border-radius: 40px;
-  border: 3pt solid #8b54a0;
-  background-color: #8b54a0;
-  color: #f7f6f6;
-  width: 270px; }
+  border: 3pt solid $purplecolor;
+
+
+  background-color: $purplecolor;
+  color: $whitecolor;
+  width: 270px;  //this has to change
+
+  //transition: all 0.3s ease 0s;
+}
 
 .button_3:hover {
-  color: #8b54a0;
-  background: #f7f6f6;
-  border: 3pt solid #f7f6f6; }
+  color: $purplecolor;
+  background: $whitecolor;
+  border: 3pt solid $whitecolor;
+}
+
+//BUTTON_4
 
 .button_4 {
-  font-family: "Chivo", sans-serif;
-  font-size: 18px;
+  font-family: $chivofamily;
+  font-size: $buttonfontsize;
   letter-spacing: 1px;
-  border: 1pt solid #b3b3b3;
+
+  border: 1pt solid $offwhite;
   border-radius: 40px;
   -webkit-box-shadow: 12px 12px 19px -17px;
-  -moz-box-shadow: 12px 12px 19px -17px;
-  box-shadow: 12px 12px 19px -17px;
-  background-color: #f7f6f6;
-  color: #7a7a7a;
-  width: 270px; }
+  -moz-box-shadow: 12px 12px 19px -17px ;
+  box-shadow: 12px 12px 19px -17px ;
+
+  background-color: $whitecolor;
+  color: $darkgreycolor;
+
+  width: 270px;  //this has to change
+
+  //transition: all 0.3s ease 0s;
+}
 
 .button_4:hover {
   color: #606060;
-  background: #f7f6f6; }
+  background: $whitecolor;
+  //box-shadow: 12px 12px 19px -17px black ;
+}
 
-.progress_1 {
+//PROGRESS BAR 1
+
+.progress_1{
   height: 28px;
-  border: 1pt solid #460e56;
-  border-radius: 5px; }
+  border: 1pt solid $darkpurplecolor;
+  border-radius: 5px;
+}
 
 .progress_1_bar {
-  background-color: #8b54a0; }
+  background-color: $purplecolor;
+}
+
+//PROGRESS BAR 2
 
 /*.progressbar_2 {
   display: inline-block;
@@ -477,6 +497,49 @@ footer {
 @media only screen and (max-width: 600px) {
   .sidebar {
     width: 100%; } }
+.profileimgwrap {
+  width: 300px;
+  height: 300px; }
+
+.profileimgwrap img {
+  width: 100%; }
+
+.profileimgwrap form {
+  height: 300px;
+  background: #b3b3b3;
+  border: 2px solid #8b54a0;
+  padding: 20px; }
+
+.profileimgwrap form .form-group label {
+  display: none; }
+
+.profileimg {
+  height: 300px;
+  border: 2px solid purple; }
+
+#imagebutton {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  background: blue;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 285px;
+  left: 285px;
+  font-size: 10px; }
+
+#imagebutton:hover {
+  background: red;
+  cursor: pointer; }
+
+#changeavatar {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  margin-top: -300px; }
+
 /*
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
  */
