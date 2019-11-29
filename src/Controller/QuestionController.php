@@ -69,6 +69,8 @@ class QuestionController extends AbstractController
             'upvotes' => $upvoteForms,
             'upvoters' => $upvoters,
             'postForm' => $postForm,
+            'userId' => $this->getUser()->getId(),
+            'postUserId' => $post->getCreatedby()->getId()
         ]);
     }
 
