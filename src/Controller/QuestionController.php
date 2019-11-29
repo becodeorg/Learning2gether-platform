@@ -155,6 +155,20 @@ class QuestionController extends AbstractController
         return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
+    /**
+     * @Route("/{id}", name="question_delete", methods={"DELETE"})
+     */
+    public function deleteQuestion(Request $request, Question $question): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($question);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('forum');
+    }
+
     private function countVotes ($post)
     {
 
