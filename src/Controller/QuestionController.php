@@ -63,12 +63,17 @@ class QuestionController extends AbstractController
             ]
         )->createView();
 
+//        var_dump($this->getUser()->getId());
+//        var_dump($post->getCreatedby()->getId()); die;
+
         return $this->render('question/index.html.twig', [
             'question' => $question,
             'posts' => $posts,
             'upvotes' => $upvoteForms,
             'upvoters' => $upvoters,
             'postForm' => $postForm,
+            'userId' => $this->getUser()->getId(),
+            'postUserId' => $post->getCreatedby()->getId()
         ]);
     }
 

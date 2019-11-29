@@ -29,8 +29,7 @@
             {{ post.dateFormatted }}<br>
 
             <br>
-
-            {% if is_granted('ROLE_PARTNER') %}
+            {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
             {{ include('question/_delete_post.html.twig') }}
             {% endif %}
 
