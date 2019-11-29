@@ -89,6 +89,7 @@ class QuizQuestionController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="quiz_question_edit", methods={"GET","POST"})
+     * @todo Check for non-existing translations, and if no translation exists, set one up with dummy stuff for editing
      */
     public function edit(Request $request, QuizQuestion $quizQuestion): Response
     {
