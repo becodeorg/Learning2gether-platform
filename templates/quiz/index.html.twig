@@ -25,7 +25,7 @@
                 <td>{{ translated_titles[loop.index-1] }}</td>
                 <td>
                     <a class="badge badge-pill badge-primary" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">show</a>
-                    <a class="badge badge-pill badge-dark" href="{{ path('quiz_edit', {'id': chapter.quiz.id}) }}">edit</a>
+
                 </td>
             </tr>
         {% else %}

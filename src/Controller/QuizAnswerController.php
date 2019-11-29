@@ -48,9 +48,9 @@ class QuizAnswerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $quizAnswerTranslation = $form->getData();
             $quizAnswer->addTranslation($quizAnswerTranslation);
+
             $em->persist($quizAnswer);
             $em->flush();
 

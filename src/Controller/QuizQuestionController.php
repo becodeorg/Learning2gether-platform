@@ -35,36 +35,42 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="quiz_question_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="quiz_question_new", methods={"GET","POST"}, requirements={
+     *     "id" = "\d+"})
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function new(Request $request): Response
+    public function new(Request $request, int $id): Response
     {
         $em = $this->getDoctrine()->getManager();
+        $quiz = $em->getRepository(Quiz::class)->find($id);
+        $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+
         $repo = $em->getRepository(QuizQuestion::class);
         $questionNmbr = $repo->createQueryBuilder('q')
-            ->andWhere('q.quiz = 1')
+            ->andWhere('q.quiz = :id')
+            ->setParameter('id', $id)
             ->select('count(q)')
             ->getQuery()
             ->getSingleScalarResult(); //returns the int value of the count
 
-        $quiz = $em->getRepository(Quiz::class)->find(1); //find(id)
         $quizQuestion = new QuizQuestion(++$questionNmbr, $quiz);
+        $quizQuestionTranslation = new QuizQuestionTranslation($language, '', $quizQuestion);
 
-        $form = $this->createForm(QuizQuestionType::class, $quizQuestion);
+        $form = $this->createForm(QuizQuestionTranslationType::class, $quizQuestionTranslation);
         $form->handleRequest($request);
-        var_dump($form);
 
-        /*if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($quizQuestion);
-            $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $quizQuestionTranslation = $form->getData();
+            $quizQuestion->addTranslation($quizQuestionTranslation);
 
-            return $this->redirectToRoute('quiz_question_index');
-        }*/
+            $em->persist($quizQuestion);
+            $em->flush();
+
+            return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
+        }
 
         return $this->render('quiz_question/new.html.twig', [
-            //'quiz_question' => $quizQuestion,
+            'quiz_question' => $quizQuestion,
             'form' => $form->createView(),
         ]);
     }
@@ -124,6 +130,6 @@ class QuizQuestionController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('quiz_question_index');
+        return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
     }
 }
