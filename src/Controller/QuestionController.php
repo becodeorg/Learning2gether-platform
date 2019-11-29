@@ -142,7 +142,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="post_delete", methods={"DELETE"})
+     * @Route("/deletePost/{id}", name="post_delete", methods={"DELETE"})
      */
     public function deletePost(Request $request, Post $post): Response
     {
@@ -156,7 +156,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="question_delete", methods={"DELETE"})
+     * @Route("/deleteQuestion/{id}", name="question_delete", methods={"DELETE"})
      */
     public function deleteQuestion(Request $request, Question $question): Response
     {
@@ -166,7 +166,7 @@ class QuestionController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('forum');
+        return $this->redirectToRoute('topic', ['category' => $question->getCategory()->getId(), 'chapter'=> $question->getChapter()->getId()]);
     }
 
     private function countVotes ($post)
