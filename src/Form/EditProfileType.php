@@ -21,7 +21,7 @@ class EditProfileType extends AbstractType
         $builder
             ->add('avatar', FileType::class, [
                 'mapped' => false,
-                'label' => 'Upload image'
+                'label' => 'Upload image',
             ]);
     }
 

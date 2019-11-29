@@ -4,20 +4,26 @@
 
 {% block body %}
 <div class="example-wrapper">
-    <h1>Welcome {{ user.name }}</h1>
 
-    {% if user.avatar %}
-    <img src="{{ asset('uploads/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
-    {% endif %}
-
-    {{ form_start(profileForm) }}
-        {{ form_row(profileForm.avatar) }}
-        <button class="btn">Change avatar</button>
-    {{ form_end(profileForm) }}
-
-    <p>Username: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>Language: {{ user.language.name }}</p>
+    <div class="profileimgwrap">
+        <div class="profileimg">
+            {% if user.avatar %}
+                <img src="{{ asset('uploads/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
+            {% else %}
+                <img src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ user.name }}">
+            {% endif %}
+        </div>
+        <div id="changeavatar">
+            {{ form_start(profileForm) }}
+            <div id="imagebutton">+</div>
+            {{ form_row(profileForm.avatar) }}
+            <button class="button_2 btn">Change avatar</button>
+            {{ form_end(profileForm) }}
+        </div>
+    </div>
+    <p>{{ user.username }}</p>
+    <p>{{ user.name }}</p>
+    <p>{{ user.email }}</p>
     <div class="badges">
         {% for badge in userBadges %}
             <h2>{{ badge.result.0.name }}</h2>
@@ -26,7 +32,5 @@
             <p>{{ badge.result.0.criteriaNarrative }}</p>
         {% endfor %}
     </div>
-    <hr>
-    <a href="{{ path('portal') }}">Back to portal</a>
 </div>
 {% endblock %}
