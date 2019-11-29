@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Quiz;
 use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionTranslation;
 use Symfony\Component\Form\AbstractType;
@@ -9,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+//TODO No longer used, but for the moment we keep it
 
 class QuizQuestionType extends AbstractType
 {

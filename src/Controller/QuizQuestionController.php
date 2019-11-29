@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Language;
 use App\Entity\Quiz;
 use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionTranslation;
@@ -85,11 +86,22 @@ class QuizQuestionController extends AbstractController
      */
     public function edit(Request $request, QuizQuestion $quizQuestion): Response
     {
-        $form = $this->createForm(QuizQuestionType::class, $quizQuestion);
+        $em = $this->getDoctrine()->getManager();
+        $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+        $qqTs= $quizQuestion->getTranslations();
+
+        foreach ($qqTs as $qqT){
+            if ($qqT->getLanguage()->getCode() === $language->getCode()){
+                $quizQuestionTrans = $qqT;
+                $questionNumber = $qqT->getQuizQuestion()->getQuestionNumber();
+            }
+        }
+
+        $form = $this->createForm(QuizQuestionTranslationType::class, $quizQuestionTrans);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
 
             return $this->redirectToRoute('quiz_question_index');
         }
@@ -97,7 +109,7 @@ class QuizQuestionController extends AbstractController
         return $this->render('quiz_question/edit.html.twig', [
             'quiz_question' => $quizQuestion,
             'form' => $form->createView(),
-            'user' => $this->getUser(),
+
         ]);
     }
 

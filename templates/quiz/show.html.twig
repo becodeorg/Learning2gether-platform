@@ -38,22 +38,18 @@
                                             {{ answer.title(user.language) }}
                                         </td>
                                         <td>
-                                            {% if answer.isCorrect %}
-                                                Yes
-                                            {% else %}
-                                                No
-                                            {% endif %}
+                                            {{ answer.isCorrect ? 'Yes' : 'No' }}
                                         </td>
                                         <td>
-                                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_question_show', {'id': question.id}) }}">show</a>
-                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_question_edit', {'id': question.id}) }}">edit</a>
+                                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_answer_show', {'id': question.id}) }}">show</a>
+                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_answer_edit', {'id': question.id}) }}">edit</a>
                                         </td>
                                     </tr>
                                     {% set j = j+1 %}
                                 {% endfor %}
                                 <tr>
                                     <td>
-                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_question_new') }}"><strong>+</strong> Add Answer</a>
+                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_answer_new') }}"><strong>+</strong> Add Answer</a>
                                     </td>
                                 </tr>
                             </table>

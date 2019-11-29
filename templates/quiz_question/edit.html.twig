@@ -3,7 +3,7 @@
 {% block title %}Edit QuizQuestion{% endblock %}
 
 {% block body %}
-    <h1>Edit QuizQuestion</h1>
+    <h1>Edit QuizQuestion {{ quiz_question.questionNumber }}</h1>
 
     {{ include('quiz_question/_form.html.twig', {'button_label': 'Update'}) }}
 
