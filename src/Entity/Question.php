@@ -49,7 +49,7 @@ class Question
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="topic", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="question", orphanRemoval=true)
      */
     private $posts;
 

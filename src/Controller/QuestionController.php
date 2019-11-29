@@ -142,7 +142,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="post_delete", methods={"DELETE"})
+     * @Route("/deletePost/{id}", name="post_delete", methods={"DELETE"})
      */
     public function deletePost(Request $request, Post $post): Response
     {
@@ -153,6 +153,20 @@ class QuestionController extends AbstractController
         }
 
         return $this->redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    /**
+     * @Route("/deleteQuestion/{id}", name="question_delete", methods={"DELETE"})
+     */
+    public function deleteQuestion(Request $request, Question $question): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($question);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('topic', ['category' => $question->getCategory()->getId(), 'chapter'=> $question->getChapter()->getId()]);
     }
 
     private function countVotes ($post)
