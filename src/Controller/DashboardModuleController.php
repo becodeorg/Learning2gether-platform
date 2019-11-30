@@ -25,7 +25,7 @@ class DashboardModuleController extends AbstractController
 
         $moduleArray = $this->getDoctrine()->getRepository(LearningModule::class)->getModuleAsArray($module);
         $fm = new FlaggingManager();
-        $flagData = $fm->flagCheck($moduleArray[0], $languageCount);
+        $flagData = $fm->checkModule($moduleArray[0], $languageCount);
 
         return $this->render('dashboard_module/index.html.twig', [
             'module' => $module,
