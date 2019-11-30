@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Domain\FlaggingManager;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,15 +18,20 @@ class DashboardModuleController extends AbstractController
      * @param LearningModule $module
      * @return Response
      */
-    public function index(Request $request, LearningModule $module) : Response
+    public function index(Request $request, LearningModule $module): Response
     {
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => $_COOKIE['language'] ?? 'en']);
-        $allLanguages = $this->getDoctrine()->getRepository(Language::class)->findAll();
+        $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
+
+        $moduleArray = $this->getDoctrine()->getRepository(LearningModule::class)->getModuleAsArray($module);
+        $fm = new FlaggingManager();
+        $flagData = $fm->flagCheck($moduleArray[0], $languageCount);
 
         return $this->render('dashboard_module/index.html.twig', [
             'module' => $module,
+            'moduleArray' => $moduleArray,
             'language' => $language,
-            'allLanguages' => $allLanguages,
+            'flagData' => $flagData
         ]);
     }
 }

@@ -173,12 +173,6 @@ class LearningModule
         //function to check the module in order to show it requires more translations before publishing
         $flagData = [];
 
-        // checking all learning module translations
-        $moduleTranslations = $this->getTranslations();
-
-        // get number of languages (dodgy fix i know)
-        $languageCount = count($moduleTranslations);
-
         $flagData['moduleNeededTranslations'] = [];
         $flagData['moduleStatus'] = false;
         foreach ($moduleTranslations as $moduleTranslation) {
