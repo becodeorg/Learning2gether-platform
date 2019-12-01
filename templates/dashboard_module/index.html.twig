@@ -10,33 +10,31 @@
         }
     </style>
 
-    {{ dump(moduleArray) }}
-    {{ dump(flagData) }}
-
-
-
     <div class="container">
         <a href="{{ path('dashboard') }}">Back</a>
         <hr>
-        <strong>This module's title and description translations:</strong>
-        {% if  (flagData['moduleNeededTranslations']|length - 5) | abs > 2 %}
+        <div class="text-center mb-3"><strong>This module's title and description translations:</strong>
+
+            {% set moduleFlag = fm.checkModuleSolo(moduleArray, languagecount) %}
+
+        {% if  (moduleFlag['moduleNeededTranslations']|length - 5) | abs > 2 %}
             <a class="btn btn-success"
-               title="{{ flagData['moduleNeededTranslations'] | join('\n') }}"
-               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (flagData['moduleNeededTranslations']|length - 5) | abs }}
+               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
+               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
                 / {{ languagecount }}</a>
-        {% elseif  (flagData['moduleNeededTranslations']|length - 5) | abs == 2 %}
+        {% elseif  (moduleFlag['moduleNeededTranslations']|length - 5) | abs == 2 %}
             <a class="btn btn-warning"
-               title="{{ flagData['moduleNeededTranslations'] | join('\n') }}"
-               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (flagData['moduleNeededTranslations']|length - 5) | abs }}
+               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
+               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
                 / {{ languagecount }}</a>
         {% else %}
             <a class="btn btn-danger"
-               title="{{ flagData['moduleNeededTranslations'] | join('\n') }}"
-               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (flagData['moduleNeededTranslations']|length - 5) | abs }}
+               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
+               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
                 / {{ languagecount }}</a>
         {% endif %}
-        <hr>
-        <table class="table table-hover">
+        </div>
+        <table class="table table-hover text-center">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -47,11 +45,13 @@
             </tr>
             </thead>
             <tbody>
-            {% for chapter in moduleArray.chapters %}
-                {% set chapterNumber = chapter['chapterNumber'] %}
+            {% for chapterObj in module.chapters %}
+                {% set chapter = cr.chapterAsArray(chapterObj) %}
+                {% set flagData = fm.checkChapter(chapter, languagecount) %}
+                {% set chapterNumber = chapter[0]['chapterNumber'] %}
                 <tr>
                     <th scope="row">{{ chapterNumber }}</th>
-                    <td>{% for chapterTranslation in chapter.translations %}
+                    <td>{% for chapterTranslation in chapter[0]['translations'] %}
                             {% if chapterTranslation['language']['name'] == language.name %}
                                 {% if chapterTranslation['title'] == '' %}
                                     Not yet translated
@@ -60,27 +60,26 @@
                                 {% endif %}
                             {% endif %}
                         {% endfor %}</td>
-                    <td>{{ chapter['pages']|length }}</td>
+                    <td>{{ chapter[0]['pages']|length }}</td>
                     <td>
                         {% if  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs > 2 %}
                             <a class="btn btn-success"
                                title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter.id}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
+                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
                                 / {{ languagecount }}</a>
                         {% elseif  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs == 2 %}
                             <a class="btn btn-warning"
                                title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter.id}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
+                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
                                 / {{ languagecount }}</a>
                         {% else %}
                             <a class="btn btn-danger"
                                title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter.id}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
+                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
                                 / {{ languagecount }}</a>
                         {% endif %}
                     </td>
-                    <td><a class="btn btn-outline-primary" href="{{ path('dashboard_module', {module: module.id}) }}">Check</a>
-                    </td>
+                    <td><a href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">Check</a></td>
                 </tr>
             {% endfor %}
             </tbody>

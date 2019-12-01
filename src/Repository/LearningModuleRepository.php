@@ -31,6 +31,15 @@ class LearningModuleRepository extends ServiceEntityRepository
         return $query->getArrayResult();
     }
 
+    public function getSmallModuleAsArray(LearningModule $module) : array
+    {
+        $em = $this->getEntityManager();
+        $dql = 'SELECT l, lt, ltl FROM App\Entity\LearningModule l JOIN l.translations lt JOIN lt.language ltl WHERE l.id = :id';
+        $query = $em->createQuery($dql);
+        $query->setParameter(':id', $module->getId());
+        return $query->getArrayResult();
+    }
+
     /**
      * @return LearningModule[] Returns an array of LearningModule objects
      */

@@ -5,7 +5,7 @@
 {% block body %}
 
     <div class="container">
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -26,7 +26,7 @@
                     {% else %}
                         <td>Unpublished</td>
                     {% endif %}
-                    <td><a class="btn btn-outline-primary" href="{{ path('dashboard_module', {module: module.id}) }}">Check</a></td>
+                    <td><a href="{{ path('dashboard_module', {module: module.id}) }}">Check</a></td>
                 </tr>
             {% endfor %}
             </tbody>

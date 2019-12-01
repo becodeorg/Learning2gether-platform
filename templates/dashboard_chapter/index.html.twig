@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardChapterController!{% endblock %}
+
+{% block body %}
+    <style>
+
+    </style>
+
+    <div class="container">
+        <a href="{{ path('dashboard_module', {module: chapterArray['id']}) }}">Back</a>
+        <hr>
+        <h3>Pages</h3>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Page title</th>
+                <th scope="col">Translations <i
+                            title="This page's title and description translations.&#10;Click to go to that page's edit page.&#10;Hover to see the missing translations."
+                            class="help-icon far fa-question-circle"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for page in chapterArray['pages'] %}
+                <tr>
+                    <th scope="row">{{ page['pageNumber'] }}</th>
+                    <td>{% for pageTranslation in page['translations'] %}
+                            {% if pageTranslation['language']['name'] == language.name %}
+                                {% if pageTranslation['title'] == '' %}
+                                    Not yet translated
+                                {% else %}
+                                    {{ pageTranslation['title'] }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% if  (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs > 2 %}
+                            <a class="btn btn-success"
+                               title="{{ pagesFlags[page['pageNumber']]['pageNeededTranslations'] | join('\n') }}"
+                               href="{{ path('edit_page', {module: chapter.learningModule.id, chapter: chapterArray['id'], page: page['id']}) }}">{{ (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs }}
+                                / {{ languagecount }}</a>
+                        {% elseif  (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs == 2 %}
+                            <a class="btn btn-warning"
+                               title="{{ pagesFlags[page['pageNumber']]['pageNeededTranslations'] | join('\n') }}"
+                               href="{{ path('edit_page', {module: chapter.learningModule.id, chapter: chapterArray['id'], page: page['id']}) }}">{{ (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs }}
+                                / {{ languagecount }}</a>
+                        {% else %}
+                            <a class="btn btn-danger"
+                               title="{{ pagesFlags[page['pageNumber']]['pageNeededTranslations'] | join('\n') }}"
+                               href="{{ path('edit_page', {module: chapter.learningModule.id, chapter: chapterArray['id'], page: page['id']}) }}">{{ (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs }}
+                                / {{ languagecount }}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/c1a3a3bd8a.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/js/dashboardApp.js') }}"></script>
+{% endblock %}
