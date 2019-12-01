@@ -29,9 +29,10 @@ class DashboardModuleController extends AbstractController
 
         return $this->render('dashboard_module/index.html.twig', [
             'module' => $module,
-            'moduleArray' => $moduleArray,
+            'moduleArray' => $moduleArray[0],
             'language' => $language,
-            'flagData' => $flagData
+            'flagData' => $flagData,
+            'languagecount' => $languageCount,
         ]);
     }
 }
