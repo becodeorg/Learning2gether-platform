@@ -32,6 +32,7 @@ class DashboardChapterController extends AbstractController
             'languagecount' => $languageCount,
             'chapterArray' => $chapterArray[0],
             'pagesFlags' => $pagesFlags['pages'],
+            'quizFlags' => $pagesFlags['quiz'],
         ]);
     }
 }
