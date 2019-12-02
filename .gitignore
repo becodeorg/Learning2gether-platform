@@ -20,3 +20,6 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 /composer.phar
+
+/.sass-cache
+/.sass-cache/
