@@ -16,24 +16,21 @@
 
     <h4>All in Current Questions</h4>
     {% for question in questions %}
+        <div class="border">
         {# Question text#}
         {{ question.subject }}
         <br>
         {# Count Replies#}
-
-        <br>
+        <p>There are {{ postCount[question.id] }} answer(s)git  in this topic</p>
         {# Question description for preview text#}
         {{ question.posts[0].subject }}
         <br>
         {# Link to the question's detail page#}
         <a href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
-
           MORE
-
         </a>
-        {{  question.dateFormatted }}<br>
-        <p>There are {{ postCount[question.id] }} answer(s)git  in this topic</p>
-        <br>
+
+        </div>
     {% endfor %}
 
     <h4>Add New Question</h4>
