@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ModuleController!{% endblock %}
+{% block title %}{{ module.getTitle(language) }}{% endblock %}
 
 {% block body %}
     <style>
@@ -18,17 +18,21 @@
     </style>
 
     <div class="example-wrapper">
-        <span>Current Module: {{ module.getTitle(language) }}, description: {{ module.getDescription(language) }}</span>
+        <h2>{{ module.getTitle(language) }}</h2>
+        <p>{{ module.getDescription(language)  | parsedown | youtube | raw}}</p>
         <hr>
-        <h3>Chapter List</h3>
+        <h3>{{ 'Chapter List'|trans }}</h3>
         <ul>
-                         {% endfor %}
+                {% for chapter in module.chapters %}
+                    <li>
+                        <h4>{{ chapter.getTitle(language) }}</h4>
+                    </li>
+                {% else %}
+                    <li>{{ 'No chapters yet!'|trans }}</li>
                 {% endfor %}
-            {% else %}
-                <li>no chapters yet!</li>
             {% endif %}
         </ul>
         <hr>
-        <a href="{{ path('portal') }}">Back to Portal</a>
+        <a href="{{ path('portal') }}">{{ 'Back to Portal'|trans }}</a>
     </div>
 {% endblock %}

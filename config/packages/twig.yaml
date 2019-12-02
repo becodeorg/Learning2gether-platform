@@ -5,4 +5,5 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         switcher: '@App\Controller\LanguageSwitcherController'
+        searchbar: '@App\Controller\ForumSearchController'
     form_theme: 'bootstrap_4_layout.html.twig'
