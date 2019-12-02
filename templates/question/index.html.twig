@@ -17,7 +17,8 @@
     {% for post in posts %}
         {% if firstpost == true %}
             {{ post.subject }}<br>
-            {{ post.dateFormatted }}<br><br><br>
+            {{ post.dateFormatted }}<br><br
+            {{ post.createdBy.username }}<br><br><br>
             <hr>
             <h5>Reply to Question</h5>
             {% set firstpost = false %}
@@ -27,6 +28,7 @@
             <p>{{ upvoters[post.id] }} users have upvoted on this post</p>
             {{ form_end(upvotes[post.id]) }}<br>
             {{ post.dateFormatted }}<br>
+            {{ post.createdBy.username }}<br><br
 
             <br>
             {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
