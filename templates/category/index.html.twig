@@ -13,10 +13,18 @@
     <h2>Topics</h2>
 
     {% for topic in topics %}
-        <a href="{{ path('topic', {'category':  category.id , 'chapter': topic.id}) }}">
-                {{ topic.title(language) }}<br>
-        </a>
-        <br>
+        <div class="border-bottom">
+            {# Topic title#}
+            {{ topic.title(language) }}
+            <br>
+            {# Count Questions for that Topic#}
+
+            <br>
+            {# Link to the Topic's detail (all question) page#}
+            <a href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
+                MORE
+            </a>
+        </div>
     {% endfor %}
 
 {% endblock %}

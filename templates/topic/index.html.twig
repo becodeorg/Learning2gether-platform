@@ -16,9 +16,18 @@
 
     <h4>All in Current Questions</h4>
     {% for question in questions %}
+        {# Question text#}
+        {{ question.subject }}
+        <br>
+        {# Count Replies#}
+
+        <br>
+        {# Question description for preview text#}
+        {{ question.posts[0].subject }}
+        <br>
+        {# Link to the question's detail page#}
         <a href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
-          {{ question.subject }}<br>
-            {{  question.dateFormatted }}<br>
+          MORE
         </a>
         <br>
     {% endfor %}
