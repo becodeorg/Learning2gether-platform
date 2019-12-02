@@ -18,8 +18,9 @@
     {% for question in questions %}
         <a href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
           {{ question.subject }}<br>
-            {{  question.dateFormatted }}<br>
         </a>
+        {{  question.dateFormatted }}<br>
+        <p>There are {{ postCount[question.id] }} answer(s)git  in this topic</p>
         <br>
     {% endfor %}
 

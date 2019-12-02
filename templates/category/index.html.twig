@@ -16,6 +16,7 @@
         <a href="{{ path('topic', {'category':  category.id , 'chapter': topic.id}) }}">
                 {{ topic.title(language) }}<br>
         </a>
+                <p>There are {{ questionCount[topic.id] }} question(s) in this topic</p>
         <br>
     {% endfor %}
 
