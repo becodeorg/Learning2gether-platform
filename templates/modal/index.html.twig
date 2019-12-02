@@ -5,11 +5,6 @@
 
     <div class="example-wrapper">
 
-        <div class="col-6" >
-            <button type="button" class="btn btn-primary">Try Again</button>
-        </div>
-
-
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fail-pop">
             Launch demo modal
@@ -19,24 +14,24 @@
         <div class="modal fade" id="fail-pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content container center">
+                <div class="modal-content container center modalcontainer">
 
-                    <div class="text-center">
+                    <div class="text-center imgmodal">
                         <img src="https://via.placeholder.com/150" alt="">
                     </div>
 
-                    <div class="text-center">
-                        <p>You are almost there.</p>
-                        <p>Give it another shot!</p>
+                    <div class="text-center modal-message">
+                        <p class="message-one">You are almost there.</p>
+                        <p class="message-two">Give it another shot!</p>
                     </div>
 
                     <div class="row ">
                         <div class="col-6">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">Try again</button>
                         </div>
 
                         <div class="col-6">
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-primary button modalbutton modal-btn">Chapter info</button>
                         </div>
                     </div>
                 </div>
