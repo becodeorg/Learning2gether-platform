@@ -28,6 +28,11 @@ class Category
      */
     private $topics;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\LearningModule", cascade={"persist", "remove"})
+     */
+    private $learning_module;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
@@ -105,5 +110,17 @@ class Category
                 return $translation->getTitle();
             }
         }
+    }
+
+    public function getLearningModule(): ?LearningModule
+    {
+        return $this->learning_module;
+    }
+
+    public function setLearningModule(?LearningModule $learning_module): self
+    {
+        $this->learning_module = $learning_module;
+
+        return $this;
     }
 }

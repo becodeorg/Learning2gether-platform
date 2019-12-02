@@ -71,6 +71,7 @@
 
         <header>
             {{ 'language test' | trans }}
+            {{ include('forum_search/_searchbar.html.twig') }}
         </header>
 
         {% block body %}{% endblock %}
