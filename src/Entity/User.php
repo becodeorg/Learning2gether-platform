@@ -87,7 +87,7 @@ class User implements UserInterface
     private $badges;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter", orphanRemoval=true)
+     *  @ORM\ManyToMany(targetEntity="App\Entity\Chapter", inversedBy="users", orphanRemoval=true)
      */
     private $progress;
 
@@ -186,7 +186,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAvatar(): string
+    public function getAvatar():? string
     {
         return $this->avatar;
     }
@@ -335,17 +335,18 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Chapter[]
+     * @return Collection|Image[]
      */
-    public function getProgress(): Collection
+    public function getImages(): Collection
     {
-        return $this->progress;
+        return $this->images;
     }
 
-    public function addProgress(Chapter $progress): self
+    public function addImage(Image $image): self
     {
-        if (!$this->progress->contains($progress)) {
-            $this->progress[] = $progress;
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setUser($this);
         }
 
         return $this;
@@ -361,18 +362,32 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Image[]
+     * @return Collection|Chapter[]
      */
-    public function getImages(): Collection
+    public function getProgress(): Collection
     {
-        return $this->images;
+        return $this->progress;
     }
 
-    public function addImage(Image $image): self
+    /**
+     * @return array|Chapter[]
+     */
+    public function getProgressByLearningModule(LearningModule $learningModule): array
     {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setUser($this);
+        $progress = [];
+        /** @var Chapter $chapter */
+        foreach($this->progress AS $chapter) {
+            if($chapter->getLearningModule()->getId() === $learningModule->getId()) {
+                $progress[$chapter->getId()] = $chapter;
+            }
+        }
+        return $progress;
+    }
+
+    public function addProgress(Chapter $progress): self
+    {
+        if (!$this->progress->contains($progress)) {
+            $this->progress[] = $progress;
         }
 
         return $this;

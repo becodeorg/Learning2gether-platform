@@ -25,12 +25,9 @@ class ProfileController extends AbstractController
     public function index(Request $request): Response
     {
         $badgrHandler = new Badgr;
-        $badgrHandler->initialise();
 
         /** @var User $user */
         $user = $this->getUser();
-
-        $accessToken = $this->getAccessToken();
 
         //get all badges from user
         $badges = $user->getBadges()->getSnapshot();
@@ -40,7 +37,7 @@ class ProfileController extends AbstractController
             $badgeKey = $badgeData->getBadge();
             $badgeKeys[] = $badgeKey;
         }
-        $userBadges = $badgrHandler->getAllBadges($badgeKeys, $user, $accessToken);
+        $userBadges = $badgrHandler->getAllBadges($badgeKeys, $user);
 
         $form = $this->createForm(EditProfileType::class, $user);
         $form->handleRequest($request);
@@ -79,10 +76,6 @@ class ProfileController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
-    }
-
-    private function getAccessToken(){
-        return $_SESSION['accessToken'];
     }
 
     /**
