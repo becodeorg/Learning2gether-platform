@@ -10,6 +10,8 @@
 /.sass-cache/
 /sass/.sass-cache/
 /public/upload/
+/public/assets/css/app.css.map/
+/sass/app.css.map/
 
 ###< symfony/framework-bundle ###
 
@@ -24,5 +26,4 @@
 ###< symfony/web-server-bundle ###
 /composer.phar
 
-/public/assets/css/app.css.map
-/sass/app.css.map
+
