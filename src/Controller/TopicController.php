@@ -8,6 +8,7 @@ use App\Entity\Language;
 use App\Entity\Post;
 use App\Entity\Question;
 use App\Form\QuestionType;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,6 +30,14 @@ class TopicController extends AbstractController
             'language'=>  $language->getId()
         ]);
 
+        $postCount = [];
+        foreach ($questions AS $question) {
+            $postCount[$question->getId()] = $this->countPosts($question->getId());
+        }
+
+
+
+
         $addQuestion = $this->createForm(
             QuestionType::class, [
             'question' => '',
@@ -49,6 +58,7 @@ class TopicController extends AbstractController
             'language' => $language,
             'questions' => $questions,
             'addQuestion' => $addQuestion,
+            'postCount' => $postCount
         ]);
     }
 
@@ -79,4 +89,17 @@ class TopicController extends AbstractController
         return $this->redirectToRoute('question', ['category' => $category->getId(), 'chapter'=> $chapter->getId(), 'question'=> $questionOut->getId()]);
     }
 
+    private function countPosts ($question)
+    {
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('nb', 'totalQuestions');
+        $query = $this->getDoctrine()->getManager()->createNativeQuery('SELECT COUNT(id) as nb FROM post WHERE question_id = :question_id', $rsm);
+        $query->setParameters([
+            'question_id' => $question
+        ]);
+
+        $questionCount = $query->getSingleScalarResult();
+        return $questionCount;
+    }
 }

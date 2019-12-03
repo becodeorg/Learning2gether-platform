@@ -303,4 +303,26 @@ class LearningModule
         }
         return $lastChapterNumber;
     }
+
+    /** @return UserChapter|array[] */
+    public function getUserChapters(User $user) : array
+    {
+        $chaptersDone = $user->getProgressByLearningModule($this);
+
+        $foundCurrentChapter = false;
+
+        $listChapters = [];
+        foreach($this->getChapters() AS $chapter) {
+            $status = isset($chaptersDone[$chapter->getId()]);
+
+            if(!$status && !$foundCurrentChapter) {
+                $status = true;
+                $foundCurrentChapter = true;
+            }
+
+            $listChapters[] = new UserChapter($chapter, $status);
+        }
+
+        return $listChapters;
+    }
 }

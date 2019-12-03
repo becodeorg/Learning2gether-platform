@@ -23,6 +23,16 @@ class Quiz
      */
     private $quizQuestions;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Chapter", mappedBy="quiz")
+     */
+    private $chapter;
+
+    public function getChapter() : Chapter
+    {
+        return $this->chapter;
+    }
+
     public function __construct()
     {
         $this->quizQuestions = new ArrayCollection();
