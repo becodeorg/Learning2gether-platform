@@ -5,6 +5,7 @@
 .profileimgwrap{
   width: $imgWidth;
   height: $imgWidth;
+  display: inline-block;
 }
 
 .profileimgwrap img{
@@ -13,9 +14,6 @@
 
 .profileimgwrap form{
   height: $imgWidth;
-  background: $offwhite;
-  border: 2px solid $purplecolor;
-  padding: 20px;
 }
 
 .profileimgwrap form .form-group label{
@@ -24,7 +22,7 @@
 
 .profileimg{
   height: 300px;
-  border: 2px solid purple;
+  border: 2px solid $purplecolor;
 }
 
 
@@ -52,4 +50,43 @@
   width: $imgWidth;
   height: $imgWidth;
   margin-top: -$imgWidth;
+}
+
+.gone{
+  display: none;
+}
+
+#show{
+  background: $white;
+  width: $imgWidth;
+  height: $imgWidth;
+  padding: 20px;
+}
+
+#moduleprogress{
+  width: 25%;
+}
+
+.completebutton{
+  width: 20%;
+  float: right;
+  height: 40px;
+}
+
+.badgeimage{
+  width: 70%;
+  height: auto;
+}
+
+.profiletext{
+  display: inline-block;
+  position: absolute;
+}
+
+.profiletext p{
+  height: 20px;
+}
+
+#show .form-group input{
+  line-height: 15px;
 }

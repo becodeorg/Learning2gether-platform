@@ -8,6 +8,7 @@
 /public/uploads/
 /var/
 /vendor/
+/.sass-cache/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

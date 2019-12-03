@@ -133,12 +133,22 @@
     background-color: $purplecolor; }
 
 .progress_1 {
-    height: 28px;
     border: 1pt solid $darkpurplecolor;
-    border-radius: 5px; }
+    border-radius: 5px;
+}
+
+.progress{
+    display: block!important;
+    height: 40px;
+    width: 75%;
+    float: left;
+}
 
 .progress_1_bar {
-    background-color: $purplecolor; }
+    background-color: $purplecolor;
+    height: 40px;
+    line-height: 0!important;
+}
 
 .progress_2 {
     width: 200px;
@@ -153,6 +163,7 @@
 
 .navwrap{
     background: $purplecolor;
+    margin-top: -100px;
 }
 
 .nav-bar-color {
@@ -160,7 +171,7 @@
 
 .navbar, .example-wrapper{
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 100px auto;
 }
 
 .navbar{

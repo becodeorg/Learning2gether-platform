@@ -112,12 +112,19 @@
   background-color: #8b54a0; }
 
 .progress_1 {
-  height: 28px;
   border: 1pt solid #460e56;
   border-radius: 5px; }
 
+.progress {
+  display: block !important;
+  height: 40px;
+  width: 75%;
+  float: left; }
+
 .progress_1_bar {
-  background-color: #8b54a0; }
+  background-color: #8b54a0;
+  height: 40px;
+  line-height: 0 !important; }
 
 .progress_2 {
   width: 200px;
@@ -129,14 +136,15 @@
   background-color: #8b54a0; }
 
 .navwrap {
-  background: #8b54a0; }
+  background: #8b54a0;
+  margin-top: -100px; }
 
 .nav-bar-color {
   background-color: #8b54a0; }
 
 .navbar, .example-wrapper {
   max-width: 1000px;
-  margin: 0 auto; }
+  margin: 100px auto; }
 
 .navbar {
   padding: 10px 0; }
@@ -499,23 +507,21 @@ footer {
     width: 100%; } }
 .profileimgwrap {
   width: 300px;
-  height: 300px; }
+  height: 300px;
+  display: inline-block; }
 
 .profileimgwrap img {
   width: 100%; }
 
 .profileimgwrap form {
-  height: 300px;
-  background: #b3b3b3;
-  border: 2px solid #8b54a0;
-  padding: 20px; }
+  height: 300px; }
 
 .profileimgwrap form .form-group label {
   display: none; }
 
 .profileimg {
   height: 300px;
-  border: 2px solid purple; }
+  border: 2px solid #8b54a0; }
 
 #imagebutton {
   width: 32px;
@@ -539,6 +545,37 @@ footer {
   width: 300px;
   height: 300px;
   margin-top: -300px; }
+
+.gone {
+  display: none; }
+
+#show {
+  background: lightgrey;
+  width: 300px;
+  height: 300px;
+  padding: 20px; }
+
+#moduleprogress {
+  width: 25%; }
+
+.completebutton {
+  width: 20%;
+  float: right;
+  height: 40px; }
+
+.badgeimage {
+  width: 70%;
+  height: auto; }
+
+.profiletext {
+  display: inline-block;
+  position: absolute; }
+
+.profiletext p {
+  height: 20px; }
+
+#show .form-group input {
+  line-height: 15px; }
 
 /*
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
