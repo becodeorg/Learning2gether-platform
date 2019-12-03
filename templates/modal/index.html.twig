@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <div class="example-wrapper">
+
+        <div class="col-6" >
+            <button type="button" class="btn btn-primary">Try Again</button>
+        </div>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fail-pop">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="fail-pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content container center">
+
+                    <div class="text-center">
+                        <img src="https://via.placeholder.com/150" alt="">
+                    </div>
+
+                    <div class="text-center">
+                        <p>You are almost there.</p>
+                        <p>Give it another shot!</p>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% endblock %}
