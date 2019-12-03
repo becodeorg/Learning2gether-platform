@@ -14,7 +14,10 @@ class Badgr
     private const BADGR_USERNAME = 'koen@becode.org';
     private const BADGR_API = 'https://api.badgr.io';
 
-    public function initialise()
+    private $refreshToken;
+    private $accessToken;
+
+    public function __construct()
     {
         $httpClient = HttpClient::create();
         $response = $httpClient->request('POST', self::BADGR_API . '/o/token', [
@@ -29,10 +32,8 @@ class Badgr
 
         $tokenData = json_decode($response->getContent(), true);
 
-        $_SESSION['refreshToken'] = $tokenData['refresh_token'];
-        $_SESSION['accessToken'] = $tokenData['access_token'];
-
-        return $tokenData;
+        $this->refreshToken = $tokenData['refresh_token'];
+        $this->accessToken = $tokenData['access_token'];
     }
 
     public function getTokenData(string $refreshToken)
@@ -50,14 +51,16 @@ class Badgr
 
         $tokenData = json_decode($response->getContent(), true);
 
-        $_SESSION['refreshToken'] = $tokenData['refresh_token'];
-        $_SESSION['accessToken'] = $tokenData['access_token'];
+        $this->refreshToken = $tokenData['refresh_token'];
+        $this->accessToken = $tokenData['access_token'];
 
         return $tokenData;
     }
 
-    public function addBadgeToUser(LearningModule $learningModule, User $user, string $accessToken): void
+    public function addBadgeToUser(LearningModule $learningModule, User $user): void
     {
+        $learningModule->setBadge('2ASjOU92SVejqTv1Mevaiw');
+
         //get badge and email for fetch
         $moduleBadge = $learningModule->getBadge();
         $email = $user->getEmail();
@@ -67,7 +70,7 @@ class Badgr
         $response = $httpClient->request('POST', self::BADGR_API.'/v2/badgeclasses/' . $moduleBadge . '/assertions', [
             'headers' => [
                 'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . $accessToken,
+                'Authorization' => 'Bearer ' . $this->accessToken,
             ],
             'json' => [
                 'recipient' => [
@@ -77,15 +80,15 @@ class Badgr
                 ]
             ]
         ]);
+
+        $user->addBadge($learningModule);
     }
 
-    public function getAllBadges($badges, User $user, string $accessToken): array
+    public function getAllBadges($badges, User $user): array
     {
         //get mail from user
         $email = $user->getEmail();
         $userBadges = [];
-
-        //var_dump($badges);
 
         //get badges from email user
         $httpClient = HttpClient::create();
@@ -93,7 +96,7 @@ class Badgr
             $response = $httpClient->request('GET', self::BADGR_API.'/v2/badgeclasses/' . $badgeKey, [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $accessToken,
+                    'Authorization' => 'Bearer ' . $this->accessToken,
                 ],
                 'json' => [
                     'recipient' => [

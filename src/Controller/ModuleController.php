@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Domain\Badgr;
-use App\Entity\Chapter;
+use App\Domain\LanguageTrait;
+use App\Domain\PageManager;
 use App\Entity\ChapterPage;
 use App\Entity\LearningModule;
-use App\Entity\Language;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,68 +15,36 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ModuleController extends AbstractController
 {
+    use LanguageTrait;
+
     /**
      * @Route("/portal/module/{module}", name="module", requirements={"module" = "\d+"})
-     * @param Request $request
-     * @param LearningModule $module
-     * @return Response
      */
     public function module(Request $request, LearningModule $module): Response
     {
-        //initialise badgr object
-        $badgrObj = new Badgr;
-        $badgrObj = $this->getSession($badgrObj);
-        $tokens = $this->getTokens();
-
         //user = logged in user
         /** @var User $user */
         $user = $this->getUser();
 
-        $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy([
-            'code' => $request->getLocale()
-        ]);
-
-        // when module completed, give badge
-        // maybe put this in a private function instead of hardcoding a boolean -Jan
-        $completed = true;
-        if($completed === true){
-            //add badge from this module to user
-            $badgrObj->addBadgeToUser($module, $user, $tokens['accessToken']);
-            $user->addBadge($module);
-            $this->getDoctrine()->getManager()->persist($user);
-            $this->getDoctrine()->getManager()->flush();
-        }
-
         return $this->render('module/index.html.twig', [
-            'language' => $language,
-            'module' => $module
+            'language' => $this->getLanguage($request),
+            'module' => $module,
+         //   'chapterManager' => $chaptersDone
         ]);
     }
 
-    // shouldn't the 2 functions below be in the badgr class ?? -Jan
-    private function getSession(Badgr $badgrObj){
-        //check if we already have refreshtoken
-        if(isset($_SESSION['refreshToken'])){
-            $refreshToken = $_SESSION['refreshToken'];
-            $badgrObj->getTokenData($refreshToken);
-        }
-        //if we don't, do the initial authentication to get it
-        else{
-            $badgrObj->initialise();
-        }
-        return $badgrObj;
-    }
-
-    // probably not what its supposed to do, but my best guess -Jan
-    private function getTokens(): array
+    /**
+     * @Route("/portal/module/view-page/{chapterPage}/", name="module_view_page", requirements={"page" = "\d+"})
+     */
+    public function viewPage(Request $request, ChapterPage $chapterPage): Response
     {
-        $tokens = [];
-        if (isset($_SESSION['accessToken'])){
-            $tokens['accessToken'] = $_SESSION['accessToken'];
-        }
-        if (isset($_SESSION['refreshToken'])){
-            $tokens['refreshToken'] = $_SESSION['refreshToken'];
-        }
-        return $tokens;
+        $pageManager = new PageManager($chapterPage);
+
+        return $this->render('module/view-page.html.twig', [
+            'language' => $this->getLanguage($request),
+            'page' => $chapterPage,
+            'pageManager' => $pageManager,
+            'env' => $_SERVER['APP_ENV']
+        ]);
     }
 }
