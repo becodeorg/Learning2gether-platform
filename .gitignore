@@ -8,6 +8,7 @@
 /var/
 /vendor/
 /.sass-cache/
+/sass/.sass-cache/
 /public/upload/
 
 ###< symfony/framework-bundle ###
