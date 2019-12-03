@@ -87,14 +87,14 @@ class User implements UserInterface
     private $badges;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"})
-     */
-    private $images;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Chapter", inversedBy="users")
+     *  @ORM\ManyToMany(targetEntity="App\Entity\Chapter", inversedBy="users", orphanRemoval=true)
      */
     private $progress;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"}, orphanRemoval=true)
+     */
+    private $images;
 
     public function __construct()
     {
@@ -352,14 +352,10 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeImage(Image $image): self
+    public function removeProgress(Chapter $progress): self
     {
-        if ($this->images->contains($image)) {
-            $this->images->removeElement($image);
-            // set the owning side to null (unless already changed)
-            if ($image->getUser() === $this) {
-                $image->setUser(null);
-            }
+        if ($this->progress->contains($progress)) {
+            $this->progress->removeElement($progress);
         }
 
         return $this;
@@ -397,10 +393,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeProgress(Chapter $progress): self
+    public function removeImage(Image $image): self
     {
-        if ($this->progress->contains($progress)) {
-            $this->progress->removeElement($progress);
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
         }
 
         return $this;
