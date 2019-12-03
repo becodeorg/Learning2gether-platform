@@ -24,12 +24,6 @@
                                 <div class="col-10"><h5>{{ chapter.getDescription(language) }}</h5></div>
                                 <div class="col-2">10%</div>
                             </div>
-                            {% for page in chapter.pages %}
-                                <div class="row">
-                                    {% set html = parsedown.text(page.translations[0].content) %}
-                                    {{ mdparser.searchForEmbed(html) | raw }}
-                                </div>
-                            {% endfor %}
                         </div>
                     </div>
 
