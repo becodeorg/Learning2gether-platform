@@ -19,6 +19,18 @@ class QuizQuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, QuizQuestion::class);
     }
 
+    public function getQuizAsArray(QuizQuestion $question) : array
+    {
+        // FIXME this query returns an empty array if any child is missing
+        // for example, if there is a quiz without any questions or any questions without an answer
+
+        $em = $this->getEntityManager();
+        $dql = 'SELECT qq, qqt, qqtl, qa, qat, qatl FROM App\Entity\QuizQuestion qq JOIN qq.translations qqt JOIN qqt.language qqtl JOIN qq.answers qa JOIN qa.translations qat JOIN qat.language qatl WHERE qq.id = :id';
+        $query = $em->createQuery($dql);
+        $query->setParameter(':id', $question->getId());
+        return $query->getArrayResult();
+    }
+
     // /**
     //  * @return QuizQuestion[] Returns an array of QuizQuestion objects
     //  */

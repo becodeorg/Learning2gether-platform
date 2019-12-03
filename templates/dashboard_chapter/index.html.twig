@@ -8,7 +8,7 @@
     </style>
 
     <div class="container">
-        {{ dump(chapterArray) }}
+        {{ dump(pagesFlags) }}
         <a href="{{ path('dashboard_module', {module: chapterArray['id']}) }}">Back</a>
         <hr>
         <h3>Pages</h3>
@@ -60,7 +60,6 @@
             </tbody>
         </table>
         <h3>Quiz</h3>
-        {{ dump(quizFlags) }}
         <table class="table table-hover">
             <thead>
             <tr>
@@ -107,6 +106,9 @@
                                href="#">{{ (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
                                 / {{ languagecount }}</a>
                         {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('dashboard_question', {chapter: chapterArray['id'] , question: question['id']}) }}">Check</a>
                     </td>
                 </tr>
             {% endfor %}

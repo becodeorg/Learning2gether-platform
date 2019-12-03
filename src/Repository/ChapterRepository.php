@@ -31,6 +31,18 @@ class ChapterRepository extends ServiceEntityRepository
         return $query->getArrayResult();
     }
 
+    public function getQuizAsArray(Chapter $chapter) : array
+    {
+        // FIXME this query returns an empty array if any child is missing
+        // for example, if there is a quiz without any questions or any questions without an answer
+
+        $em = $this->getEntityManager();
+        $dql = 'SELECT c, q, qq, qqt, qqtl, qa, qat, qatl FROM App\Entity\Chapter c JOIN c.quiz q JOIN q.quizQuestions qq JOIN qq.translations qqt JOIN qqt.language qqtl JOIN qq.answers qa JOIN qa.translations qat JOIN qat.language qatl WHERE c.id = :id';
+        $query = $em->createQuery($dql);
+        $query->setParameter(':id', $chapter->getId());
+        return $query->getArrayResult();
+    }
+
     // /**
     //  * @return Chapter[] Returns an array of Chapter objects
     //  */
