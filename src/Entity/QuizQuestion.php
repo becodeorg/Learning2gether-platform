@@ -24,7 +24,7 @@ class QuizQuestion
     private $questionNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizQuestionTranslation", mappedBy="quizQuestion", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizQuestionTranslation", mappedBy="quizQuestion", orphanRemoval=true, cascade={"persist"})
      */
     private $translations;
 
@@ -35,7 +35,7 @@ class QuizQuestion
     private $quiz;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizAnswer", mappedBy="quizQuestion", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizAnswer", mappedBy="quizQuestion", orphanRemoval=true, cascade={"persist"})
      */
     private $answers;
 

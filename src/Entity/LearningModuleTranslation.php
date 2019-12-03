@@ -40,10 +40,12 @@ class LearningModuleTranslation extends AbstractType
      */
     private $language;
 
-    public function __construct(LearningModule $learningModule, Language $language)
+    public function __construct(LearningModule $learningModule, Language $language, string $title='', string $description='')
     {
         $this->learningModule = $learningModule;
         $this->language = $language;
+        $this->title = $title;
+        $this->description = $description;
     }
 
     public function getId(): ?int

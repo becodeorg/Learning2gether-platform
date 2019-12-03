@@ -21,7 +21,7 @@ class Chapter
     /**
      * @ORM\Column(type="integer")
      */
-    private $chapterNumber;
+    private $chapterNumber = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ChapterTranslation", mappedBy="chapter", orphanRemoval=true ,cascade={"persist"})

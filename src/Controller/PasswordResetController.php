@@ -135,7 +135,7 @@ class PasswordResetController extends AbstractController
         // Create and save new tokens & return URL with them
         $selector = bin2hex(random_bytes(8));
         $token = random_bytes(32); // for user authentication
-        $url = "http://l2g.local/index.php/password-new?selector=" . $selector . "&validator=" . bin2hex($token);
+        $url = $_SERVER["HTTP_ORIGIN"]."/password-new?selector=" . $selector . "&validator=" . bin2hex($token);
         $pwdToken = new PwdResetToken($user, $selector, $token);
         $em->persist($pwdToken);
         $em->flush();

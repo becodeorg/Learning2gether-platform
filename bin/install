@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+$publicDir = dirname(__DIR__) . '/public/';
+$uploadDir = dirname(__DIR__) . '/public/upload/';
+
+if (!is_dir($uploadDir)) {
+    if(!chown($publicDir, 'www-data')) {
+        throw new RuntimeException(sprintf('Directory "%s" was not chowned', $publicDir));
+        }
+
+    if (!mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) {
+        throw new RuntimeException(sprintf('Directory "%s" was not created', $uploadDir));
+    }
+
+    if(!chown($uploadDir, 'www-data')) {
+        throw new RuntimeException(sprintf('Directory "%s" was not chowned', $uploadDir));
+    }
+
+    echo "Created upload directory";
+}
+
+echo exec('bin/console doctrine:migrations:migrate');
+echo "\n";
+echo exec('php bin/console doctrine:fixtures:load');
+echo "\n";
+echo 'Project is installed';

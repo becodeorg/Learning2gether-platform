@@ -7,10 +7,31 @@ namespace App\Domain;
 use App\Entity\Image;
 use App\Entity\LearningModule;
 use App\Entity\User;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageManager
 {
+    public function removeUpload(string $filename, string $uploads_directory): void
+    {
+        unlink($uploads_directory . '/' . $filename);
+    }
+
+    public function fixUploadsFolder(string $uploads_directory, string $public_directory): void
+    {
+        if (is_dir($uploads_directory)){
+            return;
+        }
+
+        if(!chown($public_directory, 'www-data')) {
+            throw new RuntimeException(sprintf('Directory "%s" was not created (chown failed)', $uploads_directory));
+        }
+
+        if (!mkdir($uploads_directory, 0755, true) && !is_dir($uploads_directory)) {
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $uploads_directory));
+        }
+    }
+    
     public function createImage(UploadedFile $uploadedImage, User $user, string $uploads_directory, string $type): Image
     {
         $filename = md5(uniqid('', true)) . '.' . $uploadedImage->guessExtension();

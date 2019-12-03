@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}L2G Forum{% endblock %}
+
+{% block body %}
+    <h4>Current Question</h4>
+
+    {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
+        {{ include('question/_delete_question.html.twig') }}
+    {% endif %}
+
+    {{ question.subject }} <br>
+    {{ question.dateFormatted }}
+    <br><br>
+    <h5>Description of Question</h5>
+    {% set firstpost = true %}
+    {% for post in posts %}
+        {% if firstpost == true %}
+            {{ post.subject }}<br>
+            {{ post.dateFormatted }}<br><br
+            {{ post.createdBy.username }}<br><br><br>
+            <hr>
+            <h5>Reply to Question</h5>
+            {% set firstpost = false %}
+        {% else %}
+            {{ post.subject }}<br>
+            {{ form_start(upvotes[post.id]) }}
+            <p>{{ upvoters[post.id] }} users have upvoted on this post</p>
+            {{ form_end(upvotes[post.id]) }}<br>
+            {{ post.dateFormatted }}<br>
+            {{ post.createdBy.username }}<br><br
+
+            <br>
+            {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
+            {{ include('question/_delete_post.html.twig') }}
+            {% endif %}
+
+            <br>
+
+        {% endif %}
+    {% endfor %}
+
+    {{ form_start(postForm) }}
+    {{ form_end(postForm) }}<br>
+
+{% endblock %}
