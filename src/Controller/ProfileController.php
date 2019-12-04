@@ -8,6 +8,8 @@ use App\Entity\Image;
 use App\Entity\PwdResetToken;
 use App\Entity\User;
 use App\Form\EditProfileType;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,9 +22,10 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      * @param Request $request
+     * @param Swift_Mailer $mailer
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, Swift_Mailer $mailer): Response
     {
         $badgrHandler = new Badgr;
 
@@ -48,7 +51,7 @@ class ProfileController extends AbstractController
         $deleteBtn->handleRequest($request);
 
         if ($deleteBtn->isSubmitted() && $deleteBtn->isValid()){
-            return $this->deleteUser();
+            return $this->deleteUser($mailer);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -81,11 +84,12 @@ class ProfileController extends AbstractController
     /**
      * @return RedirectResponse
      */
-    public function deleteUser(): RedirectResponse
+    public function deleteUser(Swift_Mailer $mailer): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $imageManager = new ImageManager();
         $user = $this->getUser();
+        $useremail = $user->getEmail();
         $this->get('security.token_storage')->setToken(null);
         $userImages = $this->getDoctrine()->getRepository(Image::class)->findBy(['user' => $user]);
         foreach ($userImages as $userImage) {
@@ -97,8 +101,18 @@ class ProfileController extends AbstractController
                 $em->remove($userPwdToken);
             }
         }
+        $this->sendDeleteEmail($useremail, $mailer);
         $em->remove($user);
         $em->flush();
         return $this->redirectToRoute('portal');
+    }
+
+    public function sendDeleteEmail(string $useremail, Swift_Mailer $mailer): void
+    {
+        $message = (new Swift_Message('User deleted confirmation'))
+            ->setFrom('no-reply@example.com')
+            ->setTo($useremail)
+            ->setBody($this->renderView('profile/dltmail.html.twig'), 'text/html');
+        $mailer->send($message);
     }
 }

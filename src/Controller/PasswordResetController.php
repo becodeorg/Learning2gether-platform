@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\PwdResetToken;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +18,7 @@ class PasswordResetController extends AbstractController
     /**
      * @Route("/password-reset", name="password_reset")
      */
-    public function index(\Swift_Mailer $mailer)
+    public function index(Swift_Mailer $mailer)
     {
         if (!isset($_POST["reset-request-submit"])) {
             return $this->render('password_reset/index.html.twig');
@@ -55,7 +57,7 @@ class PasswordResetController extends AbstractController
             return $this->redirectToRoute('password_reset');
         }
 
-        $form = $this->createForm(resetPasswordType::class);
+        $form = $this->createForm(ResetPasswordType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -143,9 +145,9 @@ class PasswordResetController extends AbstractController
         return $url;
     }
 
-    private function sendPwdResetEmail(User $user, String $url, \Swift_Mailer $mailer)
+    private function sendPwdResetEmail(User $user, String $url, Swift_Mailer $mailer)
     {
-        $message = (new \Swift_Message('Reset Password'))
+        $message = (new Swift_Message('Reset Password'))
             ->setFrom('no-reply@example.com')
             ->setTo($user->getEmail())
             ->setBody($this->renderView(
