@@ -178,8 +178,29 @@
     margin: 0 auto;
 }
 
+.wrapper-two {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+
 .card {
     -webkit-box-shadow: 0 6px 12px 3px $cardshadow;
     box-shadow: 0 6px 12px 3px $cardshadow;
     border: none;
     border-radius: 20px; }
+
+
+// BUTTON HARD/SOFT SKILLS filter
+
+.btn-skills {
+    background-color: $purplecolor;
+    color: $whitecolor;
+    font-family: $chivofamily;
+    font-weight: 400;
+}
+
+.btn-skills:hover {
+    background-color: $darkestpurple;
+    color: $whitecolor;
+}

@@ -1,0 +1,37 @@
+@import "./../variables/variables";
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  //padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+  background-color: $purplecolor;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 0 0;
+  border-radius: 15px;
+  border-color: $purplecolor;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+.addicon {
+  width: 70px;
+  fill: white;
+}
+
+.addiconflag {
+  width: 50px;
+  fill: white;
+}
+
+.rowaddbutton {
+  margin-bottom: 30px;
+}
+
