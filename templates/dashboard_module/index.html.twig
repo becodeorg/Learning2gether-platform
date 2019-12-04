@@ -5,7 +5,7 @@
 {% block body %}
 
     <style>
-        .help-icon{
+        .help-icon {
             cursor: pointer;
         }
     </style>
@@ -17,22 +17,16 @@
 
             {% set moduleFlag = fm.checkModuleTranslations(moduleArray, languagecount) %}
 
-        {% if  (moduleFlag['moduleNeededTranslations']|length - 5) | abs > 2 %}
-            <a class="btn btn-success"
+            {% set btnClass = 'btn-danger' %}
+            {% if  (moduleFlag['moduleNeededTranslations']|length - 5) | abs > 2 %}
+                {% set btnClass = 'btn-success' %}
+            {% elseif  (moduleFlag['moduleNeededTranslations']|length - 5) | abs == 2 %}
+                {% set btnClass = 'btn-warning' %}
+            {% endif %}
+            <a class="btn {{ btnClass }}"
                title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
                href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
                 / {{ languagecount }}</a>
-        {% elseif  (moduleFlag['moduleNeededTranslations']|length - 5) | abs == 2 %}
-            <a class="btn btn-warning"
-               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
-               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
-                / {{ languagecount }}</a>
-        {% else %}
-            <a class="btn btn-danger"
-               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
-               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
-                / {{ languagecount }}</a>
-        {% endif %}
         </div>
         <table class="table table-hover text-center">
             <thead>
@@ -40,7 +34,9 @@
                 <th scope="col">#</th>
                 <th scope="col">Chapter</th>
                 <th scope="col"># pages</th>
-                <th scope="col">Translations <i title="This chapters' title and description translations.&#10;Click to go to that chapters edit page.&#10;Hover to see the missing translations." class="help-icon far fa-question-circle"></i></th>
+                <th scope="col">Translations <i
+                            title="This chapters' title and description translations.&#10;Click to go to that chapters edit page.&#10;Hover to see the missing translations."
+                            class="help-icon far fa-question-circle"></i></th>
                 <th scope="col">&#128269;</th>
             </tr>
             </thead>
@@ -62,22 +58,16 @@
                         {% endfor %}</td>
                     <td>{{ chapter[0]['pages']|length }}</td>
                     <td>
+                        {% set btnClass = 'btn-danger' %}
                         {% if  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs > 2 %}
-                            <a class="btn btn-success"
-                               title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                            {% set btnClass = 'btn-success' %}
                         {% elseif  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs == 2 %}
-                            <a class="btn btn-warning"
-                               title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
-                        {% else %}
-                            <a class="btn btn-danger"
-                               title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                            {% set btnClass = 'btn-warning' %}
                         {% endif %}
+                        <a class="btn {{btnClass}}"
+                           title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
+                           href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
+                            / {{ languagecount }}</a>
                     </td>
                     <td><a href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">Check</a></td>
                 </tr>

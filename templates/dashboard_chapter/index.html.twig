@@ -37,22 +37,16 @@
                         {% endfor %}
                     </td>
                     <td>
+                        {% set btnClass = 'btn-danger' %}
                         {% if  (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs > 2 %}
-                            <a class="btn btn-success"
-                               title="{{ pagesFlags[page['pageNumber']]['pageNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_page', {module: chapter.learningModule.id, chapter: chapterArray['id'], page: page['id']}) }}">{{ (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                            {% set btnClass = 'btn-success' %}
                         {% elseif  (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs == 2 %}
-                            <a class="btn btn-warning"
-                               title="{{ pagesFlags[page['pageNumber']]['pageNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_page', {module: chapter.learningModule.id, chapter: chapterArray['id'], page: page['id']}) }}">{{ (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
-                        {% else %}
-                            <a class="btn btn-danger"
-                               title="{{ pagesFlags[page['pageNumber']]['pageNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_page', {module: chapter.learningModule.id, chapter: chapterArray['id'], page: page['id']}) }}">{{ (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                            {% set btnClass = 'btn-warning' %}
                         {% endif %}
+                        <a class="btn {{ btnClass }}"
+                           title="{{ pagesFlags[page['pageNumber']]['pageNeededTranslations'] | join('\n') }}"
+                           href="{{ path('edit_page', {module: chapter.learningModule.id, chapter: chapterArray['id'], page: page['id']}) }}">{{ (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs }}
+                            / {{ languagecount }}</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -89,22 +83,16 @@
                     </td>
                     <td>{{ question['answers']|length }}</td>
                     <td>
+                        {% set btnClass = 'btn-danger' %}
                         {% if  (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs > 2 %}
-                            <a class="btn btn-success"
-                               title="{{ quizFlags['questions'][question['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
-                               href="#">{{ (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                            {% set btnClass = 'btn-success' %}
                         {% elseif  (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs == 2 %}
-                            <a class="btn btn-warning"
-                               title="{{ quizFlags['questions'][question['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
-                               href="#">{{ (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
-                        {% else %}
-                            <a class="btn btn-danger"
-                               title="{{ quizFlags['questions'][question['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
-                               href="#">{{ (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                            {% set btnClass = 'btn-warning' %}
                         {% endif %}
+                        <a class="btn {{ btnClass }}"
+                           title="{{ quizFlags['questions'][question['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
+                           href="#">{{ (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
+                            / {{ languagecount }}</a>
                     </td>
                     <td>
                         <a href="{{ path('dashboard_question', {chapter: chapterArray['id'] , question: question['id']}) }}">Check</a>

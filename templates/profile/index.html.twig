@@ -9,7 +9,7 @@
             <div class="profileimgwrap">
                 <div class="profileimg">
                     {% if user.avatar %}
-                        <img src="{{ asset('uploads/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
+                        <img src="{{ asset('upload/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
                     {% else %}
                         <img src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ user.name }}">
                     {% endif %}
