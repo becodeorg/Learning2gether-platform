@@ -215,3 +215,24 @@
     background-color: $darkestpurple;
     color: $whitecolor;
 }
+
+#profiledrop{
+    padding-top: 5px;
+}
+
+#reveal{
+    position: absolute;
+    background: $offwhite;
+    width: 100px;
+    margin-top: 5px;
+    z-index: 55;
+}
+
+#screen{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 50;
+}
