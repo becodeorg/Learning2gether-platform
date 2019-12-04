@@ -50,9 +50,9 @@ class LearningModule
      */
     private $chapters;
 
-    public function __construct(string $badge, string $image, string $type, bool $isPublished = false)
+    public function __construct(string $badge='', string $image='', string $type=null, bool $isPublished = false)
     {
-        if(is_null($type)) {
+        if($type === null) {
             $type = LearningModuleType::hard();
         }
 
@@ -62,7 +62,6 @@ class LearningModule
         $this->image = $image;
         $this->type = $type;
         $this->isPublished = $isPublished;
-        //default for isPublished is set to false
     }
 
     public function getId(): ?int
@@ -166,101 +165,6 @@ class LearningModule
             }
         }
         return 'Error: Language not found';
-    }
-
-    public function flagPage(): array
-    {
-        //function to check the module in order to show it requires more translations before publishing
-        $flagData = [];
-
-        // checking all learning module translations
-        $moduleTranslations = $this->getTranslations();
-
-        // get number of languages (dodgy fix i know)
-        $languageCount = count($moduleTranslations);
-
-        $flagData['moduleNeededTranslations'] = [];
-        $flagData['moduleStatus'] = false;
-        foreach ($moduleTranslations as $moduleTranslation) {
-            if ($moduleTranslation->getTitle() === '' || $moduleTranslation->getDescription() === '') {
-                $flagData['moduleNeededTranslations'][] = $moduleTranslation->getLanguage()->getName();
-            }
-        }
-        if ((count($flagData['moduleNeededTranslations']) - $languageCount) <= -2 ){
-            $flagData['moduleStatus'] = true;
-        }
-
-        // checking all chapters
-        $chapters = $this->getChapters();
-        $flagData['chapters'] = [];
-        foreach ($chapters as $chapter) {
-            $flagData['chapters']['chapterObjects'][$chapter->getId()][] = $chapter;
-            $flagData['chapters'][$chapter->getChapterNumber()]['chapterNeededTranslations'] = [];
-            $flagData['chapters'][$chapter->getChapterNumber()]['chapterStatus'] = false;
-            $chapterTranslations = $chapter->getTranslations();
-            foreach ($chapterTranslations as $chapterTranslation) {
-                if ($chapterTranslation->getTitle() === '' || $chapterTranslation->getDescription() === '') {
-                    $flagData['chapters'][$chapter->getChapterNumber()]['chapterNeededTranslations'][] = $chapterTranslation->getLanguage()->getName();
-                }
-            }
-            if ((count($flagData['chapters'][$chapter->getChapterNumber()]['chapterNeededTranslations']) - $languageCount) <= -2 ){
-                $flagData['chapters'][$chapter->getChapterNumber()]['chapterStatus'] = true;
-            }
-
-            // checking all pages
-            $chapterPages = $chapter->getPages();
-            foreach ($chapterPages as $chapterPage) {
-                $flagData['chapters'][$chapter->getChapterNumber()]['pages'][$chapterPage->getPageNumber()]['pageNeededTranslations'] = [];
-                $flagData['chapters'][$chapter->getChapterNumber()]['pages'][$chapterPage->getPageNumber()]['pageStatus'] = false;
-                $chapterPageTranslations = $chapterPage->getTranslations();
-                foreach ($chapterPageTranslations as $chapterPageTranslation) {
-                    if ($chapterPageTranslation->getTitle() === '' || $chapterPageTranslation->getContent() === '') {
-                        $flagData['chapters'][$chapter->getChapterNumber()]['pages'][$chapterPage->getPageNumber()]['pageNeededTranslations'][] = $chapterPageTranslation->getLanguage()->getName();
-                    }
-                }
-                if ((count($flagData['chapters'][$chapter->getChapterNumber()]['pages'][$chapterPage->getPageNumber()]['pageNeededTranslations']) - $languageCount) <= -2 ){
-                    $flagData['chapters'][$chapter->getChapterNumber()]['pages'][$chapterPage->getPageNumber()]['pageStatus'] = true;
-                }
-            }
-
-            // checking all quizzes
-            $quiz = $chapter->getQuiz();
-            $flagData['chapters'][$chapter->getChapterNumber()]['quiz'] = [];
-            $quizQuestions = $quiz->getQuizQuestions();
-            foreach ($quizQuestions as $quizQuestion) {
-                $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['questionNeededTranslation'] = [];
-                $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['questionStatus'] = false;
-                $quizQuestionTranslations = $quizQuestion->getTranslations();
-                foreach ($quizQuestionTranslations as $quizQuestionTranslation) {
-                    if ($quizQuestionTranslation->getTitle() === '') {
-                        $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['questionNeededTranslation'][] = $quizQuestionTranslation->getLanguage()->getName();
-                    }
-                }
-                if ((count($flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['questionNeededTranslation']) - $languageCount) <= -2 ){
-                    $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['questionStatus'] = true;
-                }
-
-                // checking all answers
-                $answers = $quizQuestion->getAnswers();
-                $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['answers'] = [];
-                foreach ($answers as $answer) {
-                    $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['answers'][$answer->getId()]['answerNeededTranslations'] = [];
-                    $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['answers'][$answer->getId()]['answerStatus'] = false;
-                    $answerTranslations = $answer->getTranslations();
-                    foreach ($answerTranslations as $answerTranslation) {
-                        if ($answerTranslation->getTitle() === '') {
-                            $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['answers'][$answer->getId()]['answerNeededTranslations'][] = $answerTranslation->getLanguage()->getName();
-                        }
-                    }
-                    if ((count($flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['answers'][$answer->getId()]['answerNeededTranslations']) - $languageCount) <= -2 ){
-                        $flagData['chapters'][$chapter->getChapterNumber()]['quiz']['questions'][$quizQuestion->getQuestionNumber()]['answers'][$answer->getId()]['answerStatus'] = true;
-                    }
-                }
-            }
-        }
-
-        // return the humongous array with all the data
-        return $flagData;
     }
 
     /**

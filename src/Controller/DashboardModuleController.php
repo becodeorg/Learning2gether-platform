@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Domain\FlaggingManager;
+use App\Domain\LanguageTrait;
 use App\Entity\Chapter;
 use App\Entity\Language;
 use App\Entity\LearningModule;
@@ -13,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardModuleController extends AbstractController
 {
+    use LanguageTrait;
+
     /**
      * @Route("partner/dashboard/module/{module}", name="dashboard_module", requirements={"module"= "\d+"})
      * @param Request $request
@@ -21,7 +24,7 @@ class DashboardModuleController extends AbstractController
      */
     public function index(Request $request, LearningModule $module): Response
     {
-        $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => $_COOKIE['language'] ?? 'en']);
+        $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
         $moduleArray = $this->getDoctrine()->getRepository(LearningModule::class)->getSmallModuleAsArray($module);
         $chapterRepo = $this->getDoctrine()->getRepository(Chapter::class);

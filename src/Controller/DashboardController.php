@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Domain\FlaggingManager;
+use App\Domain\LanguageTrait;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Repository\LearningModuleRepository;
@@ -13,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
+    use LanguageTrait;
+
     /**
      * @Route("partner/dashboard", name="dashboard")
      * @param Request $request
@@ -22,7 +25,7 @@ class DashboardController extends AbstractController
     {
 
         // get the current language
-        $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => $_COOKIE['language'] ?? 'en']);
+        $language = $this->getLanguage($request);
 
         // fetch all LM objects from the DB
         $allModules = $this->getDoctrine()->getRepository(LearningModule::class)->findAll();
