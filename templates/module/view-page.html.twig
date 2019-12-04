@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ page.getTitle(language) }}{% endblock %}
+
+{% block body %}
+    {{ page.getContent(language) | parsedown | youtube | raw }}
+
+    {% if pageManager.previous() != null %}
+    <a class="btn-primary btn" href="{{ path('module_view_page',
+        {'chapterPage': pageManager.previous().getId()}) }}">{{ 'Previous' | trans }}</a>
+    {% endif %}
+
+    {% if pageManager.isLast() %}
+        <a class="btn-success btn" href="{{ path('quiz',
+            {'quiz': page.getChapter().getQuiz().getId()}) }}">{{ 'Start quiz' | trans }}</a>
+
+        {%if env == 'dev' %}
+            {# This button is only available in dev mode to make it easier to debug #}
+            <a class="btn-danger btn" href="{{ path('quiz_finished',
+                {'quiz': page.getChapter().getQuiz().getId()}) }}">Finish and complete quiz</a>
+        {% endif %}
+    {% else %}
+        <a class="btn-primary btn" href="{{ path('module_view_page',
+            {'chapterPage': pageManager.next().getId()}) }}">{{ 'Next' | trans }}</a>
+    {% endif %}
+{% endblock %}

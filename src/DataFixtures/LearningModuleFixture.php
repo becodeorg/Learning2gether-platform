@@ -37,7 +37,7 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
             ->findOneBy(['code' => 'en']);
 
         $learningModule = new LearningModule(
-            '',
+            '2ASjOU92SVejqTv1Mevaiw',
             '',
             LearningModuleType::SOFT(),
             true

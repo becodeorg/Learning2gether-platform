@@ -16,6 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Domain\Badgr;
+use App\Domain\ChapterManager;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/quiz")
@@ -44,26 +47,66 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/partner/{id}/edit", name="quiz_edit", methods={"GET","POST"})
+     * @Route("/quiz/{quiz}/send", name="quiz_send")
      */
-    /*public function edit(Request $request, Quiz $quiz, ChapterRepository $chapterRepository): Response
+    public function sentQuiz(Quiz $quiz): JsonResponse
     {
-        $form = $this->createForm(QuizType::class, $quiz);
-        $form->handleRequest($request);
+        //@todo: tmp code because out of scope of ticket
+        //just added this so the frontend people can already try out the API
+        $list = ['PASS', 'FAIL', 'MODULE_FINISHED'];
+        $index = array_rand($list);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Successfully edited');
+        return new JsonResponse([
+            'status' => $list[$index],
+            'badge' => 'example.jpg'
+        ]);
+    }
+
+    /**
+     * @Route("/quiz/{quiz}/finished", name="quiz_finished")
+     */
+    public function quizFinished(Quiz $quiz)
+    {
+        //@todo: tmp code - this should not be available with a route - but called from sentQuiz
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $user->addProgress($quiz->getChapter());
+        $this->getDoctrine()->getManager()->flush();
+
+        try {
+            $chapterManager = new ChapterManager($quiz->getChapter());
+
+            if (!$chapterManager->isLast()) {
+                if (!count($chapterManager->next()->getPages())) {
+                    throw new \DomainException('The next chapter does not have any pages! Please contact the site administrator.');
+                }
+
+                $this->addFlash('success', 'You completed the quiz and unlocked the next chapter!');
+
+                return $this->redirectToRoute('module_view_page', [
+                    'chapterPage' => $chapterManager->next()->getPages()[0]->getId()//firstPageOfNextChapter
+                ]);
+            }
+
+            // when module completed, give badge
+            $badgrManager = new Badgr;
+            $badgrManager->addBadgeToUser(
+                $quiz->getChapter()->getLearningModule(),
+                $user
+            );
+            //we need to save because we added the Badgr badge to the user in the line above
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('quiz_index');
+            $this->addFlash('success', 'You finished the learning module and recieved your badge!');
+            return $this->redirectToRoute('portal');
+        } catch (\DomainException $e) {
+            $this->addFlash('error', $e->getMessage());
+            $this->redirectToRoute('module', [
+                'module' => $quiz->getChapter()->getLearningModule()->getId()
+            ]);
         }
-
-        return $this->render('quiz/edit.html.twig', [
-            'chapter' => $chapterRepository->findOneBy(['quiz'=>$quiz->getId()]),
-            'quiz' => $quiz,
-            'form' => $form->createView(),
-        ]);
-    }*/
+    }
 
     /*****************
      * We do not want anyone to manually add or edit or delete a Quiz, just show existing ones
