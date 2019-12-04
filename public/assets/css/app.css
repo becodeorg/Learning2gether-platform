@@ -162,10 +162,6 @@
   width: 1000px;
   margin: 0 auto; }
 
-.wrapper-two {
-  width: 1000px;
-  margin: 0 auto; }
-
 .card {
   -webkit-box-shadow: 0 6px 12px 3px rgba(139, 84, 160, 0.37);
   box-shadow: 0 6px 12px 3px rgba(139, 84, 160, 0.37);
@@ -191,6 +187,9 @@
   width: 100px;
   margin-top: 5px;
   z-index: 55; }
+
+#profiledrop:hover {
+  cursor: pointer; }
 
 #screen {
   position: absolute;
@@ -616,133 +615,6 @@ footer {
   height: 300px;
   margin-top: -300px; }
 
-.wrapper {
-  width: 800px;
-  margin: 0 auto; }
-
-.btnchapquiz {
-  width: 200px;
-  float: right;
-  margin-right: -50px;
-  margin-top: -50px; }
-
-h1 {
-  text-align: center; }
-
-.chapcardquiz {
-  padding: 50px 20px 50px 20px;
-  border-radius: 20px;
-  border: 4px solid #8b54a0;
-  color: black;
-  background-color: white; }
-
-.chapcontainerquiz {
-  margin-top: 50px; }
-
-.button_5quiz {
-  font-family: 'Chivo', sans-serif;
-  font-size: 18px;
-  letter-spacing: 1px;
-  border-radius: 40px;
-  border: 3pt solid #33003d;
-  -webkit-box-shadow: 12px 12px 19px -17px black;
-  -moz-box-shadow: 12px 12px 19px -17px black;
-  box-shadow: 12px 12px 19px -17px black;
-  background-color: #33003d;
-  color: #f7f6f6;
-  width: 270px; }
-
-.button_5quiz:hover {
-  color: #33003d;
-  background: #f7f6f6;
-  box-shadow: 12px 12px 19px -17px black; }
-
-.chapbutton_2quiz {
-  float: right;
-  margin-top: 50px; }
-
-@media only screen and (max-width: 770px) {
-  .wrapper {
-    width: 100%; }
-
-  .btnchapquiz {
-    float: none;
-    margin: 0 auto;
-    display: block; }
-
-  .chapcardquiz {
-    padding: 20px 20px 50px 20px; }
-
-  .chapimgquiz {
-    text-align: center;
-    margin-bottom: 15px; }
-
-  .chapinfoquiz {
-    text-align: center; }
-
-  h5 {
-    margin: 0 auto; }
-
-  .chapbutton_2quiz {
-    float: none;
-    justify-content: center; } }
-.forum-cat-title {
-  font-size: 23px;
-  font-family: "Chivo", sans-serif;
-  font-weight: 400;
-  color: black;
-  letter-spacing: 1px; }
-
-.forum-cat-row {
-  margin-bottom: 35px; }
-
-.btn-circle.btn-xl {
-  width: 70px;
-  height: 70px;
-  border-radius: 35px;
-  font-size: 24px;
-  line-height: 1.33;
-  background-color: #8b54a0; }
-
-.btn-circle {
-  width: 30px;
-  height: 30px;
-  padding: 0 0;
-  border-radius: 15px;
-  border-color: #8b54a0;
-  text-align: center;
-  font-size: 12px;
-  line-height: 1.42857; }
-
-.addicon {
-  width: 70px;
-  fill: white; }
-
-.addiconflag {
-  width: 50px;
-  fill: white; }
-
-.rowaddbutton {
-  margin-bottom: 30px; }
-
-.module-cube {
-  border: 8px lightgrey solid;
-  padding: 10px 10px 10px 10px;
-  margin-top: 20px;
-  margin-bottom: 20px; }
-
-.mod-title {
-  margin: auto;
-  width: 50%;
-  margin-bottom: 30px; }
-
-.mod-step {
-  color: lightgrey;
-  font-family: "Chivo", sans-serif;
-  font-weight: 600;
-  font-size: 20px;
-  margin: 0; }
-
 .gone {
   display: none; }
 
@@ -831,6 +703,76 @@ h1 {
   font-size: 20px;
   margin: 0; }
 
+.wrapper {
+  width: 800px;
+  margin: 0 auto; }
+
+.btnchapquiz {
+  width: 200px;
+  float: right;
+  margin-right: -50px;
+  margin-top: -50px; }
+
+h1 {
+  text-align: center; }
+
+.chapcardquiz {
+  padding: 50px 20px 50px 20px;
+  border-radius: 20px;
+  border: 4px solid #8b54a0;
+  color: black;
+  background-color: white; }
+
+.chapcontainerquiz {
+  margin-top: 50px; }
+
+.button_5quiz {
+  font-family: 'Chivo', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  border-radius: 40px;
+  border: 3pt solid #33003d;
+  -webkit-box-shadow: 12px 12px 19px -17px black;
+  -moz-box-shadow: 12px 12px 19px -17px black;
+  box-shadow: 12px 12px 19px -17px black;
+  background-color: #33003d;
+  color: #f7f6f6;
+  width: 270px; }
+
+.button_5quiz:hover {
+  color: #33003d;
+  background: #f7f6f6;
+  box-shadow: 12px 12px 19px -17px black; }
+
+.chapbutton_2quiz {
+  float: right;
+  margin-top: 50px; }
+
+@media only screen and (max-width: 770px) {
+  .wrapper {
+    width: 100%; }
+
+  .btnchapquiz {
+    float: none;
+    margin: 0 auto;
+    display: block; }
+
+  .chapcardquiz {
+    padding: 20px 20px 50px 20px; }
+
+  .chapimgquiz {
+    text-align: center;
+    margin-bottom: 15px; }
+
+  .chapinfoquiz {
+    text-align: center; }
+
+  h5 {
+    margin: 0 auto; }
+
+  .chapbutton_2quiz {
+    float: none;
+    justify-content: center; } }
 /*
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
  */
