@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Domain\Badgr;
 use App\Domain\ImageManager;
+use App\Entity\Chapter;
 use App\Entity\Image;
 use App\Entity\PwdResetToken;
 use App\Entity\User;
+use App\Entity\UserChapter;
 use App\Form\EditProfileType;
 use Swift_Mailer;
 use Swift_Message;
@@ -82,15 +84,21 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @param Swift_Mailer $mailer
      * @return RedirectResponse
      */
     public function deleteUser(Swift_Mailer $mailer): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $imageManager = new ImageManager();
+        /* @var User $user */
         $user = $this->getUser();
-        $useremail = $user->getEmail();
+        $userEmail = $user->getEmail();
         $this->get('security.token_storage')->setToken(null);
+        $userProgress = $user->getProgress();
+        foreach ($userProgress as $item) {
+            $user->removeProgress($item);
+        }
         $userImages = $this->getDoctrine()->getRepository(Image::class)->findBy(['user' => $user]);
         foreach ($userImages as $userImage) {
             $imageManager->removeUpload($userImage->getSrc(), $this->getParameter('uploads_directory'));
@@ -101,17 +109,17 @@ class ProfileController extends AbstractController
                 $em->remove($userPwdToken);
             }
         }
-        $this->sendDeleteEmail($useremail, $mailer);
+        $this->sendDeleteEmail($userEmail, $mailer);
         $em->remove($user);
         $em->flush();
         return $this->redirectToRoute('portal');
     }
 
-    public function sendDeleteEmail(string $useremail, Swift_Mailer $mailer): void
+    public function sendDeleteEmail(string $userEmail, Swift_Mailer $mailer): void
     {
         $message = (new Swift_Message('User deleted confirmation'))
             ->setFrom('no-reply@example.com')
-            ->setTo($useremail)
+            ->setTo($userEmail)
             ->setBody($this->renderView('profile/dltmail.html.twig'), 'text/html');
         $mailer->send($message);
     }

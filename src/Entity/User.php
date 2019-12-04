@@ -87,7 +87,7 @@ class User implements UserInterface
     private $badges;
 
     /**
-     *  @ORM\ManyToMany(targetEntity="App\Entity\Chapter", inversedBy="users", orphanRemoval=true)
+     *  @ORM\ManyToMany(targetEntity="App\Entity\Chapter", inversedBy="users")
      */
     private $progress;
 
