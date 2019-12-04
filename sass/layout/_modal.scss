@@ -1,0 +1,33 @@
+@import "./../variables/variables";
+
+.modalbutton {
+  background-color: $purplecolor;
+  border-color: $purplecolor;
+  margin-bottom: 20px;
+}
+
+.modalbutton:hover {
+  background-color: $darkpurplecolor;
+  border-color: $darkpurplecolor;
+}
+
+.modal-message {
+
+  p {
+    font-family: $chivofamily;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+}
+
+.message-one {
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+}
+
+
+.imgmodal {
+  margin-top: 20px;
+}
