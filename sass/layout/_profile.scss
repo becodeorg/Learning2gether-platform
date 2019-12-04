@@ -1,0 +1,92 @@
+@import "../variables/_variables";
+
+
+
+.profileimgwrap{
+  width: $imgWidth;
+  height: $imgWidth;
+  display: inline-block;
+}
+
+.profileimgwrap img{
+  width: 100%;
+}
+
+.profileimgwrap form{
+  height: $imgWidth;
+}
+
+.profileimgwrap form .form-group label{
+  display: none;
+}
+
+.profileimg{
+  height: 300px;
+  border: 2px solid $purplecolor;
+}
+
+
+#imagebutton{
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  background: blue;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 285px;
+  left: 285px;
+  font-size: 10px;
+}
+
+#imagebutton:hover{
+  background: red;
+  cursor: pointer;
+}
+
+#changeavatar{
+  position: absolute;
+  width: $imgWidth;
+  height: $imgWidth;
+  margin-top: -$imgWidth;
+}
+
+.gone{
+  display: none;
+}
+
+#show{
+  background: $white;
+  width: $imgWidth;
+  height: $imgWidth;
+  padding: 20px;
+}
+
+#moduleprogress{
+  width: 25%;
+}
+
+.completebutton{
+  width: 20%;
+  float: right;
+  height: 40px;
+}
+
+.badgeimage{
+  width: 70%;
+  height: auto;
+}
+
+.profiletext{
+  display: inline-block;
+  position: absolute;
+}
+
+.profiletext p{
+  height: 20px;
+}
+
+#show .form-group input{
+  line-height: 15px;
+}

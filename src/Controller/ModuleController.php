@@ -3,10 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Domain\ChapterManager;
 use App\Domain\LanguageTrait;
 use App\Domain\PageManager;
-use App\Entity\Chapter;
 use App\Entity\ChapterPage;
 use App\Entity\LearningModule;
 use App\Entity\User;

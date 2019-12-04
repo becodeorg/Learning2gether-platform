@@ -1,0 +1,50 @@
+@import "./../variables/variables";
+
+.nav-bar-color {
+    background-color: $purplecolor;
+  }
+
+
+  h1  {
+    font-family: $chivofamily;
+    font-weight: 400;
+  }
+  
+  .intro-lh {
+    font-family: $chivofamily;
+    font-weight: 400;
+  }
+  
+  .card {
+    -webkit-box-shadow: 0 6px 12px 3px rgba(139,84,160,0.37);
+    box-shadow: 0 6px 12px 3px rgba(139,84,160,0.37);
+    border: none;
+    border-radius: 20px;
+  }
+  
+  //BUTTON_3
+  
+  .button_3 {
+    font-family: $chivofamily;
+    //font-weight: bold;
+    font-size: $buttonfontsize;
+    letter-spacing: 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  
+  
+    border-radius: 40px;
+    border: 3pt solid $purplecolor;
+  
+  
+    background-color: $purplecolor;
+    color: $whitecolor;
+  
+    //transition: all 0.3s ease 0s;
+  }
+  
+  .button_3:hover {
+    color: $purplecolor;
+    background: $whitecolor;
+    border: 3pt solid $whitecolor;
+  }

@@ -1,41 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'greeting'|trans }}{% endblock %}
+{% block title %}{{ 'greeting'|trans }}!{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1>{{ 'greeting'| trans |capitalize }}</h1>
 
-        <div class="filter-container">
-            <a class="btn btn-default" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
-            <a class="btn btn-default" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
+    <div class="wrapper">
+
+        <section class="row forum-cat-row">
+            <div class="col-8">
+            </div>
+
+            <div class="col-4">
+                <div class="row">
+                    <div class="col-6">Skillset:</div>
+                    <div class="col-3">
+                        <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+                    </div>
+                    <div class="col-3">
+                        <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <h1 class="text-center">{{ 'Learning Hub' | trans }}</h1>
+        <p class="text-center intro-lh">{{ 'Navigate through our Learninghub and find the appropiate training to reach your
+            full potential.' | trans }}</p>
+
+        <h2>{{ 'Active modules' | trans }}</h2>
+        <div class="card-columns">
+            {% for module in activeModules %}
+                {% include 'portal/partials/module.html.twig' with {'module': module} %}
+            {% endfor %}
         </div>
 
-        <h2>{{ 'Learning modules waiting for you' | trans }}</h2>
-        <ul><!-- List of modules -->
-
-            {% for module in activeModules %}
-                {% include 'portal/partials/module.html.twig' with {'module': module, 'language': language} %}
-            {% endfor %}
-        </ul>
-
-        <h2>{{ 'Finished learning modules' | trans }}</h2>
-        <ul><!-- List of modules -->
+        <h2>{{ 'Finished modules' | trans }}</h2>
+        <div class="card-columns">
             {% for module in finishedModules %}
-                {% include 'portal/partials/module.html.twig' with {'module': module, 'language': language} %}
+                {% include 'portal/partials/module.html.twig' with {'module': module} %}
             {% endfor %}
-        </ul>
+        </div>
 
-        {% if is_granted('ROLE_PARTNER') %}
         <hr>
-        <a href="{{ path('partner') }}">Partner Zone</a>
-        {% endif %}
-        <hr>
-        <a href="{{ path('profile') }}">My Profile</a>
-        <hr>
-        <a href="{{ path('forum') }}">Meeting Place</a>
+        <a href="{{ path('forum') }}">{{ 'Meeting Place' | trans }}</a>
 
-        <a href="{{ path('app_logout') }}">Logout</a>
-
+        {#
+                <a href="{{ path('app_logout') }}">Logout</a>
+        #}
     </div>
 {% endblock %}

@@ -55,6 +55,7 @@ class Question
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Chapter")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $chapter;
 

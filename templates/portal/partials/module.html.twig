@@ -1,6 +1,8 @@
-<li>
-    <a href="{{ path('module', { module : module.id}) }}">
-        {{ module.title(language) }}
-    </a>
-    {{ module.description(language) }}
-</li>
+<div class="card text-center">
+    <div class="card-body">
+        <img class="card-img-top" src="../uploads/{{ module.image }}" alt="Circle image" style="width: 78px;">
+        <h5 class="card-title pt-5">{{ module.title(language) }}</h5>
+        <p class="card-text text-muted">{{ module.description(language) }}</p>
+        <a href="{{ path('module', { module : module.id}) }}" class="btn btn-default button_3">Complete this course</a>
+    </div>
+</div>

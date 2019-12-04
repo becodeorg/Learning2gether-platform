@@ -3,27 +3,49 @@
 {% block title %}{{ module.getTitle(language) }}{% endblock %}
 
 {% block body %}
+
     <div class="example-wrapper">
-        <h2>{{ module.getTitle(language) }}</h2>
-        <p>{{ module.getDescription(language)  | parsedown | youtube | raw}}</p>
-        <hr>
-        <h3>{{ 'Chapter List'|trans }}</h3>
-        <ul>
+
+        <h2>{{ module.getTitle(language) }} COURSE</h2>
+
+        <button class="btn btn-default button_4chap btnchap">Meeting Place</button>
+
+        <section id="chapter-overview">
+            {% if module.getUserChapters(app.user)|length > 0 %}
             {% for userChapter in module.getUserChapters(app.user) %}
-                <li>
-                    {% if userChapter.isUnlocked() %}
-                        <a href="{{ path('module_view_page',
-                            {'chapterPage': userChapter.chapter.getFirstPage().id}) }}">
-                            {{ userChapter.chapter.getTitle(language) }}
-                        </a>
-                    {% else %}
-                        {{ userChapter.chapter.getTitle(language) }}
-                    {% endif %}
-                </li>
-            {% else %}
-                <li>{{ 'No chapters yet!'|trans }}</li>
+
+                <div class="container chapcontainer">
+                    <div class="row"><h3>{{ userChapter.chapter.getTitle(language) }}</h3></div>
+                    <div class="row chapcard">
+                        <div class="col-md-3 chapimg">
+                            {#       Needs too show percentage of chapter made       #}
+                            <img src="http://placehold.jp/150x150.png">
+                        </div>
+                        <div class="col-md-9 chapinfo">
+                            <div class="row">
+                                <div class="col-10"><h5>{{ userChapter.chapter.getDescription(language) }}</h5></div>
+                                <div class="col-2">10%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row chapbutton_2">
+                        {% if userChapter.isUnlocked() %}
+                            <a class="btn btn-default button_5" href="{{ path('module_view_page',
+                                {'chapterPage': userChapter.chapter.getFirstPage().id}) }}">
+                                {{ 'Follow this chapter' | trans }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
             {% endfor %}
-        </ul>
+            <div class="vertical-line"></div>
+
+        </section>
+        {% else %}
+            <p>no chapters yet!</p>
+        {% endif %}
+
         <hr>
         <a href="{{ path('portal') }}">{{ 'Back to Portal'|trans }}</a>
     </div>

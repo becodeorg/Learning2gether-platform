@@ -1,0 +1,25 @@
+@import "./../variables/variables";
+
+
+.module-cube {
+  border: 8px lightgrey solid;
+  padding: 10px 10px 10px 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.mod-title {
+  margin: auto;
+  width: 50%;
+  margin-bottom: 30px;
+}
+
+.mod-step {
+
+  color: lightgrey;
+  font-family: $chivofamily;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0;
+}
+
