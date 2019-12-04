@@ -1,5 +1,53 @@
 {% extends 'base.html.twig' %}
 
+
+{% block title %}Quiz index{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Quiz index' | trans }}</h1>
+    {% for learningModule in learning_modules %}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>{{ 'Module' | trans }}</th>
+                    <th>
+                        {% if learningModule.title(app.user.language) is not null %}
+                            {{ learningModule.title(app.user.language) }}
+                        {% else %}
+                            {{ 'Not defined' | trans }}
+                        {% endif %}
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="table">
+                                <tr>
+                                    <th>{{ 'Chapter #' | trans }}</th>
+                                    <th>{{ 'Chapter' | trans }}</th>
+                                    <th></th>
+                                </tr>
+                            {% for chapter in learningModule.chapters %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>
+                                    {% if chapter.title(app.user.language) is not null %}
+                                        {{ chapter.title(app.user.language) }}
+                                    {% else %}
+                                        {{ 'Not defined' | trans }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">{{ 'Show quiz' | trans }}</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{#
 {% block title %}Quiz{% endblock %}
 
 {% block body %}
@@ -128,7 +176,5 @@
         </div>
 
     </div>
-
-
-
 {% endblock %}
+#}

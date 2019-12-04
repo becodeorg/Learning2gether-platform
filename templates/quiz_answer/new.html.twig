@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'New QuizAnswer' | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Create new QuizAnswer' | trans }}</h1>
+
+    {{ include('quiz_answer/_form.html.twig') }}
+
+    <a href="{{ path('quiz_show', {'id': quiz_answer.quizQuestion.quiz.id}) }}">{{ 'back to list' | trans }}</a>
+{% endblock %}

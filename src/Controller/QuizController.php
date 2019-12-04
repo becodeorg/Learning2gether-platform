@@ -2,23 +2,47 @@
 
 namespace App\Controller;
 
+use App\Entity\ChapterTranslation;
+use App\Entity\Language;
+use App\Entity\Quiz;
+use App\Entity\QuizQuestion;
+use App\Entity\User;
+use App\Form\QuizType;
+use App\Repository\ChapterRepository;
+use App\Repository\ChapterTranslationRepository;
+use App\Repository\LearningModuleRepository;
+use App\Repository\QuizRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Domain\Badgr;
 use App\Domain\ChapterManager;
-use App\Entity\Quiz;
-use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/quiz")
+ */
 class QuizController extends AbstractController
 {
     /**
-     * @Route("/quiz/{quiz}", name="quiz")
+     * @Route("/partner/", name="quiz_index", methods={"GET"})
      */
-    public function index(Quiz $quiz)
+    public function index(LearningModuleRepository $learningModuleRepository): Response
     {
         return $this->render('quiz/index.html.twig', [
-            'quiz' => $quiz
+            'learning_modules' => $learningModuleRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/partner/{id}", name="quiz_show", methods={"GET"})
+     */
+    public function show(Quiz $quiz, ChapterRepository $chapterRepository): Response
+    {
+        return $this->render('quiz/show.html.twig', [
+            'chapter' => $chapterRepository->findOneBy(['quiz'=> $quiz->getId()]),
+            'quiz' => $quiz,
         ]);
     }
 
@@ -83,4 +107,8 @@ class QuizController extends AbstractController
             ]);
         }
     }
+
+    /*****************
+     * We do not want anyone to manually add or edit or delete a Quiz, just show existing ones
+     *****************/
 }

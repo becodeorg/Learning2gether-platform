@@ -36,7 +36,7 @@ class QuizAnswer
      */
     private $quizQuestion;
 
-    public function __construct(bool $isCorrect, QuizQuestion $quizQuestion)
+    public function __construct(QuizQuestion $quizQuestion, bool $isCorrect = false)
     {
         $this->translations = new ArrayCollection();
         $this->isCorrect = $isCorrect;
@@ -94,5 +94,15 @@ class QuizAnswer
     public function getQuizQuestion(): QuizQuestion
     {
         return $this->quizQuestion;
+    }
+
+    public function getTitle(Language $language): ?string
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getCode() === $language->getCode()) {
+                return $translation->getTitle();//change this line if needed when copied
+            }
+        }
+        return "Not defined";
     }
 }

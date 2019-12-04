@@ -33,7 +33,7 @@ class QuizAnswerTranslation
      */
     private $quizAnswer;
 
-    public function __construct(Language $language, string $title, QuizAnswer $quizAnswer)
+    public function __construct(QuizAnswer $quizAnswer, Language $language, string $title = '')
     {
         $this->language = $language;
         $this->title = $title;

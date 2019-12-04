@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\AbstractType;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuizQuestionTranslationRepository")
  */
-class QuizQuestionTranslation
+class QuizQuestionTranslation extends AbstractType
 {
     /**
      * @ORM\Id()
@@ -33,7 +34,7 @@ class QuizQuestionTranslation
      */
     private $quizQuestion;
 
-    public function __construct(Language $language, string $title, QuizQuestion $quizQuestion)
+    public function __construct(QuizQuestion $quizQuestion, Language $language, string $title = '')
     {
         $this->language = $language;
         $this->title = $title;
