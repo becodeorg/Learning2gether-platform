@@ -24,7 +24,7 @@ class QuizQuestionController extends AbstractController
 
 
     /**
-     * @Route("/", name="quiz_question_index", methods={"GET"})
+     * @Route("/partner/", name="quiz_question_index", methods={"GET"})
      */
     public function index(QuizQuestionRepository $quizQuestionRepository): Response
     {
@@ -34,7 +34,7 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/new/{id}", name="quiz_question_new", methods={"GET","POST"}, requirements={
+     * @Route("/partner/new/{id}", name="quiz_question_new", methods={"GET","POST"}, requirements={
      *     "id" = "\d+"})
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -71,7 +71,7 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="quiz_question_show", methods={"GET"}, requirements={
+     * @Route("/partner/{id}", name="quiz_question_show", methods={"GET"}, requirements={
      *     "id" = "\d+"})
      */
     public function show(QuizQuestionRepository $quizQuestion, int $id): Response
@@ -82,7 +82,7 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="quiz_question_edit", methods={"GET","POST"})
+     * @Route("/partner/{id}/edit", name="quiz_question_edit", methods={"GET","POST"})
      * @todo Check for non-existing translations, and if no translation exists, set one up with dummy stuff for editing
      */
     public function edit(Request $request, QuizQuestion $quizQuestion): Response
@@ -97,11 +97,17 @@ class QuizQuestionController extends AbstractController
             }
         }
 
+        //if not translation was found, create a new one for the current language, so it can be edited
+        if (!isset($quizQuestionTranslation)){
+            $quizQuestionTranslation = new QuizQuestionTranslation($quizQuestion, $language, 'undefined');
+        }
+
         $form = $this->createForm(QuizQuestionTranslationType::class, $quizQuestionTranslation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Successfully edited your question');
+            $em->persist($quizQuestionTranslation); //persist because we might be creating a new QQTranslation
             $em->flush();
 
             return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
@@ -115,12 +121,14 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="quiz_question_delete", methods={"DELETE"})
+     * @Route("/partner/{id}", name="quiz_question_delete", methods={"DELETE"})
      */
     public function delete(Request $request, QuizQuestion $quizQuestion): Response
     {
         if ($this->isCsrfTokenValid('delete'.$quizQuestion->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $this->addFlash('success', 'Successfully removed your question');
+
             $entityManager->remove($quizQuestion);
             $entityManager->flush();
         }

@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuizController extends AbstractController
 {
     /**
-     * @Route("/", name="quiz_index", methods={"GET"})
+     * @Route("/partner/", name="quiz_index", methods={"GET"})
      */
     public function index(LearningModuleRepository $learningModuleRepository): Response
     {
@@ -33,7 +33,7 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="quiz_show", methods={"GET"})
+     * @Route("/partner/{id}", name="quiz_show", methods={"GET"})
      */
     public function show(Quiz $quiz, ChapterRepository $chapterRepository): Response
     {
@@ -44,7 +44,7 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="quiz_edit", methods={"GET","POST"})
+     * @Route("/partner/{id}/edit", name="quiz_edit", methods={"GET","POST"})
      */
     /*public function edit(Request $request, Quiz $quiz, ChapterRepository $chapterRepository): Response
     {

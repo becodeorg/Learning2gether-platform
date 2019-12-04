@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuizAnswerController extends AbstractController
 {
     /**
-     * @Route("/", name="quiz_answer_index", methods={"GET"})
+     * @Route("/partner/", name="quiz_answer_index", methods={"GET"})
      */
     public function index(QuizAnswerRepository $quizAnswerRepository): Response
     {
@@ -30,7 +30,7 @@ class QuizAnswerController extends AbstractController
     }
 
     /**
-     * @Route("/new/{id}", name="quiz_answer_new", methods={"GET","POST"}, requirements={
+     * @Route("/partner/new/{id}", name="quiz_answer_new", methods={"GET","POST"}, requirements={
      *     "id" = "\d+"})
      */
     public function new(Request $request, QuizQuestion $quizQuestion): Response
@@ -47,6 +47,7 @@ class QuizAnswerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Successfully added a new answer');
             $quizAnswerTranslation = $form->getData();
             $quizAnswer->addTranslation($quizAnswerTranslation);
 
@@ -63,7 +64,7 @@ class QuizAnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="quiz_answer_show", methods={"GET"})
+     * @Route("/partner/{id}", name="quiz_answer_show", methods={"GET"})
      */
     public function show(QuizAnswer $quizAnswer): Response
     {
@@ -73,7 +74,7 @@ class QuizAnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="quiz_answer_edit", methods={"GET","POST"})
+     * @Route("/partner/{id}/edit", name="quiz_answer_edit", methods={"GET","POST"})
      * @todo Check for non-existing translations, and if no translation exists, set one up with dummy stuff for editing
      */
     public function edit(Request $request, QuizAnswer $quizAnswer): Response
@@ -88,10 +89,17 @@ class QuizAnswerController extends AbstractController
             }
         }
 
+        //if not translation was found, create a new one for the current language, so it can be edited
+        if (!isset($quizAnswerTranslation)){
+            $quizAnswerTranslation = new QuizAnswerTranslation($quizAnswer, $language, 'undefined');
+        }
+
         $form = $this->createForm(QuizAnswerTranslationType::class, $quizAnswerTranslation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Successfully edited your answer');
+            $em->persist($quizAnswerTranslation); //persist because we might be creating a new QATranslation
             $em->flush();
 
             return $this->redirectToRoute('quiz_show', ['id'=>$quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
@@ -104,12 +112,14 @@ class QuizAnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="quiz_answer_delete", methods={"DELETE"})
+     * @Route("/partner/{id}", name="quiz_answer_delete", methods={"DELETE"})
      */
     public function delete(Request $request, QuizAnswer $quizAnswer): Response
     {
         if ($this->isCsrfTokenValid('delete'.$quizAnswer->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $this->addFlash('success', 'Successfully removed your answer');
+
             $entityManager->remove($quizAnswer);
             $entityManager->flush();
         }
