@@ -158,11 +158,25 @@
   width: 1000px;
   margin: 0 auto; }
 
+.wrapper-two {
+  width: 1000px;
+  margin: 0 auto; }
+
 .card {
   -webkit-box-shadow: 0 6px 12px 3px rgba(139, 84, 160, 0.37);
   box-shadow: 0 6px 12px 3px rgba(139, 84, 160, 0.37);
   border: none;
   border-radius: 20px; }
+
+.btn-skills {
+  background-color: #8b54a0;
+  color: #f7f6f6;
+  font-family: "Chivo", sans-serif;
+  font-weight: 400; }
+
+.btn-skills:hover {
+  background-color: #33003d;
+  color: #f7f6f6; }
 
 .nav-bar-color {
   background-color: #8b54a0; }
@@ -589,6 +603,69 @@ footer {
 
 #show .form-group input {
   line-height: 15px; }
+
+  h5 {
+    margin: 0 auto; }
+
+  .chapbutton_2quiz {
+    float: none;
+    justify-content: center; } }
+.forum-cat-title {
+  font-size: 23px;
+  font-family: "Chivo", sans-serif;
+  font-weight: 400;
+  color: black;
+  letter-spacing: 1px; }
+
+.forum-cat-row {
+  margin-bottom: 35px; }
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+  background-color: #8b54a0; }
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 0 0;
+  border-radius: 15px;
+  border-color: #8b54a0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857; }
+
+.addicon {
+  width: 70px;
+  fill: white; }
+
+.addiconflag {
+  width: 50px;
+  fill: white; }
+
+.rowaddbutton {
+  margin-bottom: 30px; }
+
+.module-cube {
+  border: 8px lightgrey solid;
+  padding: 10px 10px 10px 10px;
+  margin-top: 20px;
+  margin-bottom: 20px; }
+
+.mod-title {
+  margin: auto;
+  width: 50%;
+  margin-bottom: 30px; }
+
+.mod-step {
+  color: lightgrey;
+  font-family: "Chivo", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0; }
 
 /*
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css

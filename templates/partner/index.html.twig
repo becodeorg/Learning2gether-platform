@@ -5,7 +5,31 @@
 {% block body %}
     <div class="example-wrapper">
         <h1>Howdy Partner!</h1>
-        <hr>
+
+
+        <section class="row rowaddbutton">
+            <a href="{{ path('create_module') }}">
+                <button type="button" class="btn  btn-circle btn-xl"
+                        data-toggle="tooltip" data-placement="right" title="Add new module">
+                    <img class="addicon" src="{{ asset('assets/img/plusicon.svg') }}" alt="add icon">
+                </button>
+            </a>
+        </section>
+
+
+        <section class="row">
+            <a href="{{ path('forum') }}">
+                <button type="button" class="btn btn-circle btn-xl"
+                        data-toggle="tooltip" data-placement="right" title="Go to flagpage">
+                    <img class="addiconflag" src="{{ asset('assets/img/flagicon.svg') }}" alt="flag icon">
+                </button>
+            </a>
+        </section>
+
+
+
+
+{#        <hr>
         <a href="{{ path('portal') }}">Back to Portal</a>
 
         <hr>
@@ -23,10 +47,7 @@
                     </td>
                 </tr>
             {% endfor %}
-        </table>
-        <hr>
-        <a href="{{ path('create_module') }}">Create Module</a>
-        <hr>
-        <a href="{{ path('forum') }}">Meeting Place</a>
+        </table>#}
+
     </div>
 {% endblock %}

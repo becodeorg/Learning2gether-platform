@@ -3,7 +3,54 @@
 {% block title %}Hello CreateModuleController!{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
+    <section class="wrapper">
+
+
+        <div class="row">
+            <h1 class="mod-title">Module creation</h1>
+        </div>
+
+        <div class="row">
+            <p class="mod-step">Step 1: To create a new module, please fill in one or more of the translations </p>
+        </div>
+
+        {{ form_start(form) }}
+        {% for translation in form.translations %}
+
+            <section class="module-cube">
+
+                <div class="row">
+                    <div class="col-3">
+                        <h2>{{ translation.vars.value.language.name }}</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(translation) }}
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+
+
+        <div class="row">
+            <p class="mod-step">Step 2: Upload an image and assign the correct badge for module.</p>
+        </div>
+
+
+        <section class="module-cube">
+            {{ form_row(form.image) }}
+            {{ form_row(form.badge) }}
+            {{ form_row(form.create) }}
+        </section>
+        {{ form_end(form) }}
+    </section>
+
+
+
+
+   {# <div class="example-wrapper">
         <h1>Howdy Partner!</h1>
         <hr>
         <a href="{{ path('partner') }}">Back to Partner Zone</a>
@@ -19,5 +66,5 @@
         {{ form_row(form.badge) }}
         {{ form_row(form.create) }}
         {{ form_end(form) }}
-    </div>
+    </div>#}
 {% endblock %}
