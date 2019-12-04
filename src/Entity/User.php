@@ -82,7 +82,7 @@ class User implements UserInterface
     private $upvote;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", inversedBy="users", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="App\Entity\LearningModule", orphanRemoval=true)
      */
     private $badges;
 

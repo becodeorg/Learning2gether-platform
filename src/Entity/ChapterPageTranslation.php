@@ -34,7 +34,7 @@ class ChapterPageTranslation
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ChapterPage", inversedBy="language")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ChapterPage", inversedBy="translations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $chapterPage;
