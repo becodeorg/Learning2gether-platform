@@ -17,7 +17,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg nav-bar-color">
             <!-- LOGO   -->
 
-            <a class="navbar-brand" href="#"><img src="{{ asset('assets/img/lightlogo-15.png') }}" height="50px" alt="logo"></a>
+            <a class="navbar-brand" href="{{ app.request.baseUrl }}"><img src="{{ asset('assets/img/lightlogo-15.png') }}" height="50px" alt="logo"></a>
 
             <!-- HAMBURGER ICON BUTTON   -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
@@ -25,12 +25,11 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-
             <div class="collapse navbar-collapse nav-bar-collapse" id="navbarTogglerDemo02">
 
-                <!-- SEARCH   -->
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                {% set searchbar = searchbar.getSearchbar() %}
+                {{ form_start(searchbar, {'attr': {'class': 'form-inline my-2 my-lg-0'}}) }}
+                {{ form_widget(searchbar.keywords, {'attr': {'class': 'form-control mr-sm-2'}}) }}
                 </form>
 
                 <!-- LINKS   -->

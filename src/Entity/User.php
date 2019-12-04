@@ -96,6 +96,11 @@ class User implements UserInterface
      */
     private $images;
 
+    /**
+     * @var ArrayCollection
+     */
+    private $badgesSorted = null;
+
     public function __construct()
     {
         $this->topics = new ArrayCollection();
@@ -274,14 +279,23 @@ class User implements UserInterface
      */
     public function getBadges(): Collection
     {
-        return $this->badges;
+        if($this->badgesSorted === null) {
+            $this->badgesSorted = new ArrayCollection;
+
+            /** @var LearningModule $badge */
+            foreach($this->badges AS $badge) {
+                $this->badgesSorted[$badge->getId()] = $badge;
+            }
+        }
+
+        return $this->badgesSorted;
     }
 
     public function addBadge(LearningModule $badge): self
     {
         if (!$this->badges->contains($badge)) {
             $this->badges[] = $badge;
-
+            $this->badgesSorted = null;
         }
 
         return $this;
@@ -302,7 +316,7 @@ class User implements UserInterface
     {
         if ($this->badges->contains($badge)) {
             $this->badges->removeElement($badge);
-
+            $this->badgesSorted = null;
         }
 
         return $this;
