@@ -48,7 +48,7 @@ class Chapter
     private $quiz;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="progress")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="progress", orphanRemoval=true)
      */
     private $users;
 

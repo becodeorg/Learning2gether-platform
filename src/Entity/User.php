@@ -87,7 +87,7 @@ class User implements UserInterface
     private $badges;
 
     /**
-     *  @ORM\ManyToMany(targetEntity="App\Entity\Chapter", inversedBy="users", orphanRemoval=true)
+     *  @ORM\ManyToMany(targetEntity="App\Entity\Chapter", inversedBy="users")
      */
     private $progress;
 
@@ -95,6 +95,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user" ,cascade={"persist"}, orphanRemoval=true)
      */
     private $images;
+
+    /**
+     * @var ArrayCollection
+     */
+    private $badgesSorted = null;
 
     public function __construct()
     {
@@ -274,14 +279,23 @@ class User implements UserInterface
      */
     public function getBadges(): Collection
     {
-        return $this->badges;
+        if($this->badgesSorted === null) {
+            $this->badgesSorted = new ArrayCollection;
+
+            /** @var LearningModule $badge */
+            foreach($this->badges AS $badge) {
+                $this->badgesSorted[$badge->getId()] = $badge;
+            }
+        }
+
+        return $this->badgesSorted;
     }
 
     public function addBadge(LearningModule $badge): self
     {
         if (!$this->badges->contains($badge)) {
             $this->badges[] = $badge;
-
+            $this->badgesSorted = null;
         }
 
         return $this;
@@ -302,7 +316,7 @@ class User implements UserInterface
     {
         if ($this->badges->contains($badge)) {
             $this->badges->removeElement($badge);
-
+            $this->badgesSorted = null;
         }
 
         return $this;

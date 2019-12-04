@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
@@ -20,11 +21,13 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('email')
             ->add('avatar', FileType::class, [
+                'attr'=>
+                    array(
+                        'placeholder'=>'Avatar',
+                        'class'=>'uploader'),
                 'mapped' => false,
-                'label' => 'Upload image',
+                'label' => false,
                 'constraints' => [new Image([
                     'maxSize' => '5m',
                     'mimeTypes' => [
@@ -34,12 +37,36 @@ class RegistrationFormType extends AbstractType
                     ]
                 ])]
             ])
-            ->add('username')
+            ->add('name', null, [
+                'attr'=>
+                    array(
+                        'placeholder'=>'Name',
+                        'class'=>'registerInput'),
+                'label'=> false
+            ])
+            ->add('email', null, [
+                'attr'=>
+                    array(
+                        'placeholder'=>'Email',
+                        'class'=>'registerInput'),
+                'label'=> false
+            ])
+            ->add('username', null, [
+                'attr'=>
+                    array(
+                        'placeholder'=>'Username',
+                        'class'=>'registerInput'),
+                'label'=> false
+            ])
             //->add('language', LanguageType::class, [])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'attr'=>
+                    array(
+                        'placeholder'=>'Password',
+                        'class'=>'registerInput'),
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -51,6 +78,7 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+                'label'=> false
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

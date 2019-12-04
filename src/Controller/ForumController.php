@@ -22,7 +22,6 @@ class ForumController extends AbstractController
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code'=> $_COOKIE['language'] ?? 'en']);
         $allCategories = $this->getDoctrine()->getRepository(Category::class)->findall();
 
-
         return $this->render('forum/index.html.twig', [
             'allCategories' => $allCategories,
             'language' => $language,

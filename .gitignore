@@ -7,7 +7,11 @@
 /public/bundles/
 /var/
 /vendor/
+/.sass-cache/
+/sass/.sass-cache/
 /public/upload/
+/public/assets/css/app.css.map/
+/sass/app.css.map/
 
 ###< symfony/framework-bundle ###
 
@@ -21,3 +25,6 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 /composer.phar
+
+/.sass-cache
+/.sass-cache/

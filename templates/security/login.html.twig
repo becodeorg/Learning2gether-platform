@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'home.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
 
@@ -7,18 +7,21 @@
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
+    <div class="sidebar">
+        <img class="logo" src="{{ asset('assets/img/logo_transparent.png') }}" alt="logo">
     {% if app.user %}
         <div class="mb-3">
             You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <div class="loginwrap">
     <label for="inputEmail" class="sr-only">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+        <br>
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <br>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
@@ -35,12 +38,14 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
+    <button class="btn btn-lg btn-primary button_4" type="submit">
         Sign in
     </button>
-    <p>
-    <a href= {{ path('password_reset') }}>Forgot your password?</a>
-    </p>
+    </div>
+        <p class="forgot">
+            <a href= {{ path('password_reset') }}>Forgot your password?</a>
+        </p>
+    </div>
 
 </form>
 {% endblock %}

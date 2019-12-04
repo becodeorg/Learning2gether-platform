@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use App\Domain\Badgr;
 use App\Domain\ImageManager;
+use App\Entity\Chapter;
 use App\Entity\Image;
 use App\Entity\PwdResetToken;
 use App\Entity\User;
+use App\Entity\UserChapter;
 use App\Form\EditProfileType;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,9 +24,10 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      * @param Request $request
+     * @param Swift_Mailer $mailer
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, Swift_Mailer $mailer): Response
     {
         $badgrHandler = new Badgr;
 
@@ -30,7 +35,7 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         //get all badges from user
-        $badges = $user->getBadges()->getSnapshot();
+        $badges = $user->getBadges()->getValues();
         //put all badge keys in userBadges
         $badgeKeys = [];
         foreach ($badges as &$badgeData) {
@@ -48,7 +53,7 @@ class ProfileController extends AbstractController
         $deleteBtn->handleRequest($request);
 
         if ($deleteBtn->isSubmitted() && $deleteBtn->isValid()){
-            return $this->deleteUser();
+            return $this->deleteUser($mailer);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -79,14 +84,21 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @param Swift_Mailer $mailer
      * @return RedirectResponse
      */
-    public function deleteUser(): RedirectResponse
+    public function deleteUser(Swift_Mailer $mailer): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $imageManager = new ImageManager();
+        /* @var User $user */
         $user = $this->getUser();
+        $userEmail = $user->getEmail();
         $this->get('security.token_storage')->setToken(null);
+        $userProgress = $user->getProgress();
+        foreach ($userProgress as $item) {
+            $user->removeProgress($item);
+        }
         $userImages = $this->getDoctrine()->getRepository(Image::class)->findBy(['user' => $user]);
         foreach ($userImages as $userImage) {
             $imageManager->removeUpload($userImage->getSrc(), $this->getParameter('uploads_directory'));
@@ -97,8 +109,18 @@ class ProfileController extends AbstractController
                 $em->remove($userPwdToken);
             }
         }
+        $this->sendDeleteEmail($userEmail, $mailer);
         $em->remove($user);
         $em->flush();
         return $this->redirectToRoute('portal');
+    }
+
+    public function sendDeleteEmail(string $userEmail, Swift_Mailer $mailer): void
+    {
+        $message = (new Swift_Message('User deleted confirmation'))
+            ->setFrom('no-reply@example.com')
+            ->setTo($userEmail)
+            ->setBody($this->renderView('profile/dltmail.html.twig'), 'text/html');
+        $mailer->send($message);
     }
 }
