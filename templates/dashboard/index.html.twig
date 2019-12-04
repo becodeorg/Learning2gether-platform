@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <table class="table table-hover text-center">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Module Name</th>
+                <th scope="col"># chapters</th>
+                <th scope="col">Status</th>
+                <th scope="col">&#128269;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for module in allModules %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ module.getTitle(language) }}</td>
+                    <td>{{ module.chapters|length }}</td>
+                    {% if module.isPublished %}
+                        <td>Published</td>
+                    {% else %}
+                        <td>Unpublished</td>
+                    {% endif %}
+                    <td><a href="{{ path('dashboard_module', {module: module.id}) }}">Check</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

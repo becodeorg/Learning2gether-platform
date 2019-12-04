@@ -139,7 +139,7 @@ class Chapter
         return $this;
     }
 
-    public function getQuiz(): ?Quiz
+    public function getQuiz(): Quiz
     {
         return $this->quiz;
     }

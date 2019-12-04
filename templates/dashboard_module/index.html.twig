@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardModuleController!{% endblock %}
+
+{% block body %}
+
+    <style>
+        .help-icon{
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="container">
+        <a href="{{ path('dashboard') }}">Back</a>
+        <hr>
+        <div class="text-center mb-3"><strong>This module's title and description translations:</strong>
+
+            {% set moduleFlag = fm.checkModuleTranslations(moduleArray, languagecount) %}
+
+        {% if  (moduleFlag['moduleNeededTranslations']|length - 5) | abs > 2 %}
+            <a class="btn btn-success"
+               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
+               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
+                / {{ languagecount }}</a>
+        {% elseif  (moduleFlag['moduleNeededTranslations']|length - 5) | abs == 2 %}
+            <a class="btn btn-warning"
+               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
+               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
+                / {{ languagecount }}</a>
+        {% else %}
+            <a class="btn btn-danger"
+               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
+               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
+                / {{ languagecount }}</a>
+        {% endif %}
+        </div>
+        <table class="table table-hover text-center">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Chapter</th>
+                <th scope="col"># pages</th>
+                <th scope="col">Translations <i title="This chapters' title and description translations.&#10;Click to go to that chapters edit page.&#10;Hover to see the missing translations." class="help-icon far fa-question-circle"></i></th>
+                <th scope="col">&#128269;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for chapterObj in module.chapters %}
+                {% set chapter = cr.chapterAsArray(chapterObj) %}
+                {% set flagData = fm.checkChapter(chapter, languagecount) %}
+                {% set chapterNumber = chapter[0]['chapterNumber'] %}
+                <tr>
+                    <th scope="row">{{ chapterNumber }}</th>
+                    <td>{% for chapterTranslation in chapter[0]['translations'] %}
+                            {% if chapterTranslation['language']['name'] == language.name %}
+                                {% if chapterTranslation['title'] == '' %}
+                                    Not yet translated
+                                {% else %}
+                                    {{ chapterTranslation['title'] }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}</td>
+                    <td>{{ chapter[0]['pages']|length }}</td>
+                    <td>
+                        {% if  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs > 2 %}
+                            <a class="btn btn-success"
+                               title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
+                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
+                                / {{ languagecount }}</a>
+                        {% elseif  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs == 2 %}
+                            <a class="btn btn-warning"
+                               title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
+                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
+                                / {{ languagecount }}</a>
+                        {% else %}
+                            <a class="btn btn-danger"
+                               title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
+                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
+                                / {{ languagecount }}</a>
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">Check</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
