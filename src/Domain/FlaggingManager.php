@@ -4,10 +4,10 @@
 namespace App\Domain;
 
 
-use Symfony\Component\DependencyInjection\Tests\Fixtures\NamedArgumentsDummy;
-
 class FlaggingManager
 {
+    private const MIN_NEEDED_TRANSLATIONS = 2;
+
     public function checkModuleTranslations(array $moduleData, int $languageCount): array
     {
         $flagData = [];
@@ -19,7 +19,7 @@ class FlaggingManager
                 $flagData['moduleNeededTranslations'][] = $moduleTranslation['language']['name'];
             }
         }
-        if ((count($flagData['moduleNeededTranslations']) - $languageCount) <= -2) {
+        if ((count($flagData['moduleNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
             $flagData['moduleStatus'] = true;
         }
 
@@ -73,7 +73,7 @@ class FlaggingManager
                 $flagData['quiz']['questions'][$question['questionNumber']]['questionNeededTranslations'][] = $questionTranslation['language']['name'];
             }
         }
-        if ((count($flagData['quiz']['questions'][$question['questionNumber']]['questionNeededTranslations']) - $languageCount) <= -2) {
+        if ((count($flagData['quiz']['questions'][$question['questionNumber']]['questionNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
             $flagData['quiz']['questions'][$question['questionNumber']]['questionStatus'] = true;
         }
         return $flagData;
@@ -95,7 +95,7 @@ class FlaggingManager
                     $flagData['quiz']['questions'][$question['questionNumber']]['answers'][$answer['id']]['answerNeededTranslations'][] = $answerTranslation['language']['name'];
                 }
             }
-            if ((count($flagData['quiz']['questions'][$question['questionNumber']]['answers'][$answer['id']]['answerNeededTranslations']) - $languageCount) <= -2) {
+            if ((count($flagData['quiz']['questions'][$question['questionNumber']]['answers'][$answer['id']]['answerNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
                 $flagData['quiz']['questions'][$question['questionNumber']]['answers'][$answer['id']]['answerStatus'] = true;
             }
         }
@@ -117,7 +117,7 @@ class FlaggingManager
                 $flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations'][] = $chapterTranslation['language']['name'];
             }
         }
-        if ((count($flagData['chapterNeededTranslations']) - $languageCount) <= -2) {
+        if ((count($flagData['chapterNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
             $flagData['chapterStatus'] = true;
         }
         return $flagData;
@@ -139,7 +139,7 @@ class FlaggingManager
                     $flagData['pages'][$page['pageNumber']]['pageNeededTranslations'][] = $pageTranslation['language']['name'];
                 }
             }
-            if ((count($flagData['pages'][$page['pageNumber']]['pageNeededTranslations']) - $languageCount) <= -2) {
+            if ((count($flagData['pages'][$page['pageNumber']]['pageNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
                 $flagData['pages'][$page['pageNumber']]['pageStatus'] = true;
             }
         }

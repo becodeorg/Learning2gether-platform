@@ -19,7 +19,7 @@ class QuizQuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, QuizQuestion::class);
     }
 
-    public function getQuizAsArray(QuizQuestion $question) : array
+    public function getQuestionsAsArray(QuizQuestion $question) : array
     {
         // FIXME this query returns an empty array if any child is missing
         // for example, if there is a quiz without any questions or any questions without an answer

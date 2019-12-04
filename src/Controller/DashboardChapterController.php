@@ -25,6 +25,8 @@ class DashboardChapterController extends AbstractController
     {
         $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
+
+        // for performance issues, we fetch the chapter and all its children as an array using DQL
         $chapterArray = $this->getDoctrine()->getRepository(Chapter::class)->getChapterAsArray($chapter);
 
         $fm = new FlaggingManager();

@@ -27,8 +27,13 @@ class DashboardQuestionController extends AbstractController
     {
         $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
-        $questionArray = $this->getDoctrine()->getRepository(QuizQuestion::class)->getQuizAsArray($question);
+        $questionArray = $this->getDoctrine()->getRepository(QuizQuestion::class)->getQuestionsAsArray($question);
         $quizArray = $this->getDoctrine()->getRepository(Chapter::class)->getQuizAsArray($chapter);
+
+        if (!isset($quizArray[0]) && !isset($quizArray[0]['quiz'])){
+            $this->addFlash('error', 'Question does not have a quiz attached to it');
+            return $this->redirectToRoute('dashboard_chapter', ['chapter' => $chapter->getId()]);
+        }
 
         $fm = new FlaggingManager();
         $quizFlags = $fm->checkQuiz($quizArray[0]['quiz'], $languageCount);
