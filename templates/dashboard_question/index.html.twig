@@ -35,22 +35,16 @@
                         {% endfor %}
                     </td>
                     <td>
+                        {% set btnClass = 'btn-danger' %}
                         {% if  (quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations']|length - 5) | abs > 2 %}
-                            <a class="btn btn-success"
-                               title="{{ quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
-                               href="#">{{ (quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                            {% set btnClass = 'btn-success' %}
                         {% elseif  (quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations']|length - 5) | abs == 2 %}
-                            <a class="btn btn-warning"
-                               title="{{ quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
-                               href="#">{{ (quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
-                        {% else %}
-                            <a class="btn btn-danger"
-                               title="{{ quizFlags['quiz'][questionArray['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
-                               href="#">{{ (quizFlags['quiz'][questionArray['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                            {% set btnClass = 'btn-warning' %}
                         {% endif %}
+                        <a class="btn {{ btnClass }}"
+                           title="{{ quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
+                           href="#">{{ (quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
+                            / {{ languagecount }}</a>
                     </td>
                 </tr>
             {% endfor %}
