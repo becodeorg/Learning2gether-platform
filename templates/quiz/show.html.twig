@@ -3,73 +3,64 @@
 {% block title %}Quiz{% endblock %}
 
 {% block body %}
-    <h1>Quiz {{ quiz.id }} for {{ chapter.title(user.language) }}</h1>
+    <h1>Quiz for {{ chapter.title(app.user.language) }}</h1>
 
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Quiz Id</th>
-                <td>{{ quiz.id }}</td>
-            </tr>
-            <tr>
-                <th>Questions</th>
+                <th>{{ 'Questions' | trans }}</th>
                 <th></th>
-                <th>Actions</th>
+                <th>{{ 'Actions' | trans }}</th>
             </tr>
-                {% set i = 1 %}
-                {% for question in questions %}
-                    {% set j = 1 %}
+                {% for question in quiz.quizQuestions %}
                     <tr>
                         <td>{{ question.questionNumber }}</td>
                         <td>
-                            <h5>{{ question.title(user.language) }}</h5>
+                            <h5>{{ question.title(app.user.language) }}</h5>
                             <table>
                                 <tr>
                                     <th>#</th>
-                                    <th>Answer</th>
-                                    <th>Correct?</th>
-                                    <th>Actions</th>
+                                    <th>{{ 'Answer' | trans }}</th>
+                                    <th>{{ 'Correct?' | trans }}</th>
+                                    <th>{{ 'Actions' | trans }}</th>
                                 </tr>
                                 {% for answer in question.answers %}
                                     <tr>
-                                        <td>{{ j }}</td>
+                                        <td>{{ loop.index }}</td>
                                         <td>
-                                            {{ answer.title(user.language) }}
+                                            {{ answer.title(app.user.language) }}
                                         </td>
                                         <td>
                                             {{ answer.isCorrect ? 'Yes' : 'No' }}
                                         </td>
                                         <td>
-                                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_answer_show', {'id': answer.id}) }}">show</a>
-                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_answer_edit', {'id': answer.id}) }}">edit</a>
+                                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_answer_show', {'id': answer.id}) }}">{{ 'show' | trans }}</a>
+                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_answer_edit', {'id': answer.id}) }}">{{ 'edit' | trans }}</a>
                                         </td>
                                     </tr>
-                                    {% set j = j+1 %}
                                 {% endfor %}
                                 <tr>
                                     <td>
-                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_answer_new', {'id': question.id}) }}"><strong>+</strong> Add Answer</a>
+                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_answer_new', {'id': question.id}) }}"><strong>+</strong> {{ 'Add Answer' | trans }}</a>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                         <td>
-                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_question_show', {'id': question.id}) }}">show</a>
-                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_question_edit', {'id': question.id}) }}">edit</a>
+                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_question_show', {'id': question.id}) }}">{{ 'show' | trans }}</a>
+                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_question_edit', {'id': question.id}) }}">{{ 'edit' | trans }}</a>
                         </td>
                     </tr>
-                    {% set i = i+1 %}
                 {% endfor %}
         <tr>
             <td>
-                <a class="btn btn-secondary" href="{{ path('quiz_question_new', {'id': quiz.id}) }}"><strong>+</strong> Add Question</a>
+                <a class="btn btn-secondary" href="{{ path('quiz_question_new', {'id': quiz.id}) }}"><strong>+</strong> {{ 'Add Question' | trans }}</a>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_index') }}">back to list</a>
-
+    <a href="{{ path('quiz_index') }}">{{ 'back to list' | trans }}</a>
 
 {% endblock %}

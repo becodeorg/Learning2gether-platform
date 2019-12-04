@@ -36,7 +36,7 @@ class QuizAnswer
      */
     private $quizQuestion;
 
-    public function __construct(bool $isCorrect, QuizQuestion $quizQuestion)
+    public function __construct(QuizQuestion $quizQuestion, bool $isCorrect = false)
     {
         $this->translations = new ArrayCollection();
         $this->isCorrect = $isCorrect;

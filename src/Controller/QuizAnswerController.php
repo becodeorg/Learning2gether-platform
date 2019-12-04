@@ -26,7 +26,6 @@ class QuizAnswerController extends AbstractController
     {
         return $this->render('quiz_answer/index.html.twig', [
             'quiz_answers' => $quizAnswerRepository->findAll(),
-            'user' => $this->getUser(),
         ]);
     }
 
@@ -34,15 +33,15 @@ class QuizAnswerController extends AbstractController
      * @Route("/new/{id}", name="quiz_answer_new", methods={"GET","POST"}, requirements={
      *     "id" = "\d+"})
      */
-    public function new(Request $request, int $id): Response
+    public function new(Request $request, QuizQuestion $quizQuestion): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $quizQuestion = $em->getRepository(QuizQuestion::class)->find($id);
+        //$quizQuestion = $em->getRepository(QuizQuestion::class)->find($id);
         $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
 
 
-        $quizAnswer = new QuizAnswer(false, $quizQuestion);
-        $quizAnswerTranslation = new QuizAnswerTranslation($language, '', $quizAnswer);
+        $quizAnswer = new QuizAnswer($quizQuestion);
+        $quizAnswerTranslation = new QuizAnswerTranslation($quizAnswer,$language);
 
         $form = $this->createForm(QuizAnswerTranslationType::class, $quizAnswerTranslation);
         $form->handleRequest($request);
@@ -70,7 +69,6 @@ class QuizAnswerController extends AbstractController
     {
         return $this->render('quiz_answer/show.html.twig', [
             'quiz_answer' => $quizAnswer,
-            'user' => $this->getUser(),
         ]);
     }
 
@@ -82,16 +80,15 @@ class QuizAnswerController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
-        $qaTs= $quizAnswer->getTranslations();
+        $quizAnswerTranslations= $quizAnswer->getTranslations();
 
-        foreach ($qaTs as $qaT){
-            if ($qaT->getLanguage()->getCode() === $language->getCode()){
-                $quizAnswerTrans = $qaT;
-                $questionNumber = $qaT->getQuizAnswer()->getQuizQuestion()->getQuestionNumber();
+        foreach ($quizAnswerTranslations as $quizAnswerTrans){
+            if ($quizAnswerTrans->getLanguage()->getCode() === $language->getCode()){
+                $quizAnswerTranslation = $quizAnswerTrans;
             }
         }
 
-        $form = $this->createForm(QuizAnswerTranslationType::class, $quizAnswerTrans);
+        $form = $this->createForm(QuizAnswerTranslationType::class, $quizAnswerTranslation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,9 +99,7 @@ class QuizAnswerController extends AbstractController
 
         return $this->render('quiz_answer/edit.html.twig', [
             'quiz_answer' => $quizAnswer,
-            'quiz_answer_trans' => $quizAnswerTrans,
             'form' => $form->createView(),
-            'user' => $this->getUser(),
         ]);
     }
 

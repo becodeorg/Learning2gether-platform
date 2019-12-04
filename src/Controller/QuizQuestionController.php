@@ -30,7 +30,6 @@ class QuizQuestionController extends AbstractController
     {
         return $this->render('quiz_question/index.html.twig', [
             'quiz_questions' => $quizQuestionRepository->findAll(),
-            'user' => $this->getUser(),
         ]);
     }
 
@@ -39,27 +38,23 @@ class QuizQuestionController extends AbstractController
      *     "id" = "\d+"})
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function new(Request $request, int $id): Response
+    public function new(Request $request, Quiz $quiz): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $quiz = $em->getRepository(Quiz::class)->find($id);
+        $repo = $em->getRepository(QuizQuestion::class);
+        //$quiz = $em->getRepository(Quiz::class)->find($id);
         $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
 
-        $repo = $em->getRepository(QuizQuestion::class);
-        $questionNmbr = $repo->createQueryBuilder('q')
-            ->andWhere('q.quiz = :id')
-            ->setParameter('id', $id)
-            ->select('count(q)')
-            ->getQuery()
-            ->getSingleScalarResult(); //returns the int value of the count
+        $questionNmbr = $repo->findNumberOfQuestionsForGivenID($quiz->getId());
 
         $quizQuestion = new QuizQuestion(++$questionNmbr, $quiz);
-        $quizQuestionTranslation = new QuizQuestionTranslation($language, '', $quizQuestion);
+        $quizQuestionTranslation = new QuizQuestionTranslation($quizQuestion, $language);
 
         $form = $this->createForm(QuizQuestionTranslationType::class, $quizQuestionTranslation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Successfully added a new question');
             $quizQuestionTranslation = $form->getData();
             $quizQuestion->addTranslation($quizQuestionTranslation);
 
@@ -83,7 +78,6 @@ class QuizQuestionController extends AbstractController
     {
         return $this->render('quiz_question/show.html.twig', [
             'quiz_question' => $quizQuestion->find($id),
-            'user' => $this->getUser(),
         ]);
     }
 
@@ -95,22 +89,22 @@ class QuizQuestionController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
-        $qqTs= $quizQuestion->getTranslations();
+        $quizQuestionTranslations= $quizQuestion->getTranslations();
 
-        foreach ($qqTs as $qqT){
-            if ($qqT->getLanguage()->getCode() === $language->getCode()){
-                $quizQuestionTrans = $qqT;
-                $questionNumber = $qqT->getQuizQuestion()->getQuestionNumber();
+        foreach ($quizQuestionTranslations as $quizQuestionTrans){
+            if ($quizQuestionTrans->getLanguage()->getCode() === $language->getCode()){
+                $quizQuestionTranslation = $quizQuestionTrans;
             }
         }
 
-        $form = $this->createForm(QuizQuestionTranslationType::class, $quizQuestionTrans);
+        $form = $this->createForm(QuizQuestionTranslationType::class, $quizQuestionTranslation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Successfully edited your question');
             $em->flush();
 
-            return $this->redirectToRoute('quiz_question_index');
+            return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
         }
 
         return $this->render('quiz_question/edit.html.twig', [

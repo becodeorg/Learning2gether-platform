@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit QuizQuestion{% endblock %}
+{% block title %}{{ 'Edit QuizQuestion' | trans }}{% endblock %}
 
 {% block body %}
-    <h1>Edit QuizQuestion {{ quiz_question.questionNumber }}</h1>
+    <h1>{{ 'Edit QuizQuestion' | trans }} {{ quiz_question.questionNumber }}</h1>
 
     {{ include('quiz_question/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id}) }}">back to list</a>
+    <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id}) }}">{{'back to list' | trans }}</a>
 
     {{ include('quiz_question/_delete_form.html.twig') }}
 {% endblock %}

@@ -34,7 +34,7 @@ class QuizQuestionTranslation extends AbstractType
      */
     private $quizQuestion;
 
-    public function __construct(Language $language, string $title, QuizQuestion $quizQuestion)
+    public function __construct(QuizQuestion $quizQuestion, Language $language, string $title = '')
     {
         $this->language = $language;
         $this->title = $title;

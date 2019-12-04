@@ -13,7 +13,6 @@ class QuizAnswerType extends AbstractType
     {
         $builder
             ->add('isCorrect')
-            //->add('quizQuestion')
         ;
     }
 
