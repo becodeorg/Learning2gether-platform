@@ -3,7 +3,7 @@
 {% block title %}Quiz{% endblock %}
 
 {% block body %}
-    <h1>Quiz for {{ chapter.title(app.user.language) }}</h1>
+    <h1>Quiz for chapter: {{ chapter.title(app.user.language) }}</h1>
 
 
     <table class="table">
@@ -13,11 +13,11 @@
                 <th></th>
                 <th>{{ 'Actions' | trans }}</th>
             </tr>
-                {% for question in quiz.quizQuestions %}
+                {% for quiz_question in quiz.quizQuestions %}
                     <tr>
-                        <td>{{ question.questionNumber }}</td>
+                        <td>{{ quiz_question.questionNumber }}</td>
                         <td>
-                            <h5>{{ question.title(app.user.language) }}</h5>
+                            <h5>{{ quiz_question.title(app.user.language) }}</h5>
                             <table>
                                 <tr>
                                     <th>#</th>
@@ -25,31 +25,31 @@
                                     <th>{{ 'Correct?' | trans }}</th>
                                     <th>{{ 'Actions' | trans }}</th>
                                 </tr>
-                                {% for answer in question.answers %}
+                                {% for quiz_answer in quiz_question.answers %}
                                     <tr>
                                         <td>{{ loop.index }}</td>
                                         <td>
-                                            {{ answer.title(app.user.language) }}
+                                            {{ quiz_answer.title(app.user.language) }}
                                         </td>
                                         <td>
-                                            {{ answer.isCorrect ? 'Yes' : 'No' }}
+                                            {{ quiz_answer.isCorrect ? 'Yes' : 'No' }}
                                         </td>
                                         <td>
-                                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_answer_show', {'id': answer.id}) }}">{{ 'show' | trans }}</a>
-                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_answer_edit', {'id': answer.id}) }}">{{ 'edit' | trans }}</a>
+                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_answer_edit', {'id': quiz_answer.id}) }}">{{ 'edit' | trans }}</a>
+                                            {{ include('quiz_answer/_delete_form.html.twig')}}
                                         </td>
                                     </tr>
                                 {% endfor %}
                                 <tr>
                                     <td>
-                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_answer_new', {'id': question.id}) }}"><strong>+</strong> {{ 'Add Answer' | trans }}</a>
+                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_answer_new', {'id': quiz_question.id}) }}"><strong>+</strong> {{ 'Add Answer' | trans }}</a>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                         <td>
-                            <a class="badge badge-pill badge-primary" href="{{ path('quiz_question_show', {'id': question.id}) }}">{{ 'show' | trans }}</a>
-                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_question_edit', {'id': question.id}) }}">{{ 'edit' | trans }}</a>
+                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_question_edit', {'id': quiz_question.id}) }}">{{ 'edit' | trans }}</a>
+                            {{ include('quiz_question/_delete_form.html.twig')}}
                         </td>
                     </tr>
                 {% endfor %}
@@ -61,6 +61,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_index') }}">{{ 'back to list' | trans }}</a>
+    <a href="{{ path('quiz_index') }}">{{ 'back to list' | trans }}</a> {#todo: switch link to other page#}
 
 {% endblock %}
