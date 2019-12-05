@@ -59,9 +59,9 @@
                     <td>{{ chapter[0]['pages']|length }}</td>
                     <td>
                             {% set btnClass = 'btn-danger' %}
-                            {% if  (flagData['chapterNeededTranslations']|length - 5) | abs > 2 %}
+                            {% if  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs > 2 %}
                                 {% set btnClass = 'btn-success' %}
-                            {% elseif  (flagData['chapterNeededTranslations']|length - 5) | abs == 2 %}
+                            {% elseif  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs == 2 %}
                                 {% set btnClass = 'btn-warning' %}
                             {% endif %}
                             <a class="btn {{btnClass}}"

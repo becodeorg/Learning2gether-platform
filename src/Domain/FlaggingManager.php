@@ -108,10 +108,9 @@ class FlaggingManager
      */
     public function checkChapterTranslations(int $languageCount, array $flagData, $chapter): array
     {
-        if(!isset($flagData['chapters'])) {
-            $flagData['chapterNeededTranslations'] = [];
-            $flagData['chapterStatus'] = false;
-            $flagData['chapters'] = [];
+        if(!isset($flagData['chapters'][$chapter['chapterNumber']])) {
+            $flagData['chapters'][$chapter['chapterNumber']] = [];
+            $flagData['chapters'][$chapter['chapterNumber']]['chapterStatus'] = false;
         }
 
         foreach ($chapter['translations'] as $chapterTranslation) {
@@ -119,8 +118,8 @@ class FlaggingManager
                 $flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations'][] = $chapterTranslation['language']['name'];
             }
         }
-        if ((count($flagData['chapterNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
-            $flagData['chapterStatus'] = true;
+        if ((count($flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
+            $flagData['chapters'][$chapter['chapterNumber']]['chapterStatus'] = true;
         }
         return $flagData;
     }
