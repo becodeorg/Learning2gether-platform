@@ -19,13 +19,25 @@ class ChapterRepository extends ServiceEntityRepository
         parent::__construct($registry, Chapter::class);
     }
 
-    public function getChapterAsArray(Chapter $chapter) : array
+    public function getChapterAndChildrenAsArray(Chapter $chapter) : array
     {
         // FIXME this query returns an empty array if any child is missing
         // for example, if there is a quiz without any questions or any questions without an answer
 
         $em = $this->getEntityManager();
         $dql = 'SELECT c, ct, ctl, p, pt, ptl, q, qq, qqt, qqtl, qa, qat, qatl FROM App\Entity\Chapter c JOIN c.translations ct JOIN ct.language ctl JOIN c.pages p JOIN p.translations pt JOIN pt.language ptl JOIN c.quiz q JOIN q.quizQuestions qq JOIN qq.translations qqt JOIN qqt.language qqtl JOIN qq.answers qa JOIN qa.translations qat JOIN qat.language qatl WHERE c.id = :id';
+        $query = $em->createQuery($dql);
+        $query->setParameter(':id', $chapter->getId());
+        return $query->getArrayResult();
+    }
+
+    public function getChapterAsArray(Chapter $chapter) : array
+    {
+        // FIXME this query returns an empty array if any child is missing
+        // for example, if there is a quiz without any questions or any questions without an answer
+
+        $em = $this->getEntityManager();
+        $dql = 'SELECT c, ct, ctl, p FROM App\Entity\Chapter c JOIN c.translations ct JOIN ct.language ctl JOIN c.pages p WHERE c.id = :id';
         $query = $em->createQuery($dql);
         $query->setParameter(':id', $chapter->getId());
         return $query->getArrayResult();

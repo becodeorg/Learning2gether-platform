@@ -32,16 +32,40 @@ class FlaggingManager
 
         foreach ($chapterData as $chapter) {
             $flagData = $this->checkChapterTranslations($languageCount, $flagData, $chapter);
-            $flagData = $this->checkChapterPages($languageCount, $chapter, $flagData);
+//            $flagData = $this->checkChapterPages($languageCount, $chapter, $flagData);
 
-            foreach ($chapter['quiz']['quizQuestions'] as $question) {
-                $flagData = $this->checkQuizTranslations($languageCount, $flagData, $question);
-                $flagData = $this->checkAnswers($languageCount, $question, $flagData);
-            }
+//            foreach ($chapter['quiz']['quizQuestions'] as $question) {
+//                $flagData = $this->checkQuizTranslations($languageCount, $flagData, $question);
+//                $flagData = $this->checkAnswers($languageCount, $question, $flagData);
+//            }
         }
 
         return $flagData;
+    }
 
+    /**
+     * @param int $languageCount
+     * @param array $flagData
+     * @param $chapter
+     * @return array
+     */
+    public function checkChapterTranslations(int $languageCount, array $flagData, $chapter): array
+    {
+        if (!isset($flagData['chapters'][$chapter['chapterNumber']])) {
+            $flagData['chapters'][$chapter['chapterNumber']] = [];
+            $flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations'] = [];
+            $flagData['chapters'][$chapter['chapterNumber']]['chapterStatus'] = false;
+        }
+
+        foreach ($chapter['translations'] as $chapterTranslation) {
+            if ($chapterTranslation['title'] === '' || $chapterTranslation['description'] = '') {
+                $flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations'][] = $chapterTranslation['language']['name'];
+            }
+        }
+        if ((count($flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
+            $flagData['chapters'][$chapter['chapterNumber']]['chapterStatus'] = true;
+        }
+        return $flagData;
     }
 
     public function checkQuiz(array $quizData, int $languageCount): array
@@ -102,49 +126,24 @@ class FlaggingManager
 
     /**
      * @param int $languageCount
-     * @param array $flagData
-     * @param $chapter
+     * @param array $pageArray
      * @return array
      */
-    public function checkChapterTranslations(int $languageCount, array $flagData, $chapter): array
+    public function checkPage(array $pageArray, int $languageCount): array
     {
-        if(!isset($flagData['chapters'][$chapter['chapterNumber']])) {
-            $flagData['chapters'][$chapter['chapterNumber']] = [];
-            $flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations'] = [];
-            $flagData['chapters'][$chapter['chapterNumber']]['chapterStatus'] = false;
+        $flagData = [];
+
+        $flagData['pageNeededTranslations'] = [];
+        $flagData['pageStatus'] = false;
+        foreach ($pageArray['translations'] as $pageTranslation) {
+            if ($pageTranslation['title'] === '' || $pageTranslation['content'] === '') {
+                $flagData['pageNeededTranslations'][] = $pageTranslation['language']['name'];
+            }
+        }
+        if ((count($flagData['pageNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
+            $flagData['pageStatus'] = true;
         }
 
-        foreach ($chapter['translations'] as $chapterTranslation) {
-            if ($chapterTranslation['title'] === '' || $chapterTranslation['description'] = '') {
-                $flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations'][] = $chapterTranslation['language']['name'];
-            }
-        }
-        if ((count($flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
-            $flagData['chapters'][$chapter['chapterNumber']]['chapterStatus'] = true;
-        }
-        return $flagData;
-    }
-
-    /**
-     * @param int $languageCount
-     * @param $chapter
-     * @param array $flagData
-     * @return array
-     */
-    public function checkChapterPages(int $languageCount, $chapter, array $flagData): array
-    {
-        foreach ($chapter['pages'] as $page) {
-            $flagData['pages'][$page['pageNumber']]['pageNeededTranslations'] = [];
-            $flagData['pages'][$page['pageNumber']]['pageStatus'] = false;
-            foreach ($page['translations'] as $pageTranslation) {
-                if ($pageTranslation['title'] === '' || $pageTranslation['content'] === '') {
-                    $flagData['pages'][$page['pageNumber']]['pageNeededTranslations'][] = $pageTranslation['language']['name'];
-                }
-            }
-            if ((count($flagData['pages'][$page['pageNumber']]['pageNeededTranslations']) - $languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
-                $flagData['pages'][$page['pageNumber']]['pageStatus'] = true;
-            }
-        }
         return $flagData;
     }
 

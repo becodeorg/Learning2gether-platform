@@ -26,7 +26,7 @@ class DashboardModuleController extends AbstractController
     {
         $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
-        $moduleArray = $this->getDoctrine()->getRepository(LearningModule::class)->getSmallModuleAsArray($module);
+        $moduleArray = $this->getDoctrine()->getRepository(LearningModule::class)->getModuleAsArray($module);
         $chapterRepo = $this->getDoctrine()->getRepository(Chapter::class);
 
         $fm = new FlaggingManager();

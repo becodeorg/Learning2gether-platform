@@ -11,16 +11,34 @@
                 <th scope="col">#</th>
                 <th scope="col">Module Name</th>
                 <th scope="col"># chapters</th>
+                <th scope="col">Translations <i
+                            title="This module's title and description translations.&#10;Click to go to that module's edit page."
+                            class="help-icon far fa-question-circle"></i></th>
                 <th scope="col">Status</th>
                 <th scope="col">&#128269;</th>
             </tr>
             </thead>
             <tbody>
             {% for module in allModules %}
+                {% set moduleArray = lmRepo.getModuleAsArray(module)[0] %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
                     <td>{{ module.getTitle(language) }}</td>
                     <td>{{ module.chapters|length }}</td>
+                    <td>
+                        {% set moduleFlag = fm.checkModuleTranslations(moduleArray, languagecount) %}
+
+                        {% set btnClass = 'badge-danger' %}
+                        {% if  (moduleFlag['moduleNeededTranslations']|length - 5) | abs > 2 %}
+                            {% set btnClass = 'badge-success' %}
+                        {% elseif  (moduleFlag['moduleNeededTranslations']|length - 5) | abs == 2 %}
+                            {% set btnClass = 'badge-warning' %}
+                        {% endif %}
+                        <a class="badge {{ btnClass }}"
+                           title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
+                           href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
+                            / {{ languagecount }}</a>
+                    </td>
 
 
 
@@ -29,7 +47,7 @@
                     {% else %}
                         <td>Unpublished</td>
                     {% endif %}
-                    <td><a href="{{ path('dashboard_module', {module: module.id}) }}">Check</a></td>
+                    <td><a href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
                 </tr>
             {% endfor %}
             </tbody>

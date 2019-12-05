@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EditChapterController extends AbstractController
 {
     /**
-     * @Route("/partner/edit/module/{module}/chapter/{chapter}", name="edit_chapter", requirements={
+     * @Route("/partner/edit/module/{module}/chapter/{chapter}", name="edit_chapter" , requirements={
      *     "module" = "\d+",
      *     "chapter" = "\d+"
      * })
