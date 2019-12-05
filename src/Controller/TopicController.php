@@ -94,7 +94,7 @@ class TopicController extends AbstractController
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('nb', 'totalQuestions');
-        $query = $this->getDoctrine()->getManager()->createNativeQuery('SELECT COUNT(id) as nb FROM post WHERE question_id = :question_id', $rsm);
+        $query = $this->getDoctrine()->getManager()->createNativeQuery('SELECT COUNT(id)-1 as nb FROM post WHERE question_id = :question_id', $rsm);
         $query->setParameters([
             'question_id' => $question
         ]);
