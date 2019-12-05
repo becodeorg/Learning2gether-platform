@@ -22,7 +22,6 @@
             </div>
         </section>
 
-        {{ dump(allCategories) }}
         <div class="card-columns">
             {% for category in allCategories %}
                 <a href="{{ path('category', {'category': category.id}) }}">
