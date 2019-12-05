@@ -110,6 +110,7 @@ class FlaggingManager
     {
         if(!isset($flagData['chapters'][$chapter['chapterNumber']])) {
             $flagData['chapters'][$chapter['chapterNumber']] = [];
+            $flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations'] = [];
             $flagData['chapters'][$chapter['chapterNumber']]['chapterStatus'] = false;
         }
 
