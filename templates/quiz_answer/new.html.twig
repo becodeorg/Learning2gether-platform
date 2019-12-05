@@ -3,7 +3,8 @@
 {% block title %}{{ 'New QuizAnswer' | trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'Create new QuizAnswer' | trans }}</h1>
+    <h1>{{ 'Create new QuizAnswer to:' | trans }}</h1>
+    <h4>{{ quiz_answer.quizQuestion.title(app.user.language) }}</h4>
 
     {{ include('quiz_answer/_form.html.twig') }}
 

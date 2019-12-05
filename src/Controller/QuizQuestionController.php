@@ -15,16 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/quiz/question")
- */
+
 class QuizQuestionController extends AbstractController
 {
 
 
 
     /**
-     * @Route("/partner/", name="quiz_question_index", methods={"GET"})
+     * @Route("/partner/quiz/question/", name="quiz_question_index", methods={"GET"})
      */
     public function index(QuizQuestionRepository $quizQuestionRepository): Response
     {
@@ -34,7 +32,7 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/partner/new/{id}", name="quiz_question_new", methods={"GET","POST"}, requirements={
+     * @Route("/partner/quiz/question/new/{id}", name="quiz_question_new", methods={"GET","POST"}, requirements={
      *     "id" = "\d+"})
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -71,7 +69,7 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/partner/{id}", name="quiz_question_show", methods={"GET"}, requirements={
+     * @Route("/partner/quiz/question/{id}", name="quiz_question_show", methods={"GET"}, requirements={
      *     "id" = "\d+"})
      */
     public function show(QuizQuestionRepository $quizQuestion, int $id): Response
@@ -82,8 +80,7 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/partner/{id}/edit", name="quiz_question_edit", methods={"GET","POST"})
-     * @todo Check for non-existing translations, and if no translation exists, set one up with dummy stuff for editing
+     * @Route("/partner/quiz/question/{id}/edit", name="quiz_question_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, QuizQuestion $quizQuestion): Response
     {
@@ -121,7 +118,7 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/partner/{id}", name="quiz_question_delete", methods={"DELETE"})
+     * @Route("/partner/quiz/question/{id}", name="quiz_question_delete", methods={"DELETE"})
      */
     public function delete(Request $request, QuizQuestion $quizQuestion): Response
     {

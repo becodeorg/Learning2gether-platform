@@ -20,13 +20,11 @@ use App\Domain\Badgr;
 use App\Domain\ChapterManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * @Route("/quiz")
- */
+
 class QuizController extends AbstractController
 {
     /**
-     * @Route("/partner/", name="quiz_index", methods={"GET"})
+     * @Route("/partner/quiz/", name="quiz_index", methods={"GET"})
      */
     public function index(LearningModuleRepository $learningModuleRepository): Response
     {
@@ -36,7 +34,7 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/partner/{id}", name="quiz_show", methods={"GET"})
+     * @Route("/partner/quiz/{id}", name="quiz_show", methods={"GET"})
      */
     public function show(Quiz $quiz, ChapterRepository $chapterRepository): Response
     {
