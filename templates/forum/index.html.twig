@@ -4,38 +4,46 @@
 
 {% block body %}
 
-   <section class="wrapper-two">
-    <h1>Meetingplace</h1>
+    <section class="wrapper-two">
+        <h1>Meetingplace</h1>
 
-    <section class="row forum-cat-row">
-        <div class="col-8">
-        <h2>Categories</h2>
-        </div>
-
-
-        <div class="col-4">
-            <div class="row">
-            <div class="col-6">Skillset:</div>
-            <div class="col-3"><button class="btn btn-default btn-skills">Hard</button> </div>
-            <div class="col-3"><button class="btn btn-default btn-skills">Soft</button> </div>
+        <section class="row forum-cat-row">
+            <div class="col-8">
+                <h2>Categories</h2>
             </div>
-        </div>
-    </section>
 
 
-    <div class="card-columns">
-        {% for category in allCategories %}
-            <a href="{{ path('category', {'category': category.id}) }}">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <p class="card-title forum-cat-title">
-                            {{ category.learningModule.title(language) }}
-                        </p>
+            <div class="col-4">
+                <div class="row">
+                    <div class="col-3">Skillset:</div>
+
+                    <div class="col-3">
+                        <a class="btn btn-default btn-skills " href="{{ path('forum', {'mode': 'ALL'}) }}">{{ 'all' | trans | upper }}</a>
+                    </div>
+                    <div class="col-3">
+                        <a class="btn btn-default btn-skills " href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+                    </div>
+                    <div class="col-3">
+                        <a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
                     </div>
                 </div>
-            </a>
-        {% endfor %}
-    </div>
-   </section>
+            </div>
+        </section>
+
+
+        <div class="card-columns">
+            {% for category in allCategories %}
+                <a href="{{ path('category', {'category': category.id}) }}">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <p class="card-title forum-cat-title">
+                                {{ category.learningModule.title(language) }}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
 
 {% endblock %}
