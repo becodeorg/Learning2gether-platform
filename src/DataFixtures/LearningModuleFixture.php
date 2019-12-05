@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Domain\LearningModuleType;
+use App\Entity\Category;
+use App\Entity\CategoryTranslation;
 use App\Entity\Chapter;
 use App\Entity\ChapterPage;
 use App\Entity\ChapterPageTranslation;
@@ -32,9 +34,7 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
             return;
         }
 
-        /** @var Language $english */
-        $english = $manager->getRepository(Language::class)
-            ->findOneBy(['code' => 'en']);
+        $allLanguages = $manager->getRepository(Language::class)->findAll();
 
         $learningModule = new LearningModule(
             '2ASjOU92SVejqTv1Mevaiw',
@@ -42,18 +42,28 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
             LearningModuleType::SOFT(),
             true
         );
-        $learningModule->addTranslation(new LearningModuleTranslation(
-            $learningModule,
-            $english,
-            'Javascript: Introduction course',
-            'Accusantium alias at autem blanditiis debitis dicta eaque enim ex excepturi fuga fugiat inventore ipsum iure
-    molestias necessitatibus odit quia, quis quod similique.'
-        ));
+
+        $category = new Category();
+        $category->setLearningModule($learningModule);
+
+        foreach($allLanguages AS $language) {
+            $name = sprintf('Javascript: Introduction course (%s)', $language->getName());
+            $learningModule->addTranslation(new LearningModuleTranslation(
+                $learningModule,
+                $language,
+                $name,
+                'Accusantium alias at autem blanditiis debitis dicta eaque enim ex excepturi fuga fugiat inventore ipsum iure
+        molestias necessitatibus odit quia, quis quod similique.'
+            ));
+            $category->addTranslation(new CategoryTranslation($name, $category, $language));
+        }
+
+        $manager->persist($category);
 
         $chapters = [
             'Introduction to JavaScript' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque eaque fugit iure pariatur perferendis sint
     velit voluptates? Esse incidunt iure nemo nihil obcaecati praesentium quam reiciendis, repellat voluptas? Est,
-    repellat. !!{embed}(dQw4w9WgXcQ)',
+    repellat. !!',
             'Variables and constants' => 'A deleniti dolorem ex hic iste iusto laudantium magnam nemo nisi officia, quo reprehenderit sed tempora temporibus,
     tenetur. Earum eos fugiat fugit harum hic natus non, praesentium saepe voluptatum? Sit!',
             'Functions and grouping behavior' => 'Autem consequatur doloribus error harum ipsa maxime nemo nihil nulla quis quo quod, quos reiciendis voluptatibus?
@@ -74,7 +84,8 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
             
             !!{embed}(dQw4w9WgXcQ)
             
-            ## Some example text
+            ##Some example text
+            ### Minor header
             
             Animi, commodi eveniet placeat quae quisquam repudiandae soluta ullam. Dignissimos excepturi facilis molestias
     mollitia nam neque nihil nulla, pariatur possimus provident quidem quis reiciendis repellat ut veniam, veritatis
@@ -89,21 +100,25 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
         foreach ($chapters AS $chapterTitle => $chapterDescription) {
             $chapter = new Chapter($learningModule);
 
-            $chapter->addTranslation(new ChapterTranslation(
-                $english,
-                $chapter,
-                $chapterTitle,
-                $chapterDescription
-            ));
+            foreach ($allLanguages AS $language) {
+                $chapter->addTranslation(new ChapterTranslation(
+                    $language,
+                    $chapter,
+                    $chapterTitle,
+                    $chapterDescription
+                ));
+            }
             $learningModule->addChapter($chapter);
 
             foreach ($pages AS $pageTitle => $pageDescription) {
                 $page = $chapter->createNewPage();
-                $page->addTranslation(new ChapterPageTranslation(
-                    $english,
-                    $page,
-                    $pageTitle,
-                    $pageDescription));
+                foreach($allLanguages AS $language) {
+                    $page->addTranslation(new ChapterPageTranslation(
+                        $language,
+                        $page,
+                        $pageTitle,
+                        $pageDescription));
+                }
                 $chapter->addPage($page);
             }
 
@@ -111,15 +126,16 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
 
             foreach (range(1, 3) AS $questionNumber) {
                 $question = new QuizQuestion(1, $quiz);
-                $question->addTranslation(new QuizQuestionTranslation(
-                    $question, $english, 'Do you want to enter the correct answer to question ' . $questionNumber . '?'));
+                foreach($allLanguages AS $language) {
+                    $question->addTranslation(new QuizQuestionTranslation(
+                        $question, $language, 'Do you want to enter the correct answer to question ' . $questionNumber . '?'));
 
-                $question->addAnswer($answer = new QuizAnswer($question, true));
-                $answer->addTranslation(new QuizAnswerTranslation($answer, $english, 'Yes'));
+                    $question->addAnswer($answer = new QuizAnswer($question, true));
+                    $answer->addTranslation(new QuizAnswerTranslation($answer, $language, 'Yes'));
 
-                $question->addAnswer($answer = new QuizAnswer($question, false));
-                $answer->addTranslation(new QuizAnswerTranslation($answer, $english, 'No'));
-
+                    $question->addAnswer($answer = new QuizAnswer($question, false));
+                    $answer->addTranslation(new QuizAnswerTranslation($answer, $language, 'No'));
+                }
                 $quiz->addQuizQuestion($question);
             }
         }

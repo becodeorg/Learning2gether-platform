@@ -31,12 +31,10 @@ class FlaggingManager
         $flagData = [];
 
         foreach ($chapterData as $chapter) {
-
             $flagData = $this->checkChapterTranslations($languageCount, $flagData, $chapter);
             $flagData = $this->checkChapterPages($languageCount, $chapter, $flagData);
 
             foreach ($chapter['quiz']['quizQuestions'] as $question) {
-
                 $flagData = $this->checkQuizTranslations($languageCount, $flagData, $question);
                 $flagData = $this->checkAnswers($languageCount, $question, $flagData);
             }
@@ -110,8 +108,12 @@ class FlaggingManager
      */
     public function checkChapterTranslations(int $languageCount, array $flagData, $chapter): array
     {
-        $flagData['chapterNeededTranslations'] = [];
-        $flagData['chapterStatus'] = false;
+        if(!isset($flagData['chapters'])) {
+            $flagData['chapterNeededTranslations'] = [];
+            $flagData['chapterStatus'] = false;
+            $flagData['chapters'] = [];
+        }
+
         foreach ($chapter['translations'] as $chapterTranslation) {
             if ($chapterTranslation['title'] === '' || $chapterTranslation['description'] = '') {
                 $flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations'][] = $chapterTranslation['language']['name'];

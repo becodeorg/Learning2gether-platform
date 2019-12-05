@@ -58,16 +58,16 @@
                         {% endfor %}</td>
                     <td>{{ chapter[0]['pages']|length }}</td>
                     <td>
-                        {% set btnClass = 'btn-danger' %}
-                        {% if  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs > 2 %}
-                            {% set btnClass = 'btn-success' %}
-                        {% elseif  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs == 2 %}
-                            {% set btnClass = 'btn-warning' %}
-                        {% endif %}
-                        <a class="btn {{btnClass}}"
-                           title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
-                           href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
-                            / {{ languagecount }}</a>
+                            {% set btnClass = 'btn-danger' %}
+                            {% if  (flagData['chapterNeededTranslations']|length - 5) | abs > 2 %}
+                                {% set btnClass = 'btn-success' %}
+                            {% elseif  (flagData['chapterNeededTranslations']|length - 5) | abs == 2 %}
+                                {% set btnClass = 'btn-warning' %}
+                            {% endif %}
+                            <a class="btn {{btnClass}}"
+                               title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
+                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
+                                / {{ languagecount }}</a>
                     </td>
                     <td><a href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">Check</a></td>
                 </tr>
