@@ -33,7 +33,7 @@ class DashboardController extends AbstractController
         $allModules = $this->getDoctrine()->getRepository(LearningModule::class)->findAll();
 
         $lmRepo = $this->getDoctrine()->getRepository(LearningModule::class);
-        $fm = new FlaggingManager();
+        $fm = new FlaggingManager($languageCount);
 
         return $this->render('dashboard/index.html.twig', [
             'allModules' => $allModules,

@@ -19,6 +19,18 @@ class LearningModuleRepository extends ServiceEntityRepository
         parent::__construct($registry, LearningModule::class);
     }
 
+    public function getFullModuleAsArray(LearningModule $module) : array
+    {
+        // FIXME this query returns an empty array if any child is missing
+        // for example, if there is a quiz without any questions or any questions without an answer
+
+        $em = $this->getEntityManager();
+        $dql = 'SELECT l, c, ct, ctl, p, pt, ptl, q, qq, qqt, qqtl, qa, qat, qatl FROM App\Entity\LearningModule l JOIN l.chapters c JOIN c.translations ct JOIN ct.language ctl JOIN c.pages p JOIN p.translations pt JOIN pt.language ptl JOIN c.quiz q JOIN q.quizQuestions qq JOIN qq.translations qqt JOIN qqt.language qqtl JOIN qq.answers qa JOIN qa.translations qat JOIN qat.language qatl WHERE l.id = :id';
+        $query = $em->createQuery($dql);
+        $query->setParameter(':id', $module->getId());
+        return $query->getArrayResult();
+    }
+
     public function getModuleAsArray(LearningModule $module) : array
     {
         // FIXME this query returns an empty array if any child is missing
@@ -26,6 +38,18 @@ class LearningModuleRepository extends ServiceEntityRepository
 
         $em = $this->getEntityManager();
         $dql = 'SELECT l, lt, ltl, c FROM App\Entity\LearningModule l JOIN l.translations lt JOIN lt.language ltl JOIN l.chapters c WHERE l.id = :id';
+        $query = $em->createQuery($dql);
+        $query->setParameter(':id', $module->getId());
+        return $query->getArrayResult();
+    }
+
+    public function getModuleTranslationsAsArray(LearningModule $module) : array
+    {
+        // FIXME this query returns an empty array if any child is missing
+        // for example, if there is a quiz without any questions or any questions without an answer
+
+        $em = $this->getEntityManager();
+        $dql = 'SELECT l, lt, ltl FROM App\Entity\LearningModule l JOIN l.translations lt JOIN lt.language ltl WHERE l.id = :id';
         $query = $em->createQuery($dql);
         $query->setParameter(':id', $module->getId());
         return $query->getArrayResult();

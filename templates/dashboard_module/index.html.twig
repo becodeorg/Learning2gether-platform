@@ -27,7 +27,7 @@
             <tbody>
             {% for chapterObj in module.chapters %}
                 {% set chapter = cr.chapterAsArray(chapterObj) %}
-                {% set flagData = fm.checkChapter(chapter, languagecount) %}
+                {% set flagData = fm.checkChapterTranslationsSolo(chapter) %}
                 {% set chapterNumber = chapter[0]['chapterNumber'] %}
                 <tr>
                     <th scope="row">{{ chapterNumber }}</th>
@@ -42,16 +42,16 @@
                         {% endfor %}</td>
                     <td>{{ chapter[0]['pages']|length }}</td>
                     <td>
-                            {% set btnClass = 'badge-danger' %}
-                            {% if  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs > 2 %}
-                                {% set btnClass = 'badge-success' %}
-                            {% elseif  (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs == 2 %}
-                                {% set btnClass = 'badge-warning' %}
-                            {% endif %}
-                            <a class="badge {{btnClass}}"
-                               title="{{ flagData['chapters'][chapterNumber]['chapterNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapters'][chapterNumber]['chapterNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                        {% set btnClass = 'badge-danger' %}
+                        {% if  (flagData['chapterNeededTranslations']|length - 5) | abs > 2 %}
+                            {% set btnClass = 'badge-success' %}
+                        {% elseif  (flagData['chapterNeededTranslations']|length - 5) | abs == 2 %}
+                            {% set btnClass = 'badge-warning' %}
+                        {% endif %}
+                        <a class="badge {{ btnClass }}"
+                           title="{{ flagData['chapterNeededTranslations'] | join('\n') }}"
+                           href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapterNeededTranslations']|length - 5) | abs }}
+                            / {{ languagecount }}</a>
                     </td>
                     <td><a href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">Check</a></td>
                 </tr>

@@ -4,6 +4,12 @@
 
 {% block body %}
 
+    <style>
+        .flagbtn {
+            cursor: pointer;
+        }
+    </style>
+
     <div class="container">
         <table class="table table-hover text-center">
             <thead>
@@ -14,6 +20,7 @@
                 <th scope="col">Translations <i
                             title="This module's title and description translations.&#10;Click to go to that module's edit page."
                             class="help-icon far fa-question-circle"></i></th>
+                <th scope="col">Check</th>
                 <th scope="col">Status</th>
                 <th scope="col">&#128269;</th>
             </tr>
@@ -26,7 +33,7 @@
                     <td>{{ module.getTitle(language) }}</td>
                     <td>{{ module.chapters|length }}</td>
                     <td>
-                        {% set moduleFlag = fm.checkModuleTranslations(moduleArray, languagecount) %}
+                        {% set moduleFlag = fm.checkModuleTranslationsSolo(moduleArray) %}
 
                         {% set btnClass = 'badge-danger' %}
                         {% if  (moduleFlag['moduleNeededTranslations']|length - 5) | abs > 2 %}
@@ -39,19 +46,27 @@
                            href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
                             / {{ languagecount }}</a>
                     </td>
-
-
-
-                    {% if module.isPublished %}
-                        <td>Published</td>
-                    {% else %}
-                        <td>Unpublished</td>
-                    {% endif %}
-                    <td><a href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
+                    <td>
+                        <div class="flagbtn badge badge-primary" onclick="checkModule({{ module.id }})">check</div>
+                    </td>
+                {% if module.isPublished %}
+                    <td>Published</td>
+                {% else %}
+                    <td>Unpublished</td>
+                {% endif %}
+                <td><a href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+
+
+    <script src="{{ asset('assets/js/dashboardFlagging.js') }}"></script>
+
+
 
 {% endblock %}

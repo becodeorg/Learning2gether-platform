@@ -28,7 +28,7 @@ class DashboardChapterController extends AbstractController
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
 
         $pr = $this->getDoctrine()->getRepository(ChapterPage::class);
-        $fm = new FlaggingManager();
+        $fm = new FlaggingManager($languageCount);
 
         return $this->render('dashboard_chapter/index.html.twig', [
             'fm' => $fm,
