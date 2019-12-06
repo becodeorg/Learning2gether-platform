@@ -1,10 +1,47 @@
 {% extends 'base.html.twig' %}
 
+
+{% block title %}{{ 'Quiz'|trans }}{% endblock %}
+
 {% block body %}
+    <div class="wrapper">
+        <form method="post" action="{{ path('quiz_send', {'quiz': quiz.idtete}) }}">
+            <p class="center">{{ module.getTitle(language) }}</p>
+            <h1>{{ 'Quiz'|trans }}</h1>
+            <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">
+                {{ 'Back to chapter'|trans }}
+            </a>
 
+            <!--  question1   -->
+            <section id="chapter-overview">
+                {% for question in quiz.quizQuestions %}
+                <div class="container chapcontainerquiz">
+                    <div class="row"><h3>{{ 'Question' | trans}} {{ question.questionNumber }}</h3></div>
+                    <div class="row chapcardquiz">
+                        <div class="col-md-6 chapimgquiz">
+                            <p class="question"> {{ question.getTitle(language) }}</p>
+                        </div>
+                        <div class="col-md-6 chapinfoquiz">
+                            {% for answer in question.answers %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="questions[{{ question.id }}]" id="questions_{{answer.id}}"
+                                       value="{{answer.id}}">
+                                <label class="form-check-label" for="questions_{{answer.id}}">
+                                    {{ answer.getTitle(language) }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="vertical-line"></div>
+            </section>
+
+            <div class="row chapbutton_2quiz">
+                <button class="btn btn-default button_5quiz" id="send-quiz">Submit test</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}
-
-{% block title %}
-
-{% endblock %}
-
