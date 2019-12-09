@@ -8,6 +8,11 @@ class LearningModuleType
     public const SOFT = 'SOFT';
     public const HARD = 'HARD';
 
+    const ALL_OPTIONS = [
+        self::SOFT,
+        self::HARD
+    ];
+
     private $value;
 
     private function __construct(string $value)
@@ -31,5 +36,10 @@ class LearningModuleType
     public function __toString()
     {
         return $this->value;
+    }
+
+    public static function getAllOptions()
+    {
+        return self::ALL_OPTIONS;
     }
 }

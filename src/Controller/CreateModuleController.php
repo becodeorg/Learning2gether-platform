@@ -36,6 +36,7 @@ class CreateModuleController extends AbstractController
 
         // create the form
         $form = $this->createForm(CreateModuleType::class, $module);
+
         $form->handleRequest($request);
 
         // check if the form is submitted/posted
@@ -43,6 +44,7 @@ class CreateModuleController extends AbstractController
                 $module = $form->getData();
                 $module = $this->makeTranslations($module);
                 $this->flushNewModule($module);
+
                 return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
         }
 
