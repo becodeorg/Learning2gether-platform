@@ -25,9 +25,9 @@ class CreateModuleType extends AbstractType
                 'label' => 'badgr.io badge hash ',
             ])
             ->add('type', ChoiceType::class, [
-                'label' => 'type',
+                'label' => 'Select type:',
                 'choices' => [LearningModuleType::soft(), LearningModuleType::hard()],
-                'choice_label' => function($value){ return $value; },
+                'choice_label' => static function($value){ return $value; },
                 'multiple'=>false,
                 'expanded'=>true
             ])
@@ -37,6 +37,7 @@ class CreateModuleType extends AbstractType
         $builder->add('translations', CollectionType::class, [
             'entry_type' => CreateModuleTranslationType::class,
             'entry_options' => ['label' => false],
+            'label' => 'Translations',
         ]);
     }
 

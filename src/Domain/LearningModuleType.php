@@ -38,7 +38,7 @@ class LearningModuleType
         return $this->value;
     }
 
-    public static function getAllOptions()
+    public static function getAllOptions(): array
     {
         return self::ALL_OPTIONS;
     }
