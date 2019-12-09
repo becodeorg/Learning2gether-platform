@@ -19,8 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuizQuestionController extends AbstractController
 {
 
-
-
     /**
      * @Route("/partner/quiz/question/", name="quiz_question_index", methods={"GET"})
      */
@@ -40,8 +38,13 @@ class QuizQuestionController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(QuizQuestion::class);
-        //$quiz = $em->getRepository(Quiz::class)->find($id);
-        $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+
+        if ($request->query->get('lang') === null){
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $request->query->set('lang', $language->getCode());
+        }else {
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        }
 
         $questionNmbr = $repo->findNumberOfQuestionsForGivenID($quiz->getId());
 
@@ -85,8 +88,14 @@ class QuizQuestionController extends AbstractController
     public function edit(Request $request, QuizQuestion $quizQuestion): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
         $quizQuestionTranslations= $quizQuestion->getTranslations();
+
+        if ($request->query->get('lang') === null){
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $request->query->set('lang', $language->getCode());
+        }else {
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        }
 
         foreach ($quizQuestionTranslations as $quizQuestionTrans){
             if ($quizQuestionTrans->getLanguage()->getCode() === $language->getCode()){

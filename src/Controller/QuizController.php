@@ -36,11 +36,20 @@ class QuizController extends AbstractController
     /**
      * @Route("/partner/quiz/{id}", name="quiz_show", methods={"GET"})
      */
-    public function show(Quiz $quiz, ChapterRepository $chapterRepository): Response
+    public function show(Request $request, Quiz $quiz, ChapterRepository $chapterRepository): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        if ($request->query->get('lang') === null){
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $request->query->set('lang', $language->getCode());
+        }else {
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        }
+
         return $this->render('quiz/show.html.twig', [
             'chapter' => $chapterRepository->findOneBy(['quiz'=> $quiz->getId()]),
             'quiz' => $quiz,
+            'language'=>$language,
         ]);
     }
 

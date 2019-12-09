@@ -135,4 +135,14 @@ class QuizQuestion
         }
         return "Not defined";
     }
+
+    public function getTrTitle(string $langCode): ?string
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getCode() === $langCode) {
+                return $translation->getTitle();//change this line if needed when copied
+            }
+        }
+        return "Not defined";
+    }
 }
