@@ -61,13 +61,12 @@
                         <td><a href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
                     </tr>
                     <tr>
-                        <th scope="row"></th>
-                        <td style="display: none; text-align: left" id="dump-{{ module.id }}"></td>
+                        <td nowrap colspan="6" style="display: none; text-align: left; font-size: 0.75em" id="dump-{{ module.id }}"></td>
                     </tr>
                 {% else %}
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
-                        <td colspan="6">Module needs more content!</td>
+                        <td colspan="6">This module needs more content!</td>
                     </tr>
                 {% endif %}
             {% endfor %}
