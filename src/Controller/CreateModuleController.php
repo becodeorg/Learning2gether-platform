@@ -25,13 +25,14 @@ class CreateModuleController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $imageManager = new ImageManager();
-
-        $module = new LearningModule();
-        $translationArray = $this->makeTranslations($module);
-
         /* @var User $user */
         $user = $this->getUser();
+
+        // initialize new module and one translation in english
+        $module = new LearningModule();
+        $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
+        $newTrans = new LearningModuleTranslation($module, $english);
+        $module->addTranslation($newTrans);
 
         // create the form
         $form = $this->createForm(CreateModuleType::class, $module);
@@ -39,18 +40,10 @@ class CreateModuleController extends AbstractController
 
         // check if the form is submitted/posted
         if ($form->isSubmitted() && $form->isValid()) {
-            $newTranslations = $_POST['create_module']['translations'];
-
-            if ($this->isOneTranslationFilledIn($newTranslations)) {
                 $module = $form->getData();
-                $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
-                $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $user, $this->getParameter('uploads_directory'), 'module');
-                $this->flushNewImage($newImage);
-                $module->setImage($newImage->getSrc());
+                $module = $this->makeTranslations($module);
                 $this->flushNewModule($module);
                 return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
-            }
-            $this->addFlash('error', 'please fill in at least one language');
         }
 
         return $this->render('create_module/index.html.twig', [
@@ -58,32 +51,20 @@ class CreateModuleController extends AbstractController
         ]);
     }
 
-    public function isOneTranslationFilledIn(array $translations): bool
-    {
-        //  function to check if at least one of the translations is filled in (both fields)
-        foreach ($translations as $translation) {
-            if (!empty($translation['title']) && !empty($translation['description'])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * @param LearningModule $module
-     * @return array
+     * @return LearningModule
      */
-    public function makeTranslations(LearningModule $module): array
+    public function makeTranslations(LearningModule $module): LearningModule
     {
         $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
-        $translationArray = [];
         foreach ($languageAll as $language) {
-            $languageDoctrine = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => $language->getCode()]);
-            $translation = new LearningModuleTranslation($module, $languageDoctrine);
-            $translationArray[] = $translation;
-            $module->addTranslation($translation);
+            if ($language->getCode() !== 'en'){
+                $translation = new LearningModuleTranslation($module, $language);
+                $module->addTranslation($translation);
+            }
         }
-        return $translationArray;
+        return $module;
     }
 
     /**
@@ -94,12 +75,5 @@ class CreateModuleController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);
         $entityManager->flush();
-    }
-
-    public function flushNewImage(Image $image): void
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($image);
-        $em->flush();
     }
 }
