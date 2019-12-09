@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Domain\ImageManager;
+use App\Domain\LearningModuleType;
+use App\Entity\Category;
 use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
@@ -46,7 +48,13 @@ class CreateModuleController extends AbstractController
                 $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $user, $this->getParameter('uploads_directory'), 'module');
                 $this->flushNewImage($newImage);
                 $module->setImage($newImage->getSrc());
-                $this->flushNewModule($module);
+
+                $module = $this->flushNewModule($module);
+                $cat = new Category();
+                $cat->setLearningModule($module);
+                $this->getDoctrine()->getManager()->persist($cat);
+                $this->getDoctrine()->getManager()->flush();
+
                 return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             }
             $this->addFlash('error', 'please fill in at least one language');
@@ -88,11 +96,13 @@ class CreateModuleController extends AbstractController
     /**
      * @param LearningModule $module
      */
-    public function flushNewModule(LearningModule $module): void
+    public function flushNewModule(LearningModule $module): LearningModule
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);
         $entityManager->flush();
+
+        return $module;
     }
 
     public function flushNewImage(Image $image): void
