@@ -52,17 +52,46 @@
 
             </div>
 
+
+
+
         {% endfor %}
 
 
-        <section class="sticky-bottom">
-
-            <h4>Add New Question</h4>
+        <section class="container topic-questions">
             {{ form_start(addQuestion) }}
+
+            <section class="row question-row">
+                <div class="col-3">
+                    {# Form text #}
+                    {{ form_label(addQuestion.question, 'Title:', { 'label_attr': {'class': 'question-text'} }) }}
+                </div>
+                <div class="col-9">
+                    {# Form inputfield #}
+                    {{ form_widget(addQuestion.question, {'attr': {'class': 'question-label'} }) }}
+                </div>
+            </section>
+
+            <section class="row">
+                <div class="col-3">
+                    {# Form text #}
+                    {{ form_label(addQuestion.questionDescription, 'Your question:', { 'label_attr': {'class': 'questionDescription-text'} }) }}
+                </div>
+
+                <div class="col-9">
+                    {# Form inputfield #}
+                    {{ form_widget(addQuestion.questionDescription, {'attr': {'class': 'questionDescription-label'} }) }}
+                </div>
+            </section>
+
+            {# question button #}
+            <div class="row">
+                {{ form_widget(addQuestion.postTopic, {'attr': {'class': 'topic-question-button'}}) }}
+            </div>
+
             {{ form_end(addQuestion) }}
 
         </section>
-
     </section>
 {% endblock %}
 

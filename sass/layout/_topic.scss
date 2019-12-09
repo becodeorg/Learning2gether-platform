@@ -1,2 +1,13 @@
 @import "./../variables/variables";
 
+.topic-questions {
+  background-color: $purplecolor;
+  font-family: $chivofamily;
+  padding: 20px 20px 20px 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.question-row {
+  padding-bottom: 10px;
+}

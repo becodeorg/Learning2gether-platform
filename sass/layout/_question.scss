@@ -1,0 +1,40 @@
+@import "./../variables/variables";
+
+.date-created-question {
+  color: grey;
+  font-family: $chivofamily;
+  font-size: 12px;
+}
+
+.question-asked {
+  font-family: $chivofamily;
+  font-size: 15px;
+  background-color: lightgrey;
+  padding: 10px 17px 10px 17px;
+}
+
+.question-asked-info {
+  font-family: $chivofamily;
+  font-size: 12px;
+  color: grey;
+}
+
+.btn-deletequestion {
+  border: none;
+  background-color: lightcoral;
+  color: $whitecolor;
+  font-family: $chivofamily;
+  padding: 5px 20px 5px 20px;
+  letter-spacing: 1px;
+  border-radius: 40px;
+}
+
+.question-answer-row {
+  margin-top: 20px;
+  background-color: #99cdd8;
+  padding: 10px 5px 10px 5px;
+}
+
+.upvote-img {
+  background-image:url("../../public/assets/img/thumbsup.png");
+}

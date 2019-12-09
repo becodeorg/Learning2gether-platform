@@ -22,6 +22,7 @@ class QuestionType  extends AbstractType
             ->add('category', HiddenType::class)
             ->add('postTopic', SubmitType::class, array('label' => 'Question'));
 
+
         $builder->setMethod('POST');
 
     }
