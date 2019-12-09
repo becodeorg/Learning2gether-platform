@@ -30,7 +30,7 @@ class CreateModuleType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'label' => 'type',
-                'choices'  => LearningModuleType::getAllOptions(),
+                'choices' => [LearningModuleType::soft(), LearningModuleType::hard()],
                 'choice_label' => function($value){ return $value; },
                 'multiple'=>false,
                 'expanded'=>true

@@ -29,11 +29,13 @@ class CreateModuleController extends AbstractController
         $module = new LearningModule();
         $translationArray = $this->makeTranslations($module);
 
+
         /* @var User $user */
         $user = $this->getUser();
 
         // create the form
         $form = $this->createForm(CreateModuleType::class, $module);
+
         $form->handleRequest($request);
 
         // check if the form is submitted/posted
@@ -42,11 +44,14 @@ class CreateModuleController extends AbstractController
 
             if ($this->isOneTranslationFilledIn($newTranslations)) {
                 $module = $form->getData();
+
                 $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
                 $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $user, $this->getParameter('uploads_directory'), 'module');
                 $this->flushNewImage($newImage);
                 $module->setImage($newImage->getSrc());
+                var_dump($module);
                 $this->flushNewModule($module);
+
                 return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             }
             $this->addFlash('error', 'please fill in at least one language');
