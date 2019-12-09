@@ -504,8 +504,7 @@ h1 {
   text-align: center;
   position: absolute;
   bottom: 100px;
-  left: 50px;
-  width: 200px; }
+  width: 100%; }
 
 .loginwrap button {
   width: 200px; }
@@ -552,7 +551,27 @@ footer {
 
 @media only screen and (max-width: 600px) {
   .sidebar {
-    width: 100%; } }
+    width: 100%; }
+
+  .logo {
+    width: 70%;
+    margin-left: 15%; }
+
+  .loginwrap {
+    position: relative;
+    margin-top: 100px; } }
+@media only screen and (max-width: 810px) {
+  .titlewrap {
+    padding-left: 50px; }
+
+  .titlewrap h1 {
+    font-size: 24px; }
+
+  .titlewrap h2 {
+    font-size: 18px; }
+
+  .titlewrap p {
+    font-size: 14px; } }
 .modalbutton {
   background-color: #8b54a0;
   border-color: #8b54a0;
@@ -646,6 +665,9 @@ footer {
 #show .form-group input {
   line-height: 15px; }
 
+.testborder {
+  border: 1px solid black; }
+
 .forum-cat-title {
   font-size: 23px;
   font-family: "Chivo", sans-serif;
@@ -693,7 +715,6 @@ footer {
 
 .mod-title {
   margin: auto;
-  width: 50%;
   margin-bottom: 30px; }
 
 .mod-step {
@@ -704,7 +725,7 @@ footer {
   margin: 0; }
 
 .wrapper {
-  width: 800px;
+  width: 1000px;
   margin: 0 auto; }
 
 .btnchapquiz {
