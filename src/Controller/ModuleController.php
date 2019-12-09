@@ -28,8 +28,7 @@ class ModuleController extends AbstractController
 
         return $this->render('module/index.html.twig', [
             'language' => $this->getLanguage($request),
-            'module' => $module,
-         //   'chapterManager' => $chaptersDone
+            'module' => $module
         ]);
     }
 
