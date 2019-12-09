@@ -14,7 +14,6 @@ class FlaggingManager
     private $languageCount;
 
     /**
-     * FlaggingManager constructor.
      * @param int $languageCount
      */
     public function __construct(int $languageCount)
@@ -122,7 +121,7 @@ class FlaggingManager
      * @param array $flagData
      * @return array
      */
-    public function checkAnswers(int $languageCount, $question, array $flagData): array
+    public function checkAnswers(int $languageCount, array $question, array $flagData): array
     {
         foreach ($question['answers'] as $answer) {
             $flagData['quiz']['questions'][$question['questionNumber']]['answers'][$answer['id']]['answerNeededTranslations'] = [];
@@ -201,7 +200,7 @@ class FlaggingManager
      * @param $chapter
      * @return array
      */
-    private function checkChapterFull(array $flagData, $chapter): array
+    private function checkChapterFull(array $flagData, array $chapter): array
     {
         $flagData['chapters'][$chapter['chapterNumber']] = [];
         $flagData['chapters'][$chapter['chapterNumber']]['chapterNeededTranslations'] = [];
@@ -224,7 +223,7 @@ class FlaggingManager
      * @param $page
      * @return array
      */
-    private function checkPageFull(array $flagData, $chapter, $page): array
+    private function checkPageFull(array $flagData, array $chapter, array $page): array
     {
         $flagData['chapters'][$chapter['chapterNumber']]['pages'][$page['pageNumber']] = [];
         $flagData['chapters'][$chapter['chapterNumber']]['pages'][$page['pageNumber']]['pageNeededTranslations'] = [];
@@ -246,7 +245,7 @@ class FlaggingManager
      * @param $question
      * @return array
      */
-    private function checkQuizFull(array $flagData, $chapter, $question): array
+    private function checkQuizFull(array $flagData, array $chapter, array $question): array
     {
         $flagData['chapters'][$chapter['chapterNumber']]['quiz']['questions'][$question['questionNumber']]['questionNeededTranslations'] = [];
         $flagData['chapters'][$chapter['chapterNumber']]['quiz']['questions'][$question['questionNumber']]['questionStatus'] = false;
@@ -268,7 +267,7 @@ class FlaggingManager
      * @param $answer
      * @return array
      */
-    private function checkAnswerFull(array $flagData, $chapter, $question, $answer): array
+    private function checkAnswerFull(array $flagData, array $chapter, array $question, array $answer): array
     {
         $flagData['chapters'][$chapter['chapterNumber']]['quiz']['questions'][$question['questionNumber']]['answers'][$answer['id']]['answerNeededTranslations'] = [];
         $flagData['chapters'][$chapter['chapterNumber']]['quiz']['questions'][$question['questionNumber']]['answers'][$answer['id']]['answerStatus'] = false;
