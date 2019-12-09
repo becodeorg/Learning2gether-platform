@@ -5,10 +5,12 @@ namespace App\Controller;
 
 use App\Domain\ImageManager;
 use App\Entity\Category;
+use App\Entity\Chapter;
 use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Entity\LearningModuleTranslation;
+use App\Entity\Quiz;
 use App\Entity\User;
 use App\Form\CreateModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,16 +38,18 @@ class CreateModuleController extends AbstractController
 
         // create the form
         $form = $this->createForm(CreateModuleType::class, $module);
-
         $form->handleRequest($request);
 
-        // check if the form is submitted/posted
+        // check if the form is submitted
         if ($form->isSubmitted() && $form->isValid()) {
-                $module = $form->getData();
-                $module = $this->makeTranslations($module);
-                $this->flushNewModule($module);
-
-                return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
+            $module = $form->getData();
+            $module = $this->makeTranslations($module);
+            $chapter = new Chapter($module);
+            $quiz = new Quiz();
+            $chapter->setQuiz($quiz);
+            $module->addChapter($chapter);
+            $this->flushNewModule($module);
+            return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
         }
 
         return $this->render('create_module/index.html.twig', [
@@ -61,7 +65,7 @@ class CreateModuleController extends AbstractController
     {
         $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
         foreach ($languageAll as $language) {
-            if ($language->getCode() !== 'en'){
+            if ($language->getCode() !== 'en') {
                 $translation = new LearningModuleTranslation($module, $language);
                 $module->addTranslation($translation);
             }
@@ -71,11 +75,14 @@ class CreateModuleController extends AbstractController
 
     /**
      * @param LearningModule $module
+     * @return LearningModule
      */
-    public function flushNewModule(LearningModule $module): void
+    public function flushNewModule(LearningModule $module): LearningModule
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);
         $entityManager->flush();
+
+        return $module;
     }
 }

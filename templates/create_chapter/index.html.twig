@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreateChapterController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <section class="module-cube">
+            {{ form(chapterTranslationForm) }}
+        </section>
+
+        {% for page in chapter.pages %}
+            <section class="module-cube">
+
+            </section>
+        {% endfor %}
+        <div class="text-center">
+            {{ form(addPageBtn) }}
+        </div>
+    </div>
+
+{% endblock %}

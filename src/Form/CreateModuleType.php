@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,7 +22,7 @@ class CreateModuleType extends AbstractType
     {
 
         $builder
-            ->add('badge', null , [
+            ->add('badge', TextType::class , [
                 'label' => 'badgr.io badge hash ',
             ])
             ->add('type', ChoiceType::class, [
@@ -31,7 +32,9 @@ class CreateModuleType extends AbstractType
                 'multiple'=>false,
                 'expanded'=>true
             ])
-            ->add('create', SubmitType::class)
+            ->add('create', SubmitType::class, [
+                'label' => 'Create chapter'
+            ])
         ;
 
         $builder->add('translations', CollectionType::class, [
