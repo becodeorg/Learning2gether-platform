@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Quiz
 {
+    const MINIMUM_PERCENTAGE = 80;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
