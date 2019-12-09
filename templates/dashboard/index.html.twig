@@ -27,46 +27,54 @@
             </thead>
             <tbody>
             {% for module in allModules %}
-                {% set moduleArray = lmRepo.getModuleAsArray(module)[0] %}
-                <tr>
-                    <th scope="row">{{ loop.index }}</th>
-                    <td>{{ module.getTitle(language) }}</td>
-                    <td>{{ module.chapters|length }}</td>
-                    <td>
-                        {% set moduleFlag = fm.checkModuleTranslationsSolo(moduleArray) %}
+                {% set moduleArray = lmRepo.getModuleAsArray(module) %}
+                {% if moduleArray is not empty %}
+                    {% set moduleArray = moduleArray[0] %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ module.getTitle(language) }}</td>
+                        <td>{{ module.chapters|length }}</td>
+                        <td>
+                            {% set moduleFlag = fm.checkModuleTranslationsSolo(moduleArray) %}
 
-                        {% set btnClass = 'badge-danger' %}
-                        {% if  (moduleFlag['moduleNeededTranslations']|length - 5) | abs > 2 %}
-                            {% set btnClass = 'badge-success' %}
-                        {% elseif  (moduleFlag['moduleNeededTranslations']|length - 5) | abs == 2 %}
-                            {% set btnClass = 'badge-warning' %}
+                            {% set btnClass = 'badge-danger' %}
+                            {% if  (moduleFlag['moduleNeededTranslations']|length - 5) | abs > 2 %}
+                                {% set btnClass = 'badge-success' %}
+                            {% elseif  (moduleFlag['moduleNeededTranslations']|length - 5) | abs == 2 %}
+                                {% set btnClass = 'badge-warning' %}
+                            {% endif %}
+                            <a class="badge {{ btnClass }}"
+                               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
+                               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
+                                / {{ languagecount }}</a>
+                        </td>
+                        <td>
+                            <div id="flagbtn-{{ module.id }}" class="flagbtn badge badge-primary"
+                                 onclick="checkModule({{ module.id }})">check
+                            </div>
+                        </td>
+                        {% if module.isPublished %}
+                            <td>Published</td>
+                        {% else %}
+                            <td>Unpublished</td>
                         {% endif %}
-                        <a class="badge {{ btnClass }}"
-                           title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
-                           href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
-                            / {{ languagecount }}</a>
-                    </td>
-                    <td>
-                        <div class="flagbtn badge badge-primary" onclick="checkModule({{ module.id }})">check</div>
-                    </td>
-                {% if module.isPublished %}
-                    <td>Published</td>
+                        <td><a href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"></th>
+                        <td style="display: none; text-align: left" id="dump-{{ module.id }}"></td>
+                    </tr>
                 {% else %}
-                    <td>Unpublished</td>
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td colspan="6">Module needs more content!</td>
+                    </tr>
                 {% endif %}
-                <td><a href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
-                </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-
-
-
     <script src="{{ asset('assets/js/dashboardFlagging.js') }}"></script>
-
-
-
 {% endblock %}
