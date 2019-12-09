@@ -8,13 +8,12 @@ This readme contains installation instructions and documentation links.
 This project was created during our training at [Becode](http://becode.org).
 The main contributers were, in no specific order:
 - @Anastasiyavyp	Anastasiya Vyprytska
-- @bona-kim	Bona    Bona Kim
+- @bona-kim	        Bona Kim
 - @janvdv96	        Jan Van de Velde
-- @joostvannieu	    Joost Vannieuwenhuyse
+- @joostvannieu	        Joost Vannieuwenhuyse
 - @JosephLindzius	Joseph Lindzius
-- @Nicnicsai	    Nicole Reyes Guttmann
+- @Nicnicsai	        Nicole Reyes Guttmann
 - @Timmeahj	        Tim Broos
-- @Lisonallie		Allison Van Linden
 	
 We received technical support from our coach @grubolsch (Koen Eelen).
 
