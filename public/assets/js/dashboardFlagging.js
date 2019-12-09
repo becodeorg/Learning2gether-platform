@@ -6,6 +6,7 @@ function checkModule(moduleId) {
     let url = Routing.generate('api_module', {module: moduleId}, true);
     let btn = document.getElementById('flagbtn-' + moduleId);
     let dump = document.getElementById('dump-' + moduleId);
+    let publish = document.getElementById('publish-' + moduleId);
     dump.style.display = 'none';
     btn.innerText = '';
     btn.classList.remove('badge', 'badge-primary', 'badge-danger', 'spinner-border', 'spinner-border-sm');
@@ -14,6 +15,7 @@ function checkModule(moduleId) {
         .then(function (response) {
             return response.json();
         }).then(function (data) {
+            data = [];
         if (data.length){
             btn.classList.remove('spinner-border','spinner-border-sm');
             btn.classList.add('badge', 'badge-danger');
@@ -25,6 +27,14 @@ function checkModule(moduleId) {
             }
             listDump += '</ul>';
             dump.innerHTML = listDump;
+        } else {
+            btn.classList.remove('spinner-border', 'spinner-border-sm');
+            btn.classList.add('badge', 'badge-primary');
+            btn.innerText = 're-check';
+            let publishUrl = Routing.generate('publish_module', {module: moduleId}, true);
+            publish.innerHTML = '<a id="publishLink" class="flagbtn badge badge-success">Click here to publish!</a>';
+            let publishLink = document.getElementById('publishLink');
+            publishLink.setAttribute('href', publishUrl);
         }
     });
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Domain\ImageManager;
+use App\Entity\Category;
 use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;

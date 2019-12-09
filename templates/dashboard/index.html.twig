@@ -54,9 +54,9 @@
                             </div>
                         </td>
                         {% if module.isPublished %}
-                            <td>Published</td>
+                            <td id="publish-{{ module.id }}"><div class="badge badge-success">Published</div></td>
                         {% else %}
-                            <td>Unpublished</td>
+                            <td id="publish-{{ module.id }}"><div class="badge badge-warning">Unpublished</div></td>
                         {% endif %}
                         <td><a href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
                     </tr>
