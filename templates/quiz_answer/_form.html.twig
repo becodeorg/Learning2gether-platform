@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.quizAnswer.isCorrect) }}
+
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

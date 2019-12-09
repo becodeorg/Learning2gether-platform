@@ -112,15 +112,13 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
             foreach (range(1, 3) AS $questionNumber) {
                 $question = new QuizQuestion(1, $quiz);
                 $question->addTranslation(new QuizQuestionTranslation(
-                    $english,
-                    'Do you want to enter the correct answer to question ' . $questionNumber . '?',
-                    $question));
+                    $question, $english, 'Do you want to enter the correct answer to question ' . $questionNumber . '?'));
 
-                $question->addAnswer($answer = new QuizAnswer(true, $question));
-                $answer->addTranslation(new QuizAnswerTranslation($english, 'Yes', $answer));
+                $question->addAnswer($answer = new QuizAnswer($question, true));
+                $answer->addTranslation(new QuizAnswerTranslation($answer, $english, 'Yes'));
 
-                $question->addAnswer($answer = new QuizAnswer(false, $question));
-                $answer->addTranslation(new QuizAnswerTranslation($english, 'No', $answer));
+                $question->addAnswer($answer = new QuizAnswer($question, false));
+                $answer->addTranslation(new QuizAnswerTranslation($answer, $english, 'No'));
 
                 $quiz->addQuizQuestion($question);
             }

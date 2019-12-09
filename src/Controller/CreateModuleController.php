@@ -8,6 +8,7 @@ use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Entity\LearningModuleTranslation;
+use App\Entity\User;
 use App\Form\CreateModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +26,11 @@ class CreateModuleController extends AbstractController
     {
         $imageManager = new ImageManager();
 
-        // make a new module for the form, empty values for now
         $module = new LearningModule();
         $translationArray = $this->makeTranslations($module);
+
+        /* @var User $user */
+        $user = $this->getUser();
 
         // create the form
         $form = $this->createForm(CreateModuleType::class, $module);
@@ -40,7 +43,7 @@ class CreateModuleController extends AbstractController
             if ($this->isOneTranslationFilledIn($newTranslations)) {
                 $module = $form->getData();
                 $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
-                $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $this->getUser(), $this->getParameter('uploads_directory'), 'module');
+                $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $user, $this->getParameter('uploads_directory'), 'module');
                 $this->flushNewImage($newImage);
                 $module->setImage($newImage->getSrc());
                 $this->flushNewModule($module);

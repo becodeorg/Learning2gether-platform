@@ -33,19 +33,16 @@ class LearningModule
      * @ORM\Column(type="string", length=255)
      */
     private $image;
-    //link to the LM image on the server (for marketing prettifying purposes)
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $type;
-    //defines the LM type, for example: the LM is for soft skills or hard skills
 
     /**
-     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true,cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="LearningModuleTranslation", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
      */
     private $translations;
-    // cascade means a modules translations(titles and descriptions) can be inserted to the DB when their module is flushed. -jan
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
@@ -53,10 +50,9 @@ class LearningModule
      */
     private $chapters;
 
-    //default for isPublished is set to false
-    public function __construct(string $badge='', string $image='', LearningModuleType $type=null, bool $isPublished = false)
+    public function __construct(string $badge='', string $image='', string $type=null, bool $isPublished = false)
     {
-        if(is_null($type)) {
+        if($type === null) {
             $type = LearningModuleType::hard();
         }
 
@@ -157,13 +153,18 @@ class LearningModule
         return $this->translations;
     }
 
-    public function getDescription(Language $language)
+    /**
+     * @param Language $language
+     * @return string
+     */
+    public function getDescription(Language $language): string
     {
         foreach ($this->getTranslations() AS $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
                 return $translation->getDescription();//change this line if needed when copied
             }
         }
+        return 'Error: Language not found';
     }
 
     /**
@@ -193,13 +194,6 @@ class LearningModule
             $this->chapters->removeElement($chapter);
         }
         return $this;
-    }
-
-    //function to flag the module in order to show it requires more content before publishing
-    public function flagPage()
-    {
-        //TODO flesh out this function to do stuff, (that's a separate ticket)
-        //Same function for flagging/unflagging?
     }
 
     private function fetchLastChapterNumber() : int

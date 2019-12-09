@@ -125,4 +125,24 @@ class QuizQuestion
 
         return $this;
     }
+
+    public function getTitle(Language $language): ?string
+    {
+        foreach ($this->getTranslations() AS $translation) {
+            if ($translation->getLanguage()->getCode() === $language->getCode()) {
+                return $translation->getTitle();//change this line if needed when copied
+            }
+        }
+        return "Not defined";
+    }
+
+    public function getAnswerById(int $id) :? QuizAnswer
+    {
+        foreach($this->getAnswers() AS $answer) {
+            if($answer->getId() === $id) {
+                return $answer;
+            }
+        }
+        return null;
+    }
 }

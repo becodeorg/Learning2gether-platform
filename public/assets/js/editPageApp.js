@@ -36,7 +36,7 @@ editor.toolbar.push(
     },
     {
         name: "Link",
-        action: "http://google.com", // here the link to our markdown manual would be
+        action: "https://guides.github.com/features/mastering-markdown/", // here the link to our markdown manual would be
         className: "fa fa-question-circle",
         title: "Our Markdown Guide",
     },

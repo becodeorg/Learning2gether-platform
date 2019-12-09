@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardQuestionController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <a href="{{ path('dashboard_chapter', {chapter: question.quiz.id}) }}">Back</a>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Answer</th>
+                <th scope="col">Translations <i
+                            title="This page's title and description translations.&#10;Click to go to that page's edit page.&#10;Hover to see the missing translations."
+                            class="help-icon far fa-question-circle"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for answer in questionArray['answers'] %}
+
+                <tr>
+                    <td>
+                        {{ loop.index }}
+                    </td>
+                    <td>{% for answerTranslation in answer['translations'] %}
+                            {% if answerTranslation['language']['name'] == language.name %}
+                                {% if answerTranslation['title'] == '' %}
+                                    Not yet translated
+                                {% else %}
+                                    {{ answerTranslation['title'] }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% set btnClass = 'btn-danger' %}
+                        {% if  (quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations']|length - 5) | abs > 2 %}
+                            {% set btnClass = 'btn-success' %}
+                        {% elseif  (quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations']|length - 5) | abs == 2 %}
+                            {% set btnClass = 'btn-warning' %}
+                        {% endif %}
+                        <a class="btn {{ btnClass }}"
+                           title="{{ quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
+                           href="#">{{ (quizFlags['quiz']['questions'][questionArray['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
+                            / {{ languagecount }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

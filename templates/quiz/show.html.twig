@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiz{% endblock %}
+
+{% block body %}
+    <h1>Quiz for chapter: {{ chapter.title(app.user.language) }}</h1>
+
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'Questions' | trans }}</th>
+                <th></th>
+                <th>{{ 'Actions' | trans }}</th>
+            </tr>
+                {% for quiz_question in quiz.quizQuestions %}
+                    <tr>
+                        <td>{{ quiz_question.questionNumber }}</td>
+                        <td>
+                            <h5>{{ quiz_question.title(app.user.language) }}</h5>
+                            <table>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{ 'Answer' | trans }}</th>
+                                    <th>{{ 'Correct?' | trans }}</th>
+                                    <th>{{ 'Actions' | trans }}</th>
+                                </tr>
+                                {% for quiz_answer in quiz_question.answers %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>
+                                            {{ quiz_answer.title(app.user.language) }}
+                                        </td>
+                                        <td>
+                                            {{ quiz_answer.isCorrect ? 'Yes' : 'No' }}
+                                        </td>
+                                        <td>
+                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_answer_edit', {'id': quiz_answer.id}) }}">{{ 'edit' | trans }}</a>
+                                            {{ include('quiz_answer/_delete_form.html.twig')}}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_answer_new', {'id': quiz_question.id}) }}"><strong>+</strong> {{ 'Add Answer' | trans }}</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_question_edit', {'id': quiz_question.id}) }}">{{ 'edit' | trans }}</a>
+                            {{ include('quiz_question/_delete_form.html.twig')}}
+                        </td>
+                    </tr>
+                {% endfor %}
+        <tr>
+            <td>
+                <a class="btn btn-secondary" href="{{ path('quiz_question_new', {'id': quiz.id}) }}"><strong>+</strong> {{ 'Add Question' | trans }}</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('quiz_index') }}">{{ 'back to list' | trans }}</a> {#todo: switch link to other page#}
+
+{% endblock %}
