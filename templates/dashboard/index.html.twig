@@ -54,19 +54,25 @@
                             </div>
                         </td>
                         {% if module.isPublished %}
-                            <td id="publish-{{ module.id }}"><div class="badge badge-success">Published</div></td>
+                            <td id="publish-{{ module.id }}">
+                                <div class="badge badge-success">Published</div>
+                            </td>
                         {% else %}
-                            <td id="publish-{{ module.id }}"><div class="badge badge-warning">Unpublished</div></td>
+                            <td id="publish-{{ module.id }}">
+                                <div class="badge badge-warning">Unpublished</div>
+                            </td>
                         {% endif %}
                         <td><a href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
                     </tr>
                     <tr>
-                        <td nowrap colspan="6" style="display: none; text-align: left; font-size: 0.75em" id="dump-{{ module.id }}"></td>
+                        {# sorry to the poor soul that has to style this #}
+                        <td colspan="6" style="display: none; text-align: left; font-size: 0.75em"
+                            id="dump-{{ module.id }}"></td>
                     </tr>
                 {% else %}
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
-                        <td colspan="6">This module needs more chapters!</td>
+                        <td colspan="6">This module needs more chapters! {link to module overview}</td>
                     </tr>
                 {% endif %}
             {% endfor %}

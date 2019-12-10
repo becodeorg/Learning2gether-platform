@@ -58,7 +58,7 @@ class FlaggingManager
                 $flagData['moduleNeededTranslations'][] = $moduleTranslation['language']['name'];
             }
         }
-        if ((count($flagData['moduleNeededTranslations']) - $this->languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
+        if (!in_array('English', $flagData['moduleNeededTranslations'], true) && ((count($flagData['moduleNeededTranslations']) - $this->languageCount) <= -self::MIN_NEEDED_TRANSLATIONS)) {
             $flagData['moduleStatus'] = true;
         }
 
@@ -71,7 +71,7 @@ class FlaggingManager
         $flagData['chapterNeededTranslations'] = [];
         $flagData['chapterStatus'] = false;
 
-        foreach ($chapterData[0]['translations'] as $chapterTranslation) {
+        foreach ($chapterData['translations'] as $chapterTranslation) {
             if ($chapterTranslation['title'] === '' || $chapterTranslation['description'] = '') {
                 $flagData['chapterNeededTranslations'][] = $chapterTranslation['language']['name'];
             }

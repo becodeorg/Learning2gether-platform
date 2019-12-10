@@ -15,7 +15,6 @@ function checkModule(moduleId) {
         .then(function (response) {
             return response.json();
         }).then(function (data) {
-            data = [];
         if (data.length){
             btn.classList.remove('spinner-border','spinner-border-sm');
             btn.classList.add('badge', 'badge-danger');
