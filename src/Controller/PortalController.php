@@ -22,14 +22,13 @@ class PortalController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        if(!isset($_GET['mode'])) {
-            $_GET['mode'] = LearningModuleType::HARD;
-        }
 
-        $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findBy([
+        $modules = !isset($_GET['mode'])?
+            $this->getDoctrine()->getRepository(LearningModule::class)->findBy(['isPublished' => true])
+            : $this->getDoctrine()->getRepository(LearningModule::class)->findBy([
             'isPublished' => true,
             'type' => strtoupper($_GET['mode'])
-        ]);
+            ]);
 
         $activeModules = $finishedModules = [];
 

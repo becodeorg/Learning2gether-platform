@@ -136,6 +136,16 @@ class QuizQuestion
         return "Not defined";
     }
 
+    public function getAnswerById(int $id) :? QuizAnswer
+    {
+        foreach($this->getAnswers() AS $answer) {
+            if($answer->getId() === $id) {
+                return $answer;
+            }
+        }
+        return null;
+    }
+
     public function getTrTitle(string $langCode): ?string
     {
         foreach ($this->getTranslations() AS $translation) {
