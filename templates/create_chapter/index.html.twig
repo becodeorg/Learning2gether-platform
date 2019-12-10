@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreateChapterController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="row">
+            <p class="mod-step">Edit the chapters english title and description</p>
+        </div>
+
+        <section class="module-cube">
+            {{ form_start(chapterTranslationForm) }}
+            {{ form_row(chapterTranslationForm.title) }}
+            {{ form_row(chapterTranslationForm.description) }}
+            <button class="btn btn-skills">Save</button>
+            {{ form_end(chapterTranslationForm) }}
+        </section>
+
+        {% for page in chapter.pages %}
+            <section class="module-cube">
+
+            </section>
+        {% endfor %}
+        <div class="text-center">
+            <form method="post" action="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">
+                <button class="btn btn-skills">Add a page</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
