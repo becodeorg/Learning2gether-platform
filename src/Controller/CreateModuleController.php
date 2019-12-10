@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Domain\ImageManager;
 use App\Entity\Category;
 use App\Entity\Chapter;
+use App\Entity\ChapterTranslation;
 use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
@@ -42,13 +43,24 @@ class CreateModuleController extends AbstractController
 
         // check if the form is submitted
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+
             $module = $form->getData();
-            $module = $this->makeTranslations($module);
+            $module = $this->makeModuleTranslations($module, $languageAll);
+
+            // make new chapter and its translations
             $chapter = new Chapter($module);
+            $chapter = $this->makeChapterTranslations($chapter, $languageAll);
+
+            // make quiz and attach it to chapter
             $quiz = new Quiz();
             $chapter->setQuiz($quiz);
+
+            // add chapter to module and flush
             $module->addChapter($chapter);
             $this->flushNewModule($module);
+
             return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
         }
 
@@ -59,11 +71,11 @@ class CreateModuleController extends AbstractController
 
     /**
      * @param LearningModule $module
+     * @param array $languageAll
      * @return LearningModule
      */
-    public function makeTranslations(LearningModule $module): LearningModule
+    private function makeModuleTranslations(LearningModule $module, array $languageAll): LearningModule
     {
-        $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
         foreach ($languageAll as $language) {
             if ($language->getCode() !== 'en') {
                 $translation = new LearningModuleTranslation($module, $language);
@@ -74,10 +86,24 @@ class CreateModuleController extends AbstractController
     }
 
     /**
+     * @param Chapter $chapter
+     * @param array $languageAll
+     * @return Chapter
+     */
+    private function makeChapterTranslations(Chapter $chapter, array $languageAll): Chapter
+    {
+        foreach ($languageAll as $language) {
+            $translation = new ChapterTranslation($language, $chapter);
+            $chapter->addTranslation($translation);
+        }
+        return $chapter;
+    }
+
+    /**
      * @param LearningModule $module
      * @return LearningModule
      */
-    public function flushNewModule(LearningModule $module): LearningModule
+    private function flushNewModule(LearningModule $module): LearningModule
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);

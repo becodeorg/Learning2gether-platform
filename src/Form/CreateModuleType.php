@@ -32,9 +32,6 @@ class CreateModuleType extends AbstractType
                 'multiple'=>false,
                 'expanded'=>true
             ])
-            ->add('create', SubmitType::class, [
-                'label' => 'Create chapter'
-            ])
         ;
 
         $builder->add('translations', CollectionType::class, [

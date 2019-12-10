@@ -3,12 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Chapter;
-use App\Entity\ChapterPage;
-use App\Entity\ChapterTranslation;
 use App\Entity\Language;
 use App\Entity\LearningModule;
-use App\Form\CreateChapterPageType;
-use App\Form\EditChapterType;
+use App\Form\EditChapterTranslationsType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,32 +22,24 @@ class CreateChapterController extends AbstractController
      */
     public function index(LearningModule $module, Chapter $chapter, Request $request): Response
     {
+        // get the english chapter translation from the db
         $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
-        $chapterTranslation = new ChapterTranslation($english, $chapter);
-        $chapter->addTranslation($chapterTranslation);
-        $chapterTranslationForm = $this->createForm(EditChapterType::class, $chapter);
+        $englishTranslation = $chapter->getTranslations()->filter(static function ($entry) use ($english){
+            return in_array($entry->getLanguage()->getCode(), (array)$english->getCode() , true);
+        });
+
+        $chapterTranslationForm = $this->createForm(EditChapterTranslationsType::class, $englishTranslation[0]);
         $chapterTranslationForm->handleRequest($request);
 
-        // TODO add empty chapter translations
-
-        $page = $chapter->createNewPage();
-        $addPageBtn = $this->createForm(CreateChapterPageType::class, $page);
-        $addPageBtn->handleRequest($request);
-
         if ($chapterTranslationForm->isSubmitted() && $chapterTranslationForm->isValid()){
-            $chapter = $chapterTranslationForm->getData();
+            $chapterTranslation = $chapterTranslationForm->getData();
             $em = $this->getDoctrine()->getManager();
-            $em->persist($chapter);
+            $em->persist($chapterTranslation);
             $em->flush();
-        }
-
-        if ($addPageBtn->isSubmitted() && $addPageBtn->isValid()){
-            return $this->redirectToRoute('create_page', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
         }
 
         return $this->render('create_chapter/index.html.twig', [
             'chapterTranslationForm' => $chapterTranslationForm->createView(),
-            'addPageBtn' => $addPageBtn->createView(),
             'english' => $english,
             'module' => $module,
             'chapter' => $chapter,
