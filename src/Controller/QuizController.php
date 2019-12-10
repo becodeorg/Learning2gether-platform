@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Domain\LanguageTrait;
 use App\Domain\PageManager;
 use App\Domain\QuizManager;
+use App\Entity\Language;
 use App\Entity\Quiz;
 use App\Entity\QuizAnswer;
 use App\Entity\QuizQuestion;
@@ -29,12 +30,12 @@ class QuizController extends AbstractController
     /**
      * @Route("/partner/quiz/", name="quiz_index", methods={"GET"})
      */
-    public function index(LearningModuleRepository $learningModuleRepository): Response
+   /* public function index(LearningModuleRepository $learningModuleRepository): Response
     {
         return $this->render('quiz/index.html.twig', [
             'learning_modules' => $learningModuleRepository->findAll(),
         ]);
-    }
+    }*/
 
     /**
      * @Route("/partner/quiz/{id}", name="quiz_show", methods={"GET"})
