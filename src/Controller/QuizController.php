@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Domain\LanguageTrait;
 use App\Domain\PageManager;
 use App\Domain\QuizManager;
+use App\Entity\Language;
 use App\Entity\Quiz;
 use App\Entity\QuizAnswer;
 use App\Entity\QuizQuestion;
@@ -29,21 +30,30 @@ class QuizController extends AbstractController
     /**
      * @Route("/partner/quiz/", name="quiz_index", methods={"GET"})
      */
-    public function index(LearningModuleRepository $learningModuleRepository): Response
+   /* public function index(LearningModuleRepository $learningModuleRepository): Response
     {
         return $this->render('quiz/index.html.twig', [
             'learning_modules' => $learningModuleRepository->findAll(),
         ]);
-    }
+    }*/
 
     /**
      * @Route("/partner/quiz/{id}", name="quiz_show", methods={"GET"})
      */
-    public function show(Quiz $quiz, ChapterRepository $chapterRepository): Response
+    public function show(Request $request, Quiz $quiz, ChapterRepository $chapterRepository): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        if ($request->query->get('lang') === null){
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $request->query->set('lang', $language->getCode());
+        }else {
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        }
+
         return $this->render('quiz/show.html.twig', [
             'chapter' => $chapterRepository->findOneBy(['quiz' => $quiz->getId()]),
             'quiz' => $quiz,
+            'language'=>$language,
         ]);
     }
 
