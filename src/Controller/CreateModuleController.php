@@ -50,10 +50,7 @@ class CreateModuleController extends AbstractController
                 $module->setImage($newImage->getSrc());
 
                 $module = $this->flushNewModule($module);
-                $cat = new Category();
-                $cat->setLearningModule($module);
-                $this->getDoctrine()->getManager()->persist($cat);
-                $this->getDoctrine()->getManager()->flush();
+
 
                 return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
             }
@@ -100,6 +97,10 @@ class CreateModuleController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);
+
+        $cat = new Category();
+        $cat->setLearningModule($module);
+        $entityManager->persist($cat);
         $entityManager->flush();
 
         return $module;
