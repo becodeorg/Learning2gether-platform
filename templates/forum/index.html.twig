@@ -5,16 +5,16 @@
 {% block body %}
 
     <section class="wrapper-two">
-        <h1>Meeting place</h1>
+        <h1>{{ "Meeting place" | trans}}</h1>
 
         <section class="row forum-cat-row">
             <div class="col-8">
-                <h2>Categories</h2>
+                <h2>{{ "Categories" | trans}}</h2>
             </div>
 
             <div class="col-4">
                 <div class="row">
-                    <div class="col-3">Skillset:</div>
+                    <div class="col-3">{{ "Skillset" | trans}}:</div>
                     <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum') }}">{{ 'ALL' | trans | upper }}</a> </div>
                     <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a> </div>
                     <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a> </div>
