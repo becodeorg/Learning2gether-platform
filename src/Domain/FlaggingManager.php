@@ -71,7 +71,7 @@ class FlaggingManager
         $flagData['chapterNeededTranslations'] = [];
         $flagData['chapterStatus'] = false;
 
-        foreach ($chapterData['translations'] as $chapterTranslation) {
+        foreach ($chapterData[0]['translations'] as $chapterTranslation) {
             if ($chapterTranslation['title'] === '' || $chapterTranslation['description'] = '') {
                 $flagData['chapterNeededTranslations'][] = $chapterTranslation['language']['name'];
             }
@@ -82,11 +82,11 @@ class FlaggingManager
         return $flagData;
     }
 
-    public function checkQuizTranslationSolo(array $quizData, int $languageCount): array
+    public function checkQuizTranslationSolo(array $quizData): array
     {
         $flagData = [];
-
-        foreach ($quizData['quizQuestions'] as $question) {
+        $languageCount = $this->languageCount;
+        foreach ($quizData['quiz']['quizQuestions'] as $question) {
             $flagData = $this->checkQuizTranslations($languageCount, $flagData, $question);
             $flagData = $this->checkAnswers($languageCount, $question, $flagData);
         }

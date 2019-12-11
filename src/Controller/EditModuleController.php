@@ -10,6 +10,7 @@ use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Entity\LearningModuleTranslation;
 use App\Entity\Quiz;
+use App\Entity\User;
 use App\Form\CreateChapterType;
 use App\Form\EditModuleType;
 use App\Form\ImageUploaderType;
@@ -28,8 +29,7 @@ class EditModuleController extends AbstractController
      */
     public function index(Request $request, LearningModule $module): Response
     {
-        $imageManager = new ImageManager();
-
+        /* @var User $user */
         $user = $this->getUser();
 
         $form = $this->createForm(EditModuleType::class, $module);
@@ -39,19 +39,9 @@ class EditModuleController extends AbstractController
         $chapterBtn = $this->createForm(CreateChapterType::class, $newChapter);
         $chapterBtn->handleRequest($request);
 
-        $uploader = $this->createForm(ImageUploaderType::class);
-        $uploader->handleRequest($request);
-
         if ($chapterBtn->isSubmitted() && $chapterBtn->isValid()) {
             $this->createAndAddChapter($newChapter, $module);
             $this->flushUpdatedModule($module);
-        }
-
-        if ($uploader->isSubmitted() && $uploader->isValid()) {
-            $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
-            $prevImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'module', 'src' => $module->getImage()]);
-            $updatedModule = $imageManager->changeModuleImage($uploader->getData()['upload'], $prevImage, $module, $user, $this->getParameter('uploads_directory'));
-            $this->flushUpdatedModule($updatedModule);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -64,7 +54,6 @@ class EditModuleController extends AbstractController
             'module' => $module,
             'form' => $form->createView(),
             'addchapter' => $chapterBtn->createView(),
-            'uploader' => $uploader->createView(),
         ]);
     }
 

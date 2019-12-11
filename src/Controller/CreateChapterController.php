@@ -36,6 +36,7 @@ class CreateChapterController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($chapterTranslation);
             $em->flush();
+            $this->addFlash('success', 'chapter translation saved!');
         }
 
         return $this->render('create_chapter/index.html.twig', [

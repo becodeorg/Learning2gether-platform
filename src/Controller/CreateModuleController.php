@@ -60,7 +60,7 @@ class CreateModuleController extends AbstractController
 
             // add chapter to module and flush
             $module->addChapter($chapter);
-            $this->flushNewModule($module);
+            $module = $this->flushNewModule($module);
 
             return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
         }

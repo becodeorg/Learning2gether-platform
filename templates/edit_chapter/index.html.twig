@@ -4,26 +4,15 @@
 
 {% block body %}
 <div class="example-wrapper">
-    <h1>Howdy Partner!</h1>
     <h3>Currently editing: Module {{ module.id }}, Chapter {{ chapter.chapterNumber }}</h3>
-    {{ form_start(form) }}
-    {% for translation in form.translations %}
-        <hr>
-        <h2>{{ translation.vars.value.language.name }}</h2>
-        {{ form_row(translation) }}
-    {% endfor %}
-    <hr>
-    {{ form_row(form.edit) }}
-    {{ form_end(form) }}
-    <hr>
-    <h3>This chapter contains {{ chapter.pages|length }} pages</h3>
-    <ul>
-        {% for page in chapter.pages %}
-            <li><a href="{{ path('edit_page', {module: module.id , chapter: chapter.id , page : page.id}) }}">Edit page {{ page.pageNumber }}</a></li>
-        {% endfor %}
-    </ul>
-    {{ form_start(createPage) }}
-    {{ form_end(createPage) }}
-    <a href="{{ path('edit_module', {module : module.id}) }}">Back to Module</a>
+
+    <section class="module-cube">
+        {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        <button class="btn btn-skills">Save</button>
+        {{ form_end(form) }}
+    </section>
+
 </div>
 {% endblock %}
