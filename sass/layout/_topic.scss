@@ -1,7 +1,7 @@
 @import "./../variables/variables";
 
 .topic-questions {
-  background-color: $purplecolor;
+  background-color: $purple;
   font-family: $chivofamily;
   padding: 20px 20px 20px 20px;
   border-top-left-radius: 20px;
@@ -10,4 +10,8 @@
 
 .question-row {
   padding-bottom: 10px;
+}
+
+.postbutton form .form-group button{
+  background: red;
 }

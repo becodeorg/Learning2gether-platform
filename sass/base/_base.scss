@@ -3,11 +3,17 @@
 * {
   padding: 0;
   margin: 0;
+  color: $offblack;
+
+}
+
+body {
+  background-color: $offwhite;
 }
 
 
 .chevron_front {
-  color: $whitecolor;
+  color: $offwhite;
   font-weight: bold;
 }
 
@@ -29,116 +35,116 @@
 }
 
 .buttonshadow {
-  -webkit-box-shadow: 12px 12px 19px -17px $black;
-  -moz-box-shadow: 12px 12px 19px -17px $black;
-  box-shadow: 12px 12px 19px -17px $black;
+  -webkit-box-shadow: 12px 12px 19px -17px $offblack;
+  -moz-box-shadow: 12px 12px 19px -17px $offblack;
+  box-shadow: 12px 12px 19px -17px $offblack;
 }
 
 .buttonshadowhover:hover {
-  -webkit-box-shadow: 12px 12px 19px -17px $black;
-  -moz-box-shadow: 12px 12px 19px -17px $black;
-  box-shadow: 12px 12px 19px -17px $black;
+  -webkit-box-shadow: 12px 12px 19px -17px $offblack;
+  -moz-box-shadow: 12px 12px 19px -17px $offblack;
+  box-shadow: 12px 12px 19px -17px $offblack;
 }
 
 .button_1 {
-  background-color: $whitecolor;
-  color: $purplecolor;
-  border: 3pt solid $purplecolor;
+  background-color: $offwhite;
+  color: $purple;
+  border: 3pt solid $purple;
 }
 
 .button_1:hover {
-  color: $whitecolor;
-  background: $purplecolor;
-  border: 3pt solid $purplecolor;
+  color: $offwhite;
+  background: $purple;
+  border: 3pt solid $purple;
 }
 
 .button_2 {
-  border: 3pt solid $darkpurplecolor;
-  background: $darkpurplecolor;
-  color: $whitecolor;
+  border: 3pt solid $darkpurple;
+  background: $darkpurple;
+  color: $offwhite;
 }
 
 .button_2:hover {
-  color: $darkpurplecolor !important;
-  background: $whitecolor;
+  color: $darkpurple !important;
+  background: $offwhite;
 }
 
 .button_3 {
-  border: 3pt solid $purplecolor;
-  background-color: $purplecolor;
-  color: $whitecolor;
+  border: 3pt solid $purple;
+  background-color: $purple;
+  color: $offwhite;
 }
 
 .button_3:hover {
-  color: $purplecolor;
-  background: $whitecolor;
-  border: 3pt solid $whitecolor;
+  color: $purple;
+  background: $offwhite;
+  border: 3pt solid $offwhite;
 }
 
 .button_4 {
   border: 1pt solid $offwhite;
-  background-color: $whitecolor;
-  color: $darkgreycolor;
+  background-color: $offwhite;
+  color: $darkgrey;
 }
 
 .button_4:hover {
   color: #606060;
-  background: $whitecolor;
+  background: $offwhite;
 }
 
 .button_5 {
   border: 3pt solid $darkestpurple;
   background-color: $darkestpurple;
-  color: $whitecolor;
+  color: $offwhite;
 }
 
 .button_5:hover {
   color: $darkestpurple;
-  background: $whitecolor;
+  background: $offwhite;
 }
 
 .button_6 {
-  border: 3pt solid $purplecolor;
-  background-color: $purplecolor;
-  color: $whitecolor;
+  border: 3pt solid $purple;
+  background-color: $purple;
+  color: $offwhite;
 }
 
 .button_6:hover {
-  color: $purplecolor;
-  background: $whitecolor;
-  border: 3pt solid $whitecolor;
+  color: $purple;
+  background: $offwhite;
+  border: 3pt solid $offwhite;
 }
 
 .button_7 {
-  background: $darkpurplecolor;
+  background: $darkpurple;
   border: none;
-  color: $whitecolor;
+  color: $offwhite;
 }
 
 .button_7:hover {
-  color: $purplecolor;
-  background: $whitecolor;
+  color: $purple;
+  background: $offwhite;
   text-decoration: none;
 }
 
 .round_button {
   width: 30px;
   height: 30px;
-  border: 1pt solid $purplecolor;
+  border: 1pt solid $purple;
   border-radius: 15px;
-  background-color: $purplecolor;
+  background-color: $purple;
 }
 
 .round_button:hover {
   width: 30px;
   height: 30px;
-  border: 1pt solid $purplecolor;
+  border: 1pt solid $purple;
   border-radius: 15px;
-  background-color: $purplecolor;
+  background-color: $purple;
 }
 
 .progress_1 {
-  border: 1pt solid $darkpurplecolor;
+  border: 1pt solid $darkpurple;
   border-radius: 5px;
 }
 
@@ -150,7 +156,7 @@
 }
 
 .progress_1_bar {
-  background-color: $purplecolor;
+  background-color: $purple;
   height: 40px;
   line-height: 0 !important;
 }
@@ -158,21 +164,21 @@
 .progress_2 {
   width: 200px;
   height: 12px;
-  border: 1pt solid $darkpurplecolor;
+  border: 1pt solid $darkpurple;
   border-radius: 40px;
 }
 
 .progress_2_bar {
-  background-color: $purplecolor;
+  background-color: $purple;
 }
 
 .navwrap {
-  background: $purplecolor;
+  background: $purple;
   margin-top: -100px;
 }
 
 .nav-bar-color {
-  background-color: $purplecolor;
+  background-color: $purple;
 }
 
 .navbar, .example-wrapper {
@@ -185,9 +191,9 @@
 }
 
 #language_switcher_language {
-  background: $purplecolor;
-  border: 1px solid $whitecolor;
-  color: $whitecolor;
+  background: $purple;
+  border: 1px solid $offwhite;
+  color: $offwhite;
 }
 
 .wrapper {
@@ -212,15 +218,17 @@
 // BUTTON HARD/SOFT SKILLS filter
 
 .btn-skills {
-  background-color: $purplecolor;
-  color: $whitecolor;
+  background-color: $purple;
+  color: $offwhite;
   font-family: $chivofamily;
   font-weight: 400;
+  width: 70px;
+  padding: 0px;
 }
 
 .btn-skills:hover {
   background-color: $darkestpurple;
-  color: $whitecolor;
+  color: $offwhite;
 }
 
 #profiledrop {
@@ -258,21 +266,21 @@
 }
 
 .btn-forum {
-  background-color: $purplecolor;
-  color: $whitecolor;
+  background-color: $purple;
+  color: $offwhite;
   font-family: $chivofamily;
   padding: 5px 20px 5px 20px;
   letter-spacing: 1px;
   border-radius: 40px;
 }
 .btn-forum:hover {
-  background-color: $darkpurplecolor;
-  color: $whitecolor;
+  background-color: $darkpurple;
+  color: $offwhite;
   text-decoration: none;
 }
 
 .cards-forum {
-  border: 2px solid $purplecolor;
+  border: 2px solid $purple;
   margin-bottom: 20px;
   padding: 25px 0 10px 0;
   border-radius: 20px;

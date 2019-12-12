@@ -18,7 +18,7 @@ class PostType  extends AbstractType
         $builder
             ->add('subjectPost', TextType::class)
             ->add('question_id', HiddenType::class)
-            ->add('postPost', SubmitType::class, array('label' => 'Post'));
+            ->add('postPost', SubmitType::class, array('label' => 'Reply'));
 
         $builder->setMethod('POST');
 

@@ -80,10 +80,14 @@
             {% endif %}
         {% endfor %}
 
-
+        <div class="postbutton">
         {# Input answer to question#}
         {{ form_start(postForm) }}
+
+            {#        {{ form_widget(postPost.post) }}#}
+
         {{ form_end(postForm) }}
+        </div>
 
 
     </section>

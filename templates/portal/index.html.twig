@@ -4,33 +4,28 @@
 
 {% block body %}
 
-    <div class="wrapper">
+    <div class="wrapper-two">
 
-        <section class="row forum-cat-row">
-            <div class="col-8">
-            </div>
+        <p class="title-css">{{ 'Learning Hub' | trans }}</p>
+        <p class="text-center intro-lh">{{ 'Navigate through our Learninghub and find the appropiate training to reach your
+            full potential.' | trans }}</p>
 
-            <div class="col-4">
-                <div class="row">
-                    <div class="col-3">Skillset:</div>
 
-                    <div class="col-3">
+                <div class="row forum-cat-row">
+                    <div class="col-3 col-md-auto skillset">select skillset:</div>
+
+                    <div class="col-3 col-md-auto">
                         <a class="btn btn-default btn-skills " href="{{ path('forum', {'mode': 'ALL'}) }}">{{ 'all' | trans | upper }}</a>
                     </div>
 
-                    <div class="col-3">
+                    <div class="col-3 col-md-auto">
                         <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3 col-md-auto">
                         <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <h1 class="text-center">{{ 'Learning Hub' | trans }}</h1>
-        <p class="text-center intro-lh">{{ 'Navigate through our Learninghub and find the appropiate training to reach your
-            full potential.' | trans }}</p>
 
         <h2>{{ 'Active modules' | trans }}</h2>
         <div class="card-columns">

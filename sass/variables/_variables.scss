@@ -1,14 +1,31 @@
 
 //COLORS
 
-$purplecolor: #8b54a0;
-$darkpurplecolor: #460e56;
-$darkgreycolor: #7a7a7a;
-$whitecolor: #f7f6f6;
-$darkestpurple: rgb(51,0,61);
-$offwhite: #b3b3b3;
-$black: black;
-$white: lightgrey;
+//MAIN colors
+
+$purple: #8b54a0;
+$pink: #b369b5;
+$gradient-navbar: linear-gradient(90deg, rgba(179,105,181,1) 0%, rgba(139,84,160,1) 100%);
+$gradient-main: linear-gradient(210deg, rgba(179,105,181,1) 0%, rgba(139,84,160,1) 100%);
+$darkpurple: #460e56;
+$darkestpurple: rgb(51,0,61);    /*#330033d*/
+
+//BLACK & WHITE TONES (like in partner screens)
+
+$offwhite: #fdfdfd;
+$offblack: #232323;
+$darkgrey: #7a7a7a;
+$lightgrey: #f7f6f6;
+$mediumgrey: #d3d3d3;
+
+//SECONDARY colors ( alerts, delete buttons, add etc)
+
+$yellow: #ffdf85;
+$red: #ff8787;
+$green: #89ffb8;
+$blue: #8ca7ff;
+
+
 
 //SHADOWS
 
