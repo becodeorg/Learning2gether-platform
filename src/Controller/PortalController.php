@@ -29,16 +29,6 @@ class PortalController extends AbstractController
                 'type' => strtoupper($_GET['mode'])
             ]);
 
-
-        if(!isset($_GET['mode'])) {
-            $_GET['mode'] = LearningModuleType::HARD;
-        }
-
-        $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findBy([
-            'isPublished' => true,
-            'type' => strtoupper($_GET['mode'])
-        ]);
-
         $activeModules = $finishedModules = [];
 
         /** @var User $user */
