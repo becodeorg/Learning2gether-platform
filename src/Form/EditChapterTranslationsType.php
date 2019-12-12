@@ -21,7 +21,7 @@ class EditChapterTranslationsType extends AbstractType
                 'empty_data' => '',
             ])
             ->add('description', TextareaType::class, [
-                'attr' => ['placeholder' => 'Description'],
+                'attr' => ['placeholder' => 'Description', 'rows' => 4],
                 'label' => 'Description',
                 'required' => false,
                 'empty_data' => '',

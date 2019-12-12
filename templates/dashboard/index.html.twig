@@ -10,7 +10,7 @@
         }
     </style>
 
-    <div class="container">
+    <div class="container mt-5">
 
         <!-- add module button -->
         <section class="row rowaddbutton">
@@ -22,8 +22,16 @@
             </a>
         </section>
 
-        <!-- module table -->
-        <table class=" table table-hover text-center">
+        <section class="row">
+            <a href="{{ path('forum') }}">
+                <button type="button" class="btn btn-circle btn-xl"
+                        data-toggle="tooltip" data-placement="right" title="Go to forum">
+                    <img class="addiconflag" src="{{ asset('assets/img/flagicon.svg') }}" alt="flag icon">
+                </button>
+            </a>
+        </section>
+
+        <table class="mt-5 table table-hover text-center">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -89,7 +97,6 @@
             </tbody>
         </table>
     </div>
-
 
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>

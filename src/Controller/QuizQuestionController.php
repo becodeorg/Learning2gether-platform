@@ -30,8 +30,8 @@ class QuizQuestionController extends AbstractController
     }
 
     /**
-     * @Route("/partner/quiz/question/new/{id}", name="quiz_question_new", methods={"GET","POST"}, requirements={
-     *     "id" = "\d+"})
+     * @Route("/partner/quiz/question/new/{quiz}", name="quiz_question_new", methods={"GET","POST"}, requirements={
+     *     "quiz" = "\d+"})
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request, Quiz $quiz): Response

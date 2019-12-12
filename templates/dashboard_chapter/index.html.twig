@@ -7,7 +7,7 @@
 
     </style>
 
-    <div class="container">
+    <div class="container mt-3">
         <a class="btn btn-skills" href="{{ path('dashboard_module', {module: chapter.learningModule.id }) }}">Back</a>
         <hr>
         <h3>Pages</h3>
@@ -41,7 +41,7 @@
                             {% if pageTL['title'] != '' %}
                                 {% set badgeclass = 'badge-success' %}
                             {% endif %}
-                            <a class="badge {{ badgeclass }}" href="{{ path('edit_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, lang: pageTL['language']['code']}) }}">{{ pageTL['language']['name'] }}</a>
+                            <a class="badge {{ badgeclass }}" href="{{ path('edit_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, lang: pageTL['language']['code'], return: 'dash'}) }}">{{ pageTL['language']['name'] }}</a>
                         {% endfor %}
                     </td>
                     <td><a class="badge badge-danger" onclick="return confirm('Are you sure you want to delete this page?')" href="{{ path('delete_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, return: 'dash'}) }}">Delete</a></td>
@@ -49,6 +49,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="text-center">
+            <a class="badge btn-skills" href="{{ path('create_chapter', {'module': chapter.learningModule.id, 'chapter': chapter.id}) }}">++ Add more pages ++</a>
+        </div>
         <h3>Quiz</h3>
         <table class="table table-hover text-center">
             <thead>

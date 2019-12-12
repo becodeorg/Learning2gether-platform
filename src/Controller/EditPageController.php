@@ -51,7 +51,20 @@ class EditPageController extends AbstractController
             $page->addTranslation($pageTl);
             $this->flushUpdatedPage($page);
             $this->addFlash('success', 'Changes saved.');
-            return $this->redirectToRoute('dashboard_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
+
+            if (isset($_GET['return'])){
+                switch ($_GET['return']){
+                    case 'flow':
+                        return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
+                    case 'dash':
+                        return $this->redirectToRoute('dashboard_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
+                    default:
+                        return $this->redirectToRoute('partner');
+                }
+            }
+
+
+
         }
 
         $imagesAll = $this->getDoctrine()->getRepository(Image::class)->findAll();

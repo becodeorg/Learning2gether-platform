@@ -52,7 +52,7 @@
                                 {% endfor %}
                                 <tr>
                                     <td>
-                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_answer_new', {'id': quiz_question.id, 'lang': language.code}) }}"><strong>+</strong> {{ 'Add Answer' | trans }}</a>
+                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_answer_new', {'quiz': quiz_question.id, 'lang': language.code}) }}"><strong>+</strong> {{ 'Add Answer' | trans }}</a>
                                     </td>
                                 </tr>
                             </table>

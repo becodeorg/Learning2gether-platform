@@ -19,7 +19,7 @@ class CreateModuleTranslationType extends AbstractType
                 'required' => true,
             ])
             ->add('description', TextareaType::class, [
-                'attr' => ['placeholder' => 'Description'],
+                'attr' => ['placeholder' => 'Description', 'rows' => 4],
                 'label' => false,
                 'required' => true,
             ])

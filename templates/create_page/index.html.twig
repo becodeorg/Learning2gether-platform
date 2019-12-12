@@ -22,7 +22,8 @@
                             store any changes.</strong>
                         <hr>
                         {% for image in imagesAll %}
-                            <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
+                            <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px"
+                                 alt="{{ image.name }}">
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
@@ -33,35 +34,33 @@
         </div>
     </div>
 
-    <div class="wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <section class="module-cube">
-                        <span>Chapter title: {{ chapter.title(english) }}</span><br>
-                        <span>Chapter description: {{ chapter.description(english) }}</span><br>
-                        <span>number of pages: {{ chapter.pages|length }}</span><br>
-                        <span>Module Title: {{ module.title(english) }}</span><br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <section class="module-cube">
+                    <span>Chapter title: {{ chapter.title(english) }}</span><br>
+                    <span>Chapter description: {{ chapter.description(english) }}</span><br>
+                    <span>number of pages: {{ chapter.pages|length }}</span><br>
+                    <span>Module Title: {{ module.title(english) }}</span><br>
 
-                    </section>
-                </div>
+                </section>
             </div>
-            <div class="row mb-4">
-                <div class="col">
-                    <a class="btn btn-skills"
-                       href="{{ path('create_chapter', {'chapter': chapter.id, 'module': module.id}) }}">Back to
-                        chapter</a>
-                </div>
-            </div>
-
-            {{ form_start(form) }}
-            {{ form_row(form.title) }}
-            {{ form_row(form.content) }}
-            <button class="btn btn-skills" value="exit" name="button">Save & exit</button>
-            <button class="btn btn-skills" value="next" name="button">Save & create next page</button>
-            {{ form_end(form) }}
-
         </div>
+        <div class="row mb-4">
+            <div class="col">
+                <a class="btn btn-skills"
+                   href="{{ path('create_chapter', {'chapter': chapter.id, 'module': module.id}) }}">Back to
+                    chapter</a>
+            </div>
+        </div>
+
+        {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.content) }}
+        <button class="btn btn-skills" value="exit" name="button">Save & exit</button>
+        <button class="btn btn-skills" value="next" name="button">Save & create next page</button>
+        {{ form_end(form) }}
+
     </div>
 
     <!-- markdown editor -->
