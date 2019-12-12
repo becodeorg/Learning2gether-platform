@@ -19,12 +19,12 @@ class Category
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CategoryTranslation", mappedBy="category", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\CategoryTranslation", mappedBy="category", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $translations;
 
     /**
-     * @ORM\OneToMany(targetEntity="Question", mappedBy="category", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="category", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $topics;
 

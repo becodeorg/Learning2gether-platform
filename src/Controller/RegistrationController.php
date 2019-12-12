@@ -31,6 +31,16 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // compare pwd and pwd-repeat
+            $pwd = $_POST['registration_form']['plainPassword'];
+            $pwdRepeat = $_POST['registration_form']['passwordRepeat'];
+
+            if (!$pwd || !$pwdRepeat || ($pwd != $pwdRepeat)) {
+                $this->addFlash('error', 'Enter your password correctly again!');
+                return $this->redirect($_SERVER['HTTP_REFERER']);
+            }
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(

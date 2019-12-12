@@ -34,9 +34,13 @@ class QuizAnswerController extends AbstractController
     public function new(Request $request, QuizQuestion $quizQuestion): Response
     {
         $em = $this->getDoctrine()->getManager();
-        //$quizQuestion = $em->getRepository(QuizQuestion::class)->find($id);
-        $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
 
+        if ($request->query->get('lang') === null){
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $request->query->set('lang', $language->getCode());
+        }else {
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        }
 
         $quizAnswer = new QuizAnswer($quizQuestion);
         $quizAnswerTranslation = new QuizAnswerTranslation($quizAnswer,$language);
@@ -77,8 +81,14 @@ class QuizAnswerController extends AbstractController
     public function edit(Request $request, QuizAnswer $quizAnswer): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
         $quizAnswerTranslations= $quizAnswer->getTranslations();
+
+        if ($request->query->get('lang') === null){
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $request->query->set('lang', $language->getCode());
+        }else {
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        }
 
         foreach ($quizAnswerTranslations as $quizAnswerTrans){
             if ($quizAnswerTrans->getLanguage()->getCode() === $language->getCode()){

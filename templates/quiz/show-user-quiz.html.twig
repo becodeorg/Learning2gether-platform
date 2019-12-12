@@ -5,7 +5,7 @@
 
 {% block body %}
     <div class="wrapper">
-        <form method="post" action="{{ path('quiz_send', {'quiz': quiz.idtete}) }}">
+        <form method="post" action="{{ path('quiz_send', {'quiz': quiz.id}) }}">
             <p class="center">{{ module.getTitle(language) }}</p>
             <h1>{{ 'Quiz'|trans }}</h1>
             <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">

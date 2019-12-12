@@ -3,11 +3,12 @@
 {% block title %}{{ 'Edit QuizQuestion' | trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'Edit QuizQuestion' | trans }} {{ quiz_question.questionNumber }}</h1>
+    <h1>{{ 'Chapter: ' }}{{ quiz_question.quiz.chapter.trTitle(app.request.query.get('lang')) }}</h1>
+    <h2>{{ 'Edit QuizQuestion ' | trans }} {{ quiz_question.questionNumber }}</h2>
 
     {{ include('quiz_question/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id}) }}">{{'back to list' | trans }}</a>
+    <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id, 'lang': app.request.query.get('lang')}) }}">{{'back to list' | trans }}</a>
 
     {{ include('quiz_question/_delete_form.html.twig') }}
 {% endblock %}
