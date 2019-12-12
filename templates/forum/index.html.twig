@@ -4,15 +4,12 @@
 
 {% block body %}
 
-    <section class="wrapper-two">
-        <h1>{{ "Meeting place" | trans}}</h1>
+    <section class="example-wrapper">
+
 
         <section class="row forum-cat-row">
-            <div class="col-8">
-                <h2>{{ "Categories" | trans}}</h2>
-            </div>
-
-            <div class="col-4">
+            <div class="col-8"></div>
+            <div class="col-4 skillset">
                 <div class="row">
                     <div class="col-3">{{ "Skillset" | trans}}:</div>
                     <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum') }}">{{ 'ALL' | trans | upper }}</a> </div>
@@ -21,6 +18,8 @@
                 </div>
             </div>
         </section>
+        <h1 class="text-center">Meeting place</h1>
+        <p class="text-center">Categories</p>
 
         <div class="card-columns">
             {% for category in allCategories %}
