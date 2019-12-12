@@ -10,14 +10,13 @@
     {% endif %}
 
     {{ question.subject }} <br>
-    {{ question.dateFormatted }}
     <br><br>
     <h5>Description of Question</h5>
     {% set firstpost = true %}
     {% for post in posts %}
         {% if firstpost == true %}
             {{ post.subject }}<br>
-            {{ post.dateFormatted }}<br><br
+            {{ post.dateFormatted }}<br><br>
             {{ post.createdBy.username }}<br><br><br>
             <hr>
             <h5>Reply to Question</h5>
@@ -30,7 +29,7 @@
             <button type="submit" class=""><img src="https://via.placeholder.com/50" alt="btn-delete"></button>
             {{ form_end(upvotes[post.id]) }}<br>
             {{ post.dateFormatted }}<br>
-            {{ post.createdBy.username }}<br><br
+            {{ post.createdBy.username }}<br><br>
 
             <br>
             {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
@@ -43,6 +42,8 @@
     {% endfor %}
 
     {{ form_start(postForm) }}
+    {{ form_widget(postForm) }}
+    <button type="submit" class="">Post</button>
     {{ form_end(postForm) }}<br>
 
 {% endblock %}

@@ -16,9 +16,9 @@
     <div class="titlewrap">
         <h2>{{ 'Welcome to the homepage' | trans}}</h2>
         <h1>Learning2gether</h1>
-        <p>Where digital and soft skills meet.</p>
+        <p>{{ "Where digital and soft skills meet." | trans }}</p>
     </div>
-    <a class="learnmore button_2 button buttonshadow center">Learn More</a>
+    <a class="learnmore button_2 button buttonshadow center">{{ "Learn More" | trans }}</a>
 
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
