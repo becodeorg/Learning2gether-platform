@@ -22,6 +22,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('avatar', FileType::class, [
+                'required' => false,
                 'attr'=>
                     array(
                         'placeholder'=>'Avatar',
