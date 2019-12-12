@@ -60,9 +60,34 @@ class ProfileController extends AbstractController
             $imageManager = new ImageManager();
             $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
             $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'user' => $user->getId()]);
+            // check if there was previous img
+            if(!$avatarImage){
+                $newImage = $imageManager->createImage($request->files->get('edit_profile')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
+                $user->setAvatar($newImage->getSrc());
+                $this->getDoctrine()->getManager()->persist($newImage);
+            } else {
+            // if there was an old image
             $user = $imageManager->changeUserAvatarImage($request->files->get('edit_profile')['avatar'], $avatarImage, $user, $this->getParameter('uploads_directory'));
+            }
             $this->flushUpdatedUser($user);
         }
+
+        /*
+        $entityManager = $this->getDoctrine()->getManager();
+
+        if($request->files->get('registration_form')['avatar']){
+            $imageManager = new ImageManager();
+            $newImage = $imageManager->createImage($request->files->get('registration_form')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
+            $user->setAvatar($newImage->getSrc());
+            $entityManager->persist($newImage);
+        }
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+        */
+
+
+
 
         return $this->render('profile/index.html.twig', [
             'badgeKeys' => $badgeKeys,
