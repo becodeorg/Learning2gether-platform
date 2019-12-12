@@ -136,15 +136,14 @@
   background-color: #8b54a0; }
 
 .navwrap {
-  background: #8b54a0;
-  margin-top: -100px; }
+  background: #8b54a0; }
 
 .nav-bar-color {
   background-color: #8b54a0; }
 
 .navbar, .example-wrapper {
   max-width: 1000px;
-  margin: 100px auto; }
+  margin: 0 auto; }
 
 .navbar {
   padding: 10px 0; }
@@ -154,12 +153,8 @@
   border: 1px solid #f7f6f6;
   color: #f7f6f6; }
 
-.wrapper {
-  width: 1000px;
-  margin: 0 auto; }
-
-.wrapper-two {
-  width: 1000px;
+.example-wrapper {
+  max-width: 1000px;
   margin: 0 auto; }
 
 .card {
@@ -199,6 +194,12 @@
   height: 100vh;
   z-index: 50; }
 
+@media only screen and (max-width: 1100px) {
+  .navwrap nav {
+    padding: 10px 20px; }
+
+  .example-wrapper {
+    padding: 0 20px; } }
 .nav-bar-color {
   background-color: #8b54a0; }
 
@@ -457,7 +458,7 @@ h1 {
     z-index: -10; }
 
 @media only screen and (max-width: 770px) {
-  .wrapper {
+  .example-wrapper {
     width: 100%; }
 
   .btnchap {
@@ -486,6 +487,7 @@ h1 {
   color: #f7f6f6; }
 
 .sidebar {
+  color: black;
   height: 100vh;
   top: 0;
   width: 300px;
@@ -524,10 +526,12 @@ footer {
   right: 350px;
   bottom: 100px; }
 
-.forgot {
+.forgot, .accountgot {
   position: absolute;
-  bottom: 50px;
-  right: 30px; }
+  bottom: 20px;
+  right: 30px;
+  color: black;
+  text-align: right; }
 
 .uploader {
   width: 70%;
@@ -551,7 +555,10 @@ footer {
 
 @media only screen and (max-width: 600px) {
   .sidebar {
-    width: 100%; }
+    width: 100%;
+    padding: 20px;
+    height: auto;
+    min-height: 100vh; }
 
   .logo {
     width: 70%;
@@ -605,7 +612,7 @@ footer {
   height: 300px; }
 
 .profileimgwrap form .form-group label {
-  display: none; }
+  color: lightgrey; }
 
 .profileimg {
   height: 300px;
@@ -724,9 +731,41 @@ footer {
   font-size: 20px;
   margin: 0; }
 
-.wrapper {
+.example-wrapper {
   width: 1000px;
   margin: 0 auto; }
+
+#black {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  background: black;
+  opacity: 0.5; }
+
+.shown {
+  display: block !important;
+  opacity: 1 !important;
+  margin-top: 50px !important; }
+
+.noClick {
+  opacity: 0.4;
+  pointer-events: none;
+  border-color: #7a7a7a !important;
+  background: #f7f6f6 !important;
+  color: #7a7a7a !important; }
+
+#completeText {
+  font-weight: bold;
+  font-size: 14px;
+  position: absolute;
+  margin-top: -30px;
+  color: #7a7a7a !important; }
+
+.modal-dialog {
+  padding: 20px; }
 
 .btnchapquiz {
   width: 200px;
@@ -767,7 +806,7 @@ footer {
   margin-top: 50px; }
 
 @media only screen and (max-width: 770px) {
-  .wrapper {
+  .example-wrapper {
     width: 100%; }
 
   .btnchapquiz {

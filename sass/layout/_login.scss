@@ -6,6 +6,7 @@
 }
 
 .sidebar{
+  color: $black;
   height: 100vh;
   top: 0;
   width: 300px;
@@ -51,10 +52,12 @@ footer{
   bottom: 100px;
 }
 
-.forgot{
+.forgot, .accountgot{
   position: absolute;
-  bottom: 50px;
+  bottom: 20px;
   right: 30px;
+  color: $black;
+  text-align: right;
 }
 
 .uploader{
@@ -85,6 +88,9 @@ footer{
 @media only screen and (max-width: 600px) {
   .sidebar {
     width: 100%;
+    padding: 20px;
+    height: auto;
+    min-height: 100vh;
   }
 
   .logo{
@@ -96,6 +102,7 @@ footer{
     position: relative;
     margin-top: 100px;
   }
+
 }
 
 @media only screen and (max-width: 810px) {
