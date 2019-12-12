@@ -27,12 +27,20 @@ class DashboardController extends AbstractController
         // get the current language
         $language = $this->getLanguage($request);
 
+        $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
+
         // fetch all LM objects from the DB
         $allModules = $this->getDoctrine()->getRepository(LearningModule::class)->findAll();
+
+        $lmRepo = $this->getDoctrine()->getRepository(LearningModule::class);
+        $fm = new FlaggingManager($languageCount);
 
         return $this->render('dashboard/index.html.twig', [
             'allModules' => $allModules,
             'language' => $language,
+            'lmRepo' => $lmRepo,
+            'fm' => $fm,
+            'languagecount' => $languageCount,
         ]);
     }
 }

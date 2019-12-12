@@ -80,6 +80,19 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label'=> false
             ])
+            ->add('passwordRepeat', PasswordType::class, [
+                'mapped' => false,
+                'attr'=>
+                    array(
+                        'placeholder'=>'Password repeat',
+                        'class'=>'registerInput'),
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please repeat your password',
+                    ]),
+                ],
+                'label'=> false
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

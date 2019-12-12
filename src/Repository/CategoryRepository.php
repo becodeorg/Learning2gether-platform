@@ -29,7 +29,25 @@ class CategoryRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('c')
             ->join(LearningModule::class, 'l', Join::WITH, 'l = c.id')
             ->where('l.type = :type')
-            ->setParameter('type', $type);
+            ->andwhere('l.isPublished = :isPublished')
+            ->setParameter('type', $type)
+            ->setParameter('isPublished', true);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Category[] Returns an array of Category objects
+     */
+    public function findAllPublished()
+    {
+
+
+        $qb = $this->createQueryBuilder('c')
+            ->join(LearningModule::class, 'l', Join::WITH, 'l = c.id')
+            ->where('l.isPublished = :isPublished')
+            ->setParameter('isPublished', true);
 
         return $qb->getQuery()->getResult();
     }

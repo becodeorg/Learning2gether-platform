@@ -11,7 +11,7 @@
             <div class="col-8"></div>
             <div class="col-4 skillset">
                 <div class="row">
-                    <div class="col-3">Skillset:</div>
+                    <div class="col-3">{{ "Skillset" | trans}}:</div>
                     <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum') }}">{{ 'ALL' | trans | upper }}</a> </div>
                     <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a> </div>
                     <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a> </div>
