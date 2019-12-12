@@ -71,5 +71,10 @@ class Quiz
         return $this;
     }
 
-
+    public function getBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getChapter()->getFirstPage()->getBreadcrumbs($language);
+        $breadcrumbs[] = ['name' => 'Quiz'];
+        return $breadcrumbs;
+    }
 }

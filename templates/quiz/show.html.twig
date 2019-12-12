@@ -2,6 +2,18 @@
 
 {% block title %}Quiz{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        {{ dump(app.request.requestUri) }}
+        {{ dump(quiz.breadcrumbs(app.user.language)[2].routeName) }}
+        <a class="crumb" href="{{ path(quiz.breadcrumbs(app.user.language)[2].routeName, quiz.breadcrumbs(app.user.language)[2].routeOptions) }}">{{ quiz.breadcrumbs(app.user.language)[2].name }}</a>
+        {% for crumb in  quiz.breadcrumbs(app.user.language) %}
+            {{ dump(crumb) }}
+            {#<a class="crumb" href="{{ path(crumb.routeName) }}">{{ crumb.name }}</a>#}
+        {% endfor %}
+    </h6>
+{% endblock %}
+
 {% block body %}
 
     <ul class="lang-menu nav navbar-light bg-light">
@@ -14,7 +26,6 @@
     </ul>
 
     <h1>Quiz for chapter: {{ chapter.title(language) }}</h1>
-    {#{{ dump(app.request) }}#}
 
     <table class="table">
         <tbody>
