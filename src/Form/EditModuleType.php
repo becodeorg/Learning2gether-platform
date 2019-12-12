@@ -2,11 +2,11 @@
 
 namespace App\Form;
 
+use App\Domain\LearningModuleType;
 use App\Entity\LearningModule;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,12 +16,12 @@ class EditModuleType extends AbstractType
     {
         $builder
             ->add('badge')
-            ->add('edit', SubmitType::class);
-
-        $builder
-            ->add('translations', CollectionType::class, [
-                'entry_type' => EditModuleTranslationsType::class,
-                'entry_options' => ['label' => false],
+            ->add('type', ChoiceType::class, [
+                'label' => 'Select type:',
+                'choices' => [LearningModuleType::soft(), LearningModuleType::hard()],
+                'choice_label' => static function($value){ return $value; },
+                'multiple'=>false,
+                'expanded'=>true
             ]);
     }
 

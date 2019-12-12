@@ -3,34 +3,42 @@
 {% block title %}Hello EditModuleController!{% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1>Howdy Partner!</h1>
-        <hr>
-        <a href="{{ path('partner') }}">Back to Partner Zone</a>
-        <hr>
-        <h3>Currently editing: Module {{ module.id }}</h3>
-        <img src="{{ asset('upload/' ~ module.image) }}" alt="module image">
-        {{ form(uploader) }}
 
-        {{ form_start(form) }}
-        {% for translation in form.translations %}
-            <hr>
-            <h2>{{ translation.vars.value.language.name }}</h2>
-            {{ form_row(translation) }}
-        {% endfor %}
-        <hr>
-        {{ form_row(form.edit) }}
-        {{ form_end(form) }}
-        <hr>
-        <h3>Chapters:</h3>
+    <div class="container">
+
+        <section class="module-cube">
+            {{ form_start(moduleTLForm) }}
+            {{ form_row(moduleTLForm.title) }}
+            {{ form_row(moduleTLForm.description) }}
+            <button class="btn btn-skills">Save</button>
+            {{ form_end(moduleTLForm) }}
+        </section>
+
+        <section class="module-cube">
+            {{ form_start(moduleForm) }}
+            {{ form_row(moduleForm.badge) }}
+            {{ form_row(moduleForm.type) }}
+            <h6>Current type: {{ module.type }}</h6>
+            <button class="btn btn-skills">Save</button>
+            {{ form_end(moduleForm) }}
+        </section>
+
         {% for chapter in module.chapters %}
-            <ul>
-                <li><a href="{{ path('edit_chapter', {module : module.id , chapter : chapter.id}) }}">Edit Chapter {{ chapter.chapterNumber }}</a></li>
-            </ul>
+            <section class="module-cube">
+                <span>chapter nr: {{ chapter.chapterNumber }}</span><br>
+                <span>chapter title: {{ chapter.title(english) }}</span>
+                 <a class="btn btn-skills" href="{{ path('delete_chapter', {module: module.id, chapter: chapter.id, return: 'flow'}) }}">Delete Chapter</a>
+                <a class="btn btn-skills"
+                   href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">edit chapter</a>
+            </section>
         {% endfor %}
-        {{ form_start(addchapter) }}
-        {{ form_widget(addchapter) }}
-        {{ form_end(addchapter) }}
+
+        <div class="text-center">
+            {{ form_start(addNewChapterBtn) }}
+            <button class="btn btn-skills">Add a chapter</button>
+            {{ form_end(addNewChapterBtn) }}
+        </div>
 
     </div>
+
 {% endblock %}

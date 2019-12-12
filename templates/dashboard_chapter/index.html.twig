@@ -11,7 +11,7 @@
         <a class="btn btn-skills" href="{{ path('dashboard_module', {module: chapter.learningModule.id }) }}">Back</a>
         <hr>
         <h3>Pages</h3>
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -20,6 +20,7 @@
                             title="This page's title and description translations.&#10;Click to go to that page's edit page."
                             class="help-icon far fa-question-circle"></i>
                 </th>
+                <th scope="col">&#10060;</th>
             </tr>
             </thead>
             <tbody>
@@ -43,12 +44,13 @@
                             <a class="badge {{ badgeclass }}" href="{{ path('edit_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, lang: pageTL['language']['code']}) }}">{{ pageTL['language']['name'] }}</a>
                         {% endfor %}
                     </td>
+                    <td><a class="badge badge-danger" onclick="return confirm('Are you sure you want to delete this page?')" href="{{ path('delete_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, return: 'dash'}) }}">Delete</a></td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
         <h3>Quiz</h3>
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -59,7 +61,6 @@
                             class="help-icon far fa-question-circle"></i>
                 </th>
                 <th scope="col">&#128269;</th>
-
             </tr>
             </thead>
             <tbody>
@@ -91,7 +92,7 @@
                             / {{ languagecount }}</a>
                     </td>
                     <td>
-                        <a href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">Check</a>
+                        <a class="badge btn-skills" href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">Check</a>
                     </td>
                 </tr>
             {% endfor %}

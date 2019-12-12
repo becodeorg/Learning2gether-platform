@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EditModuleTranslationController!{% endblock %}
+
+{% block body %}
+    <div class="wrapper">
+        <section class="module-cube">
+            {{ form_start(form) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+            <button class="btn btn-skills">Save</button>
+            {{ form_end(form) }}
+        </section>
+    </div>
+{% endblock %}

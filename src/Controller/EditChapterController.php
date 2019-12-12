@@ -38,7 +38,6 @@ class EditChapterController extends AbstractController
             return $this->redirectToRoute('partner');
         }
 
-        $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => $_GET['lang']]);
         $chapterTL = $this->getDoctrine()->getRepository(ChapterTranslation::class)->findOneBy(['language' => $language, 'chapter' => $chapter]);
 
         // Create translation form

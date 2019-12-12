@@ -1,7 +1,3 @@
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-});
-
 function checkModule(moduleId) {
     let url = Routing.generate('api_module', {module: moduleId}, true);
     let btn = document.getElementById('flagbtn-' + moduleId);
@@ -34,6 +30,7 @@ function checkModule(moduleId) {
             publish.innerHTML = '<a id="publishLink" class="flagbtn badge badge-success">Click here to publish!</a>';
             let publishLink = document.getElementById('publishLink');
             publishLink.setAttribute('href', publishUrl);
+            // I should probably stop the user from republishing already published modules
         }
     });
 }

@@ -12,9 +12,11 @@ use App\Entity\LearningModuleTranslation;
 use App\Entity\Quiz;
 use App\Entity\User;
 use App\Form\CreateChapterType;
+use App\Form\EditModuleTranslationsType;
 use App\Form\EditModuleType;
 use App\Form\ImageUploaderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,59 +31,69 @@ class EditModuleController extends AbstractController
      */
     public function index(Request $request, LearningModule $module): Response
     {
-        /* @var User $user */
-        $user = $this->getUser();
+        $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
+        $englishTranslation = $module->getTranslations()->filter(static function ($entry) use ($english){
+            return in_array($entry->getLanguage()->getCode(), (array)$english->getCode() , true);
+        });
 
-        $form = $this->createForm(EditModuleType::class, $module);
-        $form->handleRequest($request);
+        $moduleForm = $this->createForm(EditModuleType::class, $module);
+        $moduleForm->handleRequest($request);
 
-        $newChapter = new Chapter($module);
-        $chapterBtn = $this->createForm(CreateChapterType::class, $newChapter);
-        $chapterBtn->handleRequest($request);
+        $moduleTLForm = $this->createForm(EditModuleTranslationsType::class, $englishTranslation[0]);
+        $moduleTLForm->handleRequest($request);
 
-        if ($chapterBtn->isSubmitted() && $chapterBtn->isValid()) {
-            $this->createAndAddChapter($newChapter, $module);
-            $this->flushUpdatedModule($module);
+        $addNewChapterBtn = $this->createFormBuilder()->getForm();
+        $addNewChapterBtn->handleRequest($request);
+
+        if ($moduleForm->isSubmitted() && $moduleForm->isValid()) {
+            $module = $moduleForm->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($module);
+            $em->flush();
+            $this->addFlash('success', 'Changes saved!');
         }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $updatedModule = $form->getData();
-            $this->flushUpdatedModule($updatedModule);
-            return $this->redirectToRoute('partner');
+        if ($moduleTLForm->isSubmitted() && $moduleTLForm->isValid()){
+            $moduleTL = $moduleTLForm->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($moduleTL);
+            $em->flush();
+            $this->addFlash('success', 'Changes saved!');
+        }
+
+        if ($addNewChapterBtn->isSubmitted() && $addNewChapterBtn->isValid()){
+            $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+            $newChapter = new Chapter($module);
+            $newChapter = $this->makeChapterTranslations($newChapter, $languageAll);
+            $quiz = new Quiz();
+            $newChapter->setQuiz($quiz);
+            $module->addChapter($newChapter);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($module);
+            $em->flush();
+            return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $newChapter->getId()]);
         }
 
         return $this->render('edit_module/index.html.twig', [
             'module' => $module,
-            'form' => $form->createView(),
-            'addchapter' => $chapterBtn->createView(),
+            'english' => $english,
+            'addNewChapterBtn' => $addNewChapterBtn->createView(),
+            'moduleForm' => $moduleForm->createView(),
+            'moduleTLForm' => $moduleTLForm->createView(),
         ]);
     }
 
     /**
-     * @param Chapter $newChapter
-     * @param LearningModule|null $module
+     * @param Chapter $chapter
+     * @param array $languageAll
+     * @return Chapter
      */
-    public function createAndAddChapter(Chapter $newChapter, LearningModule $module): void
+    private function makeChapterTranslations(Chapter $chapter, array $languageAll): Chapter
     {
-        $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
         foreach ($languageAll as $language) {
-            $emptyChapterTranslation = new ChapterTranslation($language, $newChapter);
-            $newChapter->addTranslation($emptyChapterTranslation);
+            $translation = new ChapterTranslation($language, $chapter);
+            $chapter->addTranslation($translation);
         }
-        $chapterCount = count($module->getChapters());
-        $newChapter->setChapterNumber(++$chapterCount);
-        $newQuiz = new Quiz();
-        $newChapter->setQuiz($newQuiz);
-        $module->addChapter($newChapter);
-    }
-
-    /**
-     * @param LearningModule $updatedModule
-     */
-    public function flushUpdatedModule(LearningModule $updatedModule): void
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($updatedModule);
-        $entityManager->flush();
+        return $chapter;
     }
 }

@@ -5,7 +5,6 @@
 {% block body %}
 
     <div class="wrapper">
-        <a href="{{ path('edit_module', {module: module.id}) }}"></a>
         <div class="row">
             <p class="mod-step">Edit the chapters english title and description</p>
         </div>
@@ -22,14 +21,13 @@
             <section class="module-cube">
                 <span>Page nr: {{ page.pageNumber }}</span><br>
                 <span>Page title: {{ page.title(english) }}</span>
-                <a class="btn btn-skills" href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id}) }}">Delete Page</a>
+                <a class="btn btn-skills" href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id, return: 'flow'}) }}">Delete Page</a>
                 <a class="btn btn-skills" href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en'}) }}">Edit Page</a>
             </section>
         {% endfor %}
         <div class="text-center">
-            <form method="post" action="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">
-                <button class="btn btn-skills">Add a page</button>
-            </form>
+            <a class="btn btn-skills" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">Add Page</a>
+            <a class="btn btn-skills" href="{{ path('edit_module', {module: module.id}) }}">Module overview</a>
         </div>
     </div>
 

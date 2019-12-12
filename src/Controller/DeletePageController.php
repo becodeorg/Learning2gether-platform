@@ -29,6 +29,17 @@ class DeletePageController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($page);
         $em->flush();
-        return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
+        $this->addFlash('success', 'Page deleted successfully!');
+
+        if (isset($_GET['return'])){
+            switch ($_GET['return']){
+                case 'flow':
+                    return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
+                case 'dash':
+                    return $this->redirectToRoute('dashboard_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
+                default:
+                    return $this->redirectToRoute('partner');
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Chapter;
 use App\Entity\ChapterPage;
 use App\Entity\ChapterPageTranslation;
+use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Form\EditPageTranslationType;
@@ -48,6 +49,7 @@ class CreatePageController extends AbstractController
             $em->persist($page);
             $em->flush();
 
+            $this->addFlash('success', 'New page saved successfully!');
             switch ($_POST['button']){
                 case 'exit':
                     return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
@@ -58,11 +60,14 @@ class CreatePageController extends AbstractController
             }
         }
 
+        $imagesAll = $this->getDoctrine()->getRepository(Image::class)->findAll();
+
         return $this->render('create_page/index.html.twig', [
             'module' => $module,
             'chapter' => $chapter,
             'form' => $form->createView(),
             'english' => $english,
+            'imagesAll' => $imagesAll,
         ]);
     }
 }

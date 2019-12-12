@@ -12,7 +12,6 @@
 
     <div class="container">
         <a class="btn btn-skills" href="{{ path('dashboard') }}">Back</a>
-        <hr>
         <h3>Chapters</h3>
         <table class="table table-hover text-center">
             <thead>
@@ -54,16 +53,20 @@
                             <a class="badge {{ badgeclass }}" href="{{ path('edit_chapter', {'chapter': chapter[0]['id'], 'module': module.id, lang: chapterTL['language']['code']}) }}">{{ chapterTL['language']['name'] }}</a>
                         {% endfor %}
                     </td>
-                    <td><a href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">View Pages</a></td>
+                    <td><a class="badge btn btn-skills" href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">View Pages</a></td>
                 </tr>
                     {% else %}
                         <tr>
                             <th scope="row">{{ loop.index }}</th>
-                            <td colspan="6">This chapter needs more pages! <a href="{{ path('edit_module', {'module': module.id}) }}">Link</a></td>
+                            <td colspan="6">This chapter needs more pages! <a class="badge btn badge-warning" href="{{ path('create_chapter', {'module': module.id, 'chapter':  chapterObj.id}) }}">Add one!</a></td>
                         </tr>
                 {% endif %}
             {% endfor %}
             </tbody>
         </table>
+        <div class="text-center">
+        <a class="badge btn-skills" href="{{ path('edit_module', {'module': module.id}) }}">++ Add more chapters ++</a>
+        </div>
     </div>
+
 {% endblock %}

@@ -3,16 +3,17 @@
 {% block title %}Hello EditChapterController!{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
-    <h3>Currently editing: Module {{ module.id }}, Chapter {{ chapter.chapterNumber }}</h3>
+    <div class="example-wrapper">
+        <h3>Currently editing: Module {{ module.id }}, Chapter {{ chapter.chapterNumber }}</h3>
 
-    <section class="module-cube">
-        {{ form_start(form) }}
-        {{ form_row(form.title) }}
-        {{ form_row(form.description) }}
+        <section class="module-cube">
+            {{ form_start(form) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+        </section>
+
         <button class="btn btn-skills">Save</button>
         {{ form_end(form) }}
-    </section>
 
-</div>
+    </div>
 {% endblock %}

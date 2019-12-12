@@ -11,7 +11,19 @@
     </style>
 
     <div class="container">
-        <table class="table table-hover text-center">
+
+        <!-- add module button -->
+        <section class="row rowaddbutton">
+            <a href="{{ path('create_module') }}">
+                <button type="button" class="btn  btn-circle btn-xl"
+                        data-toggle="tooltip" data-placement="right" title="Add new module">
+                    <img class="addicon" src="{{ asset('assets/img/plusicon.svg') }}" alt="add icon">
+                </button>
+            </a>
+        </section>
+
+        <!-- module table -->
+        <table class=" table table-hover text-center">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -35,18 +47,13 @@
                         <td>{{ module.getTitle(language) }}</td>
                         <td>{{ module.chapters|length }}</td>
                         <td>
-                            {% set moduleFlag = fm.checkModuleTranslationsSolo(moduleArray) %}
-
-                            {% set btnClass = 'badge-danger' %}
-                            {% if  (moduleFlag['moduleNeededTranslations']|length - 5) | abs > 2 %}
-                                {% set btnClass = 'badge-success' %}
-                            {% elseif  (moduleFlag['moduleNeededTranslations']|length - 5) | abs == 2 %}
-                                {% set btnClass = 'badge-warning' %}
-                            {% endif %}
-                            <a class="badge {{ btnClass }}"
-                               title="{{ moduleFlag['moduleNeededTranslations'] | join('\n') }}"
-                               href="{{ path('edit_module', {module: moduleArray['id']}) }}">{{ (moduleFlag['moduleNeededTranslations']|length - 5) | abs }}
-                                / {{ languagecount }}</a>
+                            {% for moduleTL in moduleArray['translations'] %}
+                                {% set badgeclass = 'badge-danger' %}
+                                {% if moduleTL['title'] != '' and moduleTL['description'] != '' %}
+                                    {% set badgeclass = 'badge-success' %}
+                                {% endif %}
+                                <a class="badge {{ badgeclass }}" href="{{ path('edit_module_translation', {'module': moduleArray['id'], lang: moduleTL['language']['code']}) }}">{{ moduleTL['language']['name'] }}</a>
+                            {% endfor %}
                         </td>
                         <td>
                             <div id="flagbtn-{{ module.id }}" class="flagbtn badge badge-primary"
@@ -54,7 +61,7 @@
                             </div>
                         </td>
                         {% if module.isPublished %}
-                            <td id="publish-{{ module.id }}">
+                            <td>
                                 <div class="badge badge-success">Published</div>
                             </td>
                         {% else %}
@@ -62,10 +69,13 @@
                                 <div class="badge badge-warning">Unpublished</div>
                             </td>
                         {% endif %}
-                        <td><a href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
+                        <td><a class="badge btn-skills" href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
                     </tr>
                     <tr>
                         {# sorry to the poor soul that has to style this #}
+                        {# I did a lot of js styling on this one #}
+                        {# displaying in a seperate table ruins the whole bootstrap table #}
+                        {# maybe try bootstrap tootltips or popups ? #}
                         <td style="display: none; text-align: left; font-size: 0.75em"
                             id="dump-{{ module.id }}"></td>
                     </tr>
@@ -79,6 +89,8 @@
             </tbody>
         </table>
     </div>
+
+
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script src="{{ asset('assets/js/dashboardFlagging.js') }}"></script>
