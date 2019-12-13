@@ -10,7 +10,7 @@
         }
     </style>
 
-    <div class="container my-4">
+    <div class="example-wrapper my-5">
 
         <!-- add module button -->
         <section class="row justify-content-between rowaddbutton">
@@ -39,6 +39,7 @@
                             class="help-icon far fa-question-circle"></i></th>
                 <th scope="col">Check</th>
                 <th scope="col">Status</th>
+                <th scope="col">Delete</th>
                 <th scope="col">&#128269;</th>
             </tr>
             </thead>
@@ -75,6 +76,7 @@
                                 <div class="badge badge-warning">Unpublished</div>
                             </td>
                         {% endif %}
+                        <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('you sure fam?')">delete</a></td>
                         <td><a class="badge btn-skills" href="{{ path('dashboard_module', {module: module.id}) }}">View
                                 chapters</a></td>
                     </tr>

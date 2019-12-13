@@ -29,7 +29,7 @@ class Category
     private $topics;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\LearningModule", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\LearningModule", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $learning_module;
 

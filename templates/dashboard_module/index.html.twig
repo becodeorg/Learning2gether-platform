@@ -29,8 +29,6 @@
             {% for chapterObj in module.chapters %}
                 {% set chapter = cr.chapterAsArray(chapterObj) %}
                 {% if chapter is not empty %}
-
-                {% set flagData = fm.checkChapterTranslationsSolo(chapter) %}
                 {% set chapterNumber = chapter[0]['chapterNumber'] %}
                 <tr>
                     <th scope="row">{{ chapterNumber }}</th>
