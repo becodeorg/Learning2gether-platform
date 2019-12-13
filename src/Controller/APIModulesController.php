@@ -22,13 +22,18 @@ class APIModulesController extends AbstractController
     {
         $lmr = $this->getDoctrine()->getRepository(LearningModule::class);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
-        $moduleArray = $lmr->getFullModuleAsArray($module)[0];
-        $moduleArray['translations'] = $lmr->getModuleTranslationsAsArray($module)[0]['translations'];
+        $moduleArray = $lmr->getFullModuleAsArray($module);
+
+        if (empty($moduleArray[0])) {
+            return new JsonResponse(['This module is still missing children, check to see if all chapters have at least one page, check every question in the quiz has at least one answer']);
+        }
+
+        $moduleArray[0]['translations'] = $lmr->getModuleTranslationsAsArray($module)[0]['translations'];
 
         $fm = new FlaggingManager($languageCount);
-        $flagData = $fm->checkModuleFull($moduleArray);
-        $result = $fm->checkFlagData($flagData);
+        $flagData = $fm->checkModuleFull($moduleArray[0]);
 
+        $result = $fm->checkFlagData($flagData);
         return new JsonResponse($result);
     }
 }

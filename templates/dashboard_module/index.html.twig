@@ -10,8 +10,9 @@
         }
     </style>
 
-    <div class="container">
-        <a href="{{ path('dashboard') }}">Back</a>
+    <div class="example-wrapper my-3">
+        <a class="btn btn-skills" href="{{ path('dashboard') }}">Back</a>
+        <h3>Chapters</h3>
         <table class="table table-hover text-center">
             <thead>
             <tr>
@@ -27,6 +28,8 @@
             <tbody>
             {% for chapterObj in module.chapters %}
                 {% set chapter = cr.chapterAsArray(chapterObj) %}
+                {% if chapter is not empty %}
+
                 {% set flagData = fm.checkChapterTranslationsSolo(chapter) %}
                 {% set chapterNumber = chapter[0]['chapterNumber'] %}
                 <tr>
@@ -42,21 +45,28 @@
                         {% endfor %}</td>
                     <td>{{ chapter[0]['pages']|length }}</td>
                     <td>
-                        {% set btnClass = 'badge-danger' %}
-                        {% if  (flagData['chapterNeededTranslations']|length - 5) | abs > 2 %}
-                            {% set btnClass = 'badge-success' %}
-                        {% elseif  (flagData['chapterNeededTranslations']|length - 5) | abs == 2 %}
-                            {% set btnClass = 'badge-warning' %}
-                        {% endif %}
-                        <a class="badge {{ btnClass }}"
-                           title="{{ flagData['chapterNeededTranslations'] | join('\n') }}"
-                           href="{{ path('edit_chapter', {module: moduleArray['id'], chapter: chapter[0]['id']}) }}">{{ (flagData['chapterNeededTranslations']|length - 5) | abs }}
-                            / {{ languagecount }}</a>
+                        {% for chapterTL in chapter[0]['translations'] %}
+                            {% set badgeclass = 'badge-danger' %}
+                            {% if chapterTL['title'] != '' %}
+                                {% set badgeclass = 'badge-success' %}
+                            {% endif %}
+                            <a class="badge {{ badgeclass }}" href="{{ path('edit_chapter', {'chapter': chapter[0]['id'], 'module': module.id, lang: chapterTL['language']['code']}) }}">{{ chapterTL['language']['name'] }}</a>
+                        {% endfor %}
                     </td>
-                    <td><a href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">Check</a></td>
+                    <td><a class="badge btn btn-skills" href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">View Pages</a></td>
                 </tr>
+                    {% else %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td colspan="6">This chapter needs more pages! <a class="badge btn badge-warning" href="{{ path('create_chapter', {'module': module.id, 'chapter':  chapterObj.id}) }}">Add one!</a></td>
+                        </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>
+        <div class="text-center">
+        <a class="badge btn-skills" href="{{ path('edit_module', {'module': module.id}) }}">++ Add more chapters ++</a>
+        </div>
     </div>
+
 {% endblock %}

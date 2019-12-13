@@ -2,32 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\Chapter;
+use App\Entity\ChapterPageTranslation;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EditChapterType extends AbstractType
+class EditPageTranslationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
-            ->add('translations', CollectionType::class, [
-                'entry_type' => EditChapterTranslationsType::class,
-                'entry_options' => ['label' => false],
-            ]);
-        $builder
-            ->add('edit', SubmitType::class)
+            ->add('title', TextType::class)
+            ->add('content', TextareaType::class, [
+                'required' => false,
+                'empty_data' => '',
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Chapter::class,
+            'data_class' => ChapterPageTranslation::class,
         ]);
     }
 }

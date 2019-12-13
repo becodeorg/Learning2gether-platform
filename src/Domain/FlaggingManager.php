@@ -58,7 +58,7 @@ class FlaggingManager
                 $flagData['moduleNeededTranslations'][] = $moduleTranslation['language']['name'];
             }
         }
-        if ((count($flagData['moduleNeededTranslations']) - $this->languageCount) <= -self::MIN_NEEDED_TRANSLATIONS) {
+        if (!in_array('English', $flagData['moduleNeededTranslations'], true) && ((count($flagData['moduleNeededTranslations']) - $this->languageCount) <= -self::MIN_NEEDED_TRANSLATIONS)) {
             $flagData['moduleStatus'] = true;
         }
 
@@ -82,11 +82,11 @@ class FlaggingManager
         return $flagData;
     }
 
-    public function checkQuizTranslationSolo(array $quizData, int $languageCount): array
+    public function checkQuizTranslationSolo(array $quizData): array
     {
         $flagData = [];
-
-        foreach ($quizData['quizQuestions'] as $question) {
+        $languageCount = $this->languageCount;
+        foreach ($quizData['quiz']['quizQuestions'] as $question) {
             $flagData = $this->checkQuizTranslations($languageCount, $flagData, $question);
             $flagData = $this->checkAnswers($languageCount, $question, $flagData);
         }

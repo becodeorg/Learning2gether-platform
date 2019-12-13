@@ -5,8 +5,13 @@ namespace App\Domain;
 
 class LearningModuleType
 {
-    const SOFT = 'SOFT';
-    const HARD = 'HARD';
+    public const SOFT = 'SOFT';
+    public const HARD = 'HARD';
+
+    const ALL_OPTIONS = [
+        self::SOFT,
+        self::HARD
+    ];
 
     private $value;
 
@@ -15,11 +20,11 @@ class LearningModuleType
         $this->value = $value;
     }
 
-    static public function soft() {
+    public static function soft() {
         return new self(self::SOFT);
     }
 
-    static public function hard() {
+    public static function hard() {
         return new self(self::HARD);
     }
 
@@ -31,5 +36,10 @@ class LearningModuleType
     public function __toString()
     {
         return $this->value;
+    }
+
+    public static function getAllOptions(): array
+    {
+        return self::ALL_OPTIONS;
     }
 }
