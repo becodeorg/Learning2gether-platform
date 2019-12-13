@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Entity\LearningModule;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Category|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +20,38 @@ class CategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Category::class);
     }
+
+     /**
+      * @return Category[] Returns an array of Category objects
+      */
+    public function findByType(string $type)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join(LearningModule::class, 'l', Join::WITH, 'l = c.id')
+            ->where('l.type = :type')
+            ->andwhere('l.isPublished = :isPublished')
+            ->setParameter('type', $type)
+            ->setParameter('isPublished', true);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Category[] Returns an array of Category objects
+     */
+    public function findAllPublished()
+    {
+
+
+        $qb = $this->createQueryBuilder('c')
+            ->join(LearningModule::class, 'l', Join::WITH, 'l = c.id')
+            ->where('l.isPublished = :isPublished')
+            ->setParameter('isPublished', true);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     // /**
     //  * @return Category[] Returns an array of Category objects

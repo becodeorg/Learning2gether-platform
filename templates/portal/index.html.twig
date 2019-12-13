@@ -4,30 +4,29 @@
 
 {% block body %}
 
-    <div class="wrapper-two">
+    <div class="example-wrapper">
 
         <p class="title-css">{{ 'Learning Hub' | trans }}</p>
         <p class="text-center intro-lh">{{ 'Navigate through our Learninghub and find the appropiate training to reach your
             full potential.' | trans }}</p>
 
+        <p class="subtitle-css">{{ 'Active modules' | trans }}</p>
 
-                <div class="row forum-cat-row">
-                    <div class="col-3 col-md-auto skillset">select skillset:</div>
+        <div class="row forum-cat-row">
+            <div class="col-3 col-md-auto skillset">select skillset:</div>
 
-                    <div class="col-3 col-md-auto">
-                        <a class="btn btn-default btn-skills " href="{{ path('forum', {'mode': 'ALL'}) }}">{{ 'all' | trans | upper }}</a>
-                    </div>
+            <div class="col-3 col-md-auto">
+                <a class="btn btn-default btn-skills " href="{{ path('portal', {'mode': 'ALL'}) }}">{{ 'all' | trans | upper }}</a>
+            </div>
 
-                    <div class="col-3 col-md-auto">
-                        <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
-                    </div>
-                    <div class="col-3 col-md-auto">
-                        <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
-                    </div>
-                </div>
+            <div class="col-3 col-md-auto">
+                <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+            </div>
+            <div class="col-3 col-md-auto">
+                <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
+            </div>
+        </div>
 
-
-        <h2>{{ 'Active modules' | trans }}</h2>
         <div class="card-columns">
             {% for module in activeModules %}
                 {% include 'portal/partials/module.html.twig' with {'module': module} %}

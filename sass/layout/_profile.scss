@@ -17,7 +17,7 @@
 }
 
 .profileimgwrap form .form-group label{
-  display: none;
+  color: $white;
 }
 
 .profileimg{
@@ -89,4 +89,8 @@
 
 #show .form-group input{
   line-height: 15px;
+}
+
+.testborder{
+  border: 1px solid black;
 }

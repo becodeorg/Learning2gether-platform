@@ -148,12 +148,16 @@ class QuestionController extends AbstractController
      */
     public function deletePost(Request $request, Post $post): Response
     {
+        if(!$this->getUser()->isPartner() && $this->getUser()->getId() !== $post->getCreatedBy()->getId()){
+            $this->addFlash('error', "You don't have right to delete this post.");
+            return $this->redirect($_SERVER['HTTP_REFERER']);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($post);
             $entityManager->flush();
         }
-
         return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
@@ -162,12 +166,16 @@ class QuestionController extends AbstractController
      */
     public function deleteQuestion(Request $request, Question $question): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
+        if(!$this->getUser()->isPartner() && $this->getUser()->getId() !== $question->getCreatedBy()->getId()){
+            $this->addFlash('error', "You don't have right to delete this question.");
+            return $this->redirectToRoute('topic', ['category' => $question->getCategory()->getId(), 'chapter'=> $question->getChapter()->getId()]);
+        }
+
+        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))){
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($question);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('topic', ['category' => $question->getCategory()->getId(), 'chapter'=> $question->getChapter()->getId()]);
     }
 

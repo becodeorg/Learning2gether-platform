@@ -8,7 +8,7 @@
     </style>
 
     <div class="container">
-        <a href="{{ path('dashboard_module', {module: chapterArray['id']}) }}">Back</a>
+        <a href="{{ path('dashboard_module', {module: chapter.learningModule.id }) }}">Back</a>
         <hr>
         <h3>Pages</h3>
         <table class="table table-hover">
@@ -23,29 +23,27 @@
             </tr>
             </thead>
             <tbody>
-            {% for page in chapterArray['pages'] %}
+            {% for page in chapter.pages %}
+                {% set pageArray = pr.pageAsArray(page)[0] %}
+                {% set pageFlags = fm.checkPage(pageArray, languagecount) %}
                 <tr>
-                    <th scope="row">{{ page['pageNumber'] }}</th>
-                    <td>{% for pageTranslation in page['translations'] %}
+                    <th scope="row">{{ pageArray['pageNumber'] }}</th>
+                    <td>{% for pageTranslation in pageArray['translations'] %}
                             {% if pageTranslation['language']['name'] == language.name %}
-                                {% if pageTranslation['title'] == '' %}
-                                    Not yet translated
-                                {% else %}
-                                    {{ pageTranslation['title'] }}
-                                {% endif %}
+                                {{ pageTranslation['title'] }}
                             {% endif %}
                         {% endfor %}
                     </td>
                     <td>
-                        {% set btnClass = 'btn-danger' %}
-                        {% if  (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs > 2 %}
-                            {% set btnClass = 'btn-success' %}
-                        {% elseif  (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs == 2 %}
-                            {% set btnClass = 'btn-warning' %}
+                        {% set btnClass = 'badge-danger' %}
+                        {% if  (pageFlags['pageNeededTranslations']|length - 5) | abs > 2 %}
+                            {% set btnClass = 'badge-success' %}
+                        {% elseif  (pageFlags['pageNeededTranslations']|length - 5) | abs == 2 %}
+                            {% set btnClass = 'badge-warning' %}
                         {% endif %}
-                        <a class="btn {{ btnClass }}"
-                           title="{{ pagesFlags[page['pageNumber']]['pageNeededTranslations'] | join('\n') }}"
-                           href="{{ path('edit_page', {module: chapter.learningModule.id, chapter: chapterArray['id'], page: page['id']}) }}">{{ (pagesFlags[page['pageNumber']]['pageNeededTranslations']|length - 5) | abs }}
+                        <a class="badge {{ btnClass }}"
+                           title="{{ pageFlags['pageNeededTranslations'] | join('\n') }}"
+                           href="{{ path('edit_page', {module: chapter.learningModule.id, chapter: chapter.id, page: page.id}) }}">{{ (pageFlags['pageNeededTranslations']|length - 5) | abs }}
                             / {{ languagecount }}</a>
                     </td>
                 </tr>
@@ -68,37 +66,37 @@
             </tr>
             </thead>
             <tbody>
-            {% for question in chapterArray['quiz']['quizQuestions'] %}
-                <tr>
-                    <th scope="row">{{ question['questionNumber'] }}</th>
-                    <td>{% for questionTranslation in question['translations'] %}
-                            {% if questionTranslation['language']['name'] == language.name %}
-                                {% if questionTranslation['title'] == '' %}
-                                    Not yet translated
-                                {% else %}
-                                    {{ questionTranslation['title'] }}
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>{{ question['answers']|length }}</td>
-                    <td>
-                        {% set btnClass = 'btn-danger' %}
-                        {% if  (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs > 2 %}
-                            {% set btnClass = 'btn-success' %}
-                        {% elseif  (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs == 2 %}
-                            {% set btnClass = 'btn-warning' %}
-                        {% endif %}
-                        <a class="btn {{ btnClass }}"
-                           title="{{ quizFlags['questions'][question['questionNumber']]['questionNeededTranslations'] | join('\n') }}"
-                           href="#">{{ (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}
-                            / {{ languagecount }}</a>
-                    </td>
-                    <td>
-                        <a href="{{ path('dashboard_question', {chapter: chapterArray['id'] , question: question['id']}) }}">Check</a>
-                    </td>
-                </tr>
-            {% endfor %}
+            {#            {% for question in chapterArray['quiz']['quizQuestions'] %}#}
+            {#                <tr>#}
+            {#                    <th scope="row">{{ question['questionNumber'] }}</th>#}
+            {#                    <td>{% for questionTranslation in question['translations'] %}#}
+            {#                            {% if questionTranslation['language']['name'] == language.name %}#}
+            {#                                {% if questionTranslation['title'] == '' %}#}
+            {#                                    Not yet translated#}
+            {#                                {% else %}#}
+            {#                                    {{ questionTranslation['title'] }}#}
+            {#                                {% endif %}#}
+            {#                            {% endif %}#}
+            {#                        {% endfor %}#}
+            {#                    </td>#}
+            {#                    <td>{{ question['answers']|length }}</td>#}
+            {#                    <td>#}
+            {#                        #}{#                        {% set btnClass = 'btn-danger' %}#}
+            {#                        #}{#                        {% if  (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs > 2 %}#}
+            {#                        #}{#                            {% set btnClass = 'btn-success' %}#}
+            {#                        #}{#                        {% elseif  (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs == 2 %}#}
+            {#                        #}{#                            {% set btnClass = 'btn-warning' %}#}
+            {#                        #}{#                        {% endif %}#}
+            {#                        #}{#                        <a class="btn {{ btnClass }}"#}
+            {#                        #}{#                           title="{{ quizFlags['questions'][question['questionNumber']]['questionNeededTranslations'] | join('\n') }}"#}
+            {#                        #}{#                           href="#">{{ (quizFlags['questions'][question['questionNumber']]['questionNeededTranslations']|length - 5) | abs }}#}
+            {#                        #}{#                            / {{ languagecount }}</a>#}
+            {#                    </td>#}
+            {#                    <td>#}
+            {#                        <a href="{{ path('dashboard_question', {chapter: chapterArray['id'] , question: question['id']}) }}">Check</a>#}
+            {#                    </td>#}
+            {#                </tr>#}
+            {#            {% endfor %}#}
             </tbody>
         </table>
     </div>

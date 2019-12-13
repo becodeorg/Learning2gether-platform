@@ -2,113 +2,140 @@
 
 namespace App\Controller;
 
-use App\Entity\ChapterTranslation;
+use App\Domain\LanguageTrait;
+use App\Domain\PageManager;
+use App\Domain\QuizManager;
 use App\Entity\Language;
 use App\Entity\Quiz;
+use App\Entity\QuizAnswer;
 use App\Entity\QuizQuestion;
 use App\Entity\User;
 use App\Form\QuizType;
 use App\Repository\ChapterRepository;
-use App\Repository\ChapterTranslationRepository;
 use App\Repository\LearningModuleRepository;
-use App\Repository\QuizRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Domain\Badgr;
 use App\Domain\ChapterManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * @Route("/quiz")
- */
+
 class QuizController extends AbstractController
 {
+    use LanguageTrait;
+
     /**
-     * @Route("/partner/", name="quiz_index", methods={"GET"})
+     * @Route("/partner/quiz/", name="quiz_index", methods={"GET"})
      */
-    public function index(LearningModuleRepository $learningModuleRepository): Response
+   /* public function index(LearningModuleRepository $learningModuleRepository): Response
     {
         return $this->render('quiz/index.html.twig', [
             'learning_modules' => $learningModuleRepository->findAll(),
         ]);
-    }
+    }*/
 
     /**
-     * @Route("/partner/{id}", name="quiz_show", methods={"GET"})
+     * @Route("/partner/quiz/{id}", name="quiz_show", methods={"GET"})
      */
-    public function show(Quiz $quiz, ChapterRepository $chapterRepository): Response
+    public function show(Request $request, Quiz $quiz, ChapterRepository $chapterRepository): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        if ($request->query->get('lang') === null){
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $request->query->set('lang', $language->getCode());
+        }else {
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        }
+
         return $this->render('quiz/show.html.twig', [
-            'chapter' => $chapterRepository->findOneBy(['quiz'=> $quiz->getId()]),
+            'chapter' => $chapterRepository->findOneBy(['quiz' => $quiz->getId()]),
             'quiz' => $quiz,
+            'language'=>$language,
+        ]);
+    }
+
+    ///
+    ///  FRONTEND QUIZ
+    ///
+
+    /**
+     * @Route("/portal/quiz/{quiz}", name="quiz_show_user")
+     */
+    public function showUserQuiz(Request $request, Quiz $quiz)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $chapterManager = new ChapterManager($quiz->getChapter());
+        $module = $quiz->getChapter()->getLearningModule();
+
+        if ($chapterManager->previous() !== null && !isset($user->getProgressByLearningModule($module)[$chapterManager->previous()->getId()])) {
+            $this->addFlash('error', 'You did not unlock the chapter to access this quiz.');
+            return $this->redirectToRoute('module', ['module' => $module]);
+        }
+
+        return $this->render('quiz/show-user-quiz.html.twig', [
+            'quiz' => $quiz,
+            'language' => $this->getLanguage($request),
+            'module' => $module
         ]);
     }
 
     /**
-     * @Route("/quiz/{quiz}/send", name="quiz_send")
+     * @Route("/portal/quiz/{quiz}/send", name="quiz_send")
      */
     public function sentQuiz(Quiz $quiz): JsonResponse
     {
-        //@todo: tmp code because out of scope of ticket
-        //just added this so the frontend people can already try out the API
-        $list = ['PASS', 'FAIL', 'MODULE_FINISHED'];
-        $index = array_rand($list);
+        if(!isset($_POST['questions'])) {
+            throw new BadRequestHttpException('Missing questions in POST');
+        }
 
-        return new JsonResponse([
-            'status' => $list[$index],
-            'badge' => 'example.jpg'
-        ]);
-    }
+        $quizManager = new QuizManager($quiz, $_POST['questions']);
 
-    /**
-     * @Route("/quiz/{quiz}/finished", name="quiz_finished")
-     */
-    public function quizFinished(Quiz $quiz)
-    {
-        //@todo: tmp code - this should not be available with a route - but called from sentQuiz
+        if ($quizManager->getStatus() === $quizManager::FAIL) {
+            return new JsonResponse([
+                'status' => $quizManager::FAIL,
+                'route' => $this->generateUrl('portal')
+            ]);
+        }
 
-        /** @var User $user */
-        $user = $this->getUser();
-        $user->addProgress($quiz->getChapter());
+        $this->getUser()->addProgress($quiz->getChapter());
         $this->getDoctrine()->getManager()->flush();
 
-        try {
+        if ($quizManager->getStatus() === $quizManager::FINISHED_CHAPTER) {
+            $badgrManager = new Badgr;
+            $badgrManager->addBadgeToUser(
+                $quiz->getChapter()->getLearningModule(),
+                $this->getUser()
+            );
+
+            //we need to save because we added the Badgr badge to the user in the line above
+            $this->getDoctrine()->getManager()->flush();
             $chapterManager = new ChapterManager($quiz->getChapter());
 
-            if (!$chapterManager->isLast()) {
-                if (!count($chapterManager->next()->getPages())) {
-                    throw new \DomainException('The next chapter does not have any pages! Please contact the site administrator.');
-                }
-
-                $this->addFlash('success', 'You completed the quiz and unlocked the next chapter!');
-
-                return $this->redirectToRoute('module_view_page', [
+            /* In case the next chapter does not have any pages,
+             * point the user to the portal page.
+             * This should normally not happen!
+             */
+            $route = $this->generateUrl('portal');
+            if (count($chapterManager->next()->getPages())) {
+                $route = $this->generateUrl('module_view_page', [
                     'chapterPage' => $chapterManager->next()->getPages()[0]->getId()//firstPageOfNextChapter
                 ]);
             }
 
-            // when module completed, give badge
-            $badgrManager = new Badgr;
-            $badgrManager->addBadgeToUser(
-                $quiz->getChapter()->getLearningModule(),
-                $user
-            );
-            //we need to save because we added the Badgr badge to the user in the line above
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', 'You finished the learning module and recieved your badge!');
-            return $this->redirectToRoute('portal');
-        } catch (\DomainException $e) {
-            $this->addFlash('error', $e->getMessage());
-            $this->redirectToRoute('module', [
-                'module' => $quiz->getChapter()->getLearningModule()->getId()
+            return new JsonResponse([
+                'status' => $quizManager::FINISHED_CHAPTER,
+                'route'  => $route
             ]);
         }
-    }
 
-    /*****************
-     * We do not want anyone to manually add or edit or delete a Quiz, just show existing ones
-     *****************/
+        return new JsonResponse([
+            'status' => $quizManager::FINISHED_CHAPTER,
+            'route'  => $this->generateUrl('portal')
+        ]);
+    }
 }

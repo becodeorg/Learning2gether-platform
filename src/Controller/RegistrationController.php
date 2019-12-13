@@ -31,6 +31,16 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // compare pwd and pwd-repeat
+            $pwd = $_POST['registration_form']['plainPassword'];
+            $pwdRepeat = $_POST['registration_form']['passwordRepeat'];
+
+            if (!$pwd || !$pwdRepeat || ($pwd != $pwdRepeat)) {
+                $this->addFlash('error', 'Enter your password correctly again!');
+                return $this->redirect($_SERVER['HTTP_REFERER']);
+            }
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -46,14 +56,18 @@ class RegistrationController extends AbstractController
             $dateTime = new DateTimeImmutable();
             $user->setCreated($dateTime);
 
+            $entityManager = $this->getDoctrine()->getManager();
+
+            if($request->files->get('registration_form')['avatar']){
             $imageManager = new ImageManager();
             $newImage = $imageManager->createImage($request->files->get('registration_form')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
             $user->setAvatar($newImage->getSrc());
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
             $entityManager->persist($newImage);
+            }
+
+            $entityManager->persist($user);
             $entityManager->flush();
+
 
             // do anything else you need here, like send an email
 

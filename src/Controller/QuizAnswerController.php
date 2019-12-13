@@ -14,13 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/quiz/answer")
- */
+
 class QuizAnswerController extends AbstractController
 {
     /**
-     * @Route("/partner/", name="quiz_answer_index", methods={"GET"})
+     * @Route("/partner/quiz/answer", name="quiz_answer_index", methods={"GET"})
      */
     public function index(QuizAnswerRepository $quizAnswerRepository): Response
     {
@@ -30,15 +28,19 @@ class QuizAnswerController extends AbstractController
     }
 
     /**
-     * @Route("/partner/new/{id}", name="quiz_answer_new", methods={"GET","POST"}, requirements={
+     * @Route("/partner/quiz/answer/new/{id}", name="quiz_answer_new", methods={"GET","POST"}, requirements={
      *     "id" = "\d+"})
      */
     public function new(Request $request, QuizQuestion $quizQuestion): Response
     {
         $em = $this->getDoctrine()->getManager();
-        //$quizQuestion = $em->getRepository(QuizQuestion::class)->find($id);
-        $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
 
+        if ($request->query->get('lang') === null){
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $request->query->set('lang', $language->getCode());
+        }else {
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        }
 
         $quizAnswer = new QuizAnswer($quizQuestion);
         $quizAnswerTranslation = new QuizAnswerTranslation($quizAnswer,$language);
@@ -64,7 +66,7 @@ class QuizAnswerController extends AbstractController
     }
 
     /**
-     * @Route("/partner/{id}", name="quiz_answer_show", methods={"GET"})
+     * @Route("/partner/quiz/answer/{id}", name="quiz_answer_show", methods={"GET"})
      */
     public function show(QuizAnswer $quizAnswer): Response
     {
@@ -74,14 +76,19 @@ class QuizAnswerController extends AbstractController
     }
 
     /**
-     * @Route("/partner/{id}/edit", name="quiz_answer_edit", methods={"GET","POST"})
-     * @todo Check for non-existing translations, and if no translation exists, set one up with dummy stuff for editing
+     * @Route("/partner/quiz/answer/{id}/edit", name="quiz_answer_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, QuizAnswer $quizAnswer): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
         $quizAnswerTranslations= $quizAnswer->getTranslations();
+
+        if ($request->query->get('lang') === null){
+            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
+            $request->query->set('lang', $language->getCode());
+        }else {
+            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        }
 
         foreach ($quizAnswerTranslations as $quizAnswerTrans){
             if ($quizAnswerTrans->getLanguage()->getCode() === $language->getCode()){
@@ -112,7 +119,7 @@ class QuizAnswerController extends AbstractController
     }
 
     /**
-     * @Route("/partner/{id}", name="quiz_answer_delete", methods={"DELETE"})
+     * @Route("/partner/quiz/answer/{id}", name="quiz_answer_delete", methods={"DELETE"})
      */
     public function delete(Request $request, QuizAnswer $quizAnswer): Response
     {

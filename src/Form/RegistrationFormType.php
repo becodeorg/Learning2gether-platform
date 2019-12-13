@@ -22,6 +22,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('avatar', FileType::class, [
+                'required' => false,
                 'attr'=>
                     array(
                         'placeholder'=>'Avatar',
@@ -76,6 +77,19 @@ class RegistrationFormType extends AbstractType
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
+                    ]),
+                ],
+                'label'=> false
+            ])
+            ->add('passwordRepeat', PasswordType::class, [
+                'mapped' => false,
+                'attr'=>
+                    array(
+                        'placeholder'=>'Password repeat',
+                        'class'=>'registerInput'),
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please repeat your password',
                     ]),
                 ],
                 'label'=> false

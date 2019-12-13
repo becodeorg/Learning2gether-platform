@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Entity\Chapter;
-use App\Entity\Language;
-use App\Form\SearchbarType;
+use App\Entity\LearningModule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,12 +17,15 @@ class ForumController extends AbstractController
      */
     public function index(Request $request)
     {
-        $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code'=> $_COOKIE['language'] ?? 'en']);
-        $allCategories = $this->getDoctrine()->getRepository(Category::class)->findall();
+
+
+
+        $allCategories = !isset($_GET['mode']) ?
+            $this->getDoctrine()->getRepository(Category::class)->findAllPublished()
+            : $this->getDoctrine()->getRepository(Category::class)->findByType($_GET['mode']);
 
         return $this->render('forum/index.html.twig', [
             'allCategories' => $allCategories,
-            'language' => $language,
         ]);
     }
 }

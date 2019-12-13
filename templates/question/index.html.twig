@@ -47,14 +47,14 @@
                     </div>
 
                     {# UPVOTES #}
+
                     <div class="col-1">
                         <div class="float-right">
                             {{ form_start(upvotes[post.id]) }}
-
                             {{ upvoters[post.id] }}
 
-                            {{ form_widget(upvotes[post.id].upvote, {'attr': {'class': 'upvote-img'}}) }}
-
+                            <button type="submit" class=""><img src="{{ asset('assets/img/thumbicon.png') }}" alt="btn-delete"></button>
+{#                            {{ form_widget(upvotes[post.id].upvote, {'attr': {'class': 'upvote-img'}}) }}#}
                             {{ form_end(upvotes[post.id]) }}
                         </div>
                     </div>
@@ -83,7 +83,7 @@
         <div class="postbutton">
         {# Input answer to question#}
         {{ form_start(postForm) }}
-
+            <button type="submit" class="">Post</button>
             {#        {{ form_widget(postPost.post) }}#}
 
         {{ form_end(postForm) }}

@@ -4,31 +4,25 @@
 
 {% block body %}
 
-    <section class="wrapper-two">
-        <h1>Meetingplace</h1>
+   <section class="example-wrapper">
 
-        <section class="row forum-cat-row">
-            <div class="col-8">
-                <h2>Categories</h2>
-            </div>
+       <p class="title-css">Meetingplace</p>
+       <p class="subtitle-css">Categories</p>
 
+                <div class="row forum-cat-row">
+                    <div class="col-3 col-md-auto skillset">select skillset:</div>
 
-            <div class="col-4">
-                <div class="row">
-                    <div class="col-3">Skillset:</div>
-
-                    <div class="col-3">
-                        <a class="btn btn-default btn-skills " href="{{ path('forum', {'mode': 'ALL'}) }}">{{ 'all' | trans | upper }}</a>
+                    <div class="col-3 col-md-auto">
+                        <a class="btn btn-default btn-skills " href="{{ path('forum', {'mode': 'ALL'}) }}">{{ 'ALL' | trans | upper }}</a>
                     </div>
-                    <div class="col-3">
-                        <a class="btn btn-default btn-skills " href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+
+                    <div class="col-3 col-md-auto">
+                        <a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3 col-md-auto">
                         <a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
                     </div>
                 </div>
-            </div>
-        </section>
 
 
         <div class="card-columns">
@@ -37,7 +31,7 @@
                     <div class="card text-center">
                         <div class="card-body">
                             <p class="card-title forum-cat-title">
-                                {{ category.learningModule.title(language) }}
+                                {{ category.learningModule.title(app.user.language) }}
                             </p>
                         </div>
                     </div>
@@ -45,5 +39,4 @@
             {% endfor %}
         </div>
     </section>
-
 {% endblock %}

@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+$publicDir = dirname(__DIR__) . '/public/';
+$mediaDir = dirname(__DIR__) . '/public/media/';
+
+if (!is_dir($mediaDir)) {
+    if(!chown($publicDir, 'www-data')) {
+        throw new RuntimeException(sprintf('Directory "%s" was not chowned', $publicDir));
+    }
+
+    if (!mkdir($mediaDir, 0755, true) && !is_dir($mediaDir)) {
+        throw new RuntimeException(sprintf('Directory "%s" was not created', $mediaDir));
+    }
+
+    if(!chown($mediaDir, 'www-data')) {
+        throw new RuntimeException(sprintf('Directory "%s" was not chowned', $mediaDir));
+    }
+
+    echo 'Created Media directory';
+    echo "\n";
+}

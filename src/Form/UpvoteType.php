@@ -16,8 +16,8 @@ class UpvoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('post_id', HiddenType::class)
-            ->add('upvote', SubmitType::class, array('label' => 'Upvote'));
+            ->add('post_id', HiddenType::class);
+//            ->add('upvote', SubmitType::class, array('label' => 'Upvote'));
 
         $builder->setMethod('POST');
     }
