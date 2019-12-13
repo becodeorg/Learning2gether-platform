@@ -60,7 +60,14 @@ class ProfileController extends AbstractController
             $imageManager = new ImageManager();
             $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
             $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'user' => $user->getId()]);
+            // check if there was an previous image for that user
+            if(!$avatarImage){
+                $newImage = $imageManager->createImage($request->files->get('edit_profile')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
+                $user->setAvatar($newImage->getSrc());
+                $this->getDoctrine()->getManager()->persist($newImage);
+            } else {
             $user = $imageManager->changeUserAvatarImage($request->files->get('edit_profile')['avatar'], $avatarImage, $user, $this->getParameter('uploads_directory'));
+            }
             $this->flushUpdatedUser($user);
         }
 
