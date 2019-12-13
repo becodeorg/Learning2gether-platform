@@ -27,3 +27,35 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+liip_imagine:
+    loaders:
+        default:
+            filesystem:
+                data_root:
+                    - '%kernel.project_dir%/public/upload'
+                    - '%kernel.project_dir%/public/assets/img'
+
+    resolvers:
+        default:
+            web_path: ~
+
+    filter_sets:
+        cache: ~
+
+        # the name of the "filter set"
+        thumb:
+
+            # adjust the image quality to 75%
+            quality: 75
+
+            # list of transformations to apply (the "filters")
+            filters:
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail: { size: [40, 40], mode: outbound }
+
+                # create a 2px black border: center the thumbnail on a black background
+                # 4px larger to create a 2px border around the final image
+                # background: { size: [124, 94], position: center, color: '#000000' }
