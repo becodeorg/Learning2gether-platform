@@ -29,7 +29,6 @@ class ProfileController extends AbstractController
      */
     public function index(Request $request, Swift_Mailer $mailer): Response
     {
-
         $badgrHandler = new Badgr;
 
         /** @var User $user */
