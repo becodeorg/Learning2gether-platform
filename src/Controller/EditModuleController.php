@@ -16,6 +16,7 @@ use App\Form\EditModuleTranslationsType;
 use App\Form\EditModuleType;
 use App\Form\ImageUploaderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,6 +45,9 @@ class EditModuleController extends AbstractController
 
         $addNewChapterBtn = $this->createFormBuilder()->getForm();
         $addNewChapterBtn->handleRequest($request);
+
+        $moduleImageForm = $this->createForm(ImageUploaderType::class);
+        $moduleImageForm->handleRequest($request);
 
         if ($moduleForm->isSubmitted() && $moduleForm->isValid()) {
             $module = $moduleForm->getData();
@@ -74,12 +78,24 @@ class EditModuleController extends AbstractController
             return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $newChapter->getId()]);
         }
 
+        if ($moduleImageForm->isSubmitted() && $moduleImageForm->isValid()){
+            $imageManager = new ImageManager();
+
+            /* @var User $user */
+            $user = $this->getUser();
+
+            $prevImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'module', 'src' => $module->getImage()]);
+            $updatedModule = $imageManager->changeModuleImage($moduleImageForm->getData()['upload'], $prevImage, $module, $user, $this->getParameter('uploads_directory'));
+            $this->flushUpdatedModule($updatedModule);
+        }
+
         return $this->render('edit_module/index.html.twig', [
             'module' => $module,
             'english' => $english,
             'addNewChapterBtn' => $addNewChapterBtn->createView(),
             'moduleForm' => $moduleForm->createView(),
             'moduleTLForm' => $moduleTLForm->createView(),
+            'moduleImageForm' => $moduleImageForm->createView(),
         ]);
     }
 
@@ -95,5 +111,12 @@ class EditModuleController extends AbstractController
             $chapter->addTranslation($translation);
         }
         return $chapter;
+    }
+
+    private function flushUpdatedModule(LearningModule $updatedModule): void
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($updatedModule);
+        $em->flush();
     }
 }

@@ -47,8 +47,14 @@ class CreateModuleController extends AbstractController
 
             $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
 
+            $imageManager = new ImageManager();
+
             $module = $form->getData();
             $module = $this->makeModuleTranslations($module, $languageAll);
+
+            $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $user, $this->getParameter('uploads_directory'), 'module');
+            $this->flushNewImage($newImage);
+            $module->setImage($newImage->getSrc());
 
             // make new chapter and its translations
             $chapter = new Chapter($module);
@@ -116,5 +122,12 @@ class CreateModuleController extends AbstractController
         $entityManager->flush();
 
         return $module;
+    }
+
+    public function flushNewImage(Image $image): void
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($image);
+        $em->flush();
     }
 }

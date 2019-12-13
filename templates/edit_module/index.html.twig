@@ -25,13 +25,34 @@
             {{ form_end(moduleForm) }}
         </section>
 
+        <section class="module-cube">
+            <div class="row">
+                <div class="col">
+                    {{ form_start(moduleImageForm) }}
+                    <h3>Change module image</h3>
+                    {{ form_widget(moduleImageForm.upload) }}
+                    <button class="mt-2 btn btn-skills">Save</button>
+                    {{ form_end(moduleImageForm) }}
+                </div>
+                <div class="col">
+                    <img style="width: 256px;" src="{{ asset('upload/' ~ module.image) }}" alt="">
+
+                </div>
+            </div>
+
+
+        </section>
+
         {% for chapter in module.chapters %}
             <section class="module-cube">
                 <span>chapter nr: {{ chapter.chapterNumber }}</span><br>
                 <span>chapter title: {{ chapter.title(english) }}</span><br>
-                 <a class="badge btn-skills" href="{{ path('delete_chapter', {module: module.id, chapter: chapter.id, return: 'flow'}) }}">Delete Chapter</a>
+                <a class="badge btn-skills"
+                   href="{{ path('delete_chapter', {module: module.id, chapter: chapter.id, return: 'flow'}) }}">Delete
+                    Chapter</a>
                 <a class="badge btn-skills"
                    href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">edit chapter</a>
+                <a class="badge btn-skills" href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">edit quiz</a>
             </section>
         {% endfor %}
 

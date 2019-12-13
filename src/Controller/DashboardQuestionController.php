@@ -35,8 +35,8 @@ class DashboardQuestionController extends AbstractController
             return $this->redirectToRoute('dashboard_chapter', ['chapter' => $chapter->getId()]);
         }
 
-        $fm = new FlaggingManager();
-        $quizFlags = $fm->checkQuiz($quizArray[0]['quiz'], $languageCount);
+        $fm = new FlaggingManager($languageCount);
+        $quizFlags = $fm->checkQuizTranslationSolo($quizArray[0]);
 
         return $this->render('dashboard_question/index.html.twig', [
             'question' => $question,
