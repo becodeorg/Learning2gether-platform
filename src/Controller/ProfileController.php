@@ -48,7 +48,9 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageManager = new ImageManager();
+            //Avatar : if user upload a new photo, then do this.
+
+/*            $imageManager = new ImageManager();
             $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
             $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'user' => $user->getId()]);
             // check if there was an previous image for that user
@@ -59,7 +61,12 @@ class ProfileController extends AbstractController
             } else {
                 $user = $imageManager->changeUserAvatarImage($request->files->get('edit_profile')['avatar'], $avatarImage, $user, $this->getParameter('uploads_directory'));
             }
+*/
+
             $this->flushUpdatedUser($user);
+            $this->addFlash('info', 'Updated successfully!');
+
+            return $this->redirectToRoute('profile');
         }
 
         // Delete-account
