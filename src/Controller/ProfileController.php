@@ -48,21 +48,10 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //Avatar : if user upload a new photo, then do this.
-
-/*            $imageManager = new ImageManager();
-            $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
-            $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'user' => $user->getId()]);
-            // check if there was an previous image for that user
-            if (!$avatarImage) {
-                $newImage = $imageManager->createImage($request->files->get('edit_profile')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
-                $user->setAvatar($newImage->getSrc());
-                $this->getDoctrine()->getManager()->persist($newImage);
-            } else {
-                $user = $imageManager->changeUserAvatarImage($request->files->get('edit_profile')['avatar'], $avatarImage, $user, $this->getParameter('uploads_directory'));
+            // Avatar : change user's avatar only if user upload a new avatar
+            if ($request->files->get('edit_profile')['avatar']) {
+                $this->UpdateUserAvatar($user, $request);
             }
-*/
-
             $this->flushUpdatedUser($user);
             $this->addFlash('info', 'Updated successfully!');
 
@@ -84,9 +73,11 @@ class ProfileController extends AbstractController
             'userBadges' => $userBadges,
             'user' => $user,
             'profileForm' => $form->createView(),
-            'delete' => $deleteBtn->createView(),
+            'deleteBtn' => $deleteBtn->createView(),
         ]);
     }
+
+
 
     /**
      * @param User $user
@@ -96,6 +87,25 @@ class ProfileController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     */
+    public function UpdateUserAvatar(User $user, Request $request): void
+    {
+        $imageManager = new ImageManager();
+        $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
+        $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'user' => $user->getId()]);
+        // check if there was an previous image for that user
+        if (!$user->getAvatar()) {
+            $newImage = $imageManager->createImage($request->files->get('edit_profile')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
+            $user->setAvatar($newImage->getSrc());
+            $this->getDoctrine()->getManager()->persist($newImage);
+        } else {
+            $user = $imageManager->changeUserAvatarImage($request->files->get('edit_profile')['avatar'], $avatarImage, $user, $this->getParameter('uploads_directory'));
+        }
     }
 
     /**
