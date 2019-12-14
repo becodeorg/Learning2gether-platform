@@ -29,46 +29,47 @@ class ProfileController extends AbstractController
      */
     public function index(Request $request, Swift_Mailer $mailer): Response
     {
-        $badgrHandler = new Badgr;
 
         /** @var User $user */
         $user = $this->getUser();
 
-        //get all badges from user
+        // Badge : get all badges from user and put all badge keys in userBadges
         $badges = $user->getBadges()->getValues();
-        //put all badge keys in userBadges
         $badgeKeys = [];
         foreach ($badges as &$badgeData) {
             $badgeKey = $badgeData->getBadge();
             $badgeKeys[] = $badgeKey;
         }
+        $badgrHandler = new Badgr;
         $userBadges = $badgrHandler->getAllBadges($badgeKeys, $user);
 
+        // Edit-profile
         $form = $this->createForm(EditProfileType::class, $user);
         $form->handleRequest($request);
-
-        $deleteBtn = $this->createFormBuilder()
-            ->add('delete_user', SubmitType::class)
-            ->getForm();
-        $deleteBtn->handleRequest($request);
-
-        if ($deleteBtn->isSubmitted() && $deleteBtn->isValid()){
-            return $this->deleteUser($mailer);
-        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageManager = new ImageManager();
             $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
             $avatarImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'avatar', 'user' => $user->getId()]);
             // check if there was an previous image for that user
-            if(!$avatarImage){
+            if (!$avatarImage) {
                 $newImage = $imageManager->createImage($request->files->get('edit_profile')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
                 $user->setAvatar($newImage->getSrc());
                 $this->getDoctrine()->getManager()->persist($newImage);
             } else {
-            $user = $imageManager->changeUserAvatarImage($request->files->get('edit_profile')['avatar'], $avatarImage, $user, $this->getParameter('uploads_directory'));
+                $user = $imageManager->changeUserAvatarImage($request->files->get('edit_profile')['avatar'], $avatarImage, $user, $this->getParameter('uploads_directory'));
             }
             $this->flushUpdatedUser($user);
+        }
+
+        // Delete-account
+        $deleteBtn = $this->createFormBuilder()
+            ->add('delete_user', SubmitType::class)
+            ->getForm();
+        $deleteBtn->handleRequest($request);
+
+        if ($deleteBtn->isSubmitted() && $deleteBtn->isValid()) {
+            return $this->deleteUser($mailer);
         }
 
         return $this->render('profile/index.html.twig', [
@@ -111,8 +112,8 @@ class ProfileController extends AbstractController
             $imageManager->removeUpload($userImage->getSrc(), $this->getParameter('uploads_directory'));
         }
         $userPwdTokens = $this->getDoctrine()->getRepository(PwdResetToken::class)->findBy(['user' => $user]);
-        if (!empty($userPwdTokens)){
-            foreach ($userPwdTokens as $userPwdToken){
+        if (!empty($userPwdTokens)) {
+            foreach ($userPwdTokens as $userPwdToken) {
                 $em->remove($userPwdToken);
             }
         }
