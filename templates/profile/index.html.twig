@@ -7,14 +7,14 @@
     <div class="row">
         <div class="col-md-8">
             <div class="profileimgwrap">
-                <div class="profileimg">  {#this is the default div to display#}
+                <div class="profileimg"> {# default #}
                     {% if user.avatar %}
                         <img src="{{ asset('upload/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
                     {% else %}
                         <img src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ user.name }}">
                     {% endif %}
                 </div>
-                <div id="changeavatar"> {#If the Edit button is clicked, display this div on the profile photo #}
+                <div id="changeavatar">
                     {{ form_start(profileForm) }}
 {#                    <div id="imagebutton">+</div>#}
                     <div class="gone" id="show">
@@ -25,13 +25,13 @@
                 </div>
             </div>
             <div class="profiletext">
-                <div id="show-mode"> {#this is the default div to display#}
+                <div> {# default #}
                     <p>{{ user.username }}</p>
                     <p>{{ user.name }}</p>
                     <p>{{ user.email }}</p>
                     <div id="imagebutton">Edit Profile</div>
                 </div>
-                <div id="edit-mode"> {#If the Edit button is clicked, replace div above with this#}
+                <div> {# Edit mode (display only if EDIT button is clicked #}
                     {{ form_row(profileForm.username) }}
                     {{ form_row(profileForm.name) }}
                     {{ form_row(profileForm.email) }}
@@ -39,6 +39,7 @@
                 </div>
             </div>
             {{ form_end(profileForm) }}
+
             <div class="progression">
                 <h3 class="title">Your courses</h3>
                 <p class="coursetitle">Javascript</p>
