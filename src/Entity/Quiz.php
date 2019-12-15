@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Domain\Breadcrumb;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -73,8 +74,8 @@ class Quiz
 
     public function getBreadcrumbs(Language $language) : array
     {
-        $breadcrumbs = $this->getChapter()->getFirstPage()->getBreadcrumbs($language);
-        $breadcrumbs[] = ['name' => 'Quiz'];
+        $breadcrumbs = $this->getChapter()->getBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb('Quiz', 'quiz_show', ['id' => $this->getId()]);
         return $breadcrumbs;
     }
 }

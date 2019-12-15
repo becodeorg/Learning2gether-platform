@@ -21,13 +21,13 @@ class Breadcrumb
         return $this->name;
     }
 
-    public function getRouteName(): string
+    public function getRouteName(): ?string
     {
         return $this->routeName;
     }
 
 
-    public function getRouteOptions(): array
+    public function getRouteOptions(): ?array
     {
         return $this->routeOptions;
     }

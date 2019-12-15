@@ -4,12 +4,10 @@
 
 {% block breadcrumbs %}
     <h6 class="breadcrumbs">
-        {{ dump(app.request.requestUri) }}
-        {{ dump(quiz.breadcrumbs(app.user.language)[2].routeName) }}
-        <a class="crumb" href="{{ path(quiz.breadcrumbs(app.user.language)[2].routeName, quiz.breadcrumbs(app.user.language)[2].routeOptions) }}">{{ quiz.breadcrumbs(app.user.language)[2].name }}</a>
-        {% for crumb in  quiz.breadcrumbs(app.user.language) %}
-            {{ dump(crumb) }}
-            {#<a class="crumb" href="{{ path(crumb.routeName) }}">{{ crumb.name }}</a>#}
+        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
+        <span class="crumb crumb-separator"> > </span>
+        {% for crumb in quiz.breadcrumbs(app.user.language) %}
+            {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}
     </h6>
 {% endblock %}
@@ -82,6 +80,6 @@
         </tbody>
     </table>
 
-    {#<a href="{{ path('') }}">{{ 'back chapter' | trans }}</a>#} {#todo: switch link to other page#}
+    <a href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id, 'lang': language.code}) }}">{{ 'back chapter' | trans }}</a>
 
 {% endblock %}

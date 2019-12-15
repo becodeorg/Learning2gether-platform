@@ -2,6 +2,16 @@
 
 {% block title %}Hello EditChapterController!{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
+        <span class="crumb crumb-separator"> > </span>
+        {% for crumb in chapter.breadcrumbs(app.user.language) %}
+            {{ include('partials/breadcrumbs.html.twig') }}
+        {% endfor %}
+    </h6>
+{% endblock %}
+
 {% block body %}
 <div class="example-wrapper">
     <h1>Howdy Partner!</h1>
