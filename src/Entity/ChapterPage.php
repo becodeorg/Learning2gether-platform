@@ -117,20 +117,15 @@ class ChapterPage
 
     public function getBreadcrumbs(Language $language) : array
     {
-        return [
-            new Breadcrumb(
-                $this->getChapter()->getLearningModule()->getTitle($language),
-                'edit_module',
-                ['module' => $this->getChapter()->getLearningModule()->getId()]
-            ),
-            new Breadcrumb(
-                $this->getChapter()->getTitle($language)
-            ),
-            new Breadcrumb(
-                $this->getChapter()->getFirstPage()->getTitle($language),
-                'dashboard_chapter',
-                ['chapter' => $this->getChapter()->getFirstPage()->getId()]
-            ),
-        ];
+        $breadcrumbs = $this->getChapter()->getBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb(
+            $this->getTitle($language),
+            'edit_chapter',
+            ['module' => $this->getChapter()->getLearningModule()->getId(),
+            'chapter' => $this->getChapter()->getFirstPage()->getId(),
+            'page' => $this->getId()
+            ]
+        );
+        return $breadcrumbs;
     }
 }
