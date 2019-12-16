@@ -60,11 +60,13 @@ class ProfileController extends AbstractController
 
         // Delete-account
         $deleteBtn = $this->createFormBuilder()
-            ->add('delete_user', SubmitType::class)
+            ->add('delete_user', SubmitType::class, [
+            'row_attr'=> ['id' => 'delete-account-btn']])
             ->getForm();
         $deleteBtn->handleRequest($request);
 
         if ($deleteBtn->isSubmitted() && $deleteBtn->isValid()) {
+
             return $this->deleteUser($mailer);
         }
 
