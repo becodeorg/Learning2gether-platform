@@ -75,6 +75,11 @@ class QuizController extends AbstractController
         $chapterManager = new ChapterManager($quiz->getChapter());
         $module = $quiz->getChapter()->getLearningModule();
 
+        $test = false;
+        if (isset($_GET['test']) && $_GET['test'] === 'true' && $user->isPartner()) {
+            $test = true;
+        }
+
         if ($chapterManager->previous() !== null && !isset($user->getProgressByLearningModule($module)[$chapterManager->previous()->getId()])) {
             $this->addFlash('error', 'You did not unlock the chapter to access this quiz.');
             return $this->redirectToRoute('module', ['module' => $module]);
@@ -83,7 +88,8 @@ class QuizController extends AbstractController
         return $this->render('quiz/show-user-quiz.html.twig', [
             'quiz' => $quiz,
             'language' => $this->getLanguage($request),
-            'module' => $module
+            'module' => $module,
+            'test' => $test
         ]);
     }
 
