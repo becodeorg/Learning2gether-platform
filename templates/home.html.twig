@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         {% block stylesheets %}{% endblock %}
@@ -18,7 +20,7 @@
         <h1>Learning2gether</h1>
         <p>Where digital and soft skills meet.</p>
     </div>
-    <a class="learnmore button_2 button buttonshadow center">Learn More</a>
+    <a class="learnmore button_2 button buttonshadow center" href="https://www.learning2gether.org/">{{ "Learn More" | trans }}</a>
 
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}

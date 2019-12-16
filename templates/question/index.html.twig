@@ -3,44 +3,135 @@
 {% block title %}L2G Forum{% endblock %}
 
 {% block body %}
-    <h4>Current Question</h4>
 
-    {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
-        {{ include('question/_delete_question.html.twig') }}
-    {% endif %}
+    <section class="example-wrapper">
 
-    {{ question.subject }} <br>
-    {{ question.dateFormatted }}
-    <br><br>
-    <h5>Description of Question</h5>
-    {% set firstpost = true %}
-    {% for post in posts %}
-        {% if firstpost == true %}
-            {{ post.subject }}<br>
-            {{ post.dateFormatted }}<br><br
-            {{ post.createdBy.username }}<br><br><br>
-            <hr>
-            <h5>Reply to Question</h5>
-            {% set firstpost = false %}
-        {% else %}
-            {{ post.subject }}<br>
-            {{ form_start(upvotes[post.id]) }}
-            <p>{{ upvoters[post.id] }} users have upvoted on this post</p>
-            {{ form_end(upvotes[post.id]) }}<br>
-            {{ post.dateFormatted }}<br>
-            {{ post.createdBy.username }}<br><br
+        {# question asked #}
+        {#        <p class="title-css">{{ question.subject }}</p> #}
 
-            <br>
-            {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
-            {{ include('question/_delete_post.html.twig') }}
+
+        {% set firstpost = true %}
+        {% for post in posts %}
+
+            {% if firstpost == true %}
+                {# Question asked #}
+
+                <div class="row question-asked">
+                    <div class="col-2 image-name-column">
+
+                        <div class="row image-row imageForumAvatar justify-content-center">
+                            {% if post.createdBy.avatar %}
+                                <img style="width: 50px; height: 50px"
+                                     src="{{ asset('upload/' ~ post.createdBy.avatar) }}"
+                                     alt="avatar of {{ post.createdBy.avatar }}">
+                            {% else %}
+                                <img style="width: 50px; height: 50px"
+                                     src="{{ asset('assets/img/logo_transparent.png') }}"
+                                     alt="avatar of {{ post.createdBy.avatar }}">
+                            {% endif %}
+                        </div>
+
+                        <div class="row name-row ">
+                            {# Question asked author #}
+                            <div class="col text-center"> {{ post.createdBy.username }}</div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-10 question-datecreated-column">
+                        <div class="row title-question-row">
+                            {{ question.subject }}
+                        </div>
+
+                        <div class="row question-row">
+                            {{ post.subject }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row question-asked-info">
+                    {# date posted #}
+                    <div class="col text-right "> {{ question.dateFormatted }} </div>
+                </div>
+
+                {# delete button question asked #}
+                {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
+                    {{ include('question/_delete_question.html.twig') }}
+                {% endif %}
+
+                {% set firstpost = false %}
+
+            {% else %}
+
+
+
+
+
+                <div class="row question-answer-row">
+
+
+
+                    <div class="imageForumAvatar">
+                        {% if post.createdBy.avatar %}
+                            <img style="width: 50px; height: 50px" src="{{ asset('upload/' ~ post.createdBy.avatar) }}"
+                                 alt="avatar of {{ post.createdBy.avatar }}">
+                        {% else %}
+                            <img style="width: 50px; height: 50px" src="{{ asset('assets/img/logo_transparent.png') }}"
+                                 alt="avatar of {{ post.createdBy.avatar }}">
+                        {% endif %}
+                    </div>
+
+
+                    {# Reply to question #}
+                    <div class="col-11">
+                        {{ post.subject }}
+                    </div>
+
+
+                    {# UPVOTES #}
+
+                    <div class="col-1">
+                        <div class="float-right">
+                            {{ form_start(upvotes[post.id]) }}
+                            {{ upvoters[post.id] }}
+
+                            <button type="submit" class=""><img src="{{ asset('assets/img/thumbicon.png') }}"
+                                                                alt="btn-delete"></button>
+                            {#                            {{ form_widget(upvotes[post.id].upvote, {'attr': {'class': 'upvote-img'}}) }}#}
+                            {{ form_end(upvotes[post.id]) }}
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row question-asked-info">
+                    {# Reply to question author #}
+                    <div class="col text-left">{{ post.createdBy.username }} </div>
+
+                    {# Reply to question date posted #}
+                    <div class="col text-right "> {{ post.dateFormatted }} </div>
+                </div>
+
+                {# if author> can delete post #}
+                {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
+                    {{ include('question/_delete_post.html.twig') }}
+                {% endif %}
+
+
             {% endif %}
+        {% endfor %}
 
-            <br>
+        <div class="postbutton">
+            {# Input answer to question#}
+            {{ form_start(postForm) }}
+            {{ form_widget(postForm.subjectPost) }}
+            <button type="submit" class="">Sent</button>
 
-        {% endif %}
-    {% endfor %}
+            {{ form_end(postForm) }}
+        </div>
 
-    {{ form_start(postForm) }}
-    {{ form_end(postForm) }}<br>
+
+    </section>
 
 {% endblock %}

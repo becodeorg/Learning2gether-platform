@@ -10,6 +10,7 @@
 /.sass-cache/
 /sass/.sass-cache/
 /public/upload/
+/public/media/
 /public/assets/css/app.css.map/
 /sass/app.css.map/
 
@@ -27,4 +28,12 @@
 /composer.phar
 
 /.sass-cache
-/.sass-cache/
+
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
