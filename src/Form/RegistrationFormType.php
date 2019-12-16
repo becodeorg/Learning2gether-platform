@@ -21,23 +21,23 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('avatar', FileType::class, [
-                'required' => false,
-                'attr'=>
-                    array(
-                        'placeholder'=>'Avatar',
-                        'class'=>'uploader'),
-                'mapped' => false,
-                'label' => false,
-                'constraints' => [new Image([
-                    'maxSize' => '5m',
-                    'mimeTypes' => [
-                        'image/jpeg',
-                        'image/png',
-                        'image/gif',
-                    ]
-                ])]
-            ])
+//            ->add('avatar', FileType::class, [
+//                'required' => false,
+//                'attr'=>
+//                    array(
+//                        'placeholder'=>'Avatar',
+//                        'class'=>'uploader'),
+//                'mapped' => false,
+//                'label' => false,
+//                'constraints' => [new Image([
+//                    'maxSize' => '5m',
+//                    'mimeTypes' => [
+//                        'image/jpeg',
+//                        'image/png',
+//                        'image/gif',
+//                    ]
+//                ])]
+//            ])
             ->add('name', null, [
                 'attr'=>
                     array(

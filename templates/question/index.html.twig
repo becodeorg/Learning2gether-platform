@@ -3,61 +3,101 @@
 {% block title %}L2G Forum{% endblock %}
 
 {% block body %}
-    <h4>Current Question</h4>
 
-    {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
-        {{ include('question/_delete_question.html.twig') }}
-    {% endif %}
+    <section class="container wrapper">
 
-    {{ question.subject }} <br>
-    <br><br>
-    <h5>Description of Question</h5>
-    {% set firstpost = true %}
-    {% for post in posts %}
-        {% if firstpost == true %}
-            {{ post.subject }}<br>
-            {{ post.dateFormatted }}<br><br>
-            {{ post.createdBy.username }}<br><br><br>
-            <div class="imageForumAvatar">
-                {% if post.createdBy.avatar %}
-                    <img style="width: 50px; height: 50px" src="{{ asset('upload/' ~ post.createdBy.avatar) }}" alt="avatar of {{ post.createdBy.avatar }}">
-                {% else %}
-                    <img style="width: 50px; height: 50px" src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ post.createdBy.avatar }}">
+        {# question asked #}
+        <p class="title-css">{{ question.subject }}</p>
+
+        {# date created #}
+        <p class="date-created-question text-right">  {{ question.dateFormatted }} </p>
+
+        {% set firstpost = true %}
+        {% for post in posts %}
+
+            {% if firstpost == true %}
+                {# Question asked #}
+                <div class="row question-asked">
+                    {{ post.subject }}
+                </div>
+
+                <div class="row question-asked-info">
+                    {# Question asked author #}
+                    <div class="col text-left"> {{ post.createdBy.username }}</div>
+
+                    {# Question asked date #}
+                    <div class="col text-right ">{{ post.dateFormatted }}</div>
+                </div>
+
+                <div class="imageForumAvatar">
+                    {% if post.createdBy.avatar %}
+                        <img style="width: 50px; height: 50px" src="{{ asset('upload/' ~ post.createdBy.avatar) }}" alt="avatar of {{ post.createdBy.avatar }}">
+                    {% else %}
+                        <img style="width: 50px; height: 50px" src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ post.createdBy.avatar }}">
+                    {% endif %}
+                </div>
+
+                {# delete button question asked #}
+
+                {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
+                    {{ include('question/_delete_question.html.twig') }}
                 {% endif %}
-            </div>
-            <hr>
-            <h5>Reply to Question</h5>
-            {% set firstpost = false %}
-        {% else %}
-            {{ post.subject }}<br>
-            {{ form_start(upvotes[post.id]) }}
-            {{ form_widget(upvotes[post.id]) }}
-            <p>{{ upvoters[post.id] }} users have upvoted on this post</p>
-            <button type="submit" class=""><img src="https://via.placeholder.com/50" alt="btn-delete"></button>
-            {{ form_end(upvotes[post.id]) }}<br>
-            {{ post.dateFormatted }}<br>
-            {{ post.createdBy.username }}<br><br>
-            <div class="imageForumAvatar">
-                {% if post.createdBy.avatar %}
-                    <img style="width: 50px; height: 50px" src="{{ asset('upload/' ~ post.createdBy.avatar) }}" alt="avatar of {{ post.createdBy.avatar }}">
-                {% else %}
-                    <img style="width: 50px; height: 50px" src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ post.createdBy.avatar }}">
-                {% endif %}
-            </div>
 
-            <br>
-            {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
-            {{ include('question/_delete_post.html.twig') }}
+
+                {% set firstpost = false %}
+            {% else %}
+
+                <div class="row question-answer-row">
+
+                    {# Reply to question #}
+                    <div class="col-11">
+                        {{ post.subject }}
+                    </div>
+
+                    {# UPVOTES #}
+
+                    <div class="col-1">
+                        <div class="float-right">
+                            {{ form_start(upvotes[post.id]) }}
+                            {{ upvoters[post.id] }}
+
+                            <button type="submit" class=""><img src="{{ asset('assets/img/thumbicon.png') }}" alt="btn-delete"></button>
+{#                            {{ form_widget(upvotes[post.id].upvote, {'attr': {'class': 'upvote-img'}}) }}#}
+                            {{ form_end(upvotes[post.id]) }}
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row question-asked-info">
+                    {# Reply to question author #}
+                    <div class="col text-left">{{ post.createdBy.username }} </div>
+
+                    {# Reply to question date posted #}
+                    <div class="col text-right "> {{ post.dateFormatted }} </div>
+                </div>
+
+
+                {# if author> can delete post #}
+                {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
+                    {{ include('question/_delete_post.html.twig') }}
+                {% endif %}
+
+
             {% endif %}
+        {% endfor %}
 
-            <br>
+        <div class="postbutton">
+        {# Input answer to question#}
+        {{ form_start(postForm) }}
+            <button type="submit" class="">Post</button>
+            {#        {{ form_widget(postPost.post) }}#}
 
-        {% endif %}
-    {% endfor %}
+        {{ form_end(postForm) }}
+        </div>
 
-    {{ form_start(postForm) }}
-    {{ form_widget(postForm) }}
-    <button type="submit" class="">Post</button>
-    {{ form_end(postForm) }}<br>
+
+    </section>
 
 {% endblock %}

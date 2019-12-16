@@ -1,9 +1,14 @@
 @import "./../variables/variables";
 
 .nav-bar-color {
-    background-color: $purplecolor;
+    background-color: $purple;
   }
 
+.skillset {
+  font-family: $chivofamily;
+  font-variant: small-caps;
+  color: $darkgrey;
+}
 
   h1  {
     font-family: $chivofamily;
@@ -34,17 +39,35 @@
   
   
     border-radius: 40px;
-    border: 3pt solid $purplecolor;
+    border: 3pt solid $purple;
   
   
-    background-color: $purplecolor;
-    color: $whitecolor;
+    background-color: $purple;
+    color: $offwhite;
   
     //transition: all 0.3s ease 0s;
   }
   
   .button_3:hover {
-    color: $purplecolor;
-    background: $whitecolor;
-    border: 3pt solid $whitecolor;
+    color: $purple;
+    background: $offwhite;
+    border: 3pt solid $offwhite;
   }
+
+@media only screen and (max-width: 1090px) {
+  body {
+    .wrapper-two {
+      width: 800px;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 920px) {
+  body {
+    .wrapper-two {
+      width: 600px;
+    }
+  }
+}
+
