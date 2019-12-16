@@ -14,31 +14,46 @@
         {{ currentTopic.title(language) }}<br>
         <br>
 
-    <h4>All in Current Questions</h4>
-    {% for question in questions %}
-        <div class="border">
-        {# Question text#}
-        {{ question.subject }}
-        <br>
-        {# Count Replies#}
-        <p>There are {{ postCount[question.id] }} answer(s)  in this topic</p>
-        {# Question description for preview text#}
-        {{ question.posts[0].subject }}
-        <br>
-        {# Link to the question's detail page#}
-        <a href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
-          MORE
-        </a>
 
-        </div>
-    {% endfor %}
+    <div class="question-wrapper">
+        <h4>All in Current Questions</h4>
+        {% for question in questions %}
+            <div class="border">
+                {# Question text#}
+                <div class="question-subject">
+                    {{ question.subject }}
+                </div>
+
+                <br>
+                {# Count Replies#}
+                <div class="post-count">
+                    <p>There are {{ postCount[question.id] }} answer(s)  in this topic</p>
+                </div>
+
+                {# Question description for preview text#}
+                <div class="question-post">
+                    {{ question.posts[0].subject }}
+
+
+                </div>
+
+                <br>
+                {# Link to the question's detail page#}
+                <a href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
+                    MORE
+                </a>
+
+            </div>
+        {% endfor %}
+
+
 
     <h4>Add New Question</h4>
     {{ form_start(addQuestion) }}
     {{ form_widget(addQuestion) }}
     <button type="submit" class="">Send Question</button>
     {{ form_end(addQuestion) }}
-
+    </div>
 {% endblock %}
 
 

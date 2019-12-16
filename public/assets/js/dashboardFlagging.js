@@ -15,7 +15,7 @@ function checkModule(moduleId) {
             btn.classList.remove('spinner-border','spinner-border-sm');
             btn.classList.add('badge', 'badge-danger');
             btn.innerText = data.length + ' problems found!';
-            dump.style.display = 'inline';
+            dump.style.display = 'block';
             let listDump = '<ul style="width: 100%">';
             for (let i = 0; i < data.length; i++){
                 listDump += '<li>' + data[i] + '</li>';
@@ -34,3 +34,23 @@ function checkModule(moduleId) {
         }
     });
 }
+
+//modal checking
+
+let modal = document.querySelector(".modal");
+let trigger = document.querySelector(".trigger");
+let closeButton = document.querySelector(".close-button");
+
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
+
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);

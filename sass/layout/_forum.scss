@@ -14,4 +14,68 @@
   margin-bottom: 35px;
 }
 
+.main-forum-topic{
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  .inner-topics{
+    border: none;
+    font-weight:800;
+    -webkit-box-shadow: 14px 18px 33px -17px rgba(0,0,0,0.75);
+    -moz-box-shadow: 14px 18px 33px -17px rgba(0,0,0,0.75);
+    box-shadow: 14px 18px 33px -17px rgba(0,0,0,0.75);
+    margin:10px ;
+    border-radius: 15px;
+    padding: 15px;
+    button{
+      width: 100px;
+      height: 50px;
+      background-color: white;
+      border-radius: 5px;
+      border: 1px solid $purplecolor;
+      color: $purplecolor;
+      .more-link{
+        color: $purplecolor;
+      }
+      &:hover{
+        background-color: $purplecolor;
+        color: white;
+        .more-link{
+          color: white;
+        }
+
+      }
+    }
+
+  }
+
+}
+
+.question-wrapper{
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  .question-subject{
+    margin: 10px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $darkgreycolor;
+
+  }
+  .question-post{
+    margin: 10px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $purplecolor;
+  }
+}
+
+
+
 

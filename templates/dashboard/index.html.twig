@@ -13,36 +13,41 @@
     <div class="container mt-5">
 
         <!-- add module button -->
-        <section class="row rowaddbutton">
-            <a href="{{ path('create_module') }}">
-                <button type="button" class="btn  btn-circle btn-xl"
-                        data-toggle="tooltip" data-placement="right" title="Add new module">
-                    <img class="addicon" src="{{ asset('assets/img/plusicon.svg') }}" alt="add icon">
-                </button>
-            </a>
-        </section>
+        <div class="modules-container">
+            <section class="row rowaddbutton" >
+                <a href="{{ path('create_module') }}" class="call-to-action">
+                    <button type="button" class="btn  btn-circle btn-xl"
+                            data-toggle="tooltip" data-placement="right" title="Add new module">
+                        <img class="addicon" src="{{ asset('assets/img/plusicon.svg') }}" alt="add icon">
+                    </button>
+                    <p>Create a new module </p>
+                </a>
+            </section>
 
-        <section class="row">
-            <a href="{{ path('forum') }}">
-                <button type="button" class="btn btn-circle btn-xl"
-                        data-toggle="tooltip" data-placement="right" title="Go to forum">
-                    <img class="addiconflag" src="{{ asset('assets/img/flagicon.svg') }}" alt="flag icon">
-                </button>
-            </a>
-        </section>
+            <section class="row">
+                <a href="{{ path('forum') }}" class="call-to-action">
+                    <button type="button" class="btn btn-circle btn-xl"
+                            data-toggle="tooltip" data-placement="right" title="Go to forum">
+                        <img class="addiconflag" src="{{ asset('assets/img/flagicon.svg') }}" alt="flag icon">
+                    </button>
+                    <p>Go to foum  </p>
+                </a>
+            </section>
+        </div>
+
 
         <table class="mt-5 table table-hover text-center">
             <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Module Name</th>
-                <th scope="col"># chapters</th>
-                <th scope="col">Translations <i
+            <tr class="dash-lines">
+                <th scope="col" class="header-dash">#</th>
+                <th scope="col" class="header-dash">Module Name</th>
+                <th scope="col" class="header-dash"># chapters</th>
+                <th scope="col" class="header-dash"> Translations <i
                             title="This module's title and description translations.&#10;Click to go to that module's edit page."
                             class="help-icon far fa-question-circle"></i></th>
-                <th scope="col">Check</th>
-                <th scope="col">Status</th>
-                <th scope="col">&#128269;</th>
+                <th scope="col" class="header-dash trigger">Check</th>
+                <th scope="col" class="header-dash">Status</th>
+                <th scope="col" class="header-dash">&#128269;</th>
             </tr>
             </thead>
             <tbody>
@@ -50,7 +55,7 @@
                 {% set moduleArray = lmRepo.getModuleAsArray(module) %}
                 {% if moduleArray is not empty %}
                     {% set moduleArray = moduleArray[0] %}
-                    <tr>
+                    <tr class="dash-lines">
                         <th scope="row">{{ loop.index }}</th>
                         <td>{{ module.getTitle(language) }}</td>
                         <td>{{ module.chapters|length }}</td>
@@ -64,6 +69,7 @@
                             {% endfor %}
                         </td>
                         <td>
+
                             <div id="flagbtn-{{ module.id }}" class="flagbtn badge badge-primary"
                                  onclick="checkModule({{ module.id }})">check
                             </div>
@@ -79,13 +85,13 @@
                         {% endif %}
                         <td><a class="badge btn-skills" href="{{ path('dashboard_module', {module: module.id}) }}">View chapters</a></td>
                     </tr>
-                    <tr>
+                    <tr class="module-rows">
+
                         {# sorry to the poor soul that has to style this #}
                         {# I did a lot of js styling on this one #}
                         {# displaying in a seperate table ruins the whole bootstrap table #}
                         {# maybe try bootstrap tootltips or popups ? #}
-                        <td style="display: none; text-align: left; font-size: 0.75em"
-                            id="dump-{{ module.id }}"></td>
+                        <td style="display: none;" class="module-alert" id="dump-{{ module.id }}"></td>
                     </tr>
                 {% else %}
                     <tr class="text-center">
@@ -98,6 +104,10 @@
         </table>
     </div>
 
+    <script scrc="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+    <script>
+
+    </script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script src="{{ asset('assets/js/dashboardFlagging.js') }}"></script>
