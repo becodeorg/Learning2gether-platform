@@ -39,6 +39,16 @@
                 </div>
             </div>
 
+            {# Delete my account#}
+            <div>
+                {{ form_start(deleteBtn) }}
+                {{ form_widget(deleteBtn.delete_user,
+                    { 'label': 'Delete my account'
+                    , 'attr': {'onclick': 'return confirm("Are you sure to delete your account?")'}
+                    }) }}
+                {{ form_end(deleteBtn) }}
+            </div>
+
             <div class="progression">
                 <h3 class="title">Your courses</h3>
                 <p class="coursetitle">Javascript</p>
