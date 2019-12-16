@@ -67,7 +67,8 @@
             </tr>
             </thead>
             <tbody>
-            {% if cr.chapterAsArray(chapter) is empty %}
+
+            {% if cr.chapterQuizAsArray(chapter) is empty %}
                 <tr>
                     <td colspan="6">This quiz has no questions! <a class="badge btn badge-warning"
                                                                    href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">Add
