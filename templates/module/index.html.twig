@@ -6,9 +6,9 @@
 
     <div class="example-wrapper">
 
-        <h2>{{ module.getTitle(language) }} COURSE</h2>
+        <h2>{{ module.getTitle(language) }}</h2>
 
-        <button class="btn btn-default button_4chap btnchap">Meeting Place</button>
+        <a href="{{ path('forum') }}"><button class="btn btn-default button_4chap btnchap">Meeting Place</button></a>
 
         <section id="chapter-overview">
             {% if module.getUserChapters(app.user)|length > 0 %}
