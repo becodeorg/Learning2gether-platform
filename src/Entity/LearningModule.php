@@ -7,7 +7,6 @@ use App\Domain\LearningModuleType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use http\Url;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LearningModuleRepository")
