@@ -22,6 +22,7 @@
                 <th scope="col">Translations <i
                             title="This chapters' title and description translations.&#10;Click to go to that chapters edit page.&#10;Hover to see the missing translations."
                             class="help-icon far fa-question-circle"></i></th>
+                <th scope="col">&#10060;</th>
                 <th scope="col">&#128269;</th>
             </tr>
             </thead>
@@ -29,8 +30,6 @@
             {% for chapterObj in module.chapters %}
                 {% set chapter = cr.chapterAsArray(chapterObj) %}
                 {% if chapter is not empty %}
-
-                {% set flagData = fm.checkChapterTranslationsSolo(chapter) %}
                 {% set chapterNumber = chapter[0]['chapterNumber'] %}
                 <tr>
                     <th scope="row">{{ chapterNumber }}</th>
@@ -53,6 +52,7 @@
                             <a class="badge {{ badgeclass }}" href="{{ path('edit_chapter', {'chapter': chapter[0]['id'], 'module': module.id, lang: chapterTL['language']['code']}) }}">{{ chapterTL['language']['name'] }}</a>
                         {% endfor %}
                     </td>
+                    <td><a class="badge badge-danger" href="{{ path('delete_chapter', {'chapter': chapter[0]['id'], return: 'dash'}) }}">delete</a></td>
                     <td><a class="badge btn btn-skills" href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">View Pages</a></td>
                 </tr>
                     {% else %}

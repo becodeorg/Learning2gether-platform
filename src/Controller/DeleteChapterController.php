@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DeleteChapterController extends AbstractController
 {
     /**
-     * @Route("partner/delete/chapter/{chapter}", name="delete_chapter")
+     * @Route("partner/delete/chapter/{chapter}", name="delete_chapter", requirements={"chapter"="\d+"})
      * @param Request $request
      * @param Chapter $chapter
      * @return Response

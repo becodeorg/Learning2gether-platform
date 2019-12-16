@@ -37,7 +37,7 @@ class LearningModuleRepository extends ServiceEntityRepository
         // for example, if there is a quiz without any questions or any questions without an answer
 
         $em = $this->getEntityManager();
-        $dql = 'SELECT l, lt, ltl, c FROM App\Entity\LearningModule l JOIN l.translations lt JOIN lt.language ltl JOIN l.chapters c WHERE l.id = :id';
+        $dql = 'SELECT l, lt, ltl, c FROM App\Entity\LearningModule l JOIN l.translations lt JOIN lt.language ltl JOIN l.chapters c WHERE l.id = :id ORDER BY ltl.id';
         $query = $em->createQuery($dql);
         $query->setParameter(':id', $module->getId());
         return $query->getArrayResult();
