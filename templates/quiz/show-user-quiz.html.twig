@@ -4,13 +4,18 @@
 {% block title %}{{ 'Quiz'|trans }}{% endblock %}
 
 {% block body %}
-    <div class="wrapper">
+    <div class="example-wrapper">
         <form id="fetchForm" method="post" action="{{ path('quiz_send', {'quiz': quiz.id}) }}">
             <p class="center">{{ module.getTitle(language) }}</p>
             <h1>{{ 'Quiz'|trans }}</h1>
-            <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">
-                {{ 'Back to chapter'|trans }}
-            </a>
+
+            {% if test == false %}
+                <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">
+                    {{ 'Back to chapter'|trans }}
+                </a>
+                {% else %}
+                    <a class="btn btn-default button button_4chap btnchapquiz" href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id}) }}">Back to dashboard</a>
+            {% endif %}
 
             <!--  question1   -->
             <section id="chapter-overview">
@@ -45,13 +50,16 @@
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content container center modalcontainer">
+                            <!--
                             <div class="text-center imgmodal">
                                 <img src="https://via.placeholder.com/150" alt="">
                             </div>
+                            -->
 
                             <div class="text-center modal-message">
-                                <p class="message-one">You are almost there.</p>
-                                <p class="message-two">Give it another shot!</p>
+                                <p class="message-one">{{ 'You are almost there.' | trans }}</p>
+                                <p><span id="process-percentage"></span> % {{ 'correct' | trans }}</p>
+                                <p class="message-two">{{ 'Give it another shot!' | trans }}</p>
                             </div>
 
                             <div class="row ">
@@ -70,12 +78,12 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content container center modalcontainer">
                             <div class="text-center imgmodal">
-                                <img src="https://via.placeholder.com/150" alt="">
+                                <img src="https://via.placeholder.com/150" alt="" id="badgr-image" height="150">
                             </div>
 
                             <div class="text-center modal-message">
-                                <p class="message-one">Complete module</p>
-                                <p class="message-two">yeet</p>
+                                <p class="message-one">{{ 'You completed the module.' | trans }}</p>
+                                <p class="message-two">{{ 'Well done!' | trans }}</p>
                             </div>
 
                             <div class="row ">
@@ -94,22 +102,24 @@
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content container center modalcontainer">
+                            <!--
                             <div class="text-center imgmodal">
                                 <img src="https://via.placeholder.com/150" alt="">
                             </div>
+                            -->
 
                             <div class="text-center modal-message">
-                                <p class="message-one">Complete chapter.</p>
-                                <p class="message-two">Yeet</p>
+                                <p class="message-one">{{ 'You completed this chapter.' | trans }}</p>
+                                <p class="message-two">{{ 'Well done!' | trans }}</p>
                             </div>
 
                             <div class="row ">
                                 <div class="col-6">
-                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">Profile</button></a>
+                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">{{ 'Profile' | trans }}</button></a>
                                 </div>
 
                                 <div class="col-6">
-                                    <a href="{{ path('module', { module : module.id}) }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">Next chapter</button>
+                                    <a href="{{ path('module', { module : module.id}) }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">{{ 'Next chapter' | trans }}</button></a>
                                 </div>
                             </div>
                         </div>
@@ -117,11 +127,14 @@
                 </div>
             </div>
 
-            <div class="row chapbutton_2quiz">
-                <p id="completeText">Fill in all questions to submit</p>
-                <button class="btn btn-default button_5quiz noClick" id="send-quiz">Submit test</button>
-            </div>
+            {% if test == false %}
+                <div class="row chapbutton_2quiz">
+                    <p id="completeText">Fill in all questions to submit</p>
+                    <button class="btn btn-default button_5quiz noClick" id="send-quiz">Submit test</button>
+                </div>
+            {% endif %}
         </form>
     </div>
+
     <script src="{{ asset('assets/js/quiz.js') }}"></script>
 {% endblock %}
