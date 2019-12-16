@@ -46,7 +46,7 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
         $category = new Category();
         $category->setLearningModule($learningModule);
 
-        foreach($allLanguages AS $language) {
+        foreach ($allLanguages AS $language) {
             $name = sprintf('Javascript: Introduction course (%s)', $language->getName());
             $learningModule->addTranslation(new LearningModuleTranslation(
                 $learningModule,
@@ -73,23 +73,20 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
         ];
 
         $pages = [
-            'Introduction' => '#Big title
+            'Introduction' => '# Big title
             
-            * This
-            * should
-            * be a
-            * bullet list
+* This
+* should
+* be a
+* bullet list
             
-            [A link to google](http://www.google.com?q=learning2gether)
+[A link to google](http://www.google.com?q=learning2gether)
             
-            !!{embed}(dQw4w9WgXcQ)
+!!{embed}(dQw4w9WgXcQ)
             
-            ##Some example text
-            ### Minor header
-            
-            Animi, commodi eveniet placeat quae quisquam repudiandae soluta ullam. Dignissimos excepturi facilis molestias
-    mollitia nam neque nihil nulla, pariatur possimus provident quidem quis reiciendis repellat ut veniam, veritatis
-    vero, voluptate!',
+## Some example text
+### Minor header 
+Animi, commodi eveniet placeat quae quisquam repudiandae soluta ullam. Dignissimos excepturi facilis molestias mollitia nam neque nihil nulla, pariatur possimus provident quidem quis reiciendis repellat ut veniam, veritatis vero, voluptate!',
             'Let us dive into the theory!' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque eaque fugit iure pariatur perferendis sint
     velit voluptates? Esse incidunt iure nemo nihil obcaecati praesentium quam reiciendis, repellat voluptas? Est,
     repellat.',
@@ -112,7 +109,7 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
 
             foreach ($pages AS $pageTitle => $pageDescription) {
                 $page = $chapter->createNewPage();
-                foreach($allLanguages AS $language) {
+                foreach ($allLanguages AS $language) {
                     $page->addTranslation(new ChapterPageTranslation(
                         $language,
                         $page,
@@ -126,17 +123,17 @@ class LearningModuleFixture extends Fixture implements OrderedFixtureInterface
 
             foreach (range(1, 3) AS $questionNumber) {
                 $question = new QuizQuestion($questionNumber, $quiz);
-                foreach($allLanguages AS $language) {
+                foreach ($allLanguages AS $language) {
                     $question->addTranslation(new QuizQuestionTranslation(
                         $question, $language, 'Do you want to enter the correct answer to question ' . $questionNumber . '? (' . $language->getName() . ')'));
                 }
                 $question->addAnswer($answer = new QuizAnswer($question, true));
-                foreach($allLanguages AS $language) {
+                foreach ($allLanguages AS $language) {
                     $answer->addTranslation(new QuizAnswerTranslation($answer, $language, 'Yes'));
 
                 }
                 $question->addAnswer($answer = new QuizAnswer($question, false));
-                foreach($allLanguages AS $language) {
+                foreach ($allLanguages AS $language) {
                     $answer->addTranslation(new QuizAnswerTranslation($answer, $language, 'No'));
 
                 }
