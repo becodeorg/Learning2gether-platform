@@ -1,8 +1,8 @@
 @import "./../variables/variables";
 
 .loginbody{
-  background: $purplecolor;
-  color: $whitecolor;
+  background: $purple;
+  color: $offwhite;
 }
 
 .sidebar{
@@ -12,7 +12,7 @@
   width: 300px;
   position: absolute;
   right: 0;
-  background: $whitecolor;
+  background: $offwhite;
 }
 
 .form-group {
@@ -44,7 +44,7 @@
 footer{
   position: absolute;
   bottom: 0;
-  background: $darkpurplecolor;
+  background: $darkpurple;
   width: 100%;
   z-index: -5;
   padding-left: 100px;
@@ -80,7 +80,7 @@ footer{
   top: 50px;
   position: absolute;
   right: 100px;
-  border: 5px solid $purplecolor;
+  border: 5px solid $purple;
 }
 
 .custom-file label{
@@ -109,7 +109,7 @@ footer{
 }
 
 footer a{
-  color: $purplecolor;
+  color: $purple;
 }
 
 @media only screen and (max-width: 600px) {

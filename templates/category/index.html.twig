@@ -4,34 +4,51 @@
 
 {% block body %}
 
-   <h1>Forum</h1>
 
-    <h2>Current Category</h2>
-    {{ category.learningModule.title(language) }}<br>
-    {{ category.learningModule.description(language) }} <br><br>
+    <section class="example-wrapper">
 
-    <h2>Topics</h2>
-
-    {% for topic in topics %}
+        <p class="title-css"> {{ category.learningModule.title(language) }}</p>
+        {#    <p>{{ category.learningModule.description(language) }}</p>#}
 
 
+        <p class="subtitle-css">
+            TOPICS</p>
 
 
+        {% for topic in topics %}
 
 
-        <div class="border-bottom">
-            {# Topic title#}
-            {{ topic.title(language) }}
-            <br>
-            {# Count Questions for that Topic#}
-            <p>There are {{ questionCount[topic.id] }} question(s) in this topic</p>
-            {# Link to the Topic's detail (all question) page#}
-            <a href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
-                MORE
-            </a>
-        </div>
+            <div class="container ">
 
-    {% endfor %}
+                <div class="row cards-forum center">
+
+                    <div class="col-6 title-cards-forum">
+                        {# Topic title#}
+                        {{ topic.title(language) }}
+                    </div>
+
+                    <div class="col-3 questions-cards-forum">
+                        {# Count Questions for that Topic#}
+                        <p>{{ questionCount[topic.id] }} question(s)</p>
+                    </div>
+
+                    <div class="col-3">
+                        {# Link to the Topic's detail (all question) page#}
+                        <a class="btn-forum "
+                           href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
+                            MORE
+                        </a>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        {% endfor %}
+
+
+    </section>
 
 {% endblock %}
 

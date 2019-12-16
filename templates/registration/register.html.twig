@@ -6,9 +6,7 @@
 <div class="sidebar">
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.avatar) }}
-        <img class="profilePic" src="{{ asset('assets/img/profile.png') }}" alt="profile picture">
-        <div class="registerTitle center">Upload image</div>
+{#        {{ form_row(registrationForm.avatar) }}#}
         <div class="loginwrap">
                 {{ form_row(registrationForm.name) }}
                 {{ form_row(registrationForm.email) }}

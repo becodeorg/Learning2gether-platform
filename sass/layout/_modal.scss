@@ -1,14 +1,14 @@
 @import "./../variables/variables";
 
 .modalbutton {
-  background-color: $purplecolor;
-  border-color: $purplecolor;
+  background-color: $purple;
+  border-color: $purple;
   margin-bottom: 20px;
 }
 
 .modalbutton:hover {
-  background-color: $darkpurplecolor;
-  border-color: $darkpurplecolor;
+  background-color: $darkpurple;
+  border-color: $darkpurple;
 }
 
 .modal-message {

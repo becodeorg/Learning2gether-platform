@@ -4,41 +4,95 @@
 
 {% block body %}
 
-    <h1>Forum</h1>
 
-    <h2>Current Category</h2>
-    {{ category.learningModule.title(language) }}<br>
-    {{ category.learningModule.description(language) }} <br><br>
+    {# <h2>Current Category</h2>
+     {{ category.learningModule.title(language) }}<br>
+     {{ category.learningModule.description(language) }} <br><br>#}
 
-    <h2>Current Topic</h2>
-        {{ currentTopic.title(language) }}<br>
-        <br>
+    <section class="wrapper">
 
-    <h4>All in Current Questions</h4>
-    {% for question in questions %}
-        <div class="border">
-        {# Question text#}
-        {{ question.subject }}
-        <br>
-        {# Count Replies#}
-        <p>There are {{ postCount[question.id] }} answer(s)  in this topic</p>
-        {# Question description for preview text#}
-        {{ question.posts[0].subject }}
-        <br>
-        {# Link to the question's detail page#}
-        <a href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
-          MORE
-        </a>
+        {#    TOPIC TITLE#}
+        <p class="title-css">
+            {{ currentTopic.title(language) }}
+        </p>
 
-        </div>
-    {% endfor %}
+        {% for question in questions %}
 
-    <h4>Add New Question</h4>
-    {{ form_start(addQuestion) }}
-    {{ form_widget(addQuestion) }}
-    <button type="submit" class="">Send Question</button>
-    {{ form_end(addQuestion) }}
+            <div class="container ">
 
+                <div class="row cards-forum center">
+
+                    <div class="col-4 title-cards-forum">
+                        {# Question text#}
+                        {{ question.subject }}
+                    </div>
+
+                    <div class="col-2 questions-cards-forum">
+                        {# Count Replies#}
+                        <p>{{ postCount[question.id] }} answer(s)</p>
+                    </div>
+
+                    <div class="col-3">
+                        {# Question description for preview text#}
+                        {{ question.posts[0].subject }}
+                    </div>
+
+                    <div class="col-3">
+                        {# Link to the question's detail page#}
+                        <a class="btn-forum "
+                           href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
+                            MORE
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+
+        <section class="container topic-questions">
+            {{ form_start(addQuestion) }}
+
+            <section class="row question-row">
+                <div class="col-3">
+                    {# Form text #}
+                    {{ form_label(addQuestion.question, 'Title:', { 'label_attr': {'class': 'question-text'} }) }}
+                </div>
+                <div class="col-9">
+                    {# Form inputfield #}
+                    {{ form_widget(addQuestion.question, {'attr': {'class': 'question-label'} }) }}
+                </div>
+            </section>
+
+            <section class="row">
+                <div class="col-3">
+                    {# Form text #}
+                    {{ form_label(addQuestion.questionDescription, 'Your question:', { 'label_attr': {'class': 'questionDescription-text'} }) }}
+                </div>
+
+                <div class="col-9">
+                    {# Form inputfield #}
+                    {{ form_widget(addQuestion.questionDescription, {'attr': {'class': 'questionDescription-label'} }) }}
+                </div>
+            </section>
+
+            {# question button #}
+            {#<div class="row">
+                {{ form_widget(addQuestion.postTopic, {'attr': {'class': 'topic-question-button'}}) }}
+            </div>#}
+
+            {{ form_end(addQuestion) }}
+
+            {# {{ form_start(addQuestion) }}
+              {{ form_widget(addQuestion) }}
+              <button type="submit" class="">Send Question</button>
+              {{ form_end(addQuestion) }}#}
+
+
+        </section>
+    </section>
 {% endblock %}
 
 
