@@ -50,6 +50,11 @@
                 <button class="completebutton button_2">Complete</button>
             </div>
 
+            {% for module in modules %}
+                {{ dump(user.activeModules(modules)) }}
+                {{  dump(user.finishedModules(modules)) }}
+            {% endfor %}
+
         </div>
 
         <div class="badges col-md-4 row">

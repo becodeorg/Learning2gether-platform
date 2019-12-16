@@ -6,6 +6,7 @@ use App\Domain\Badgr;
 use App\Domain\ImageManager;
 use App\Entity\Chapter;
 use App\Entity\Image;
+use App\Entity\LearningModule;
 use App\Entity\PwdResetToken;
 use App\Entity\User;
 use App\Entity\UserChapter;
@@ -32,6 +33,9 @@ class ProfileController extends AbstractController
 
         /** @var User $user */
         $user = $this->getUser();
+
+        //get modules
+        $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findBy(['isPublished' => true]);
 
         // Badge : get all badges from user and put all badge keys in userBadges
         $badges = $user->getBadges()->getValues();
@@ -74,6 +78,7 @@ class ProfileController extends AbstractController
             'user' => $user,
             'profileForm' => $form->createView(),
             'deleteBtn' => $deleteBtn->createView(),
+            'modules' => $modules
         ]);
     }
 
