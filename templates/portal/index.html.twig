@@ -4,25 +4,20 @@
 
 {% block body %}
 
-    <div class="wrapper">
+    <div class="example-wrapper">
 
         <section class="row forum-cat-row">
-            <div class="col-8">
-            </div>
-
-            <div class="col-4">
-                <div class="row">
-                    <div class="col-3">Skillset:</div>
-                    <div class="col-3">
-                        <a class="btn btn-default btn-skills" href="{{ path('portal') }}">{{ 'all' | trans | upper }}</a>
-                    </div>
-                    <div class="col-3">
-                        <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
-                    </div>
-                    <div class="col-3">
-                        <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
-                    </div>
+            <div class="col-12">
+                <div class="skills">
+                    <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
                 </div>
+                <div class="skills">
+                    <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+                </div>
+                <div class="skills">
+                    <a class="btn btn-default btn-skills" href="{{ path('portal') }}">{{ 'all' | trans | upper }}</a>
+                </div>
+                <div class="skills">Skillset:</div>
             </div>
         </section>
 
@@ -43,10 +38,6 @@
                 {% include 'portal/partials/module.html.twig' with {'module': module} %}
             {% endfor %}
         </div>
-
-        <hr>
-        <a href="{{ path('forum') }}">{{ 'Meeting Place' | trans }}</a>
-
         {#
                 <a href="{{ path('app_logout') }}">Logout</a>
         #}

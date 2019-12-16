@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}{{ page.getTitle(language) }}{% endblock %}
-
 {% block body %}
+<div class="example-wrapper">
+
+
+
     {{ page.getContent(language) | parsedown | youtube | raw }}
 
     {% if pageManager.previous() != null %}
@@ -17,4 +19,5 @@
         <a class="btn-primary btn" href="{{ path('module_view_page',
             {'chapterPage': pageManager.next().getId()}) }}">{{ 'Next' | trans }}</a>
     {% endif %}
+</div>
 {% endblock %}

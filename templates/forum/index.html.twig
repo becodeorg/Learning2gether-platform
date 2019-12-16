@@ -5,17 +5,13 @@
 {% block body %}
 
     <section class="example-wrapper">
-
-
         <section class="row forum-cat-row">
-            <div class="col-8"></div>
-            <div class="col-4 skillset">
-                <div class="row">
-                    <div class="col-3">{{ "Skillset" | trans}}:</div>
-                    <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum') }}">{{ 'ALL' | trans | upper }}</a> </div>
-                    <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a> </div>
-                    <div class="col-3"><a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a> </div>
-                </div>
+            <div class="col-12">
+                <div class="skills"><a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a> </div>
+                <div class="skills"><a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a> </div>
+                <div class="skills"><a class="btn btn-default btn-skills" href="{{ path('forum') }}">{{ 'ALL' | trans | upper }}</a> </div>
+                <div class="skills">{{ "Skillset" | trans}}:</div>
+            </div>
             </div>
         </section>
         <h1 class="text-center">Meeting place</h1>

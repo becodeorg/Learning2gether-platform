@@ -4,8 +4,11 @@
 
 {% block body %}
 <div class="sidebar">
+
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.avatar) }}
+        <img class="profilePic" src="{{ asset('assets/img/profile.png') }}" alt="profile picture">
+        <div class="registerTitle center">Upload image</div>
         <div class="loginwrap">
                 {{ form_row(registrationForm.name) }}
                 {{ form_row(registrationForm.email) }}
@@ -14,7 +17,7 @@
                 {{ form_row(registrationForm.passwordRepeat) }}
                 {{ form_row(registrationForm.agreeTerms) }}
 
-                <button class="btn button_4">Register</button>
+                <button class="button button_1">Register</button>
         </div>
     {{ form_end(registrationForm) }}
         <p class="accountgot">
