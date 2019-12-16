@@ -1,17 +1,22 @@
 @import "./../variables/variables";
 
 .loginbody{
-  background: $purplecolor;
-  color: $whitecolor;
+  background: $purple;
+  color: $offwhite;
 }
 
 .sidebar{
+  color: $black;
   height: 100vh;
   top: 0;
   width: 300px;
   position: absolute;
   right: 0;
-  background: $whitecolor;
+  background: $offwhite;
+}
+
+.form-group {
+  text-align: center;
 }
 
 .logo{
@@ -27,8 +32,9 @@
   text-align: center;
   position: absolute;
   bottom: 100px;
-  left: 50px;
-  width: 200px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
 }
 
 .loginwrap button{
@@ -38,7 +44,7 @@
 footer{
   position: absolute;
   bottom: 0;
-  background: $darkpurplecolor;
+  background: $darkpurple;
   width: 100%;
   z-index: -5;
   padding-left: 100px;
@@ -52,18 +58,37 @@ footer{
   bottom: 100px;
 }
 
-.forgot{
+.forgot, .accountgot{
   position: absolute;
-  bottom: 50px;
+  bottom: 20px;
   right: 30px;
+  color: $black;
+  text-align: right;
+}
+
+.custom-file {
+  .form-group:first-child & {
+    height: 100px;
+    width: 100px;
+    margin-top: 50px;
+  }
+}
+
+.profilePic{
+  height: 100px;
+  width: 100px;
+  top: 50px;
+  position: absolute;
+  right: 100px;
+  border: 5px solid $purple;
+}
+
+.custom-file label{
+  opacity: 0;
 }
 
 .uploader{
-  width: 70%;
-  margin-left: 15%;
-  height: 200px;
-  background: red;
-  margin-top: 50px;
+  height: 100%;
 }
 
 .checkbox{
@@ -83,8 +108,57 @@ footer{
   cursor: pointer;
 }
 
+footer a{
+  color: $purple;
+}
+
 @media only screen and (max-width: 600px) {
   .sidebar {
     width: 100%;
+    padding: 20px;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .logo{
+    width: 70%;
+    margin-left: 15%;
+  }
+
+  .custom-file {
+    .form-group:first-child & {
+      height: 100px;
+      width: 100px;
+      margin: 50px 0 20px;
+    }
+  }
+
+  .profilePic{
+    left: calc(50% - 50px);
+    top: 70px;
+  }
+
+  .loginwrap{
+    position: relative;
+    margin-top: 100px;
+  }
+
+}
+
+@media only screen and (max-width: 810px) {
+  .titlewrap {
+    padding-left: 50px;
+  }
+  .titlewrap h1 {
+    font-size: 24px;
+  }
+  .titlewrap h2 {
+    font-size: 18px;
+  }
+  .titlewrap p{
+    font-size: 14px;
+  }
+  footer a{
+    margin-left: -50px;
   }
 }

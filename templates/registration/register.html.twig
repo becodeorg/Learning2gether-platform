@@ -4,6 +4,7 @@
 
 {% block body %}
 <div class="sidebar">
+
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.avatar) }}
         <div class="loginwrap">
@@ -13,7 +14,7 @@
                 {{ form_row(registrationForm.plainPassword) }}
                 {{ form_row(registrationForm.agreeTerms) }}
 
-                <button class="btn button_4">Register</button>
+                <button class="button button_1">Register</button>
         </div>
     {{ form_end(registrationForm) }}
 </div>

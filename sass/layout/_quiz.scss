@@ -1,9 +1,45 @@
 @import "./../variables/variables";
 
 
-.wrapper {
-  width: 800px;
-  margin: 0 auto;
+.example-wrapper {
+  max-width: $wrapWidth;
+}
+
+#black{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  background: black;
+  opacity: 0.5;
+}
+
+.shown{
+  display: block!important;
+  opacity: 1!important;
+  margin-top: 50px!important;
+}
+
+.noClick{
+  opacity: 0.4;
+  pointer-events: none;
+  border-color: $darkgreycolor!important;
+  background:$whitecolor!important;
+  color: $darkgreycolor!important;
+}
+
+#completeText{
+  font-weight: bold;
+  font-size: 14px;
+  position: absolute;
+  margin-top: -30px;
+  color: $darkgreycolor!important;
+}
+
+.modal-dialog{
+  padding: 20px;
 }
 
 .btnchapquiz {
@@ -13,14 +49,10 @@
   margin-top: -50px;
 }
 
-h1 {
-  text-align: center;
-}
-
 .chapcardquiz {
   padding: 50px 20px 50px 20px;
   border-radius: 20px;
-  border: 4px solid $purplecolor;
+  border: 4px solid $purple;
   color: black;
   background-color: white;
 }
@@ -56,7 +88,7 @@ h1 {
 }
 
 @media only screen and (max-width: 770px) {
-  .wrapper {
+  .example-wrapper {
     width: 100%;
   }
 

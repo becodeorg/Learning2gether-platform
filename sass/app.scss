@@ -1,5 +1,10 @@
-@import "./base/_base.scss";
 @import "./variables/_variables";
+
+body{
+  color: $offblack;
+}
+
+@import "./base/_base.scss";
 @import "./layout/_learninghub.scss";
 @import "./layout/_meeting_place.scss";
 @import "./layout/_template.scss";

@@ -1,238 +1,334 @@
 @import "./../variables/variables";
 
-*{
-    padding: 0;
-    margin: 0;
+* {
+  padding: 0;
+  margin: 0;
+
 }
+
+body {
+  background-color: $offwhite;
+}
+
 
 .chevron_front {
-    color: $whitecolor;
-    font-weight: bold; }
-
-.button{
-    padding: 5px 20px;
-    font-family: "Chivo", sans-serif;
-    font-size: 18px;
-    letter-spacing: 1px;
-    border-radius: 40px;
-    transition: 0.2s;
+  color: $offwhite;
+  font-weight: bold;
 }
 
-.button:hover{
-    cursor: pointer;
+.button {
+  padding: 5px 20px;
+  font-family: "Chivo", sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  border-radius: 40px;
+  transition: 0.2s;
 }
 
-.buttonwidth{
-    width: 270px;
+.button:hover {
+  cursor: pointer;
 }
 
-.buttonshadow{
-    -webkit-box-shadow: 12px 12px 19px -17px $black;
-    -moz-box-shadow: 12px 12px 19px -17px $black;
-    box-shadow: 12px 12px 19px -17px $black;
+.buttonwidth {
+  width: 270px;
 }
 
-.buttonshadowhover:hover{
-    -webkit-box-shadow: 12px 12px 19px -17px $black;
-    -moz-box-shadow: 12px 12px 19px -17px $black;
-    box-shadow: 12px 12px 19px -17px $black;
+.buttonshadow {
+  -webkit-box-shadow: 12px 12px 19px -17px $offblack;
+  -moz-box-shadow: 12px 12px 19px -17px $offblack;
+  box-shadow: 12px 12px 19px -17px $offblack;
+}
+
+.buttonshadowhover:hover {
+  -webkit-box-shadow: 12px 12px 19px -17px $offblack;
+  -moz-box-shadow: 12px 12px 19px -17px $offblack;
+  box-shadow: 12px 12px 19px -17px $offblack;
 }
 
 .button_1 {
-    background-color: $whitecolor;
-    color: $purplecolor;
-    border: 3pt solid $purplecolor;
+  background-color: $offwhite;
+  color: $purple;
+  border: 3pt solid $purple;
 }
 
 .button_1:hover {
-    color: $whitecolor;
-    background: $purplecolor;
-    border: 3pt solid $purplecolor;
+  color: $offwhite;
+  background: $purple;
+  border: 3pt solid $purple;
 }
 
 .button_2 {
-    border: 3pt solid $darkpurplecolor;
-    background: $darkpurplecolor;
-    color: $whitecolor;
+  border: 3pt solid $darkpurple;
+  background: $darkpurple;
+  color: $offwhite;
 }
 
 .button_2:hover {
-    color: $darkpurplecolor!important;
-    background: $whitecolor;
+  color: $darkpurple !important;
+  background: $offwhite;
 }
 
 .button_3 {
-    border: 3pt solid $purplecolor;
-    background-color: $purplecolor;
-    color: $whitecolor;
+  border: 3pt solid $purple;
+  background-color: $purple;
+  color: $offwhite;
 }
 
 .button_3:hover {
-    color: $purplecolor;
-    background: $whitecolor;
-    border: 3pt solid $whitecolor;
+  color: $purple;
+  background: $offwhite;
+  border: 3pt solid $offwhite;
 }
 
 .button_4 {
-    border: 1pt solid $offwhite;
-    background-color: $whitecolor;
-    color: $darkgreycolor;
+  border: 1pt solid $offwhite;
+  background-color: $offwhite;
+  color: $darkgrey;
 }
 
 .button_4:hover {
-    color: #606060;
-    background: $whitecolor; }
+  color: #606060;
+  background: $offwhite;
+}
 
 .button_5 {
-    border: 3pt solid $darkestpurple;
-    background-color: $darkestpurple;
-    color: $whitecolor;
+  border: 3pt solid $darkestpurple;
+  background-color: $darkestpurple;
+  color: $offwhite;
 }
 
 .button_5:hover {
-    color: $darkestpurple;
-    background: $whitecolor;
+  color: $darkestpurple;
+  background: $offwhite;
 }
 
 .button_6 {
-    border: 3pt solid $purplecolor;
-    background-color: $purplecolor;
-    color: $whitecolor;
+  border: 3pt solid $purple;
+  background-color: $purple;
+  color: $offwhite;
 }
 
 .button_6:hover {
-    color: $purplecolor;
-    background: $whitecolor;
-    border: 3pt solid $whitecolor;
+  color: $purple;
+  background: $offwhite;
+  border: 3pt solid $offwhite;
 }
 
-.button_7{
-    background: $darkpurplecolor;
-    border: none;
-    color: $whitecolor;
+.button_7 {
+  background: $darkpurple;
+  border: none;
+  color: $offwhite;
 }
 
 .button_7:hover {
-    color: $purplecolor;
-    background: $whitecolor;
-    text-decoration: none;
+  color: $purple;
+  background: $offwhite;
+  text-decoration: none;
 }
 
 .round_button {
-    width: 30px;
-    height: 30px;
-    border: 1pt solid $purplecolor;
-    border-radius: 15px;
-    background-color: $purplecolor; }
-
-.round_button:hover {
-    width: 30px;
-    height: 30px;
-    border: 1pt solid $purplecolor;
-    border-radius: 15px;
-    background-color: $purplecolor; }
-
-.progress_1 {
-    border: 1pt solid $darkpurplecolor;
-    border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  border: 1pt solid $purple;
+  border-radius: 15px;
+  background-color: $purple;
 }
 
-.progress{
-    display: block!important;
-    height: 40px;
-    width: 75%;
-    float: left;
+.round_button:hover {
+  width: 30px;
+  height: 30px;
+  border: 1pt solid $purple;
+  border-radius: 15px;
+  background-color: $purple;
+}
+
+.progress_1 {
+  border: 1pt solid $darkpurple;
+  border-radius: 5px;
+}
+
+.progress {
+  display: block !important;
+  height: 40px;
+  width: 75%;
+  float: left;
 }
 
 .progress_1_bar {
-    background-color: $purplecolor;
-    height: 40px;
-    line-height: 0!important;
+  background-color: $purple;
+  height: 40px;
+  line-height: 0 !important;
 }
 
 .progress_2 {
-    width: 200px;
-    height: 12px;
-    border: 1pt solid $darkpurplecolor;
-    border-radius: 40px;
+  width: 200px;
+  height: 12px;
+  border: 1pt solid $darkpurple;
+  border-radius: 40px;
 }
 
 .progress_2_bar {
-    background-color: $purplecolor;
+  background-color: $purple;
 }
 
-.navwrap{
-    background: $purplecolor;
-    margin-top: -100px;
+.navwrap {
+  background: $purple;
 }
 
 .nav-bar-color {
-    background-color: $purplecolor; }
-
-.navbar, .example-wrapper{
-    max-width: 1000px;
-    margin: 100px auto;
+  background-color: $purple;
 }
 
-.navbar{
-    padding: 10px 0;
+.navbar, .example-wrapper {
+  max-width: $wrapWidth;
+  margin: 0 auto;
 }
 
-#language_switcher_language{
-    background: $purplecolor;
-    border: 1px solid $whitecolor;
-    color: $whitecolor;
+.navbar {
+  padding: 10px 0;
 }
 
-.wrapper {
-    width: 1000px;
-    margin: 0 auto;
+#language_switcher_language {
+  background: $purple;
+  border: 1px solid $offwhite;
+  color: $offwhite;
 }
 
-.wrapper-two {
-    width: 1000px;
-    margin: 0 auto;
+.example-wrapper {
+    max-width: $wrapWidth;
+    margin: 50px auto;
+}
+
+.skills{
+    float: right;
+    margin-right: 10px;
 }
 
 
 .card {
-    -webkit-box-shadow: 0 6px 12px 3px $cardshadow;
-    box-shadow: 0 6px 12px 3px $cardshadow;
-    border: none;
-    border-radius: 20px; }
+  -webkit-box-shadow: 0 6px 12px 3px $cardshadow;
+  box-shadow: 0 6px 12px 3px $cardshadow;
+  border: none;
+  border-radius: 20px;
+}
 
 
 // BUTTON HARD/SOFT SKILLS filter
 
 .btn-skills {
-    background-color: $purplecolor;
-    color: $whitecolor;
-    font-family: $chivofamily;
-    font-weight: 400;
+  background-color: $purple;
+  color: $offwhite;
+  font-family: $chivofamily;
+  font-weight: 400;
+  width: 70px;
+  padding: 0px;
 }
 
 .btn-skills:hover {
-    background-color: $darkestpurple;
-    color: $whitecolor;
+  background-color: $darkestpurple;
+  color: $offwhite;
 }
 
-#profiledrop{
-    padding-top: 5px;
+#profiledrop {
+  padding-top: 5px;
 }
 
 #reveal{
     position: absolute;
     background: $offwhite;
     width: 100px;
-    margin-top: 5px;
+    margin-top: 30px;
     z-index: 55;
+    right: 15px;
+    background: $purple;
+    border: 1px solid $white;
 }
 
-#screen{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 50;
+#reveal a{
+    color: $white;
+}
+
+#reveal a:hover{
+    color: $darkestpurple;
+    background: $white;
+}
+
+#profiledrop:hover {
+  cursor: pointer;
+}
+
+#screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 50;
+}
+
+.title-css {
+  text-align: center;
+  font-family: $chivofamily;
+  font-weight: 400;
+  font-size: 2.5rem;
+}
+
+.subtitle-css {
+  font-family: $chivofamily;
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+.btn-forum {
+  background-color: $purple;
+  color: $offwhite;
+  font-family: $chivofamily;
+  padding: 5px 20px 5px 20px;
+  letter-spacing: 1px;
+  border-radius: 40px;
+}
+
+.btn-forum:hover {
+  background-color: $darkpurple;
+  color: $offwhite;
+  text-decoration: none;
+}
+
+.cards-forum {
+  border: 2px solid $purple;
+  margin-bottom: 20px;
+  padding: 25px 0 10px 0;
+  border-radius: 20px;
+}
+
+.title-cards-forum {
+  font-family: $chivofamily;
+  font-weight: 600;
+}
+
+.questions-cards-forum {
+  font-family: $chivofamily;
+  color: darkgrey;
+}
+
+@media only screen and (max-width: 1100px) {
+  .navwrap nav {
+    padding: 10px 20px;
+  }
+
+  .example-wrapper {
+    margin-top: 20px;
+
+  }
+}
+
+@media only screen and (max-width: 767px) {
+    #reveal{
+        left: 0;
+        margin-top: 10px;
+    }
+
+    #reveal a{
+        padding: 5px;
+    }
 }
