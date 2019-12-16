@@ -5,6 +5,7 @@ namespace App\Domain;
 
 use App\Entity\Chapter;
 use App\Entity\User;
+use DomainException;
 
 /*
  * @description This object is responsible for determining the order in
@@ -26,7 +27,7 @@ class ChapterManager
             }
         }
 
-        throw new \DomainException('Current chapter not found in this list of chapters: position could not be determined.');
+        throw new DomainException('Current chapter not found in this list of chapters: position could not be determined.');
     }
 
     public function previous() :? Chapter {
@@ -39,7 +40,7 @@ class ChapterManager
 
     public function next() : Chapter {
         if($this->isLast()) {
-            throw new \DomainException('No next chapter found');
+            throw new FinishedModuleException('No next chapter found');
         }
 
         return $this->chapters[$this->activeIndex+1];
