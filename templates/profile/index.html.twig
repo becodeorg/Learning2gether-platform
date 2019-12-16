@@ -51,33 +51,8 @@
             </div>
 
         </div>
+
         <div class="badges col-md-4 row">
-            <!-- testbadges -->
-            <div class="badge col-md-6 testborder">
-                <p>badge name</p>
-                <img class="badgeimage" src="{{ asset('assets/img/logo_transparent.png') }}" alt="Badge" height="150" width="150">
-                <p>description</p>
-                <p>criteria</p>
-            </div>
-            <div class="badge col-md-6 testborder">
-                <p>badge name</p>
-                <img class="badgeimage" src="{{ asset('assets/img/logo_transparent.png') }}" alt="Badge" height="150" width="150">
-                <p>description</p>
-                <p>criteria</p>
-            </div>
-            <div class="badge col-md-6 testborder">
-                <p>badge name</p>
-                <img class="badgeimage" src="{{ asset('assets/img/logo_transparent.png') }}" alt="Badge" height="150" width="150">
-                <p>description</p>
-                <p>criteria</p>
-            </div>
-            <div class="badge col-md-6 testborder">
-                <p>badge name</p>
-                <img class="badgeimage" src="{{ asset('assets/img/logo_transparent.png') }}" alt="Badge" height="150" width="150">
-                <p>description</p>
-                <p>criteria</p>
-            </div>
-            <!-- END testbadges -->
             {% for badge in userBadges %}
                 <div class="badge col-md-6">
                     <p>{{ badge.result.0.name }}</p>

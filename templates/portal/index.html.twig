@@ -16,29 +16,36 @@
             <div class="col-3 col-md-auto skillset">select skillset:</div>
 
             <div class="col-3 col-md-auto">
-                <a class="btn btn-default btn-skills " href="{{ path('portal', {'mode': 'ALL'}) }}">{{ 'all' | trans | upper }}</a>
+                <a class="btn btn-default btn-skills "
+                   href="{{ path('portal', {'mode': 'ALL'}) }}">{{ 'all' | trans | upper }}</a>
             </div>
 
             <div class="col-3 col-md-auto">
-                <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+                <a class="btn btn-default btn-skills"
+                   href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
             </div>
             <div class="col-3 col-md-auto">
-                <a class="btn btn-default btn-skills" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
+                <a class="btn btn-default btn-skills"
+                   href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
             </div>
         </div>
 
         <div class="card-columns">
             {% for module in activeModules %}
-                {% include 'portal/partials/module.html.twig' with {'module': module} %}
+                {% include 'portal/partials/module.html.twig' with {'module': module, 'label': 'Complete this course' } %}
             {% endfor %}
         </div>
 
-        <h2>{{ 'Finished modules' | trans }}</h2>
-        <div class="card-columns">
-            {% for module in finishedModules %}
-                {% include 'portal/partials/module.html.twig' with {'module': module} %}
-            {% endfor %}
-        </div>
+        {% for module in finishedModules %}
+            {% if loop.first %}
+                <h2>{{ 'Finished modules' | trans }}</h2>
+                <div class="card-columns">
+            {% endif %}
+            {% include 'portal/partials/module.html.twig' with {'module': module, 'label': 'Restart this course'} %}
+            {% if loop.last %}
+                </div>
+            {% endif %}
+        {% endfor %}
 
         <hr>
         <a href="{{ path('forum') }}">{{ 'Meeting Place' | trans }}</a>
