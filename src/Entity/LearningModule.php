@@ -108,7 +108,7 @@ class LearningModule
         $this->image = $image;
     }
 
-    public function getType(): LearningModuleType
+    public function getType(): string
     {
         return $this->type;
     }

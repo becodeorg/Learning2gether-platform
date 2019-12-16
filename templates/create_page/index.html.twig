@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EditPageController!{% endblock %}
+{% block title %}Hello CreatePageController!{% endblock %}
 
 {% block body %}
 
@@ -22,7 +22,8 @@
                             store any changes.</strong>
                         <hr>
                         {% for image in imagesAll %}
-                            <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
+                            <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px"
+                                 alt="{{ image.name }}">
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
@@ -33,42 +34,40 @@
         </div>
     </div>
 
-    <div class="example-wrapper">
-        <h1>Howdy Partner!</h1>
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
-        <p>Here we want to edit a page's content using markdown. How do we let the user select/decide which language to
-            edit?</p>
-        <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <section class="module-cube">
+                    <span>Chapter title: {{ chapter.title(english) }}</span><br>
+                    <span>Chapter description: {{ chapter.description(english) }}</span><br>
+                    <span>number of pages: {{ chapter.pages|length }}</span><br>
+                    <span>Module Title: {{ module.title(english) }}</span><br>
+
+                </section>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+                <a class="btn btn-skills"
+                   href="{{ path('create_chapter', {'chapter': chapter.id, 'module': module.id}) }}">Back to
+                    chapter</a>
+            </div>
+        </div>
+
         {{ form_start(form) }}
         {{ form_row(form.title) }}
         {{ form_row(form.content) }}
-        <button class="btn btn-skills">Save</button>
+        <button class="btn btn-skills" value="exit" name="button">Save & exit</button>
+        <button class="btn btn-skills" value="next" name="button">Save & create next page</button>
         {{ form_end(form) }}
-        <hr>
-        <a class="btn btn-skills" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">Back to chapter</a>
-    </div>
 
+    </div>
 
     <!-- markdown editor -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <!-- /markdown editor -->
 
-    <!-- bootstrap js -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-            crossorigin="anonymous"></script>
-    <!-- /bootstrap js -->
-
-    <!-- custom js for this page -->
     <script src="{{ asset('assets/js/editPageApp.js') }}"></script>
 
 {% endblock %}

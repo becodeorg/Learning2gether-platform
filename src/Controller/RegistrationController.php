@@ -58,12 +58,12 @@ class RegistrationController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
 
-            if($request->files->get('registration_form')['avatar']){
-            $imageManager = new ImageManager();
-            $newImage = $imageManager->createImage($request->files->get('registration_form')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
-            $user->setAvatar($newImage->getSrc());
-            $entityManager->persist($newImage);
-            }
+//            if($request->files->get('registration_form')['avatar']){
+//            $imageManager = new ImageManager();
+//            $newImage = $imageManager->createImage($request->files->get('registration_form')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
+//            $user->setAvatar($newImage->getSrc());
+//            $entityManager->persist($newImage);
+//            }
 
             $entityManager->persist($user);
             $entityManager->flush();
