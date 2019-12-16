@@ -8,13 +8,11 @@ use App\Entity\ChapterPageTranslation;
 use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
+use App\Form\EditPageTranslationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,34 +34,37 @@ class EditPageController extends AbstractController
     public function index(Request $request, LearningModule $module, Chapter $chapter, ChapterPage $page): Response
     {
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy([
-            'code' => $request->getLocale()
+            'code' => $_GET['lang']
         ]);
+
+        if ($language === null){
+            return $this->redirectToRoute('partner');
+        }
 
         $pageTl = $this->getDoctrine()->getRepository(ChapterPageTranslation::class)->findOneBy(['language' => $language, 'chapterPage' => $page]);
 
-        $form = $this->createFormBuilder()
-            ->add('title', TextType::class, [
-                'data' => $pageTl->getTitle(),
-                'required' => false,
-                'empty_data' => '',
-            ])
-            ->add('editor', TextareaType::class, [
-                'data' => $pageTl->getContent(),
-                'required' => false,
-                'empty_data' => '',
-            ])
-            ->add('save_changes', SubmitType::class)
-            ->getForm();
-
+        $form = $this->createForm(EditPageTranslationType::class, $pageTl);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $pageTl->setTitle($form->getData()['title']);
-            $pageTl->setContent($form->getData()['editor']);
+            $pageTl = $form->getData();
             $page->addTranslation($pageTl);
             $this->flushUpdatedPage($page);
             $this->addFlash('success', 'Changes saved.');
-            return $this->redirectToRoute('edit_page', ['module' => $module->getId(), 'chapter' => $chapter->getId(), 'page' => $page->getId()]);
+
+            if (isset($_GET['return'])){
+                switch ($_GET['return']){
+                    case 'flow':
+                        return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
+                    case 'dash':
+                        return $this->redirectToRoute('dashboard_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
+                    default:
+                        return $this->redirectToRoute('partner');
+                }
+            }
+
+
+
         }
 
         $imagesAll = $this->getDoctrine()->getRepository(Image::class)->findAll();

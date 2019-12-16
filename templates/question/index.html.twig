@@ -10,25 +10,40 @@
     {% endif %}
 
     {{ question.subject }} <br>
-    {{ question.dateFormatted }}
     <br><br>
     <h5>Description of Question</h5>
     {% set firstpost = true %}
     {% for post in posts %}
         {% if firstpost == true %}
             {{ post.subject }}<br>
-            {{ post.dateFormatted }}<br><br
+            {{ post.dateFormatted }}<br><br>
             {{ post.createdBy.username }}<br><br><br>
+            <div class="imageForumAvatar">
+                {% if post.createdBy.avatar %}
+                    <img style="width: 50px; height: 50px" src="{{ asset('upload/' ~ post.createdBy.avatar) }}" alt="avatar of {{ post.createdBy.avatar }}">
+                {% else %}
+                    <img style="width: 50px; height: 50px" src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ post.createdBy.avatar }}">
+                {% endif %}
+            </div>
             <hr>
             <h5>Reply to Question</h5>
             {% set firstpost = false %}
         {% else %}
             {{ post.subject }}<br>
             {{ form_start(upvotes[post.id]) }}
+            {{ form_widget(upvotes[post.id]) }}
             <p>{{ upvoters[post.id] }} users have upvoted on this post</p>
+            <button type="submit" class=""><img src="https://via.placeholder.com/50" alt="btn-delete"></button>
             {{ form_end(upvotes[post.id]) }}<br>
             {{ post.dateFormatted }}<br>
-            {{ post.createdBy.username }}<br><br
+            {{ post.createdBy.username }}<br><br>
+            <div class="imageForumAvatar">
+                {% if post.createdBy.avatar %}
+                    <img style="width: 50px; height: 50px" src="{{ asset('upload/' ~ post.createdBy.avatar) }}" alt="avatar of {{ post.createdBy.avatar }}">
+                {% else %}
+                    <img style="width: 50px; height: 50px" src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ post.createdBy.avatar }}">
+                {% endif %}
+            </div>
 
             <br>
             {% if is_granted('ROLE_PARTNER') or (userId == post.createdBy.Id) %}
@@ -41,6 +56,8 @@
     {% endfor %}
 
     {{ form_start(postForm) }}
+    {{ form_widget(postForm) }}
+    <button type="submit" class="">Post</button>
     {{ form_end(postForm) }}<br>
 
 {% endblock %}

@@ -146,7 +146,7 @@ class User implements UserInterface
     public function getRoles() : array
     {
         if ($this->isPartner()) {
-            return [self::ROLE_PARTNER];
+            return [self::ROLE_USER, self::ROLE_PARTNER];
         }
 
         return [self::ROLE_USER];

@@ -43,17 +43,6 @@ editor.toolbar.push(
 );
 editor.createToolbar();
 
-let changes = false;
-// onchange function to look for changes to prevent leaving without saving
-editor.codemirror.on("change", function () {
-    if (changes === false){
-        window.onbeforeunload = function(event){
-            event.returnValue = true;
-        };
-        changes = true;
-    }
-});
-
 function insertImage(src) {
     let cm = editor.codemirror;
     cm.replaceSelection("![image](" + src + ")");

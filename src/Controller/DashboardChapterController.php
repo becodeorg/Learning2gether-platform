@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Domain\FlaggingManager;
 use App\Domain\LanguageTrait;
 use App\Entity\Chapter;
+use App\Entity\ChapterPage;
 use App\Entity\Language;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,20 +27,17 @@ class DashboardChapterController extends AbstractController
         $language = $this->getLanguage($request);
         $languageCount = $this->getDoctrine()->getRepository(Language::class)->getLanguageCount();
 
-        // for performance issues, we fetch the chapter and all its children as an array using DQL
-        $chapterArray = $this->getDoctrine()->getRepository(Chapter::class)->getChapterAsArray($chapter);
-
-        $fm = new FlaggingManager();
-        $pagesFlags = $fm->checkChapter($chapterArray, $languageCount);
+        $pr = $this->getDoctrine()->getRepository(ChapterPage::class);
+        $cr = $this->getDoctrine()->getRepository(Chapter::class);
+        $fm = new FlaggingManager($languageCount);
 
         return $this->render('dashboard_chapter/index.html.twig', [
             'fm' => $fm,
             'chapter' => $chapter,
             'language' => $language,
+            'pr' => $pr,
+            'cr' => $cr,
             'languagecount' => $languageCount,
-            'chapterArray' => $chapterArray[0],
-            'pagesFlags' => $pagesFlags['pages'],
-            'quizFlags' => $pagesFlags['quiz'],
         ]);
     }
 }

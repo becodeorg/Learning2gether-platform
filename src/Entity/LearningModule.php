@@ -7,7 +7,6 @@ use App\Domain\LearningModuleType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use http\Url;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LearningModuleRepository")
@@ -110,7 +109,7 @@ class LearningModule
         $this->image = $image;
     }
 
-    public function getType(): LearningModuleType
+    public function getType(): string
     {
         return $this->type;
     }

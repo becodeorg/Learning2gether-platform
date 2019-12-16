@@ -20,7 +20,7 @@ class EditModuleTranslationsType extends AbstractType
                 'empty_data' => '',
             ])
             ->add('description', TextareaType::class, [
-                'attr' => ['placeholder' => 'Description'],
+                'attr' => ['placeholder' => 'Description', 'rows' => 4],
                 'label' => false,
                 'required' => false,
                 'empty_data' => '',

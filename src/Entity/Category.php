@@ -19,17 +19,17 @@ class Category
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CategoryTranslation", mappedBy="category", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\CategoryTranslation", mappedBy="category", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $translations;
 
     /**
-     * @ORM\OneToMany(targetEntity="Question", mappedBy="category", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="category", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $topics;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\LearningModule", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\LearningModule", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $learning_module;
 
@@ -117,7 +117,7 @@ class Category
         return $this->learning_module;
     }
 
-    public function setLearningModule(?LearningModule $learning_module): self
+    public function setLearningModule(LearningModule $learning_module): self
     {
         $this->learning_module = $learning_module;
 

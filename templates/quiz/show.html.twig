@@ -13,73 +13,86 @@
 {% endblock %}
 
 {% block body %}
-
-    <ul class="lang-menu nav navbar-light bg-light">
-        <li class="navbar-brand">Select Language</li>
-        <li class="nav-item"><a class="nav-link" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'en'})) }}">English</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'es'})) }}">Spanish</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{  path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'fr'}))}}">French</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{  path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'is'}))}}">Icelandic</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{  path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'bg'}))}}">Bulgarian</a></li>
-    </ul>
+    <div class="example-wrapper">
+        <ul class="lang-menu nav navbar-light bg-light">
+            <li class="navbar-brand">Select Language</li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'en'})) }}">English</a>
+            </li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'es'})) }}">Spanish</a>
+            </li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'fr'})) }}">French</a>
+            </li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'is'})) }}">Icelandic</a>
+            </li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'bg'})) }}">Bulgarian</a>
+            </li>
+        </ul>
 
     <h1>Quiz for chapter: {{ chapter.title(language) }}</h1>
 
-    <table class="table">
-        <tbody>
+        <table class="table">
+            <tbody>
             <tr>
                 <th>{{ 'Questions' | trans }}</th>
-                <th></th>
                 <th>{{ 'Actions' | trans }}</th>
             </tr>
-                {% for quiz_question in quiz.quizQuestions %}
-                    <tr>
-                        <td>{{ quiz_question.questionNumber }}</td>
-                        <td>
-                            <h5>{{ quiz_question.title(language) }}</h5>
-                            <table>
+            {% for quiz_question in quiz.quizQuestions %}
+                <tr>
+                    <td>
+                        <h5>{{ quiz_question.title(language) }}</h5>
+                        <table>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ 'Answer' | trans }}</th>
+                                <th>{{ 'Correct?' | trans }}</th>
+                                <th>{{ 'Actions' | trans }}</th>
+                            </tr>
+                            {% for quiz_answer in quiz_question.answers %}
                                 <tr>
-                                    <th>#</th>
-                                    <th>{{ 'Answer' | trans }}</th>
-                                    <th>{{ 'Correct?' | trans }}</th>
-                                    <th>{{ 'Actions' | trans }}</th>
-                                </tr>
-                                {% for quiz_answer in quiz_question.answers %}
-                                    <tr>
-                                        <td>{{ loop.index }}</td>
-                                        <td>
-                                            {{ quiz_answer.title(language) }}
-                                        </td>
-                                        <td>
-                                            {{ quiz_answer.isCorrect ? 'Yes' : 'No' }}
-                                        </td>
-                                        <td>
-                                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_answer_edit', {'id': quiz_answer.id, 'lang': language.code}) }}">{{ 'edit' | trans }}</a>
-                                            {{ include('quiz_answer/_delete_form.html.twig')}}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                <tr>
+                                    <td>{{ loop.index }}</td>
                                     <td>
-                                        <a class="btn btn-secondary btn-sm" href="{{ path('quiz_answer_new', {'id': quiz_question.id, 'lang': language.code}) }}"><strong>+</strong> {{ 'Add Answer' | trans }}</a>
+                                        {{ quiz_answer.title(language) }}
+                                    </td>
+                                    <td>
+                                        {{ quiz_answer.isCorrect ? 'Yes' : 'No' }}
+                                    </td>
+                                    <td>
+                                        <a class="badge badge-dark"
+                                           href="{{ path('quiz_answer_edit', {'id': quiz_answer.id, 'lang': language.code}) }}">{{ 'edit' | trans }}</a>
+                                        {{ include('quiz_answer/_delete_form.html.twig') }}
                                     </td>
                                 </tr>
-                            </table>
-                        </td>
-                        <td>
-                            <a class="badge badge-pill badge-dark" href="{{ path('quiz_question_edit', {'id': quiz_question.id, 'lang': language.code}) }}">{{ 'edit' | trans }}</a>
-                            {{ include('quiz_question/_delete_form.html.twig')}}
-                        </td>
-                    </tr>
-                {% endfor %}
-        <tr>
-            <td>
-                <a class="btn btn-secondary" href="{{ path('quiz_question_new', {'id': quiz.id, 'lang': language.code}) }}"><strong>+</strong> {{ 'Add Question' | trans }}</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id, 'lang': language.code}) }}">{{ 'back chapter' | trans }}</a>
+                            {% endfor %}
+                            <tr>
+                                <td>
+                                    <a class="btn btn-secondary btn-sm"
+                                       href="{{ path('quiz_answer_new', {'id': quiz_question.id, 'lang': language.code}) }}"><strong>+</strong> {{ 'Add Answer' | trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <a class="badge badge-dark"
+                           href="{{ path('quiz_question_edit', {'id': quiz_question.id, 'lang': language.code}) }}">{{ 'edit' | trans }}</a>
+                        {{ include('quiz_question/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                    <a class="btn btn-secondary"
+                       href="{{ path('quiz_question_new', {'id': quiz.id, 'lang': language.code}) }}"><strong>+</strong> {{ 'Add Question' | trans }}
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

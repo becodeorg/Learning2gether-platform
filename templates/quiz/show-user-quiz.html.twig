@@ -5,7 +5,7 @@
 
 {% block body %}
     <div class="wrapper">
-        <form method="post" action="{{ path('quiz_send', {'quiz': quiz.id}) }}">
+        <form id="fetchForm" method="post" action="{{ path('quiz_send', {'quiz': quiz.id}) }}">
             <p class="center">{{ module.getTitle(language) }}</p>
             <h1>{{ 'Quiz'|trans }}</h1>
             <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">
@@ -38,10 +38,90 @@
 
                 <div class="vertical-line"></div>
             </section>
+            <div id="popup">
+                <div id="black" class="gone"></div>
+                <!-- Modal -->
+                <div class="modal fade" id="fail-pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content container center modalcontainer">
+                            <div class="text-center imgmodal">
+                                <img src="https://via.placeholder.com/150" alt="">
+                            </div>
+
+                            <div class="text-center modal-message">
+                                <p class="message-one">You are almost there.</p>
+                                <p class="message-two">Give it another shot!</p>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-6">
+                                    <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">Chapter info</button></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="./{{ quiz.id }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">Try again</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="module-pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content container center modalcontainer">
+                            <div class="text-center imgmodal">
+                                <img src="https://via.placeholder.com/150" alt="">
+                            </div>
+
+                            <div class="text-center modal-message">
+                                <p class="message-one">Complete module</p>
+                                <p class="message-two">yeet</p>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-6">
+                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">Profile</button></a>
+                                </div>
+
+                                <div class="col-6">
+                                    <a href="{{ path('portal') }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">Learning hub</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="chapter-pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content container center modalcontainer">
+                            <div class="text-center imgmodal">
+                                <img src="https://via.placeholder.com/150" alt="">
+                            </div>
+
+                            <div class="text-center modal-message">
+                                <p class="message-one">Complete chapter.</p>
+                                <p class="message-two">Yeet</p>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-6">
+                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">Profile</button></a>
+                                </div>
+
+                                <div class="col-6">
+                                    <a href="{{ path('module', { module : module.id}) }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">Next chapter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row chapbutton_2quiz">
-                <button class="btn btn-default button_5quiz" id="send-quiz">Submit test</button>
+                <p id="completeText">Fill in all questions to submit</p>
+                <button class="btn btn-default button_5quiz noClick" id="send-quiz">Submit test</button>
             </div>
         </form>
     </div>
+    <script src="{{ asset('assets/js/quiz.js') }}"></script>
 {% endblock %}

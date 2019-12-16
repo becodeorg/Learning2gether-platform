@@ -105,7 +105,7 @@ class QuizController extends AbstractController
         $this->getUser()->addProgress($quiz->getChapter());
         $this->getDoctrine()->getManager()->flush();
 
-        if ($quizManager->getStatus() === $quizManager::FINISHED_CHAPTER) {
+        if ($quizManager->getStatus() === $quizManager::FINISHED_MODULE) {
             $badgrManager = new Badgr;
             $badgrManager->addBadgeToUser(
                 $quiz->getChapter()->getLearningModule(),
@@ -128,7 +128,7 @@ class QuizController extends AbstractController
             }
 
             return new JsonResponse([
-                'status' => $quizManager::FINISHED_CHAPTER,
+                'status' => $quizManager::FINISHED_MODULE,
                 'route'  => $route
             ]);
         }

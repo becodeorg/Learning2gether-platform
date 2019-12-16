@@ -21,13 +21,7 @@ class PartnerController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy([
-            'code' => $request->getLocale()
-        ]);
-        $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findAll();
-        return $this->render('partner/index.html.twig', [
-            'language' => $language,
-            'modules' => $modules,
-        ]);
+        return $this->redirectToRoute('dashboard');
+        // should probably remove this middle page
     }
 }
