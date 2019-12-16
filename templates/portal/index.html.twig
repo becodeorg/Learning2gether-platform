@@ -4,7 +4,22 @@
 
 {% block body %}
 
+
     <div class="example-wrapper">
+        <section class="row justify-content-between rowaddbutton">
+            <a href="{{ path('create_module') }}">
+                <button type="button" class="btn  btn-circle btn-xl"
+                        data-toggle="tooltip" data-placement="right" title="Add new module">
+                    <img class="addicon" src="{{ asset('assets/img/plusicon.svg') }}" alt="add icon">
+                </button>
+            </a>
+            <a href="{{ path('forum') }}">
+                <button type="button" class="btn btn-circle btn-xl"
+                        data-toggle="tooltip" data-placement="right" title="Go to forum">
+                    <img class="addiconflag" src="{{ asset('assets/img/flagicon.svg') }}" alt="flag icon">
+                </button>
+            </a>
+        </section>
 
         <section class="row forum-cat-row">
             <div class="col-12">
