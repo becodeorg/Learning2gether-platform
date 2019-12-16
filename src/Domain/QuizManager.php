@@ -24,7 +24,7 @@ class QuizManager
         $this->questions = $questions;
     }
 
-    private function getPercentageResult() : int
+    public function getPercentageResult() : int
     {
         $correctAnswers = 0;
         foreach ($this->quiz->getQuizQuestions() AS $question) {

@@ -59,15 +59,9 @@ class Badgr
 
     public function addBadgeToUser(LearningModule $learningModule, User $user): void
     {
-        $learningModule->setBadge('2ASjOU92SVejqTv1Mevaiw');
-
-        //get badge and email for fetch
-        $moduleBadge = $learningModule->getBadge();
-        $email = $user->getEmail();
-
         //give the badge to email
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('POST', self::BADGR_API.'/v2/badgeclasses/' . $moduleBadge . '/assertions', [
+        $response = $httpClient->request('POST', self::BADGR_API.'/v2/badgeclasses/' . $learningModule->getBadge() . '/assertions', [
             'headers' => [
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->accessToken,
@@ -76,7 +70,7 @@ class Badgr
                 'recipient' => [
                     'type' => 'email',
                     'hashed' => false,
-                    'identity' => $email
+                    'identity' => $user->getEmail()
                 ]
             ]
         ]);
@@ -84,7 +78,7 @@ class Badgr
         $user->addBadge($learningModule);
     }
 
-    public function getAllBadges($badges, User $user): array
+    public function getAllBadges(array $badges, User $user): array
     {
         //get mail from user
         $email = $user->getEmail();
@@ -112,5 +106,11 @@ class Badgr
             $userBadges[] = $badgeData;
         }
         return $userBadges;
+    }
+
+    public function getImage(User $user, string $badgeHash)
+    {
+        $badge = $this->getAllBadges([$badgeHash], $user);
+        return $badge[0]['result'][0]['image'];
     }
 }
