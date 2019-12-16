@@ -16,6 +16,7 @@ use App\Repository\ChapterRepository;
 use App\Repository\LearningModuleRepository;
 use DomainException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -74,6 +75,11 @@ class QuizController extends AbstractController
         $chapterManager = new ChapterManager($quiz->getChapter());
         $module = $quiz->getChapter()->getLearningModule();
 
+        $test = false;
+        if (isset($_GET['test']) && $_GET['test'] === 'true' && $user->isPartner()) {
+            $test = true;
+        }
+
         if ($chapterManager->previous() !== null && !isset($user->getProgressByLearningModule($module)[$chapterManager->previous()->getId()])) {
             $this->addFlash('error', 'You did not unlock the chapter to access this quiz.');
             return $this->redirectToRoute('module', ['module' => $module]);
@@ -82,7 +88,8 @@ class QuizController extends AbstractController
         return $this->render('quiz/show-user-quiz.html.twig', [
             'quiz' => $quiz,
             'language' => $this->getLanguage($request),
-            'module' => $module
+            'module' => $module,
+            'test' => $test
         ]);
     }
 
@@ -100,6 +107,7 @@ class QuizController extends AbstractController
         if ($quizManager->getStatus() === $quizManager::FAIL) {
             return new JsonResponse([
                 'status' => $quizManager::FAIL,
+                'percentage' => number_format($quizManager->getPercentageResult()),
                 'route' => $this->generateUrl('portal')
             ]);
         }
@@ -111,11 +119,23 @@ class QuizController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         if ($quizManager->getStatus() === $quizManager::FINISHED_MODULE) {
-            $badgrManager = new Badgr;
-            $badgrManager->addBadgeToUser(
-                $quiz->getChapter()->getLearningModule(),
-                $user
-            );
+            $learningModule = $quiz->getChapter()->getLearningModule();
+
+            try {
+                $badgrManager = new Badgr;
+                $badgrManager->addBadgeToUser(
+                    $learningModule,
+                    $user
+                );
+                $image = $badgrManager->getImage(
+                    $user,
+                    $learningModule->getBadge()
+                );
+            }
+            catch(ClientException $e) {
+                $image = '';
+                $user->addBadge($learningModule);
+            }
 
             //we need to save because we added the Badgr badge to the user in the line above
             $this->getDoctrine()->getManager()->flush();
@@ -133,11 +153,14 @@ class QuizController extends AbstractController
                     ]);
                 }
             } catch (FinishedModuleException $exception){
-                return new JsonResponse([
-                    'status' => $quizManager::FINISHED_MODULE,
-                    'route'  => $route
-                ]);
+                //route is still Portal
             }
+
+            return new JsonResponse([
+                'status' => $quizManager::FINISHED_MODULE,
+                'image' => $image,
+                'route'  => $route
+            ]);
         }
 
         return new JsonResponse([

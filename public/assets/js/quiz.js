@@ -19,6 +19,7 @@ for(let i=0; i<checkboxes.length; i++){
             document.getElementById('send-quiz').classList.remove('noClick');
             document.getElementById('completeText').classList.add('gone');
         }
+        document.getElementById('send-quiz').setAttribute("disabled", "enabled");
     });
 }
 
@@ -46,13 +47,15 @@ form.addEventListener("submit", function(event){
                 document.getElementById('black').classList.remove('gone');
                 document.getElementById('chapter-pop').classList.add('shown');
             }
-            if(status === "FAIL"){
+            else if(status === "FAIL"){
                 document.getElementById('black').classList.remove('gone');
                 document.getElementById('fail-pop').classList.add('shown');
+                document.getElementById('process-percentage').innerHTML = json.percentage;
             }
-            if(status === "FINISHED_MODULE"){
+            else if(status === "FINISHED_MODULE"){
                 document.getElementById('black').classList.remove('gone');
                 document.getElementById('module-pop').classList.add('shown');
+                document.getElementById('badgr-image').src = json.image;
             }
         })
 });

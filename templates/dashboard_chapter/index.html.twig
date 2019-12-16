@@ -31,7 +31,7 @@
                     <th scope="row">{{ pageArray['pageNumber'] }}</th>
                     <td>{% for pageTranslation in pageArray['translations'] %}
                             {% if pageTranslation['language']['name'] == language.name %}
-                                {{ pageTranslation['title']}}
+                                {{ pageTranslation['title'] }}
                             {% endif %}
                         {% endfor %}
                     </td>
@@ -41,18 +41,25 @@
                             {% if pageTL['title'] != '' %}
                                 {% set badgeclass = 'badge-success' %}
                             {% endif %}
-                            <a class="badge {{ badgeclass }}" href="{{ path('edit_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, lang: pageTL['language']['code'], return: 'dash'}) }}">{{ pageTL['language']['name'] }}</a>
+                            <a class="badge {{ badgeclass }}"
+                               href="{{ path('edit_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, lang: pageTL['language']['code'], return: 'dash'}) }}">{{ pageTL['language']['name'] }}</a>
                         {% endfor %}
                     </td>
-                    <td><a class="badge badge-danger" onclick="return confirm('Are you sure you want to delete this page?')" href="{{ path('delete_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, return: 'dash'}) }}">Delete</a></td>
+                    <td><a class="badge badge-danger"
+                           onclick="return confirm('Are you sure you want to delete this page?')"
+                           href="{{ path('delete_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, return: 'dash'}) }}">Delete</a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
         <div class="text-center">
-            <a class="badge btn-skills" href="{{ path('create_chapter', {'module': chapter.learningModule.id, 'chapter': chapter.id}) }}">++ Add more pages ++</a>
+            <a class="badge btn-skills"
+               href="{{ path('create_chapter', {'module': chapter.learningModule.id, 'chapter': chapter.id}) }}">++ Add
+                more pages ++</a>
         </div>
-        <h3>Quiz</h3>
+        <h3>Quiz <a class="btn btn-skills"
+                    href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">Test</a></h3>
         <table class="table table-hover text-center">
             <thead>
             <tr>
