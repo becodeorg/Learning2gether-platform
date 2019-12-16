@@ -6,29 +6,39 @@
 <div class="example-wrapper">
     <div class="row">
         <div class="col-md-8">
+            {# default mode #}
             <div class="profileimgwrap">
-                <div class="profileimg">
+                <div class="profileimg profileimgwrap">
                     {% if user.avatar %}
                         <img src="{{ asset('upload/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
                     {% else %}
                         <img src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ user.name }}">
                     {% endif %}
                 </div>
-                <div id="changeavatar">
+                <div class="profiletext">
+                    <p>{{ user.username }}</p>
+                    <p>{{ user.name }}</p>
+                    <p>{{ user.email }}</p>
+                    <div id="imagebutton">Edit Profile</div>
+                </div>
+            </div>
+            {# edit mode : only if "edit-btn" is clicked #}
+            <div class="profileimgwrap gone" id="show">
+                <div class="profileimg profileimgwrap" id="changeavatar">
                     {{ form_start(profileForm) }}
-                    <div id="imagebutton">+</div>
-                    <div class="gone" id="show">
-                        {{ form_row(profileForm.avatar) }}
-                        <button class="button_2 btn">Change avatar</button>
-                    </div>
+{#                    <div class="gone" id="show">#}
+                    {{ form_row(profileForm.avatar) }}
+{#                    </div>#}
+                </div>
+                <div class="profiletext">
+                    {{ form_row(profileForm.username) }}
+                    {{ form_row(profileForm.name) }}
+                    {{ form_row(profileForm.email) }}
+                    <button class="button_2 btn">Update Profile</button>
                     {{ form_end(profileForm) }}
                 </div>
             </div>
-            <div class="profiletext">
-                <p>{{ user.username }}</p>
-                <p>{{ user.name }}</p>
-                <p>{{ user.email }}</p>
-            </div>
+
             <div class="progression">
                 <h3 class="title">Your courses</h3>
                 <p class="coursetitle">Javascript</p>
