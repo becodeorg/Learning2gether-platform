@@ -75,8 +75,7 @@ class QuizController extends AbstractController
         $module = $quiz->getChapter()->getLearningModule();
 
         $test = false;
-
-        if (isset($_GET) && $_GET['test'] === 'true') {
+        if (isset($_GET['test']) && $_GET['test'] === 'true' && $user->isPartner()) {
             $test = true;
         }
 
