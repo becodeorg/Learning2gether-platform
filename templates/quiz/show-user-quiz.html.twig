@@ -4,13 +4,18 @@
 {% block title %}{{ 'Quiz'|trans }}{% endblock %}
 
 {% block body %}
-    <div class="wrapper">
+    <div class="example-wrapper">
         <form id="fetchForm" method="post" action="{{ path('quiz_send', {'quiz': quiz.id}) }}">
             <p class="center">{{ module.getTitle(language) }}</p>
             <h1>{{ 'Quiz'|trans }}</h1>
-            <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">
-                {{ 'Back to chapter'|trans }}
-            </a>
+
+            {% if test == false %}
+                <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">
+                    {{ 'Back to chapter'|trans }}
+                </a>
+                {% else %}
+                    <a class="btn btn-default button button_4chap btnchapquiz" href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id}) }}">Back to dashboard</a>
+            {% endif %}
 
             <!--  question1   -->
             <section id="chapter-overview">
@@ -117,10 +122,12 @@
                 </div>
             </div>
 
-            <div class="row chapbutton_2quiz">
-                <p id="completeText">Fill in all questions to submit</p>
-                <button class="btn btn-default button_5quiz noClick" id="send-quiz">Submit test</button>
-            </div>
+            {% if test == false %}
+                <div class="row chapbutton_2quiz">
+                    <p id="completeText">Fill in all questions to submit</p>
+                    <button class="btn btn-default button_5quiz noClick" id="send-quiz">Submit test</button>
+                </div>
+            {% endif %}
         </form>
     </div>
     <script src="{{ asset('assets/js/quiz.js') }}"></script>
