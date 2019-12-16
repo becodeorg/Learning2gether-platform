@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreateChapterController!{% endblock %}
+
+{% block body %}
+
+    <div class="container my-3">
+        <div class="row">
+            <p class="mod-step">Edit the chapters english title and description</p>
+        </div>
+
+        <section class="module-cube">
+            {{ form_start(chapterTranslationForm) }}
+            {{ form_row(chapterTranslationForm.title) }}
+            {{ form_row(chapterTranslationForm.description) }}
+            <button class="btn btn-skills">Save</button>
+            {{ form_end(chapterTranslationForm) }}
+        </section>
+
+        <div class="row">
+            <p class="mod-step">Pages overview</p>
+        </div>
+
+        {% for page in chapter.pages %}
+            <section class="module-cube">
+                <span>Page nr: {{ loop.index }}</span><br>
+                <span>Page title: {{ page.title(english) }}</span><br>
+                <a class="badge btn-skills" href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">Edit Page</a>
+                <a class="badge btn-skills" href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id, return: 'flow'}) }}">Delete Page</a>
+            </section>
+        {% endfor %}
+        <div class="text-center">
+            <a class="btn btn-skills" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">Add Page</a>
+            <a class="btn btn-skills" href="{{ path('edit_module', {module: module.id}) }}">Module overview</a>
+        </div>
+    </div>
+
+{% endblock %}

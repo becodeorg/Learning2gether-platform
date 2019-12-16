@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreatePageController!{% endblock %}
+
+{% block body %}
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Select a picture to insert</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <a class="btn btn-success" href="{{ path('upload_content') }}">Upload an image</a><br/>
+                        <strong>You have to reload the page for images to appear in this window, use the save button to
+                            store any changes.</strong>
+                        <hr>
+                        {% for image in imagesAll %}
+                            <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px"
+                                 alt="{{ image.name }}">
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <section class="module-cube">
+                    <span>Chapter title: {{ chapter.title(english) }}</span><br>
+                    <span>Chapter description: {{ chapter.description(english) }}</span><br>
+                    <span>number of pages: {{ chapter.pages|length }}</span><br>
+                    <span>Module Title: {{ module.title(english) }}</span><br>
+
+                </section>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+                <a class="btn btn-skills"
+                   href="{{ path('create_chapter', {'chapter': chapter.id, 'module': module.id}) }}">Back to
+                    chapter</a>
+            </div>
+        </div>
+
+        {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.content) }}
+        <button class="btn btn-skills" value="exit" name="button">Save & exit</button>
+        <button class="btn btn-skills" value="next" name="button">Save & create next page</button>
+        {{ form_end(form) }}
+
+    </div>
+
+    <!-- markdown editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <!-- /markdown editor -->
+
+    <script src="{{ asset('assets/js/editPageApp.js') }}"></script>
+
+{% endblock %}

@@ -23,9 +23,7 @@ class ImageUploaderType extends AbstractType
                         'image/gif',
                     ]
                 ])]
-            ])
-            ->add('submit', SubmitType::class)
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

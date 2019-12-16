@@ -34,4 +34,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/portal, roles: ROLE_USER }
+         - { path: ^/forum, roles: ROLE_USER }
+         - { path: ^/profile, roles: ROLE_USER }
          - { path: ^/partner, roles: ROLE_PARTNER }
