@@ -1,9 +1,14 @@
+/*#330033d*/
 * {
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  color: #232323; }
+
+body {
+  background-color: #fdfdfd; }
 
 .chevron_front {
-  color: #f7f6f6;
+  color: #fdfdfd;
   font-weight: bold; }
 
 .button {
@@ -21,80 +26,80 @@
   width: 270px; }
 
 .buttonshadow {
-  -webkit-box-shadow: 12px 12px 19px -17px black;
-  -moz-box-shadow: 12px 12px 19px -17px black;
-  box-shadow: 12px 12px 19px -17px black; }
+  -webkit-box-shadow: 12px 12px 19px -17px #232323;
+  -moz-box-shadow: 12px 12px 19px -17px #232323;
+  box-shadow: 12px 12px 19px -17px #232323; }
 
 .buttonshadowhover:hover {
-  -webkit-box-shadow: 12px 12px 19px -17px black;
-  -moz-box-shadow: 12px 12px 19px -17px black;
-  box-shadow: 12px 12px 19px -17px black; }
+  -webkit-box-shadow: 12px 12px 19px -17px #232323;
+  -moz-box-shadow: 12px 12px 19px -17px #232323;
+  box-shadow: 12px 12px 19px -17px #232323; }
 
 .button_1 {
-  background-color: #f7f6f6;
+  background-color: #fdfdfd;
   color: #8b54a0;
   border: 3pt solid #8b54a0; }
 
 .button_1:hover {
-  color: #f7f6f6;
+  color: #fdfdfd;
   background: #8b54a0;
   border: 3pt solid #8b54a0; }
 
 .button_2 {
   border: 3pt solid #460e56;
   background: #460e56;
-  color: #f7f6f6; }
+  color: #fdfdfd; }
 
 .button_2:hover {
   color: #460e56 !important;
-  background: #f7f6f6; }
+  background: #fdfdfd; }
 
 .button_3 {
   border: 3pt solid #8b54a0;
   background-color: #8b54a0;
-  color: #f7f6f6; }
+  color: #fdfdfd; }
 
 .button_3:hover {
   color: #8b54a0;
-  background: #f7f6f6;
-  border: 3pt solid #f7f6f6; }
+  background: #fdfdfd;
+  border: 3pt solid #fdfdfd; }
 
 .button_4 {
-  border: 1pt solid #b3b3b3;
-  background-color: #f7f6f6;
+  border: 1pt solid #fdfdfd;
+  background-color: #fdfdfd;
   color: #7a7a7a; }
 
 .button_4:hover {
   color: #606060;
-  background: #f7f6f6; }
+  background: #fdfdfd; }
 
 .button_5 {
   border: 3pt solid #33003d;
   background-color: #33003d;
-  color: #f7f6f6; }
+  color: #fdfdfd; }
 
 .button_5:hover {
   color: #33003d;
-  background: #f7f6f6; }
+  background: #fdfdfd; }
 
 .button_6 {
   border: 3pt solid #8b54a0;
   background-color: #8b54a0;
-  color: #f7f6f6; }
+  color: #fdfdfd; }
 
 .button_6:hover {
   color: #8b54a0;
-  background: #f7f6f6;
-  border: 3pt solid #f7f6f6; }
+  background: #fdfdfd;
+  border: 3pt solid #fdfdfd; }
 
 .button_7 {
   background: #460e56;
   border: none;
-  color: #f7f6f6; }
+  color: #fdfdfd; }
 
 .button_7:hover {
   color: #8b54a0;
-  background: #f7f6f6;
+  background: #fdfdfd;
   text-decoration: none; }
 
 .round_button {
@@ -150,12 +155,13 @@
 
 #language_switcher_language {
   background: #8b54a0;
-  border: 1px solid #f7f6f6;
-  color: #f7f6f6; }
+  border: 1px solid #fdfdfd;
+  color: #fdfdfd; }
 
 .example-wrapper {
   max-width: 1000px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding-top: 110px; }
 
 .card {
   -webkit-box-shadow: 0 6px 12px 3px rgba(139, 84, 160, 0.37);
@@ -165,20 +171,22 @@
 
 .btn-skills {
   background-color: #8b54a0;
-  color: #f7f6f6;
+  color: #fdfdfd;
   font-family: "Chivo", sans-serif;
-  font-weight: 400; }
+  font-weight: 400;
+  width: 70px;
+  padding: 0px; }
 
 .btn-skills:hover {
   background-color: #33003d;
-  color: #f7f6f6; }
+  color: #fdfdfd; }
 
 #profiledrop {
   padding-top: 5px; }
 
 #reveal {
   position: absolute;
-  background: #b3b3b3;
+  background: #fdfdfd;
   width: 100px;
   margin-top: 5px;
   z-index: 55; }
@@ -194,14 +202,59 @@
   height: 100vh;
   z-index: 50; }
 
+.title-css {
+  text-align: center;
+  font-family: "Chivo", sans-serif;
+  font-weight: 400;
+  font-size: 2.5rem; }
+
+.subtitle-css {
+  font-family: "Chivo", sans-serif;
+  font-weight: 400;
+  font-size: 2rem; }
+
+.btn-forum {
+  background-color: #8b54a0;
+  color: #fdfdfd;
+  font-family: "Chivo", sans-serif;
+  padding: 5px 20px 5px 20px;
+  letter-spacing: 1px;
+  border-radius: 40px; }
+
+.btn-forum:hover {
+  background-color: #460e56;
+  color: #fdfdfd;
+  text-decoration: none; }
+
+.cards-forum {
+  border: 2px solid #8b54a0;
+  margin-bottom: 20px;
+  padding: 25px 0 10px 0;
+  border-radius: 20px; }
+
+.title-cards-forum {
+  font-family: "Chivo", sans-serif;
+  font-weight: 600; }
+
+.questions-cards-forum {
+  font-family: "Chivo", sans-serif;
+  color: darkgrey; }
+
 @media only screen and (max-width: 1100px) {
   .navwrap nav {
     padding: 10px 20px; }
 
   .example-wrapper {
-    padding: 0 20px; } }
+    margin-top: 20px; } }
+/*#330033d*/
+/*#330033d*/
 .nav-bar-color {
   background-color: #8b54a0; }
+
+.skillset {
+  font-family: "Chivo", sans-serif;
+  font-variant: small-caps;
+  color: #7a7a7a; }
 
 h1 {
   font-family: "Chivo", sans-serif;
@@ -226,13 +279,20 @@ h1 {
   border-radius: 40px;
   border: 3pt solid #8b54a0;
   background-color: #8b54a0;
-  color: #f7f6f6; }
+  color: #fdfdfd; }
 
 .button_3:hover {
   color: #8b54a0;
-  background: #f7f6f6;
-  border: 3pt solid #f7f6f6; }
+  background: #fdfdfd;
+  border: 3pt solid #fdfdfd; }
 
+@media only screen and (max-width: 1090px) {
+  body .wrapper-two {
+    width: 800px; } }
+@media only screen and (max-width: 920px) {
+  body .wrapper-two {
+    width: 600px; } }
+/*#330033d*/
 .cards-container {
   width: 100%;
   max-width: 1280px;
@@ -249,136 +309,9 @@ h1 {
     -moz-box-shadow: -1px -1px 22px -6px rgba(0, 0, 0, 0.75);
     box-shadow: -1px -1px 22px -6px rgba(0, 0, 0, 0.75); }
 
-/* probably not needed
-//BUTTON_1
-
-.button_1 {
-  font-family: $chivofamily;
-  //font-weight: bold;
-  font-size: $buttonfontsize;
-  letter-spacing: 1px;
-
-  border: 3pt solid $purplecolor;
-  border-radius: 40px;
-  -webkit-box-shadow: 12px 12px 19px -17px;
-  -moz-box-shadow: 12px 12px 19px -17px ;
-  box-shadow: 12px 12px 19px -17px ;
-
-  background-color: $whitecolor;
-  color: $purplecolor;
-
-  //transition: all 0.3s ease 0s;
-}
-
-.button_1:hover {
-  color: $whitecolor;
-  background: $purplecolor;
-  box-shadow: 12px 12px 19px -17px black ;
-}
-
-//BUTTON_2
-
-.button_2 {
-  font-family: $chivofamily;
-  //font-weight: bold;
-  font-size: $buttonfontsize;
-  letter-spacing: 1px;
-
-
-  border-radius: 40px;
-  border: 3pt solid $darkpurplecolor;
-  -webkit-box-shadow: 12px 12px 19px -17px black;
-  -moz-box-shadow: 12px 12px 19px -17px black ;
-  box-shadow: 12px 12px 19px -17px black ;
-
-  background-color: $darkpurplecolor;
-  color: $whitecolor;
-
-  width: 270px;  //this has to change
-
-  //transition: all 0.3s ease 0s;
-}
-
-.button_2:hover {
-  color: $darkpurplecolor;
-  background: $whitecolor;
-  box-shadow: 12px 12px 19px -17px black ;
-}
-
-//BUTTON_3
-
-.button_3 {
-  font-family: $chivofamily;
-  //font-weight: bold;
-  font-size: $buttonfontsize;
-  letter-spacing: 1px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-
-
-  border-radius: 40px;
-  border: 3pt solid $purplecolor;
-
-
-  background-color: $purplecolor;
-  color: $whitecolor;
-  width: 270px;  //this has to change
-
-  //transition: all 0.3s ease 0s;
-}
-
-.button_3:hover {
-  color: $purplecolor;
-  background: $whitecolor;
-  border: 3pt solid $whitecolor;
-}
-
-//BUTTON_4
-
-.button_4 {
-  font-family: $chivofamily;
-  font-size: $buttonfontsize;
-  letter-spacing: 1px;
-
-  border: 1pt solid $offwhite;
-  border-radius: 40px;
-  -webkit-box-shadow: 12px 12px 19px -17px;
-  -moz-box-shadow: 12px 12px 19px -17px ;
-  box-shadow: 12px 12px 19px -17px ;
-
-  background-color: $whitecolor;
-  color: $darkgreycolor;
-
-  width: 270px;  //this has to change
-
-  //transition: all 0.3s ease 0s;
-}
-
-.button_4:hover {
-  color: #606060;
-  background: $whitecolor;
-  //box-shadow: 12px 12px 19px -17px black ;
-}
-
-//PROGRESS BAR 1
-
-.progress_1{
-  height: 28px;
-  border: 1pt solid $darkpurplecolor;
-  border-radius: 5px;
-}
-
-.progress_1_bar {
-  background-color: $purplecolor;
-}
-
-//PROGRESS BAR 2
-
-/*.progressbar_2 {
-  display: inline-block;
-}*/
+/*#330033d*/
 .chevron_front {
-  color: #f7f6f6;
+  color: #fdfdfd;
   font-weight: bold; }
 
 .round_back {
@@ -404,22 +337,23 @@ h1 {
 .progress_2_bar {
   background-color: #8b54a0; }
 
+/*#330033d*/
 .button_4chap {
   font-family: 'Chivo', sans-serif;
   font-size: 18px;
   letter-spacing: 1px;
-  border: 1pt solid #b3b3b3;
+  border: 1pt solid #fdfdfd;
   border-radius: 40px;
   -webkit-box-shadow: 12px 12px 19px -17px;
   -moz-box-shadow: 12px 12px 19px -17px;
   box-shadow: 12px 12px 19px -17px;
-  background-color: #f7f6f6;
+  background-color: #fdfdfd;
   color: #7a7a7a;
   width: 270px; }
 
 .button_4chap:hover {
   color: #606060;
-  background: #f7f6f6; }
+  background: #fdfdfd; }
 
 .btnchap {
   width: 200px;
@@ -434,7 +368,7 @@ h1 {
   padding: 20px 10px 20px 5px;
   border-radius: 20px;
   background-color: #8b54a0;
-  color: #f7f6f6; }
+  color: #fdfdfd; }
 
 .chapcontainer {
   margin-top: 50px; }
@@ -482,18 +416,19 @@ h1 {
   .chapbutton_2 {
     float: none;
     justify-content: center; } }
+/*#330033d*/
 .loginbody {
   background: #8b54a0;
-  color: #f7f6f6; }
+  color: #fdfdfd; }
 
 .sidebar {
-  color: black;
+  color: #232323;
   height: 100vh;
   top: 0;
   width: 300px;
   position: absolute;
   right: 0;
-  background: #f7f6f6; }
+  background: #fdfdfd; }
 
 .logo {
   width: 100%; }
@@ -530,7 +465,7 @@ footer {
   position: absolute;
   bottom: 20px;
   right: 30px;
-  color: black;
+  color: #232323;
   text-align: right; }
 
 .uploader {
@@ -579,6 +514,8 @@ footer {
 
   .titlewrap p {
     font-size: 14px; } }
+/*#330033d*/
+/*#330033d*/
 .modalbutton {
   background-color: #8b54a0;
   border-color: #8b54a0;
@@ -600,6 +537,7 @@ footer {
 .imgmodal {
   margin-top: 20px; }
 
+/*#330033d*/
 .profileimgwrap {
   width: 300px;
   height: 300px;
@@ -612,7 +550,7 @@ footer {
   height: 300px; }
 
 .profileimgwrap form .form-group label {
-  color: lightgrey; }
+  color: #fdfdfd; }
 
 .profileimg {
   height: 300px;
@@ -645,7 +583,7 @@ footer {
   display: none; }
 
 #show {
-  background: lightgrey;
+  background: #fdfdfd;
   width: 300px;
   height: 300px;
   padding: 20px; }
@@ -675,6 +613,7 @@ footer {
 .testborder {
   border: 1px solid black; }
 
+/*#330033d*/
 .forum-cat-title {
   font-size: 23px;
   font-family: "Chivo", sans-serif;
@@ -685,6 +624,7 @@ footer {
 .forum-cat-row {
   margin-bottom: 35px; }
 
+/*#330033d*/
 .btn-circle.btn-xl {
   width: 70px;
   height: 70px;
@@ -714,6 +654,7 @@ footer {
 .rowaddbutton {
   margin-bottom: 30px; }
 
+/*#330033d*/
 .module-cube {
   border: 8px lightgrey solid;
   padding: 10px 10px 10px 10px;
@@ -731,6 +672,7 @@ footer {
   font-size: 20px;
   margin: 0; }
 
+/*#330033d*/
 .example-wrapper {
   width: 1000px;
   margin: 0 auto; }
@@ -754,7 +696,7 @@ footer {
   opacity: 0.4;
   pointer-events: none;
   border-color: #7a7a7a !important;
-  background: #f7f6f6 !important;
+  background: #fdfdfd !important;
   color: #7a7a7a !important; }
 
 #completeText {
@@ -830,6 +772,55 @@ footer {
   .chapbutton_2quiz {
     float: none;
     justify-content: center; } }
+/*#330033d*/
+/*#330033d*/
+.topic-questions {
+  background-color: #8b54a0;
+  font-family: "Chivo", sans-serif;
+  padding: 20px 20px 20px 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px; }
+
+.question-row {
+  padding-bottom: 10px; }
+
+.postbutton form .form-group button {
+  background: red; }
+
+/*#330033d*/
+.date-created-question {
+  color: grey;
+  font-family: "Chivo", sans-serif;
+  font-size: 12px; }
+
+.question-asked {
+  font-family: "Chivo", sans-serif;
+  font-size: 15px;
+  background-color: lightgrey;
+  padding: 10px 17px 10px 17px; }
+
+.question-asked-info {
+  font-family: "Chivo", sans-serif;
+  font-size: 12px;
+  color: grey; }
+
+.btn-deletequestion {
+  border: none;
+  background-color: lightcoral;
+  color: #fdfdfd;
+  font-family: "Chivo", sans-serif;
+  padding: 5px 20px 5px 20px;
+  letter-spacing: 1px;
+  border-radius: 40px; }
+
+.question-answer-row {
+  margin-top: 20px;
+  background-color: #99cdd8;
+  padding: 10px 5px 10px 5px; }
+
+.upvote-img {
+  background-image: url("../../public/assets/img/thumbsup.png"); }
+
 /*
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
  */

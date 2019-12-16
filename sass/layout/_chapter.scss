@@ -11,14 +11,14 @@
   -moz-box-shadow: 12px 12px 19px -17px;
   box-shadow: 12px 12px 19px -17px;
 
-  background-color: $whitecolor;
-  color: $darkgreycolor;
+  background-color: $offwhite;
+  color: $darkgrey;
   width: 270px;
 }
 
 .button_4chap:hover {
   color: #606060;
-  background: $whitecolor;
+  background: $offwhite;
 }
 
 .btnchap {
@@ -35,8 +35,8 @@
 .chapcard {
   padding: 20px 10px 20px 5px;
   border-radius: 20px;
-  background-color: $purplecolor;
-  color: $whitecolor;
+  background-color: $purple;
+  color: $offwhite;
 }
 
 .chapcontainer {
@@ -60,7 +60,7 @@
     height: -webkit-calc(100% - 80px);
     height: -moz-calc(100% - 80px);
     height: calc(100% - 80px);
-    background-color: $purplecolor;
+    background-color: $purple;
     top: 80px;
     z-index: -10;
   }
