@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Domain\FinishedModuleException;
 use App\Domain\LanguageTrait;
 use App\Domain\PageManager;
 use App\Domain\QuizManager;
@@ -13,6 +14,7 @@ use App\Entity\User;
 use App\Form\QuizType;
 use App\Repository\ChapterRepository;
 use App\Repository\LearningModuleRepository;
+use DomainException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -102,14 +104,17 @@ class QuizController extends AbstractController
             ]);
         }
 
-        $this->getUser()->addProgress($quiz->getChapter());
+        /* @var User $user */
+        $user = $this->getUser();
+
+        $user->addProgress($quiz->getChapter());
         $this->getDoctrine()->getManager()->flush();
 
-        if ($quizManager->getStatus() === $quizManager::FINISHED_CHAPTER) {
+        if ($quizManager->getStatus() === $quizManager::FINISHED_MODULE) {
             $badgrManager = new Badgr;
             $badgrManager->addBadgeToUser(
                 $quiz->getChapter()->getLearningModule(),
-                $this->getUser()
+                $user
             );
 
             //we need to save because we added the Badgr badge to the user in the line above
@@ -121,16 +126,18 @@ class QuizController extends AbstractController
              * This should normally not happen!
              */
             $route = $this->generateUrl('portal');
-            if (count($chapterManager->next()->getPages())) {
-                $route = $this->generateUrl('module_view_page', [
-                    'chapterPage' => $chapterManager->next()->getPages()[0]->getId()//firstPageOfNextChapter
+            try {
+                if (count($chapterManager->next()->getPages())) {
+                    $route = $this->generateUrl('module_view_page', [
+                        'chapterPage' => $chapterManager->next()->getPages()[0]->getId()//firstPageOfNextChapter
+                    ]);
+                }
+            } catch (FinishedModuleException $exception){
+                return new JsonResponse([
+                    'status' => $quizManager::FINISHED_MODULE,
+                    'route'  => $route
                 ]);
             }
-
-            return new JsonResponse([
-                'status' => $quizManager::FINISHED_CHAPTER,
-                'route'  => $route
-            ]);
         }
 
         return new JsonResponse([
