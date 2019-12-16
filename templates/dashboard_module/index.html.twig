@@ -2,6 +2,14 @@
 
 {% block title %}Hello DashboardModuleController!{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        {% for crumb in module.breadcrumbs(app.user.language) %}
+            {{ include('partials/breadcrumbs.html.twig') }}
+        {% endfor %}
+    </h6>
+{% endblock %}
+
 {% block body %}
 
     <style>

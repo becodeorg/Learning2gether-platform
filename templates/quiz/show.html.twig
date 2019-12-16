@@ -2,6 +2,16 @@
 
 {% block title %}Quiz{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
+        <span class="crumb crumb-separator"> > </span>
+        {% for crumb in quiz.breadcrumbs(app.user.language) %}
+            {{ include('partials/breadcrumbs.html.twig') }}
+        {% endfor %}
+    </h6>
+{% endblock %}
+
 {% block body %}
     <div class="example-wrapper">
         <ul class="lang-menu nav navbar-light bg-light">
@@ -23,8 +33,7 @@
             </li>
         </ul>
 
-        <h1>Quiz for chapter: {{ chapter.title(language) }}</h1>
-        {#{{ dump(app.request) }}#}
+    <h1>Quiz for chapter: {{ chapter.title(language) }}</h1>
 
         <table class="table">
             <tbody>
@@ -86,6 +95,6 @@
         </table>
     </div>
 
-    {#<a href="{{ path('') }}">{{ 'back chapter' | trans }}</a>#} {#todo: switch link to other page#}
+    <a href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id, 'lang': language.code}) }}">{{ 'back chapter' | trans }}</a>
 
 {% endblock %}
