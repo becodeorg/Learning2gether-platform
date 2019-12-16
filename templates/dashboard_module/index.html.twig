@@ -4,6 +4,10 @@
 
 {% block breadcrumbs %}
     <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('portal') }}">Portal</a>
+        <span class="crumb crumb-separator"> > </span>
+        <a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a>
+        <span class="crumb crumb-separator"> > </span>
         {% for crumb in module.breadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}

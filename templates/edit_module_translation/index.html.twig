@@ -2,6 +2,16 @@
 
 {% block title %}Hello EditModuleTranslationController!{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
+        <span class="crumb crumb-separator"> > </span>
+        <a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a>
+        <span class="crumb crumb-separator"> > </span>
+        <span class="crumb"> Module Translation </span>
+    </h6>
+{% endblock %}
+
 {% block body %}
     <div class="wrapper">
         <section class="module-cube">

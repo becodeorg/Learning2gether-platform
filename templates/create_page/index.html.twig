@@ -2,6 +2,18 @@
 
 {% block title %}Hello CreatePageController!{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
+        <span class="crumb crumb-separator"> > </span>
+        <a class="crumb crumb-link" href="{{ path('create_module') }}">Create Module</a>
+        <span class="crumb crumb-separator"> > </span>
+        <a class="crumb crumb-link" href="{{ path('create_chapter') }}">Create Chapter</a>
+        <span class="crumb crumb-separator"> > </span>
+        <span class="crumb">Create Page</span>
+    </h6>
+{% endblock %}
+
 {% block body %}
 
     <!-- Modal -->

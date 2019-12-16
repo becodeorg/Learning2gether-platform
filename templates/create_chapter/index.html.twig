@@ -2,6 +2,16 @@
 
 {% block title %}Hello CreateChapterController!{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
+        <span class="crumb crumb-separator"> > </span>
+        <a class="crumb crumb-link" href="{{ path('create_module') }}">Create Module</a>
+        <span class="crumb crumb-separator"> > </span>
+        <span class="crumb">Create Chapter</span>
+    </h6>
+{% endblock %}
+
 {% block body %}
 
     <div class="container my-3">
