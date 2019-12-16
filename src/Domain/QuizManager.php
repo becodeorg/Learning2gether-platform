@@ -10,12 +10,12 @@ use Doctrine\ORM\EntityManager;
 
 class QuizManager
 {
-    const FAIL = 'FAIL';
-    const FINISHED_CHAPTER = 'FINISHED_CHAPTER';
-    const FINISHED_MODULE = 'FINISHED_MODULE';
+    public const FAIL = 'FAIL';
+    public const FINISHED_CHAPTER = 'FINISHED_CHAPTER';
+    public const FINISHED_MODULE = 'FINISHED_MODULE';
 
     private $quiz;
-    private $questions = [];
+    private $questions;
     private $status = null;
 
     public function __construct(Quiz $quiz, array $questions)
@@ -36,7 +36,7 @@ class QuizManager
                 (int)$this->questions[$question->getId()]
             );
 
-            $correctAnswers += is_null($answer) ? 0 : $answer->IsCorrect();
+            $correctAnswers += $answer === null ? 0 : $answer->IsCorrect();
         }
 
         return (int)round($correctAnswers / count($this->quiz->getQuizQuestions()) * 100);
