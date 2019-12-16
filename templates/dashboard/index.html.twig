@@ -2,6 +2,14 @@
 
 {% block title %}Hello DashboardController!{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
+        <span class="crumb crumb-separator"> > </span>
+        <span class="crumb">Dashboard</span>
+    </h6>
+{% endblock %}
+
 {% block body %}
 
     <div class="container">

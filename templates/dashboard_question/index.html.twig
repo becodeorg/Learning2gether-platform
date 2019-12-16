@@ -2,6 +2,16 @@
 
 {% block title %}Hello DashboardQuestionController!{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
+        <span class="crumb crumb-separator"> > </span>
+        {% for crumb in question.breadcrumbs(app.user.language) %}
+            {{ include('partials/breadcrumbs.html.twig') }}
+        {% endfor %}
+    </h6>
+{% endblock %}
+
 {% block body %}
 
     <div class="container">

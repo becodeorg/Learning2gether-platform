@@ -2,6 +2,18 @@
 
 {% block title %}L2G Forums{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('portal') }}">Portal</a>
+        <span class="crumb crumb-separator"> > </span>
+        <h6 class="breadcrumbs">
+            {% for crumb in category.learningModule.breadcrumbs(app.user.language) %}
+                {{ include('partials/breadcrumbs.html.twig') }}
+            {% endfor %}
+        </h6>
+    </h6>
+{% endblock %}
+
 {% block body %}
 
    <h1>Forum</h1>
