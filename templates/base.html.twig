@@ -41,7 +41,7 @@
 
                 {% set searchbar = searchbar.getSearchbar() %}
                 {{ form_start(searchbar, {'attr': {'class': 'form-inline my-2 my-lg-0'}}) }}
-                {{ form_widget(searchbar.keywords, {'attr': {'class': 'form-control mr-sm-2'}}) }}
+                {{ form_widget(searchbar.keywords, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Search'}}) }}
                 </form>
 
                 <!-- LINKS   -->
