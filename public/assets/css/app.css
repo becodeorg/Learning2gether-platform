@@ -866,6 +866,15 @@ footer a {
   background: red; }
 
 /*#330033d*/
+body {
+  background-color: #fdfdfd; }
+
+.title-question-row {
+  padding-top: 5px; }
+
+.title-question-row {
+  font-weight: 700; }
+
 .date-created-question {
   color: grey;
   font-family: "Chivo", sans-serif;
@@ -874,8 +883,9 @@ footer a {
 .question-asked {
   font-family: "Chivo", sans-serif;
   font-size: 15px;
-  background-color: lightgrey;
-  padding: 10px 17px 10px 17px; }
+  background-color: #f7f6f6;
+  padding: 10px 17px 0 17px;
+  margin-bottom: 10px; }
 
 .question-asked-info {
   font-family: "Chivo", sans-serif;
