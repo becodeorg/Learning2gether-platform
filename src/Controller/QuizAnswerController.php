@@ -109,7 +109,18 @@ class QuizAnswerController extends AbstractController
             $em->persist($quizAnswerTranslation); //persist because we might be creating a new QATranslation
             $em->flush();
 
-            return $this->redirectToRoute('quiz_show', ['id'=>$quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
+            if (isset($_GET['return'])){
+                switch ($_GET['return']){
+                    case 'flow':
+                        return $this->redirectToRoute('quiz_show', ['id'=>$quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
+                    case 'dash':
+                        return $this->redirectToRoute('dashboard_question', ['chapter' => $quizAnswer->getQuizQuestion()->getQuiz()->getChapter()->getId(), 'question' => $quizAnswer->getQuizQuestion()->getId()]);
+                    default:
+                        return $this->redirectToRoute('partner');
+                }
+            }
+
+//            return $this->redirectToRoute('quiz_show', ['id'=>$quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
         }
 
         return $this->render('quiz_answer/edit.html.twig', [

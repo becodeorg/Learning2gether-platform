@@ -41,9 +41,13 @@
         <p>Here we want to edit a page's content using markdown. How do we let the user select/decide which language to
             edit?</p>
         <hr>
-        {{ form(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.content) }}
+        <button class="btn btn-skills">Save</button>
+        {{ form_end(form) }}
         <hr>
-        <a href="{{ path('edit_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">Back to chapter</a>
+        <a class="btn btn-skills" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">Back to chapter</a>
     </div>
 
 

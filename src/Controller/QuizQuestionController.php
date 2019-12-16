@@ -32,7 +32,6 @@ class QuizQuestionController extends AbstractController
     /**
      * @Route("/partner/quiz/question/new/{id}", name="quiz_question_new", methods={"GET","POST"}, requirements={
      *     "id" = "\d+"})
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request, Quiz $quiz): Response
     {
@@ -116,7 +115,18 @@ class QuizQuestionController extends AbstractController
             $em->persist($quizQuestionTranslation); //persist because we might be creating a new QQTranslation
             $em->flush();
 
-            return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
+            if (isset($_GET['return'])){
+                switch ($_GET['return']){
+                    case 'flow':
+                        return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
+                    case 'dash':
+                        return $this->redirectToRoute('dashboard_chapter', ['module' => $quizQuestion->getQuiz()->getChapter()->getLearningModule()->getId(), 'chapter' => $quizQuestion->getQuiz()->getChapter()->getId()]);
+                    default:
+                        return $this->redirectToRoute('partner');
+                }
+            }
+
+//            return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
         }
 
         return $this->render('quiz_question/edit.html.twig', [

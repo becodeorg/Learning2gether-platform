@@ -13,14 +13,15 @@ class EditChapterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('edit', SubmitType::class)
-        ;
+
         $builder
             ->add('translations', CollectionType::class, [
                 'entry_type' => EditChapterTranslationsType::class,
                 'entry_options' => ['label' => false],
             ]);
+        $builder
+            ->add('edit', SubmitType::class)
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -6,10 +6,13 @@ namespace App\Controller;
 use App\Domain\ImageManager;
 use App\Domain\LearningModuleType;
 use App\Entity\Category;
+use App\Entity\Chapter;
+use App\Entity\ChapterTranslation;
 use App\Entity\Image;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Entity\LearningModuleTranslation;
+use App\Entity\Quiz;
 use App\Entity\User;
 use App\Form\CreateModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,35 +29,46 @@ class CreateModuleController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $imageManager = new ImageManager();
-
-        $module = new LearningModule();
-        $translationArray = $this->makeTranslations($module);
-
         /* @var User $user */
         $user = $this->getUser();
+
+        // initialize new module and one translation in english
+        $module = new LearningModule();
+        $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
+        $newTrans = new LearningModuleTranslation($module, $english);
+        $module->addTranslation($newTrans);
 
         // create the form
         $form = $this->createForm(CreateModuleType::class, $module);
         $form->handleRequest($request);
 
-        // check if the form is submitted/posted
+        // check if the form is submitted
         if ($form->isSubmitted() && $form->isValid()) {
-            $newTranslations = $_POST['create_module']['translations'];
 
-            if ($this->isOneTranslationFilledIn($newTranslations)) {
-                $module = $form->getData();
-                $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
-                $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $user, $this->getParameter('uploads_directory'), 'module');
-                $this->flushNewImage($newImage);
-                $module->setImage($newImage->getSrc());
+            $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
 
-                $module = $this->flushNewModule($module);
+            $imageManager = new ImageManager();
 
+            $module = $form->getData();
+            $module = $this->makeModuleTranslations($module, $languageAll);
 
-                return $this->redirectToRoute('edit_module', ['module' => $module->getId()]);
-            }
-            $this->addFlash('error', 'please fill in at least one language');
+            $newImage = $imageManager->createImage($request->files->get('create_module')['image'], $user, $this->getParameter('uploads_directory'), 'module');
+            $this->flushNewImage($newImage);
+            $module->setImage($newImage->getSrc());
+
+            // make new chapter and its translations
+            $chapter = new Chapter($module);
+            $chapter = $this->makeChapterTranslations($chapter, $languageAll);
+
+            // make quiz and attach it to chapter
+            $quiz = new Quiz();
+            $chapter->setQuiz($quiz);
+
+            // add chapter to module and flush
+            $module->addChapter($chapter);
+            $module = $this->flushNewModule($module);
+
+            return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
         }
 
         return $this->render('create_module/index.html.twig', [
@@ -62,38 +76,41 @@ class CreateModuleController extends AbstractController
         ]);
     }
 
-    public function isOneTranslationFilledIn(array $translations): bool
+    /**
+     * @param LearningModule $module
+     * @param array $languageAll
+     * @return LearningModule
+     */
+    private function makeModuleTranslations(LearningModule $module, array $languageAll): LearningModule
     {
-        //  function to check if at least one of the translations is filled in (both fields)
-        foreach ($translations as $translation) {
-            if (!empty($translation['title']) && !empty($translation['description'])) {
-                return true;
+        foreach ($languageAll as $language) {
+            if ($language->getCode() !== 'en') {
+                $translation = new LearningModuleTranslation($module, $language);
+                $module->addTranslation($translation);
             }
         }
-        return false;
+        return $module;
     }
 
     /**
-     * @param LearningModule $module
-     * @return array
+     * @param Chapter $chapter
+     * @param array $languageAll
+     * @return Chapter
      */
-    public function makeTranslations(LearningModule $module): array
+    private function makeChapterTranslations(Chapter $chapter, array $languageAll): Chapter
     {
-        $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
-        $translationArray = [];
         foreach ($languageAll as $language) {
-            $languageDoctrine = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => $language->getCode()]);
-            $translation = new LearningModuleTranslation($module, $languageDoctrine);
-            $translationArray[] = $translation;
-            $module->addTranslation($translation);
+            $translation = new ChapterTranslation($language, $chapter);
+            $chapter->addTranslation($translation);
         }
-        return $translationArray;
+        return $chapter;
     }
 
     /**
      * @param LearningModule $module
+     * @return LearningModule
      */
-    public function flushNewModule(LearningModule $module): LearningModule
+    private function flushNewModule(LearningModule $module): LearningModule
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($module);
@@ -101,6 +118,7 @@ class CreateModuleController extends AbstractController
         $cat = new Category();
         $cat->setLearningModule($module);
         $entityManager->persist($cat);
+
         $entityManager->flush();
 
         return $module;
