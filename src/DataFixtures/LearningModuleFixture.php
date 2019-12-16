@@ -140,7 +140,6 @@ Animi, commodi eveniet placeat quae quisquam repudiandae soluta ullam. Dignissim
                 $quiz->addQuizQuestion($question);
             }
         }
-
         $manager->persist($learningModule);
         $manager->flush();
     }
