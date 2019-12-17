@@ -102,6 +102,12 @@ class QuizQuestionController extends AbstractController
             }
         }
 
+        $returnCode = $_GET['return'] ?? null;
+
+        if ($returnCode === null) {
+            return $this->redirectToRoute('partner');
+        }
+
         //if not translation was found, create a new one for the current language, so it can be edited
         if (!isset($quizQuestionTranslation)){
             $quizQuestionTranslation = new QuizQuestionTranslation($quizQuestion, $language, 'undefined');
@@ -115,8 +121,8 @@ class QuizQuestionController extends AbstractController
             $em->persist($quizQuestionTranslation); //persist because we might be creating a new QQTranslation
             $em->flush();
 
-            if (isset($_GET['return'])){
-                switch ($_GET['return']){
+            if (isset($returnCode)) {
+                switch ($returnCode) {
                     case 'flow':
                         return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
                     case 'dash':
@@ -130,6 +136,8 @@ class QuizQuestionController extends AbstractController
         }
 
         return $this->render('quiz_question/edit.html.twig', [
+            'language' => $language,
+            'returnCode' => $returnCode,
             'quiz_question' => $quizQuestion,
             'form' => $form->createView(),
 
