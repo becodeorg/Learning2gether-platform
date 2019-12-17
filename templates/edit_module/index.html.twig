@@ -4,9 +4,9 @@
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
-        {% for crumb in module.editBreadcrumbs(app.user.language) %}
-            {{ include('partials/breadcrumbs.html.twig') }}
-        {% endfor %}
+    {% for crumb in module.editBreadcrumbs(app.user.language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
 {% endblock %}
 
 {% block body %}
@@ -37,7 +37,10 @@
                 <div class="col">
                     {{ form_start(moduleImageForm) }}
                     <h3>Change module image</h3>
+                    <h6 class="text-muted">Allowed filetypes: .jpg, .gif and .png</h6>
+
                     {{ form_widget(moduleImageForm.upload) }}
+                    {{ form_errors(moduleImageForm.upload) }}
                     <button class="mt-2 btn btn-skills">Update</button>
                     {{ form_end(moduleImageForm) }}
                 </div>
