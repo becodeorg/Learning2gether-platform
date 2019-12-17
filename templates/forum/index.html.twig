@@ -6,21 +6,20 @@
 
    <section class="example-wrapper">
 
-       <p class="title-css">Meetingplace</p>
+       <p class="title-css">Forum</p>
        <p class="subtitle-css">Categories</p>
 
                 <div class="row forum-cat-row">
                     <div class="col-3 col-md-auto skillset">select skillset:</div>
 
                     <div class="col-3 col-md-auto">
-                        <a class="btn btn-default btn-skills " href="{{ path('forum') }}">{{ 'ALL' | trans | upper }}</a>
-                    </div>
-
-                    <div class="col-3 col-md-auto">
-                        <a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+                        <a class="btn btn-default btn-skills {% if mode == 'ALL' %} active-mode {% endif %} "  href="{{ path('forum') }}">{{ 'ALL' | trans | upper }}</a>
                     </div>
                     <div class="col-3 col-md-auto">
-                        <a class="btn btn-default btn-skills" href="{{ path('forum', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
+                        <a class="btn btn-default btn-skills {% if mode == 'SOFT' %} active-mode {% endif %}" href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+                    </div>
+                    <div class="col-3 col-md-auto">
+                        <a class="btn btn-default btn-skills {% if mode == 'HARD' %} active-mode {% endif %}" href="{{ path('forum', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
                     </div>
                 </div>
 
