@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Domain\Badgr;
 use App\Domain\ImageManager;
+use App\Domain\LanguageTrait;
 use App\Entity\Chapter;
 use App\Entity\Image;
 use App\Entity\LearningModule;
@@ -22,6 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
 {
+    use LanguageTrait;
     /**
      * @Route("/profile", name="profile")
      * @param Request $request
@@ -73,6 +75,7 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('profile/index.html.twig', [
+            'language' => $this->getLanguage($request),
             'badgeKeys' => $badgeKeys,
             'userBadges' => $userBadges,
             'user' => $user,
