@@ -39,14 +39,18 @@
                     <h3>Change module image</h3>
                     <h6 class="text-muted">Allowed filetypes: .jpg, .gif and .png</h6>
 
-                    {{ form_widget(moduleImageForm.upload) }}
+                    {{ form_widget(moduleImageForm.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
                     {{ form_errors(moduleImageForm.upload) }}
                     <button class="mt-2 btn btn-skills">Update</button>
                     {{ form_end(moduleImageForm) }}
                 </div>
                 <div class="col">
-                    <img style="width: 256px;" src="{{ asset('upload/' ~ module.image) }}" alt="">
-
+                    <p>image preview</p>
+                    <img style="width: 180px;" class="uploadPreview" src="#" alt="">
+                </div>
+                <div class="col">
+                    <p>current image</p>
+                    <img style="width: 180px;" src="{{ asset('upload/' ~ module.image) }}" alt="">
                 </div>
             </div>
 
@@ -71,7 +75,8 @@
             <button class="btn btn-skills">Add a chapter</button>
             {{ form_end(addNewChapterBtn) }}
         </div>
-
     </div>
+
+    <script src="{{ asset('assets/js/UploaderPreviewScript.js') }}"></script>
 
 {% endblock %}
