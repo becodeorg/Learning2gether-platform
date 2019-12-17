@@ -27,7 +27,7 @@ class CategoryRepository extends ServiceEntityRepository
     public function findByType(string $type)
     {
         $qb = $this->createQueryBuilder('c')
-            ->join(LearningModule::class, 'l', Join::WITH, 'l = c.id')
+            ->join(LearningModule::class, 'l', Join::WITH, 'l = c.learning_module')
             ->where('l.type = :type')
             ->andwhere('l.isPublished = :isPublished')
             ->setParameter('type', $type)
@@ -45,7 +45,7 @@ class CategoryRepository extends ServiceEntityRepository
 
 
         $qb = $this->createQueryBuilder('c')
-            ->join(LearningModule::class, 'l', Join::WITH, 'l = c.id')
+            ->join(LearningModule::class, 'l', Join::WITH, 'l = c.learning_module')
             ->where('l.isPublished = :isPublished')
             ->setParameter('isPublished', true);
 
