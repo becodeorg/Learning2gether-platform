@@ -29,7 +29,7 @@ class CategoryController extends AbstractController
     {
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code'=> $_COOKIE['language'] ?? 'en']);
         $topics = $this->getDoctrine()->getRepository(Chapter::class)->findBy([
-            'learningModule' => $category
+            'learningModule' => $category->getLearningModule()
         ]);
 
 
