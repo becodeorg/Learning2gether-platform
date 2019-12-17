@@ -34,6 +34,13 @@ class PortalController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        foreach ($user->getActiveModules($modules) as $module) {
+            $activeModules[] = $module;
+        }
+        foreach ($user->getFinishedModules($modules) as $module) {
+            $finishedModules[] = $module;
+        }
+
 
         return $this->render('portal/index.html.twig', [
             'language' => $this->getLanguage($request),

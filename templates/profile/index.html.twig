@@ -39,10 +39,20 @@
                 </div>
             </div>
 
+            {# Delete my account#}
+            <div>
+                {{ form_start(deleteBtn) }}
+                {{ form_widget(deleteBtn.delete_user,
+                    { 'label': 'Delete my account'
+                        , 'attr': {'onclick': 'return confirm("Are you sure to delete your account?")'}
+                    }) }}
+                {{ form_end(deleteBtn) }}
+            </div>
+
             {% for module in user.activeModules(modules) %}
                 <div class="progression">
                     {% if loop.first %}
-                        <h3 class="title">Your active courses</h3>
+                        <h3 class="title">Active courses unlocked percentage</h3>
                     {% endif %}
                     <p class="coursetitle">{{ module.title(language) }}</p>
                     {% set userProgress = 0 %}
