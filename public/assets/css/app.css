@@ -703,6 +703,12 @@ footer a {
 .forum-cat-row {
   margin-bottom: 35px; }
 
+a {
+  color: #8b54a0; }
+
+a:hover {
+  color: #460e56; }
+
 /*#330033d*/
 .btn-circle.btn-xl {
   width: 70px;
