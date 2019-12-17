@@ -2,6 +2,13 @@
 
 {% block title %}Hello CreateChapterController!{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    {% for crumb in chapter.editBreadcrumbs(app.user.language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
+{% endblock %}
+
 {% block body %}
 
     <div class="container my-3">
@@ -13,7 +20,7 @@
             {{ form_start(chapterTranslationForm) }}
             {{ form_row(chapterTranslationForm.title) }}
             {{ form_row(chapterTranslationForm.description) }}
-            <button class="btn btn-skills">Save</button>
+            <button class="btn btn-skills">Update</button>
             {{ form_end(chapterTranslationForm) }}
         </section>
 
@@ -22,15 +29,23 @@
         </div>
 
         {% for page in chapter.pages %}
+
             <section class="module-cube">
                 <span>Page nr: {{ loop.index }}</span><br>
                 <span>Page title: {{ page.title(english) }}</span><br>
-                <a class="badge btn-skills" href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">Edit Page</a>
-                <a class="badge btn-skills" href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id, return: 'flow'}) }}">Delete Page</a>
+                <a class="badge btn-primary"
+                   href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">Edit
+                    Page</a>
+                <a class="badge badge-danger" onclick="return confirm('Are you sure you want to delete this page?')"
+                   href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id, return: 'flow'}) }}">Delete
+                    Page</a>
             </section>
+
         {% endfor %}
+
         <div class="text-center">
-            <a class="btn btn-skills" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">Add Page</a>
+            <a class="btn btn-skills" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">Add
+                Page</a>
             <a class="btn btn-skills" href="{{ path('edit_module', {module: module.id}) }}">Module overview</a>
         </div>
     </div>

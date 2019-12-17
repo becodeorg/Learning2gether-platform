@@ -72,10 +72,20 @@ class Quiz
         return $this;
     }
 
-    public function getBreadcrumbs(Language $language) : array
+    public function getDashboardBreadcrumbs(Language $language) : array
     {
-        $breadcrumbs = $this->getChapter()->getBreadcrumbs($language);
-        $breadcrumbs[] = new Breadcrumb('Quiz', 'quiz_show', ['id' => $this->getId()]);
+        return $this->getChapter()->getDashboardBreadcrumbs($language);
+    }
+
+    public function getEditBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getChapter()->getEditBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb(
+            'Edit Quiz',
+            'quiz_show',
+            ['id' => $this->getId()]
+        );
+
         return $breadcrumbs;
     }
 }

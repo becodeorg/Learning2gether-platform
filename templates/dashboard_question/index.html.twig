@@ -2,10 +2,17 @@
 
 {% block title %}Hello DashboardQuestionController!{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    {% for crumb in question.dashboardBreadcrumbs(app.user.language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
+{% endblock %}
+
 {% block body %}
 
     <div class="example-wrapper my-3">
-        <a class="btn btn-skills" href="{{ path('dashboard_chapter', {chapter: question.quiz.id}) }}">Back</a>
+{#        <a class="btn btn-skills" href="{{ path('dashboard_chapter', {chapter: question.quiz.id}) }}">Back</a>#}
         <h3>Answers</h3>
         <table class="table table-hover">
             <thead>
