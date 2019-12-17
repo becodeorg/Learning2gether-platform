@@ -3,7 +3,7 @@
 {% block title %}Hello EditModuleController!{% endblock %}
 
 {% block breadcrumbs %}
-{#    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>#}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
         {% for crumb in module.editBreadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}
