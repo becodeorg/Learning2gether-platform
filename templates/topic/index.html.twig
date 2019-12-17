@@ -59,7 +59,7 @@
             <section class="row question-row">
                 <div class="col-3">
                     {# Form text #}
-                    {{ form_label(addQuestion.question, 'Title:', { 'label_attr': {'class': 'question-text'} }) }}
+                    {{ form_label(addQuestion.question, 'Question Title:', { 'label_attr': {'class': 'question-text'} }) }}
                 </div>
                 <div class="col-9">
                     {# Form inputfield #}
@@ -70,12 +70,12 @@
             <section class="row">
                 <div class="col-3">
                     {# Form text #}
-                    {{ form_label(addQuestion.questionDescription, 'Your question:', { 'label_attr': {'class': 'questionDescription-text'} }) }}
+                    {{ form_label(addQuestion.questionDescription, 'Question Description:', { 'label_attr': {'class': 'questionDescription-text'} }) }}
                 </div>
 
                 <div class="col-9">
                     {# Form inputfield #}
-                    {{ form_widget(addQuestion.questionDescription, {'attr': {'class': 'questionDescription-label'} }) }}
+                    {{ form_widget(addQuestion.questionDescription, {'attr': {'class': 'questionDescriptionTextbox questionDescription-label','rows': '5'} }) }}
                 </div>
             </section>
 
