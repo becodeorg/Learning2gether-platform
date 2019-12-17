@@ -37,7 +37,9 @@ class EditPageController extends AbstractController
             'code' => $_GET['lang']
         ]);
 
-        if ($language === null){
+        $returnCode = $_GET['return'] ?? null;
+
+        if ($language === null || $returnCode === null) {
             return $this->redirectToRoute('partner');
         }
 
@@ -52,8 +54,8 @@ class EditPageController extends AbstractController
             $this->flushUpdatedPage($page);
             $this->addFlash('success', 'Changes saved.');
 
-            if (isset($_GET['return'])){
-                switch ($_GET['return']){
+            if (isset($returnCode)) {
+                switch ($returnCode) {
                     case 'flow':
                         return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
                     case 'dash':
@@ -62,14 +64,14 @@ class EditPageController extends AbstractController
                         return $this->redirectToRoute('partner');
                 }
             }
-
-
-
+            // just in case
+            return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $chapter->getId()]);
         }
 
         $imagesAll = $this->getDoctrine()->getRepository(Image::class)->findAll();
 
         return $this->render('edit_page/index.html.twig', [
+            'returnCode' => $returnCode,
             'page' => $page,
             'pageTl' => $pageTl,
             'form' => $form->createView(),

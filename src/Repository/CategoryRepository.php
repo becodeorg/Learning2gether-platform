@@ -42,7 +42,10 @@ class CategoryRepository extends ServiceEntityRepository
      */
     public function findAllPublished()
     {
-
+//        $em = $this->getEntityManager();
+//        $dql = 'SELECT c, cl FROM App\Entity\LearningModule c JOIN c.learning_module cl';
+//        $query = $em->createQuery($dql);
+//        return $query->getResult();
 
         $qb = $this->createQueryBuilder('c')
             ->join(LearningModule::class, 'l', Join::WITH, 'l = c.learning_module')

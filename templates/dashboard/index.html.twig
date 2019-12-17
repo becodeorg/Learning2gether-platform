@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}L2G - Dashboard{% endblock %}
 
 {% block body %}
 
@@ -62,7 +62,7 @@
                                     {% set badgeclass = 'badge-success' %}
                                 {% endif %}
                                 <a class="badge {{ badgeclass }}"
-                                   href="{{ path('edit_module_translation', {'module': moduleArray['id'], lang: moduleTL['language']['code']}) }}">{{ moduleTL['language']['name'] }}</a>
+                                   href="{{ path('edit_module_translation', {'module': moduleArray['id'], lang: moduleTL['language']['code']}) }}">{{ moduleTL['language']['name'] | lower }}</a>
                             {% endfor %}
                         </td>
                         <td>
@@ -79,9 +79,8 @@
                                 <div class="badge badge-warning">Unpublished</div>
                             </td>
                         {% endif %}
-                        <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('you sure fam?')">delete</a></td>
-                        <td><a class="badge btn-skills" href="{{ path('dashboard_module', {module: module.id}) }}">View
-                                chapters</a></td>
+                        <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('Are you sure about that?')">delete</a></td>
+                        <td><a class="badge badge-primary" href="{{ path('dashboard_module', {module: module.id}) }}">chapters</a></td>
                     </tr>
 
                     <tr class="module-row">

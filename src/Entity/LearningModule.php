@@ -231,13 +231,24 @@ class LearningModule
         return $listChapters;
     }
 
-    public function getBreadcrumbs(Language $language) : array
+    public function getDashboardBreadcrumbs(Language $language) : array
     {
         return [
             new Breadcrumb(
-                $this->getTitle($language),
+                'Module',
                 'dashboard_module',
                 ['module' => $this->getId()]
+            )
+        ];
+    }
+
+    public function getEditBreadcrumbs(Language $language) : array
+    {
+        return [
+            new Breadcrumb(
+                'Edit Module',
+                'edit_module',
+            ['module' => $this->getId()]
             )
         ];
     }
