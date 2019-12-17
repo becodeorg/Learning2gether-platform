@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Domain\Badgr;
 use App\Domain\ImageManager;
+use App\Domain\LanguageTrait;
 use App\Entity\Chapter;
 use App\Entity\Image;
+use App\Entity\LearningModule;
 use App\Entity\PwdResetToken;
 use App\Entity\User;
 use App\Entity\UserChapter;
@@ -21,6 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
 {
+    use LanguageTrait;
     /**
      * @Route("/profile", name="profile")
      * @param Request $request
@@ -32,6 +35,9 @@ class ProfileController extends AbstractController
 
         /** @var User $user */
         $user = $this->getUser();
+
+        //get modules
+        $modules = $this->getDoctrine()->getRepository(LearningModule::class)->findBy(['isPublished' => true]);
 
         // Badge : get all badges from user and put all badge keys in userBadges
         $badges = $user->getBadges()->getValues();
@@ -71,11 +77,13 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('profile/index.html.twig', [
+            'language' => $this->getLanguage($request),
             'badgeKeys' => $badgeKeys,
             'userBadges' => $userBadges,
             'user' => $user,
             'profileForm' => $form->createView(),
             'deleteBtn' => $deleteBtn->createView(),
+            'modules' => $modules
         ]);
     }
 

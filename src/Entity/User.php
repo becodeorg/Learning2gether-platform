@@ -419,4 +419,44 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @param array $modules
+     * @return array|LearningModule[]
+     * @throws \Exception
+     */
+    public function getActiveModules(array $modules) : array
+    {
+        $list = [];
+        foreach($modules AS $learningModule) {
+            if(!$learningModule instanceof LearningModule) {
+                throw new \Exception('Expected learningModule, got '. get_class($learningModule));
+            }
+
+            if(!isset($this->getBadges()[$learningModule->getId()])) {
+                $list[] = $learningModule;
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * @param array $modules
+     * @return array|LearningModule[]
+     * @throws \Exception
+     */
+    public function getFinishedModules(array $modules) : array
+    {
+        $list = [];
+        foreach($modules AS $learningModule) {
+            if(!$learningModule instanceof LearningModule) {
+                throw new \Exception('Expected learningModule, got '. get_class($learningModule));
+            }
+
+            if(isset($this->getBadges()[$learningModule->getId()])) {
+                $list[] = $learningModule;
+            }
+        }
+        return $list;
+    }
 }
