@@ -34,11 +34,12 @@ class PortalController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        foreach ($user->getActiveModules($modules) as $module) {
-            $activeModules[] = $module;
-        }
-        foreach ($user->getFinishedModules($modules) as $module) {
-            $finishedModules[] = $module;
+        foreach($modules AS $learningModule) {
+            if(isset($user->getBadges()[$learningModule->getId()])) {
+                $finishedModules[] = $learningModule;
+            } else {
+                $activeModules[] = $learningModule;
+            }
         }
 
 
