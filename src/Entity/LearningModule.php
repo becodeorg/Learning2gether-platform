@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Domain\Breadcrumb;
 use App\Domain\LearningModuleType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -228,5 +229,16 @@ class LearningModule
         }
 
         return $listChapters;
+    }
+
+    public function getBreadcrumbs(Language $language) : array
+    {
+        return [
+            new Breadcrumb(
+                $this->getTitle($language),
+                'dashboard_module',
+                ['module' => $this->getId()]
+            )
+        ];
     }
 }

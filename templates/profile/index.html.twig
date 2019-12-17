@@ -44,10 +44,13 @@
                 {{ form_start(deleteBtn) }}
                 {{ form_widget(deleteBtn.delete_user,
                     { 'label': 'Delete my account'
-                        , 'attr': {'onclick': 'return confirm("Are you sure to delete your account?")'}
+
+                    , 'attr': {'onclick': 'return confirm("Are you sure to delete your account?")'}
+
                     }) }}
                 {{ form_end(deleteBtn) }}
             </div>
+
 
             {% for module in user.activeModules(modules) %}
                 <div class="progression">
@@ -61,6 +64,7 @@
                             {% set userProgress = userProgress + 1 %}
                         {% endif %}
                     {% endfor %}
+
                     <div class="progress progress_1">
                         <div class="progress-bar progress_1_bar" role="progressbar" style="width:{{ (userProgress / module.chapters | length) * 100}}%;" id="" aria-valuenow="20"
                              aria-valuemin="0" aria-valuemax="100"> {{ (userProgress / module.chapters | length) * 100 }}%
