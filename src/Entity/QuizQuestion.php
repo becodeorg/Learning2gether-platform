@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Domain\Breadcrumb;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -154,5 +155,12 @@ class QuizQuestion
             }
         }
         return "Not defined";
+    }
+
+    public function getBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getQuiz()->getBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb('Question');
+        return $breadcrumbs;
     }
 }

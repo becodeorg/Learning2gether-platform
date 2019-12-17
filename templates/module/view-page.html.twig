@@ -1,20 +1,24 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}{{ page.getTitle(language) }}{% endblock %}
-
 {% block body %}
+<div class="example-wrapper">
+
+    <div class="markdown card">
+
     {{ page.getContent(language) | parsedown | youtube | raw }}
 
     {% if pageManager.previous() != null %}
-    <a class="btn-primary btn" href="{{ path('module_view_page',
-        {'chapterPage': pageManager.previous().getId()}) }}">{{ 'Previous' | trans }}</a>
+    <a class="markdownlink prev" href="{{ path('module_view_page',
+        {'chapterPage': pageManager.previous().getId()}) }}"><button class=" button button_2 centerbutton">{{ 'Previous' | trans }}</button></a>
     {% endif %}
 
     {% if pageManager.isLast() %}
-        <a class="btn-success btn" href="{{ path('quiz_show_user',
-            {'quiz': page.getChapter().getQuiz().getId()}) }}">{{ 'Start quiz' | trans }}</a>
+        <a class="markdownlink next" href="{{ path('quiz_show_user',
+            {'quiz': page.getChapter().getQuiz().getId()}) }}"><button class=" button button_2 centerbutton">{{ 'Start quiz' | trans }}</button></a>
     {% else %}
-        <a class="btn-primary btn" href="{{ path('module_view_page',
-            {'chapterPage': pageManager.next().getId()}) }}">{{ 'Next' | trans }}</a>
+        <a class="markdownlink next" href="{{ path('module_view_page',
+            {'chapterPage': pageManager.next().getId()}) }}"><button class=" button button_2 centerbutton">{{ 'Next' | trans }}</button></a>
     {% endif %}
+    </div>
+</div>
 {% endblock %}
