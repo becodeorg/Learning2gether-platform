@@ -223,13 +223,25 @@ class Chapter
         return $this->getPages()[0];
     }
 
-    public function getBreadcrumbs(Language $language) : array
+    public function getDashboardBreadcrumbs(Language $language) : array
     {
-        $breadcrumbs = $this->getLearningModule()->getBreadcrumbs($language);
+        $breadcrumbs = $this->getLearningModule()->getDashboardBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb(
-            $this->getTitle($language),
+            'Chapter',
             'dashboard_chapter',
             ['chapter' => $this->getId()]
+        );
+
+        return $breadcrumbs;
+    }
+
+    public function getEditBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getLearningModule()->getEditBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb(
+            'Edit Chapter',
+            'create_chapter',
+            ['module' => $this->getLearningModule()->getId() , 'chapter' => $this->getId()]
         );
 
         return $breadcrumbs;

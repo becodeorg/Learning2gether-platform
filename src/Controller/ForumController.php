@@ -17,9 +17,6 @@ class ForumController extends AbstractController
      */
     public function index(Request $request)
     {
-
-
-
         $allCategories = !isset($_GET['mode']) ?
             $this->getDoctrine()->getRepository(Category::class)->findAllPublished()
             : $this->getDoctrine()->getRepository(Category::class)->findByType($_GET['mode']);

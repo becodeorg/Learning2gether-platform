@@ -29,9 +29,8 @@ class CategoryController extends AbstractController
     {
         $language = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code'=> $_COOKIE['language'] ?? 'en']);
         $topics = $this->getDoctrine()->getRepository(Chapter::class)->findBy([
-            'learningModule' => $category
+            'learningModule' => $category->getLearningModule()
         ]);
-
 
         $questionCount = [];
         foreach ($topics AS $topic) {
@@ -52,7 +51,6 @@ class CategoryController extends AbstractController
 
     private function countQuestions ($topics, $language)
     {
-
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('nb', 'totalQuestions');
         $query = $this->getDoctrine()->getManager()->createNativeQuery('SELECT COUNT(id) as nb FROM question WHERE chapter_id = :chapter_id AND language_id= :language_id', $rsm);
