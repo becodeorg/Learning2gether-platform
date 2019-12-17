@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G - Dashboard{% endblock %}
-
 {% block body %}
 
     <style>
@@ -11,7 +9,6 @@
     </style>
 
     <div class="example-wrapper my-5">
-
         <!-- add module button -->
         <section class="row justify-content-between rowaddbutton">
             <a href="{{ path('create_module') }}">
@@ -33,11 +30,14 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Module Name</th>
-                <th scope="col"># chapters</th>
+                <th scope="col">Chapters</th>
                 <th scope="col">Translations <i
                             title="This module's title and description translations.&#10;Click to go to that module's edit page."
                             class="help-icon far fa-question-circle"></i></th>
-                <th scope="col">Check</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Check <i
+                            title="Click to check this module's problems.&#10;This process can take up to 15 seconds."
+                            class="help-icon far fa-question-circle"></i></th>
                 <th scope="col">Status</th>
                 <th scope="col">&#10060;</th>
                 <th scope="col">&#128269;</th>
@@ -63,17 +63,20 @@
                             {% endfor %}
                         </td>
                         <td>
+                            <a class="badge badge-secondary" href="{{ path('edit_module', {'module': module.id}) }}">overview</a>
+                        </td>
+                        <td>
                             <div id="flagbtn-{{ module.id }}" class="flagbtn badge badge-primary"
                                  onclick="checkModule({{ module.id }})">check
                             </div>
                         </td>
                         {% if module.isPublished %}
                             <td>
-                                <div class="badge badge-success">Published</div>
+                                <div class="text-success badge">published</div>
                             </td>
                         {% else %}
                             <td id="publish-{{ module.id }}">
-                                <div class="badge badge-warning">Unpublished</div>
+                                <div class="text-danger badge">unpublished</div>
                             </td>
                         {% endif %}
                         <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('Are you sure about that?')">delete</a></td>

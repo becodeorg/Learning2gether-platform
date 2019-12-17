@@ -25,12 +25,11 @@ function checkModule(moduleId) {
         } else {
             btn.classList.remove('spinner-border', 'spinner-border-sm');
             btn.classList.add('badge', 'badge-primary');
-            btn.innerText = 're-check';
+            btn.innerText = 'No errors found';
             let publishUrl = Routing.generate('publish_module', {module: moduleId}, true);
             publish.innerHTML = '<a id="publishLink" class="flagbtn badge badge-success">Click here to publish!</a>';
             let publishLink = document.getElementById('publishLink');
             publishLink.setAttribute('href', publishUrl);
-            // I should probably stop the user from republishing already published modules
         }
     });
 }
