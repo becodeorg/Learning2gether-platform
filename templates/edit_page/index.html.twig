@@ -3,13 +3,17 @@
 {% block title %}Hello EditPageController!{% endblock %}
 
 {% block breadcrumbs %}
-    <h6 class="breadcrumbs">
-        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
-        <span class="crumb crumb-separator"> > </span>
-        {% for crumb in page.breadcrumbs(app.user.language) %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    {% if returnCode == 'dash' %}
+        {% for crumb in page.dashboardBreadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}
-    </h6>
+        {%  elseif returnCode == 'flow' %}
+            {% for crumb in page.editBreadcrumbs(app.user.language) %}
+                {{ include('partials/breadcrumbs.html.twig') }}
+            {% endfor %}
+    {% endif %}
+
 {% endblock %}
 
 {% block body %}
@@ -44,13 +48,6 @@
     </div>
 
     <div class="example-wrapper">
-        <h1>Howdy Partner!</h1>
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
-        <p>Here we want to edit a page's content using markdown. How do we let the user select/decide which language to
-            edit?</p>
-        <hr>
         {{ form_start(form) }}
         {{ form_row(form.title) }}
         {{ form_row(form.content) }}

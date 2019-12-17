@@ -46,6 +46,7 @@ class EditModuleTranslationController extends AbstractController
 
         return $this->render('edit_module_translation/index.html.twig', [
             'form' => $form->createView(),
+            'module' => $module,
         ]);
     }
 }

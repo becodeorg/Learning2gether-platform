@@ -90,6 +90,12 @@ class QuizAnswerController extends AbstractController
             $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
         }
 
+        $returnCode = $_GET['return'] ?? null;
+
+        if ($returnCode === null) {
+            return $this->redirectToRoute('partner');
+        }
+
         foreach ($quizAnswerTranslations as $quizAnswerTrans){
             if ($quizAnswerTrans->getLanguage()->getCode() === $language->getCode()){
                 $quizAnswerTranslation = $quizAnswerTrans;
@@ -109,8 +115,8 @@ class QuizAnswerController extends AbstractController
             $em->persist($quizAnswerTranslation); //persist because we might be creating a new QATranslation
             $em->flush();
 
-            if (isset($_GET['return'])){
-                switch ($_GET['return']){
+            if (isset($returnCode)) {
+                switch ($returnCode) {
                     case 'flow':
                         return $this->redirectToRoute('quiz_show', ['id'=>$quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
                     case 'dash':
@@ -124,6 +130,7 @@ class QuizAnswerController extends AbstractController
         }
 
         return $this->render('quiz_answer/edit.html.twig', [
+            'returnCode' => $returnCode,
             'quiz_answer' => $quizAnswer,
             'form' => $form->createView(),
         ]);

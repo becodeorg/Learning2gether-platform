@@ -32,7 +32,6 @@ class CategoryController extends AbstractController
             'learningModule' => $category->getLearningModule()
         ]);
 
-
         $questionCount = [];
         foreach ($topics AS $topic) {
             $questionCount[$topic->getId()] = $this->countQuestions($topic->getId(), $language->getId());
@@ -52,7 +51,6 @@ class CategoryController extends AbstractController
 
     private function countQuestions ($topics, $language)
     {
-
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('nb', 'totalQuestions');
         $query = $this->getDoctrine()->getManager()->createNativeQuery('SELECT COUNT(id) as nb FROM question WHERE chapter_id = :chapter_id AND language_id= :language_id', $rsm);
