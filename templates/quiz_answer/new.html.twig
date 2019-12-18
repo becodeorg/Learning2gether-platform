@@ -3,13 +3,9 @@
 {% block title %}{{ 'New QuizAnswer' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <h6 class="breadcrumbs">
-        <a class="crumb crumb-link" href="{{ path('partner') }}">{{ 'Partner' | trans }}</a>
-        <span class="crumb crumb-separator"> > </span>
-        {% for crumb in quiz_answer.breadcrumbs(app.user.language) %}
-            {{ include('partials/breadcrumbs.html.twig') }}
-        {% endfor %}
-    </h6>
+    {% for crumb in quiz_answer.dashboardBreadcrumbs(language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
 {% endblock %}
 
 {% block body %}
