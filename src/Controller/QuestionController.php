@@ -17,7 +17,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/forum/{category}/{chapter}/{question}", name="question", requirements={
+     * @Route("portal/forum/{category}/{chapter}/{question}", name="question", requirements={
      *
      *     "category"="\d+",
      *     "chapter"="\d+",
