@@ -16,6 +16,7 @@ class ImageUploaderType extends AbstractType
         $builder
             ->add('upload', FileType::class, [
                 'constraints' => [new Image([
+                    'maxHeight' => 1081,
                     'maxSize' => '5m',
                     'mimeTypes' => [
                         'image/jpeg',
