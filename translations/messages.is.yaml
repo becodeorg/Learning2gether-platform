@@ -1,12 +1,10 @@
 greeting: Halló
-This friendly message is coming from: Þessi vinalegu skilaboð koma frá
-Your controller at: Stjórnandi þinn kl
-Your template at: Sniðmátið þitt kl
-Controller: StjórnandiController
 Please sign in: Vinsamlegast skráðu þig inn
+Sign in: Skráðu þig inn
 Welcome to the homepage: Verið velkomin á heimasíðuna
 language test : is. Þessi síða er í IJslands
 Login: Innskráning
+Logout:
 Register: Nýsráning
 Email: Tölvupóstur
 Password: Lykilorð
@@ -16,15 +14,18 @@ Username: Notandanafn
 Image: Mynd
 Welcome to: Velkomin í
 Learn more: Sjá nánar
-Forgot Password: Gleymt lykilorð
-Don’t have an account yet: Ertu ekki með reikning
+Forgot your password?: Gleymt lykilorð?
+No account yet?: Ertu ekki með reikning?
+Already have an account? :
 Search: Leita
+Search results: leitarniðurstöður
 Learning Hub: Námskerfi
 Learning Module: Námseining
 Learning Modules: Námseiningar
 Language: Tungumál
 Follow this course: Fylgja þessu námskeiði
 Profile: Prófíll
+My profile: Prófíllinn minn
 Forum: Vettvangur
 Meeting place: Fundarstaður
 Chapters: Kaflar
@@ -37,6 +38,7 @@ Start quiz: Byrja könnunina
 Next: Næsta
 Previous: Fyrri
 Back to chapter: Til baka í kafla
+Back to forum: Til baka í vettvangur
 Chapter info: Upplýsingar um kafla
 Passed: Náðir
 Try again: Reyndu aftur
@@ -59,6 +61,7 @@ Topic: Efni
 Topics: Efni
 Question: Spurning
 Questions: Spurningar
+Question(s): Spurning(ar)
 View answers: Skoða svör
 View questions: Skoða spurningar
 Title: Titill
@@ -67,6 +70,8 @@ Send: Senda
 Back to: Til baka til
 Post: Færsla
 Answer: Svar
+Answers: Svör
+Answer(s): Svar(r)
 Badge: Merki
 Badges: Merki
 Your courses: Námskeiðin þín

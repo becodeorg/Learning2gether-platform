@@ -1,12 +1,10 @@
 greeting: Здравейте
-This friendly message is coming from: Това приятелско съобщение идва от
-Your controller at: Вашият контролер в
-Your template at: Вашият шаблон в
-Controller: контрольор
 Please sign in: Моля, влезте в профила си
+Sign in: Впиши се
 Welcome to the homepage: Добре дошли в началната страница
 language test : bg. Тази страница е на български език
 Login: Вход
+Logout:
 Register: Регистрация
 Email: Email
 Password: Парола
@@ -16,15 +14,18 @@ Username: Потребителско име
 Image: Снимка
 Welcome to: Добре дошли
 Learn more: Научете повече
-Forgot Password: Забравена парола
-Don’t have an account yet: Нямате профил
+Forgot your password?: Забравена парола?
+No account yet?: Нямате профил?
+Already have an account? :
 Search: Търсене
+Search results: Резултати от търсенето
 Learning Hub: Обучителен хъб
 Learning Module: Обучителен модул
 Learning Modules: Обучителен модули
 Language: Език
 Follow this course: Запишете се
 Profile: Профил
+My profile: Моят профил
 Forum: Форум
 Meeting place: Място за дискусия
 Chapters: Теми
@@ -37,6 +38,7 @@ Start quiz: Започни тест
 Next: Следващ
 Previous: Предишен
 Back to chapter: Обратно към урока
+Back to forum: Обратно към форума
 Chapter info: Информация за урока
 Passed: Браво! Преминахте успешно теста
 Try again: Опитайте отново
@@ -58,7 +60,8 @@ Categories: Категории
 Topic: Тема
 Topics: Теми
 Question: Въпрос
-Questions: Въпроси 
+Questions: Въпросите
+Question(s): Въпрос(ие) 
 View answers: Виж отговорите
 View questions: Виж въпросите
 Title: Заглавие
@@ -67,6 +70,8 @@ Send: Изпрати
 Back to: Обратно към
 Post: Публикувай
 Answer: Отговор
+Answers: Отговори
+Answer(s): Отговор(и)
 Badge: Значка
 Badges: Значки
 Your courses: Вашите модули
