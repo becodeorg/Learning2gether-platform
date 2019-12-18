@@ -37,7 +37,7 @@
 
         {% for module in finishedModules %}
             {% if loop.first %}
-                <h2>{{ 'Completed courses' | trans }}</h2>
+                <h2 class="finishedModules">{{ 'Completed courses' | trans }}</h2>
                 <div class="card-columns">
             {% endif %}
             {% include 'portal/partials/module.html.twig' with {'module': module, 'label': 'Restart this course'} %}
