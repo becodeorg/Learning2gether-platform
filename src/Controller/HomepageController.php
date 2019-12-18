@@ -18,8 +18,6 @@ class HomepageController extends AbstractController
             return $this->redirectToRoute($this->getUser()->isPartner() ? 'partner' : 'portal');
         }
 
-        return $this->render('homepage/index.html.twig', [
-            'controller_name' => 'HomepageController',
-        ]);
+        return $this->render('homepage/index.html.twig');
     }
 }

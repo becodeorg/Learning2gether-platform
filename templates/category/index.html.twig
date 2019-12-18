@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G Forums{% endblock %}
+{% block title %}{{ 'Forum' | trans }} - {{ 'Topics' | trans }}{% endblock %}
 
 {% block body %}
 
@@ -11,8 +11,7 @@
         {#    <p>{{ category.learningModule.description(language) }}</p>#}
 
 
-        <p class="subtitle-css">
-            TOPICS</p>
+        <p class="subtitle-css">{{ 'Topics' | trans | upper }}</p>
 
 
         {% for topic in topics %}
@@ -29,14 +28,14 @@
 
                     <div class="col-3 questions-cards-forum">
                         {# Count Questions for that Topic#}
-                        <p>{{ questionCount[topic.id] }} question(s)</p>
+                        <p>{{ questionCount[topic.id] }} {{ 'Question(s)' | trans | lower }}</p>
                     </div>
 
                     <div class="col-3">
                         {# Link to the Topic's detail (all question) page#}
                         <a class="btn-forum "
                            href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
-                            MORE
+                            {{ 'More' | trans | upper }}
                         </a>
                     </div>
 

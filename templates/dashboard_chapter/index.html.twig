@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardChapterController!{% endblock %}
+{% block title %} {{ 'Dashboard' | trans }}-{{ 'Chapter' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
         {% for crumb in chapter.dashboardBreadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}
@@ -22,8 +22,8 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Page title</th>
-                <th scope="col">Translations <i
+                <th scope="col">{{ 'Page' | trans }} {{ 'title' | trans }}</th>
+                <th scope="col">{{ 'Translations' | trans }} <i
                             title="This page's title and description translations.&#10;Click to go to that page's edit page."
                             class="help-icon far fa-question-circle"></i>
                 </th>
