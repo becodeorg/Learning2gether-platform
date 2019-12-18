@@ -44,9 +44,10 @@
         {% endfor %}
 
         <div class="text-center">
-            <a class="btn btn-skills" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">Add
+            <a class="p-1 button btn-skills" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">Add
                 Page</a>
-            <a class="btn btn-skills" href="{{ path('edit_module', {module: module.id}) }}">Module overview</a>
+            <a class="p-1 button btn-skills" href="{{ path('edit_module', {module: module.id}) }}">Module overview</a>
+            <a class="p-1 button btn-skills" href="{{ path('quiz_show', {id: chapter.quiz.id}) }}">Edit quiz</a>
         </div>
     </div>
 

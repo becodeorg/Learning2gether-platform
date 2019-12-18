@@ -16,16 +16,16 @@
             <div class="col-3 col-md-auto skillset">select skillset:</div>
 
             <div class="col-3 col-md-auto">
-                <a class="btn btn-default btn-skills "
-                   href="{{ path('portal', {'mode': 'ALL'}) }}">{{ 'all' | trans | upper }}</a>
+                <a class="btn btn-default btn-skills {% if mode == 'ALL' %} active-mode {% endif %} "
+                   href="{{ path('portal') }}">{{ 'all' | trans | upper }}</a>
             </div>
 
             <div class="col-3 col-md-auto">
-                <a class="btn btn-default btn-skills"
+                <a class="btn btn-default btn-skills {% if mode == 'SOFT' %} active-mode {% endif %} "
                    href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
             </div>
             <div class="col-3 col-md-auto">
-                <a class="btn btn-default btn-skills"
+                <a class="btn btn-default btn-skills {% if mode == 'HARD' %} active-mode {% endif %} "
                    href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
             </div>
         </div>

@@ -4,19 +4,18 @@
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
-        {% for crumb in chapter.dashboardBreadcrumbs(app.user.language) %}
-            {{ include('partials/breadcrumbs.html.twig') }}
-        {% endfor %}
+    {% for crumb in chapter.dashboardBreadcrumbs(app.user.language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
 {% endblock %}
 
 {% block body %}
-    <style>
-
-    </style>
-
     <div class="example-wrapper">
-{#        <a class="btn btn-skills" href="{{ path('dashboard_module', {module: chapter.learningModule.id }) }}">Back</a>#}
-        <hr>
+        <div class="text-center">
+            <a class="btn btn-primary"
+               href="{{ path('create_chapter', {module: chapter.learningModule.id, chapter: chapter.id }) }}">Chapter
+                overview</a>
+        </div>
         <h3>Pages</h3>
         <table class="table table-hover text-center">
             <thead>
@@ -60,10 +59,6 @@
             {% endfor %}
             </tbody>
         </table>
-        <div class="text-center">
-            <a class="badge badge-primary"
-               href="{{ path('create_chapter', {'module': chapter.learningModule.id, 'chapter': chapter.id}) }}">edit chapter</a>
-        </div>
         <h3>Quiz <a class="btn btn-skills"
                     href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">Test</a></h3>
         <table class="table table-hover text-center">
@@ -83,9 +78,11 @@
 
             {% if cr.chapterQuizAsArray(chapter) is empty %}
                 <tr>
-                    <td colspan="6">This quiz has no questions! <a class="badge btn badge-warning"
-                                                                   href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">Add
-                            one!</a></td>
+                    <td colspan="6">
+                        This quiz has no questions! <a class="badge btn badge-warning"
+                                                       href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">
+                            Add one!</a>
+                    </td>
                 </tr>
             {% else %}
                 {% for question in cr.chapterQuizAsArray(chapter)[0]['quiz']['quizQuestions'] %}
@@ -117,7 +114,6 @@
                                href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">answers</a>
                         </td>
                     </tr>
-
                 {% endfor %}
             {% endif %}
             </tbody>
