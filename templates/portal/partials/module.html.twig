@@ -6,6 +6,6 @@
 
         <h5 class="card-title pt-5">{{ module.title(language) }}</h5>
         <p class="card-text text-muted">{{ module.description(language) }}</p>
-        <a href="{{ path('module', { module : module.id}) }}" class="btn btn-default button_3">{{ 'label' | trans }}</a>
+        <a href="{{ path('module', { module : module.id}) }}" class="btn btn-default button_3">{{ label | trans }}</a>
     </div>
 </div>
