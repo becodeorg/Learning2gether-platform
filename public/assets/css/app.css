@@ -283,6 +283,9 @@ body {
   font-variant: small-caps;
   color: #7a7a7a; }
 
+.finishedModules {
+  margin: 20px 0; }
+
 h1 {
   font-family: "Chivo", sans-serif;
   font-weight: 400; }
