@@ -632,40 +632,26 @@ footer a {
 
 .profileimg {
   height: 300px;
-  border: 2px solid #8b54a0;
   overflow: hidden; }
 
 #imagebutton {
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  background: blue;
-  border-radius: 50%;
-  color: white;
+  font-size: 12px;
   text-align: center;
-  position: absolute;
-  top: 285px;
-  left: 285px;
-  font-size: 10px; }
+  float: left; }
 
 #imagebutton:hover {
-  background: red;
   cursor: pointer; }
-
-#changeavatar {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  margin-top: -300px; }
 
 .gone {
   display: none; }
 
 #show {
   background: #fdfdfd;
-  width: 300px;
-  height: 300px;
-  padding: 20px; }
+  position: absolute;
+  padding: 20px;
+  top: 0px;
+  margin: 0 auto;
+  width: 300px; }
 
 #moduleprogress {
   width: 25%; }
@@ -674,6 +660,17 @@ footer a {
   width: 20%;
   float: right;
   height: 40px; }
+
+.badges {
+  padding: 0;
+  padding-left: 20px; }
+
+.profilechange form .form-group .custom-file .custom-file-input {
+  opacity: 1;
+  width: auto; }
+
+.profilechange form .form-group .custom-file {
+  width: auto; }
 
 .badgeimage {
   width: 70%;
@@ -692,6 +689,18 @@ footer a {
 .testborder {
   border: 1px solid black; }
 
+@media only screen and (max-width: 600px) {
+  .profiletext {
+    position: relative; }
+
+  .progression {
+    margin-top: 80px; }
+
+  .auto {
+    margin-left: calc(50% - 150px); }
+
+  .absCenter {
+    left: calc(50% - 150px); } }
 /*#330033d*/
 .forum-cat-title {
   font-size: 23px;
@@ -736,8 +745,46 @@ a:hover {
   width: 50px;
   fill: white; }
 
-.rowaddbutton {
-  margin-bottom: 30px; }
+.main-page-button {
+  margin: 0 auto 30px;
+  width: 320px;
+  display: flex;
+  justify-content: center;
+  text-align: center; }
+
+#overlay {
+  width: 100%;
+  height: 100vh;
+  background-color: grey;
+  opacity: 50%;
+  position: absolute;
+  display: none; }
+
+.module-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #7a7a7a; }
+  .module-row .module-alert {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    width: 320px;
+    height: 200px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    z-index: 10; }
+    .module-row .module-alert ul {
+      display: flex;
+      text-align: center;
+      align-items: center;
+      list-style: none; }
+
+.active-mode {
+  background-color: #ffffff;
+  border: 1px solid #8b54a0;
+  color: #7a7a7a; }
 
 /*#330033d*/
 .module-cube {

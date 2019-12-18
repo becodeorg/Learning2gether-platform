@@ -1,15 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G Quiz{% endblock %}
+{% block title %}Quiz{% endblock %}
 
 {% block breadcrumbs %}
-    <h6 class="breadcrumbs">
-        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
-        <span class="crumb crumb-separator"> > </span>
-        {% for crumb in quiz.breadcrumbs(app.user.language) %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+        {% for crumb in quiz.editBreadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}
-    </h6>
 {% endblock %}
 
 {% block body %}
@@ -64,7 +61,7 @@
                                     </td>
                                     <td>
                                         <a class="badge badge-dark"
-                                           href="{{ path('quiz_answer_edit', {'id': quiz_answer.id, 'lang': language.code}) }}">{{ 'Edit' | trans }}</a>
+                                           href="{{ path('quiz_answer_edit', {'id': quiz_answer.id, 'lang': language.code, 'return': 'flow'}) }}">{{ 'Edit' | trans }}</a>
                                         {{ include('quiz_answer/_delete_form.html.twig') }}
                                     </td>
                                 </tr>
@@ -80,7 +77,7 @@
                     </td>
                     <td>
                         <a class="badge badge-dark"
-                           href="{{ path('quiz_question_edit', {'id': quiz_question.id, 'lang': language.code}) }}">{{ 'Edit' | trans }}</a>
+                           href="{{ path('quiz_question_edit', {'id': quiz_question.id, 'lang': language.code, 'return': 'flow'}) }}">{{ 'Edit' | trans }}</a>
                         {{ include('quiz_question/_delete_form.html.twig') }}
                     </td>
                 </tr>

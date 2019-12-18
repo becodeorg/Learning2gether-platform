@@ -3,13 +3,16 @@
 {% block title %}{{ 'Edit QuizAnswer' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <h6 class="breadcrumbs">
-        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
-        <span class="crumb crumb-separator"> > </span>
-        {% for crumb in quiz_answer.breadcrumbs(app.user.language) %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    {% if returnCode == 'dash' %}
+        {% for crumb in quiz_answer.dashboardBreadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}
-    </h6>
+    {% elseif returnCode == 'flow' %}
+        {% for crumb in quiz_answer.editBreadcrumbs(app.user.language) %}
+            {{ include('partials/breadcrumbs.html.twig') }}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block body %}

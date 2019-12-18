@@ -47,12 +47,12 @@ class UpgradePartnerCommand extends Command
             'email' => $email
         ]);
 
-        if(is_null($user)) {
+        if($user === null) {
             $io->error('User not found');
             return;
         }
 
-        $user->isPartner(true);
+        $user->setIsPartner(true);
         $this->em->flush();
 
         $io->success(sprintf('Upgrade user %s to partner', $user->getEmail()));

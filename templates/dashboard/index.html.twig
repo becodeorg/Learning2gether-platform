@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}L2G - Dashboard{% endblock %}
 
 {% block body %}
 
@@ -9,22 +9,25 @@
             cursor: pointer;
         }
     </style>
-
+    <div id="overlay"></div>
     <div class="example-wrapper my-5">
 
         <!-- add module button -->
-        <section class="row justify-content-between rowaddbutton">
+        <section class="row justify-content-between rowaddbutton main-page-button">
             <a href="{{ path('create_module') }}">
                 <button type="button" class="btn  btn-circle btn-xl"
                         data-toggle="tooltip" data-placement="right" title="Add new module">
                     <img class="addicon" src="{{ asset('assets/img/plusicon.svg') }}" alt="add icon">
                 </button>
+                <p>Create a new module</p>
             </a>
             <a href="{{ path('forum') }}">
                 <button type="button" class="btn btn-circle btn-xl"
                         data-toggle="tooltip" data-placement="right" title="Go to forum">
-                    <img class="addiconflag" src="{{ asset('assets/img/flagicon.svg') }}" alt="flag icon">
+                    <img class="addiconflag" src="{{ asset('assets/img/chat.svg') }}" alt="flag icon">
+
                 </button>
+                <p>Go to forum page</p>
             </a>
         </section>
 
@@ -59,7 +62,7 @@
                                     {% set badgeclass = 'badge-success' %}
                                 {% endif %}
                                 <a class="badge {{ badgeclass }}"
-                                   href="{{ path('edit_module_translation', {'module': moduleArray['id'], lang: moduleTL['language']['code']}) }}">{{ moduleTL['language']['name'] }}</a>
+                                   href="{{ path('edit_module_translation', {'module': moduleArray['id'], lang: moduleTL['language']['code']}) }}">{{ moduleTL['language']['name'] | lower }}</a>
                             {% endfor %}
                         </td>
                         <td>
@@ -76,17 +79,17 @@
                                 <div class="badge badge-warning">Unpublished</div>
                             </td>
                         {% endif %}
-                        <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('you sure fam?')">delete</a></td>
-                        <td><a class="badge btn-skills" href="{{ path('dashboard_module', {module: module.id}) }}">View
-                                chapters</a></td>
+                        <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('Are you sure about that?')">delete</a></td>
+                        <td><a class="badge badge-primary" href="{{ path('dashboard_module', {module: module.id}) }}">chapters</a></td>
                     </tr>
-                    <tr>
+
+                    <tr class="module-row">
                         {# sorry to the poor soul that has to style this #}
                         {# I did a lot of js styling on this one #}
                         {# displaying in a seperate table ruins the whole bootstrap table #}
                         {# maybe try bootstrap tootltips or popups ? #}
                         <td style="display: none; text-align: left; font-size: 0.75em"
-                            id="dump-{{ module.id }}"></td>
+                            id="dump-{{ module.id }}" class="module-alert"></td>
                     </tr>
                 {% else %}
                     <tr class="text-center">
