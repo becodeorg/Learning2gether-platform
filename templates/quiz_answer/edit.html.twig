@@ -16,8 +16,11 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <h1 class="mod-title">{{ 'Edit Answer' | trans }}</h1>
+    </div>
     <div class="example-wrapper">
-        <h1>{{ 'Edit QuizAnswer to:' | trans }}</h1>
+        <h2>{{ 'Edit QuizAnswer to:' | trans }}</h2>
         <h4>{{ quiz_answer.quizQuestion.trTitle(app.request.query.get('lang')) }}</h4>
 
         {{ include('quiz_answer/_form.html.twig', {'button_label': 'Update'}) }}

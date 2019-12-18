@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EditChapterController!{% endblock %}
+{% block title %}Edit Chapter{% endblock %}
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
@@ -10,6 +10,9 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <h1 class="mod-title">{{ 'Edit Chapter' | trans }}</h1>
+    </div>
     <div class="example-wrapper">
         <h3>Currently editing: Module {{ module.id }}, Chapter {{ chapter.chapterNumber }}</h3>
 

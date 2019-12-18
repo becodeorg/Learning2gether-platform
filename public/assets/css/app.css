@@ -804,6 +804,14 @@ a:hover {
   font-size: 20px;
   margin: 0; }
 
+.mod-step-partial {
+  color: black;
+  font-family: "Chivo", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 20px;
+  margin-right: 20px; }
+
 /*#330033d*/
 .example-wrapper {
   max-width: 1000px; }
@@ -917,6 +925,9 @@ a:hover {
 
 .postbutton form .form-group button {
   background: red; }
+
+#question_questionDescription {
+  height: 120px; }
 
 /*#330033d*/
 body {

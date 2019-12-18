@@ -10,6 +10,9 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <h1 class="mod-title">{{ 'Edit Quiz' | trans }}</h1>
+    </div>
     <div class="example-wrapper">
         <ul class="lang-menu nav navbar-light bg-light">
             <li class="navbar-brand">Select Language</li>
@@ -30,7 +33,7 @@
             </li>
         </ul>
 
-    <h1>Quiz for chapter: {{ chapter.title(language) }}</h1>
+    <h2>Quiz for chapter: {{ chapter.title(language) }}</h2>
 
         <table class="table">
             <tbody>

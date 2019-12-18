@@ -10,8 +10,12 @@
 {% endblock %}
 
 {% block body %}
-
+    <div class="row">
+        <h1 class="mod-title">{{ 'Question Dashboard' | trans }}</h1>
+    </div>
     <div class="example-wrapper my-3">
+        <h3>Question: {{ question.title(language) }}</h3>
+        <br>
 {#        <a class="btn btn-skills" href="{{ path('dashboard_chapter', {chapter: question.quiz.id}) }}">Back</a>#}
         <h3>Answers</h3>
         <table class="table table-hover">

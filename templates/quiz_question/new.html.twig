@@ -13,7 +13,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{'Create new QuizQuestion for:'  | trans }}</h1>
+    <div class="row">
+        <h1 class="mod-title">{{ 'New Question' | trans }}</h1>
+    </div>
+    <h2>{{'Create new QuizQuestion for:'  | trans }}</h2>
     <h2>{{ quiz_question.quiz.chapter.trTitle(app.request.query.get('lang')) }}</h2>
 
     {{ include('quiz_question/_form.html.twig') }}
