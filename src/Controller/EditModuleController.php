@@ -85,8 +85,16 @@ class EditModuleController extends AbstractController
             $user = $this->getUser();
 
             $prevImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'module', 'src' => $module->getImage()]);
-            $updatedModule = $imageManager->changeModuleImage($moduleImageForm->getData()['upload'], $prevImage, $module, $user, $this->getParameter('uploads_directory'));
-            $this->flushUpdatedModule($updatedModule);
+            if ($prevImage !== null){
+                $module = $imageManager->changeModuleImage($moduleImageForm->getData()['upload'], $prevImage, $module, $user, $this->getParameter('uploads_directory'));
+                $this->flushUpdatedModule($module);
+            } else {
+                $newImage = $imageManager->createImage($moduleImageForm->getData()['upload'], $user, $this->getParameter('uploads_directory'),'module');
+                $module->setImage($newImage->getSrc());
+                $this->flushNewImage($newImage);
+                $this->flushUpdatedModule($module);
+            }
+
         }
 
         return $this->render('edit_module/index.html.twig', [
@@ -117,6 +125,13 @@ class EditModuleController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $em->persist($updatedModule);
+        $em->flush();
+    }
+
+    private function flushNewImage(Image $newImage)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newImage);
         $em->flush();
     }
 }
