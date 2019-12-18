@@ -257,6 +257,9 @@ body {
   font-family: "Chivo", sans-serif;
   color: darkgrey; }
 
+.margintop {
+  margin-top: 50px; }
+
 @media only screen and (max-width: 1100px) {
   .navwrap nav {
     padding: 10px 20px; }
@@ -413,7 +416,7 @@ h1 {
   text-align: center; }
 
 .chapcard {
-  padding: 20px 10px 20px 5px;
+  padding: 20px 10px 20px 20px;
   border-radius: 20px;
   background-color: #8b54a0;
   color: #fdfdfd; }
