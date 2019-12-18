@@ -7,55 +7,70 @@
     <div class="row">
         <div class="col-md-8">
             {# default mode #}
-            <div class="profileimgwrap">
+            <div class="profileimgwrap card auto">
                 <div class="profileimg profileimgwrap">
                     {% if user.avatar %}
-                        <img src="{{ asset('upload/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
+                        <img src="{{ asset(user.avatar | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% else %}
-                        <img src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ user.name }}">
+                        <img src="{{ asset('logo_transparent.png' | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% endif %}
                 </div>
                 <div class="profiletext">
                     <p>{{ user.username }}</p>
                     <p>{{ user.name }}</p>
                     <p>{{ user.email }}</p>
-                    <div id="imagebutton">{{ 'Edit' | trans }} {{ 'Profile' | trans }}</div>
+
+                    <div class="button button_2" id="imagebutton">{{ 'Edit' | trans }} {{ 'Profile' | trans }}</div>
+
                 </div>
             </div>
             {# edit mode : only if "edit-btn" is clicked #}
-            <div class="profileimgwrap gone" id="show">
-                <div class="profileimg profileimgwrap" id="changeavatar">
+            <div class="gone card absCenter" id="show">
+
+                <div class="profilechange">
                     {{ form_start(profileForm) }}
-{#                    <div class="gone" id="show">#}
-                    {{ form_row(profileForm.avatar) }}
-{#                    </div>#}
-                </div>
-                <div class="profiletext">
                     {{ form_row(profileForm.username) }}
                     {{ form_row(profileForm.name) }}
                     {{ form_row(profileForm.email) }}
-                    <button class="button_2 btn">{{ 'Update' | trans }} {{ 'Profile' | trans }}</button>
+                    {#                    <div class="gone" id="show">#}
+                    {{ form_row(profileForm.avatar,
+                        { 'attr': {'class': 'profileupload'}
+                        }) }}
+                    {#                    </div>#}
+                    <button class="button_2 button bottom">{{ 'Update' | trans }} {{ 'Profile' | trans }}</button>
+
                     {{ form_end(profileForm) }}
+                    <div>
+                        {{ form_start(deleteBtn) }}
+                        {{ form_widget(deleteBtn.delete_user,
+                            { 'label': 'Delete my account'
+                                , 'attr': {'onclick': 'return confirm("Are you sure to delete your account?")', 'class': 'button btn-danger'}
+                            }) }}
+                        {{ form_end(deleteBtn) }}
+                    </div>
                 </div>
             </div>
 
             {# Delete my account#}
+
             <div>
                 {{ form_start(deleteBtn) }}
                 {{ form_widget(deleteBtn.delete_user,
                     { 'label': 'Delete my account'
 
                     , 'attr': {'onclick': 'return confirm("Are you sure you want to delete your profile?")'}
-
                     }) }}
                 {{ form_end(deleteBtn) }}
             </div>
 
 
+
             {% for module in user.activeModules(modules) %}
                 <div class="progression">
                     {% if loop.first %}
-                        <h3 class="title">{{ 'Active courses unlocked percentage' | trans }}</h3>
+
+                        <h3 class="title-css progresstitle">{{ 'Active courses unlocked percentage' | trans }}</h3>
+
                     {% endif %}
                     <p class="coursetitle">{{ module.title(language) }}</p>
                     {% set userProgress = 0 %}
@@ -70,18 +85,21 @@
                              aria-valuemin="0" aria-valuemax="100"> {{ (userProgress / module.chapters | length) * 100 }}%
                         </div>
                     </div>
-                    <a href="{{ path('module', {'module': module.id}) }}" class="completebutton button_2">{{ 'Complete' | trans }}</a>
+
+                    <a href="{{ path('module', {'module': module.id}) }}" class="completebutton button_2 button">{{ 'Continue' | trans }}</a>
+
                 </div>
             {% endfor %}
         </div>
 
         <div class="badges col-md-4 row">
+            <h5 class="title-css center">Your badges</h5>
             {% for badge in userBadges %}
-                <div class="badge col-md-6">
-                    <p>{{ badge.result.0.name }}</p>
+                <div class="badge col-sm-6">
+                    <p class="badgename">{{ badge.result.0.name }}</p>
                     <img class="badgeimage" src="{{ badge.result.0.image}}" alt="Badge" height="150" width="150">
-                    <p>{{ badge.result.0.description }}</p>
-                    <p>{{ badge.result.0.criteriaNarrative }}</p>
+                    <p class="badgedescription">{{ badge.result.0.description }}</p>
+                    <p class="badgecriteria">{{ badge.result.0.criteriaNarrative }}</p>
                 </div>
             {% endfor %}
         </div>

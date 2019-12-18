@@ -37,13 +37,21 @@
                 <div class="col">
                     {{ form_start(moduleImageForm) }}
                     <h3>{{ 'Change module image' |trans }}</h3>
-                    {{ form_widget(moduleImageForm.upload) }}
-                    <button class="mt-2 btn btn-skills">{{ 'Update' |trans }}</button>
+                    <h6 class="text-muted">Allowed filetypes: .jpg, .gif and .png</h6>
+
+                    {{ form_widget(moduleImageForm.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
+                    {{ form_errors(moduleImageForm.upload) }}
+                    <button class="mt-2 btn btn-skills">Update</button>
+
                     {{ form_end(moduleImageForm) }}
                 </div>
                 <div class="col">
-                    <img style="width: 256px;" src="{{ asset('upload/' ~ module.image) }}" alt="">
-
+                    <p>image preview</p>
+                    <img style="width: 180px;" class="uploadPreview" src="#" alt="">
+                </div>
+                <div class="col">
+                    <p>current image</p>
+                    <img style="width: 180px;" src="{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="">
                 </div>
             </div>
 
@@ -70,5 +78,7 @@
         </div>
 
     </div>
+
+    <script src="{{ asset('assets/js/UploaderPreviewScript.js') }}"></script>
 
 {% endblock %}

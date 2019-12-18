@@ -42,19 +42,27 @@ liip_imagine:
 
     filter_sets:
         cache: ~
+        learningModuleImage:
+            filters:
+                downscale:
+                    max: [512, 512]
+        profile:
+            filters:
+                downscale:
+                    max: [512, 512]
 
         # the name of the "filter set"
         thumb:
 
             # adjust the image quality to 75%
-            quality: 75
+            # quality: 75
 
             # list of transformations to apply (the "filters")
             filters:
 
                 # create a thumbnail: set size to 120x90 and use the "outbound" mode
                 # to crop the image when the size ratio of the input differs
-                thumbnail: { size: [40, 40], mode: outbound }
+                thumbnail: { size: [128, 128], mode: outbound }
 
                 # create a 2px black border: center the thumbnail on a black background
                 # 4px larger to create a 2px border around the final image
