@@ -33,12 +33,12 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <a class="btn btn-success" href="{{ path('upload_content') }}">{{ 'Upload an image' | trans }}</a><br/>
+                        <a class="btn btn-success" target="_blank" href="{{ path('upload_content') }}">{{ 'Upload an image' | trans }}</a><br/>
                         <strong>{{ 'You have to reload the page for images to appear in this window, use the save button to
                             store any changes' | trans }}.</strong>
                         <hr>
                         {% for image in imagesAll %}
-                            <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
+                            <img class="imageClick" src="{{ asset('upload/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
