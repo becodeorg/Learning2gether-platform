@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ForumSearchController extends AbstractController
 {
     /**
-     * @Route("/forum/searchbar", name="searchbar")
+     * @Route("/portal/forum/searchbar", name="searchbar")
      */
     public function index(Request $request)
     {
