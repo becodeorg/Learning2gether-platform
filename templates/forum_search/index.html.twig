@@ -3,22 +3,27 @@
 {% block title %}L2G Forums{% endblock %}
 
 {% block body %}
+    <section class="example-wrapper">
+        <h3 class="title-css">Search results</h3>
+        <p class="subtitle-css">Forum Topics</p>
+        {% for results in resultsFromQuestion %}
+            <a      class=""
+                    href="{{ path('question', {'category': results.category.id, 'chapter': results.chapter.id, 'question': results.id}) }}"><br>
+                {{ results.subject }}<br>
+            </a>
+        {% endfor %}
+        <br>
+        <hr><br>
+        <p class="subtitle-css">Posts</p>
+        {% for results in resultsFromPost %}
 
-    <h3>Search results</h3>
-    <p>From Questions</p>
-    {% for results in resultsFromQuestion %}
-        <a href="{{ path('question', {'category': results.category.id, 'chapter': results.chapter.id, 'question': results.id}) }}"><br>
-            {{ results.subject }}<br>
+            <a href="{{ path('question', {'category': results.question.category.id, 'chapter': results.question.chapter.id, 'question': results.question.id}) }}"><br>
+                {{ results.subject }}<br>
+            </a>
+        {% endfor %}
+        <br><br>
+        <a href="{{ path('forum') }}">
+            <button class="button button_2 centerbutton">Return to forums</button>
         </a>
-    {% endfor %}
-    <br><br>
-    <p>From Posts</p>
-    {% for results in resultsFromPost %}
-
-        <a href="{{ path('question', {'category': results.question.category.id, 'chapter': results.question.chapter.id, 'question': results.question.id}) }}"><br>
-            {{ results.subject }}<br>
-        </a>
-    {% endfor %}
-    <br><br>
-    <a href="{{ path('forum') }}">Return to forums</a>
+    </section>
 {% endblock %}

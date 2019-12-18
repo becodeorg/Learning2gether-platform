@@ -2,12 +2,8 @@
 example: {% for crumb in quiz.breadcrumbs(app.user.language) %}
 Don't forget to also close the for loop ;)
 #}
-{% if crumb.routeName is defined and crumb.routeName is not empty and not loop.last %}
-    <a class="crumb crumb-link" href="{{ path(crumb.routeName, crumb.routeOptions) }}">{{ crumb.name }}</a>
-{% else %}
-    <span class="crumb">{{ crumb.name }}</span>
-{% endif %}
-
-{% if not loop.last %}
-    <span class="crumb crumb-separator"> > </span>
-{% endif %}
+    {% if crumb.routeName is defined and crumb.routeName is not empty and not loop.last %}
+        <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path(crumb.routeName, crumb.routeOptions) }}">{{ crumb.name }}</a></li>
+    {% else %}
+        <li class="breadcrumb-item active" aria-current="page">{{ crumb.name }}</li>
+    {% endif %}

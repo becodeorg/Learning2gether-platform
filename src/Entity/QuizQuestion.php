@@ -134,10 +134,10 @@ class QuizQuestion
                 return $translation->getTitle();//change this line if needed when copied
             }
         }
-        return "Not defined";
+        return 'Not defined';
     }
 
-    public function getAnswerById(int $id) :? QuizAnswer
+    public function getAnswerById(int $id) : ?QuizAnswer
     {
         foreach($this->getAnswers() AS $answer) {
             if($answer->getId() === $id) {
@@ -154,13 +154,20 @@ class QuizQuestion
                 return $translation->getTitle();//change this line if needed when copied
             }
         }
-        return "Not defined";
+        return 'Not defined';
     }
 
-    public function getBreadcrumbs(Language $language) : array
+    public function getDashboardBreadcrumbs(Language $language) : array
     {
-        $breadcrumbs = $this->getQuiz()->getBreadcrumbs($language);
-        $breadcrumbs[] = new Breadcrumb('Question');
+        $breadcrumbs = $this->getQuiz()->getDashboardBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb('Question', 'dashboard_question', ['chapter' => $this->getQuiz()->getChapter()->getId(), 'question' => $this->getId()]);
+        return $breadcrumbs;
+    }
+
+    public function getEditBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getQuiz()->getEditBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb('Edit Question ('.$language->getName().')', 'quiz_show', ['id' => $this->getQuiz()->getId()]);
         return $breadcrumbs;
     }
 }

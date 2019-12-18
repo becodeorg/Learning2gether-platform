@@ -117,10 +117,17 @@ class QuizAnswer
         return "Not defined";
     }
 
-    public function getBreadcrumbs(Language $language) : array
+    public function getDashboardBreadcrumbs(Language $language) : array
     {
-        $breadcrumbs = $this->getQuizQuestion()->getQuiz()->getBreadcrumbs($language);
-        $breadcrumbs[] = new Breadcrumb('Answer');
+        $breadcrumbs = $this->getQuizQuestion()->getDashboardBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb('Edit Answer (' . $language->getName() . ')');
+        return $breadcrumbs;
+    }
+
+    public function getEditBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getQuizQuestion()->getEditBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb('Edit Answer (' . $language->getName() . ')');
         return $breadcrumbs;
     }
 }

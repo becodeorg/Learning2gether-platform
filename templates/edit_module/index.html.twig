@@ -3,32 +3,10 @@
 {% block title %}Hello EditModuleController!{% endblock %}
 
 {% block breadcrumbs %}
-    <h6 class="breadcrumbs">
-        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
-        <span class="crumb crumb-separator"> > </span>
-        {% for crumb in module.breadcrumbs(app.user.language) %}
-            {{ include('partials/breadcrumbs.html.twig') }}
-        {% endfor %}
-    </h6>
-{% endblock %}
-
-{% block body %}
-    <div class="example-wrapper">
-        <h1>Howdy Partner!</h1>
-        <hr>
-        <a href="{{ path('partner') }}">Back to Partner Zone</a>
-        <hr>
-        <h3>Currently editing: Module {{ module.id }}</h3>
-        <img src="{{ asset('upload/' ~ module.image) }}" alt="module image">
-        {{ form(uploader) }}
-
-        {{ form_start(form) }}
-        {% for translation in form.translations %}
-            <hr>
-            <h2>{{ translation.vars.value.language.name }}</h2>
-            {{ form_row(translation) }}
-        {% endfor %}
-    </h6>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    {% for crumb in module.editBreadcrumbs(app.user.language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
 {% endblock %}
 
 {% block body %}
@@ -40,7 +18,7 @@
             {{ form_start(moduleTLForm) }}
             {{ form_row(moduleTLForm.title) }}
             {{ form_row(moduleTLForm.description) }}
-            <button class="btn btn-skills">Save</button>
+            <button class="btn btn-skills">Update</button>
             {{ form_end(moduleTLForm) }}
         </section>
 
@@ -50,7 +28,7 @@
             {{ form_row(moduleForm.badge) }}
             {{ form_row(moduleForm.type) }}
             <h6>Current type: {{ module.type }}</h6>
-            <button class="btn btn-skills">Save</button>
+            <button class="btn btn-skills">Update</button>
             {{ form_end(moduleForm) }}
         </section>
 
@@ -59,13 +37,20 @@
                 <div class="col">
                     {{ form_start(moduleImageForm) }}
                     <h3>Change module image</h3>
-                    {{ form_widget(moduleImageForm.upload) }}
-                    <button class="mt-2 btn btn-skills">Save</button>
+                    <h6 class="text-muted">Allowed filetypes: .jpg, .gif and .png</h6>
+
+                    {{ form_widget(moduleImageForm.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
+                    {{ form_errors(moduleImageForm.upload) }}
+                    <button class="mt-2 btn btn-skills">Update</button>
                     {{ form_end(moduleImageForm) }}
                 </div>
                 <div class="col">
-                    <img style="width: 256px;" src="{{ asset('upload/' ~ module.image) }}" alt="">
-
+                    <p>image preview</p>
+                    <img style="width: 180px;" class="uploadPreview" src="#" alt="">
+                </div>
+                <div class="col">
+                    <p>current image</p>
+                    <img style="width: 180px;" src="{{ asset('upload/' ~ module.image) }}" alt="">
                 </div>
             </div>
 
@@ -76,12 +61,12 @@
             <section class="module-cube">
                 <span>chapter nr: {{ chapter.chapterNumber }}</span><br>
                 <span>chapter title: {{ chapter.title(english) }}</span><br>
-                <a class="badge btn-skills"
+                <a class="badge badge-danger"
                    href="{{ path('delete_chapter', {module: module.id, chapter: chapter.id, return: 'flow'}) }}">Delete
                     Chapter</a>
-                <a class="badge btn-skills"
+                <a class="badge badge-primary"
                    href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">edit chapter</a>
-                <a class="badge btn-skills" href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">edit quiz</a>
+                <a class="badge btn-primary" href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">edit quiz</a>
             </section>
         {% endfor %}
 
@@ -90,7 +75,8 @@
             <button class="btn btn-skills">Add a chapter</button>
             {{ form_end(addNewChapterBtn) }}
         </div>
-
     </div>
+
+    <script src="{{ asset('assets/js/UploaderPreviewScript.js') }}"></script>
 
 {% endblock %}

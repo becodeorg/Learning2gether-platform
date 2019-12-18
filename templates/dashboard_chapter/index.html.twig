@@ -3,13 +3,10 @@
 {% block title %}Hello DashboardChapterController!{% endblock %}
 
 {% block breadcrumbs %}
-    <h6 class="breadcrumbs">
-        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
-        <span class="crumb crumb-separator"> > </span>
-        {% for crumb in chapter.breadcrumbs(app.user.language) %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+        {% for crumb in chapter.dashboardBreadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}
-    </h6>
 {% endblock %}
 
 {% block body %}
@@ -18,7 +15,7 @@
     </style>
 
     <div class="example-wrapper">
-        <a class="btn btn-skills" href="{{ path('dashboard_module', {module: chapter.learningModule.id }) }}">Back</a>
+{#        <a class="btn btn-skills" href="{{ path('dashboard_module', {module: chapter.learningModule.id }) }}">Back</a>#}
         <hr>
         <h3>Pages</h3>
         <table class="table table-hover text-center">
@@ -64,9 +61,8 @@
             </tbody>
         </table>
         <div class="text-center">
-            <a class="badge btn-skills"
-               href="{{ path('create_chapter', {'module': chapter.learningModule.id, 'chapter': chapter.id}) }}">++ Add
-                more pages ++</a>
+            <a class="badge badge-primary"
+               href="{{ path('create_chapter', {'module': chapter.learningModule.id, 'chapter': chapter.id}) }}">edit chapter</a>
         </div>
         <h3>Quiz <a class="btn btn-skills"
                     href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">Test</a></h3>
@@ -117,8 +113,8 @@
                             {% endfor %}
                         </td>
                         <td>
-                            <a class="badge btn-skills"
-                               href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">Answers</a>
+                            <a class="badge badge-primary"
+                               href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">answers</a>
                         </td>
                     </tr>
 
@@ -127,7 +123,7 @@
             </tbody>
         </table>
         <div class="text-center">
-            <a class="badge btn-skills" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">++ Add more pages ++</a>
+            <a class="badge badge-primary" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">edit quiz</a>
         </div>
     </div>
 {% endblock %}

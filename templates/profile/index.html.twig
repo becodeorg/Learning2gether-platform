@@ -51,45 +51,31 @@
             {# Delete my account#}
 
 
-            <div class="progression">
-                <h3 class="title">Your courses</h3>
-                <p class="coursetitle">Javascript</p>
+
+            {% for module in user.activeModules(modules) %}
+                <div class="progression">
+                    {% if loop.first %}
+                        <h3 class="title">Active courses unlocked percentage</h3>
+                    {% endif %}
+                    <p class="coursetitle">{{ module.title(language) }}</p>
+                    {% set userProgress = 0 %}
+                    {% for userChapter in module.userChapters(user) %}
+                        {% if userChapter.isUnlocked == true %}
+                            {% set userProgress = userProgress + 1 %}
+                        {% endif %}
+                    {% endfor %}
+
                     <div class="progress progress_1">
-                        <div class="progress-bar progress_1_bar" role="progressbar" id="moduleprogress" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">25%
+                        <div class="progress-bar progress_1_bar" role="progressbar" style="width:{{ (userProgress / module.chapters | length) * 100}}%;" id="" aria-valuenow="20"
+                             aria-valuemin="0" aria-valuemax="100"> {{ (userProgress / module.chapters | length) * 100 }}%
                         </div>
                     </div>
-                <button class="completebutton button_2">Complete</button>
-            </div>
-
+                    <a href="{{ path('module', {'module': module.id}) }}" class="completebutton button_2">Complete</a>
+                </div>
+            {% endfor %}
         </div>
+
         <div class="badges col-md-4 row">
-            <!-- testbadges -->
-            <div class="badge col-md-6 testborder">
-                <p>badge name</p>
-                <img class="badgeimage" src="{{ asset('assets/img/logo_transparent.png') }}" alt="Badge" height="150" width="150">
-                <p>description</p>
-                <p>criteria</p>
-            </div>
-            <div class="badge col-md-6 testborder">
-                <p>badge name</p>
-                <img class="badgeimage" src="{{ asset('assets/img/logo_transparent.png') }}" alt="Badge" height="150" width="150">
-                <p>description</p>
-                <p>criteria</p>
-            </div>
-            <div class="badge col-md-6 testborder">
-                <p>badge name</p>
-                <img class="badgeimage" src="{{ asset('assets/img/logo_transparent.png') }}" alt="Badge" height="150" width="150">
-                <p>description</p>
-                <p>criteria</p>
-            </div>
-            <div class="badge col-md-6 testborder">
-                <p>badge name</p>
-                <img class="badgeimage" src="{{ asset('assets/img/logo_transparent.png') }}" alt="Badge" height="150" width="150">
-                <p>description</p>
-                <p>criteria</p>
-            </div>
-            <!-- END testbadges -->
             {% for badge in userBadges %}
                 <div class="badge col-md-6">
                     <p>{{ badge.result.0.name }}</p>
