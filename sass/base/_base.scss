@@ -8,6 +8,7 @@
 
 body {
   background-color: $offwhite;
+  overflow-x: hidden;
 }
 
 
@@ -318,7 +319,7 @@ body {
 
   .example-wrapper {
     margin-top: 20px;
-
+    padding: 0 20px;
   }
 }
 
