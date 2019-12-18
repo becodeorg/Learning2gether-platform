@@ -39,7 +39,7 @@
 
                     <div class="col-2 questions-cards-forum">
                         {# Count Replies#}
-                        <p>{{ postCount[question.id] }} answer(s)</p>
+                        <p>{{ postCount[question.id] }}{{ 'Answer(s)' | trans }}</p>
                     </div>
 
                     <div class="col-3 questions-cards-forum">
@@ -83,7 +83,7 @@
                 </div>
             </section>
 
-            <button type="submit" class="btn-forum ">Send Question</button>
+           <button type="submit" class="btn-forum ">{{ 'Send Question' | trans }}</button>
 
             {{ form_end(addQuestion) }}
 

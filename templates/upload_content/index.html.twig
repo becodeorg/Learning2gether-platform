@@ -6,7 +6,6 @@
 <div class="example-wrapper">
     {{ form_start(uploader) }}
     {{ form_row(uploader.upload) }}
-    {{ form_row(uploader.submit) }}
     {{ form_end(uploader) }}
     {% for image in imagesAll %}
         <img src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">

@@ -19,7 +19,7 @@
         </div>
     {{ form_end(registrationForm) }}
         <p class="accountgot">
-                Already have an account? <a href="{{ path('app_login') }}">{{ 'Login' | trans }}</a>
+                {{ 'Already have an account' | trans }}? <a href="{{ path('app_login') }}">{{ 'Login' | trans }}</a>
         </p>
 </div>
 {% endblock %}

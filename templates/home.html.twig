@@ -13,6 +13,7 @@
         <link href="https://fonts.googleapis.com/css?family=Chivo:300,400,700,900&display=swap" rel="stylesheet">
         <!-- STYLESHEET -->
         <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+        <link rel='shortcut icon' type='image/x-icon' href='{{ asset('assets/img/favicon.ico') }}' />
     </head>
     <body class="loginbody">
     <div class="titlewrap">
@@ -20,7 +21,7 @@
         <h1>Learning2gether</h1>
         <p>{{ "Where digital and soft skills meet." | trans }}</p>
     </div>
-    <a class="learnmore button_2 button buttonshadow center" href="https://www.learning2gether.org/">{{ "Learn more" | trans }}</a>
+    <a class="learnmore button_2 button buttonshadow center" target="_blank" href="https://www.learning2gether.org/">{{ "Learn more" | trans }}</a>
 
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}

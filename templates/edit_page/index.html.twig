@@ -34,7 +34,7 @@
                     </div>
                     <div class="modal-body">
                         <a class="btn btn-success" href="{{ path('upload_content') }}">{{ 'Upload an image' | trans }}</a><br/>
-                        <strong>{{ You have to reload the page for images to appear in this window, use the save button to
+                        <strong>{{ 'You have to reload the page for images to appear in this window, use the save button to
                             store any changes' | trans }}.</strong>
                         <hr>
                         {% for image in imagesAll %}
@@ -42,7 +42,7 @@
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'Close' | trans }}</button>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
         <button class="btn btn-skills">Save</button>
         {{ form_end(form) }}
         <hr>
-        <a class="btn btn-skills" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">Back to chapter</a>
+        <a class="btn btn-skills" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">{{ 'Back to chapter' | trans }}</a>
     </div>
 
 

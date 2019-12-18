@@ -73,20 +73,20 @@
                         </td>
                         <td>
                             <div id="flagbtn-{{ module.id }}" class="flagbtn badge badge-primary"
-                                 onclick="checkModule({{ module.id }})">check
+                                 onclick="checkModule({{ module.id }})">{{ 'Check' | trans }}
                             </div>
                         </td>
                         {% if module.isPublished %}
                             <td>
-                                <div class="text-success badge">published</div>
+                                <div class="badge text-success">{{ 'Published' | trans }}</div>
                             </td>
                         {% else %}
                             <td id="publish-{{ module.id }}">
-                                <div class="text-danger badge">unpublished</div>
+                                <div class="badge text-danger">{{ 'Unpublished' | trans }}</div>
                             </td>
                         {% endif %}
-                        <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('Are you sure about that?')">delete</a></td>
-                        <td><a class="badge badge-primary" href="{{ path('dashboard_module', {module: module.id}) }}">chapters</a></td>
+                        <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('Are you sure about that?')">{{ 'Delete' | trans }}</a></td>
+                        <td><a class="badge badge-primary" href="{{ path('dashboard_module', {module: module.id}) }}">{{ 'Chapters' | trans }}</a></td>
                     </tr>
 
                     <tr class="module-row">
@@ -100,7 +100,7 @@
                 {% else %}
                     <tr class="text-center">
                         <th scope="row">{{ loop.index }}</th>
-                        <td colspan="6">This module needs more chapters! {link to module overview}</td>
+                        <td colspan="6">{{ 'This module needs more chapters!' | trans }} {link to module overview}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
