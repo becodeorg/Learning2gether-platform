@@ -11,7 +11,8 @@
 
 {% block body %}
     <div class="example-wrapper">
-        <ul class="lang-menu nav navbar-light bg-light">
+
+        {#<ul class="lang-menu nav navbar-light bg-light">
             <li class="navbar-brand">Select Language</li>
             <li class="nav-item"><a class="nav-link"
                                     href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'en'})) }}">English</a>
@@ -28,15 +29,15 @@
             <li class="nav-item"><a class="nav-link"
                                     href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'lang': 'bg'})) }}">Bulgarian</a>
             </li>
-        </ul>
+        </ul>#}
 
-    <h1>Quiz for chapter: {{ chapter.title(language) }}</h1>
+    <h1 class="title-css">Quiz for chapter: {{ chapter.title(language) }}</h1>
 
         <table class="table">
             <tbody>
             <tr>
-                <th>{{ 'Questions' | trans }}</th>
-                <th>{{ 'Actions' | trans }}</th>
+                <th class="table-main-header ">{{ 'Questions' | trans }}</th>
+                <th class="table-main-header">{{ 'Actions' | trans }}</th>
             </tr>
             {% for quiz_question in quiz.quizQuestions %}
                 <tr>
@@ -60,7 +61,7 @@
                                     </td>
                                     <td>
                                         <a class="badge badge-dark"
-                                           href="{{ path('quiz_answer_edit', {'id': quiz_answer.id, 'lang': language.code, 'return': 'flow'}) }}">{{ 'edit' | trans }}</a>
+                                           href="{{ path('quiz_answer_edit', {'id': quiz_answer.id, 'lang': language.code, 'return': 'flow'}) }}">{{ 'Edit' | trans }}</a>
                                         {{ include('quiz_answer/_delete_form.html.twig') }}
                                     </td>
                                 </tr>
@@ -76,7 +77,7 @@
                     </td>
                     <td>
                         <a class="badge badge-dark"
-                           href="{{ path('quiz_question_edit', {'id': quiz_question.id, 'lang': language.code, 'return': 'flow'}) }}">{{ 'edit' | trans }}</a>
+                           href="{{ path('quiz_question_edit', {'id': quiz_question.id, 'lang': language.code, 'return': 'flow'}) }}">{{ 'Edit' | trans }}</a>
                         {{ include('quiz_question/_delete_form.html.twig') }}
                     </td>
                 </tr>
@@ -90,8 +91,10 @@
             </tr>
             </tbody>
         </table>
+
+        <a href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id, 'lang': language.code}) }}">
+            <button class="button button_2 btn-margin">{{ 'Back to chapter' | trans }}</button>
+        </a>
+
     </div>
-
-    <a href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id, 'lang': language.code}) }}">{{ 'back chapter' | trans }}</a>
-
 {% endblock %}

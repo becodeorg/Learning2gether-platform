@@ -17,13 +17,13 @@
 
 {% block body %}
     <div class="example-wrapper">
-        <h1>{{ 'Edit QuizAnswer to:' | trans }}</h1>
-        <h4>{{ quiz_answer.quizQuestion.trTitle(app.request.query.get('lang')) }}</h4>
+        <h1 class="title-css">{{ 'Edit QuizAnswer to:' | trans }}</h1>
+        <h4 class="subtitle-css">{{ quiz_answer.quizQuestion.trTitle(app.request.query.get('lang')) }}</h4>
 
         {{ include('quiz_answer/_form.html.twig', {'button_label': 'Update'}) }}
-
-        <a href="{{ path('quiz_show', {'id': quiz_answer.quizQuestion.quiz.id, 'lang': app.request.query.get('lang')}) }}">{{ 'back to list' | trans }}</a>
-
         {{ include('quiz_answer/_delete_form.html.twig') }}
+        <a href="{{ path('quiz_show', {'id': quiz_answer.quizQuestion.quiz.id, 'lang': app.request.query.get('lang')}) }}">
+            <button class="button button_2 btn-margin">{{ 'Back to list' | trans }}</button>
+        </a>
     </div>
 {% endblock %}
