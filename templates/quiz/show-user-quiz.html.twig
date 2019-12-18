@@ -14,7 +14,7 @@
                     {{ 'Back to chapter'|trans }}
                 </a>
                 {% else %}
-                    <a class="btn btn-default button button_4chap btnchapquiz" href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id}) }}">Back to dashboard</a>
+                    <a class="btn btn-default button button_4chap btnchapquiz" href="{{ path('dashboard_chapter', {'chapter': quiz.chapter.id}) }}">{{ 'Back to Dashboard' | trans }}</a>
             {% endif %}
 
             <!--  question1   -->
@@ -88,11 +88,11 @@
 
                             <div class="row ">
                                 <div class="col-6">
-                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">Profile</button></a>
+                                    <a href="{{ path('profile') }}"><button type="button" class="btn btn-secondary button modalbutton" data-dismiss="modal">{{ 'Profile' | trans }}</button></a>
                                 </div>
 
                                 <div class="col-6">
-                                    <a href="{{ path('portal') }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">Learning hub</button></a>
+                                    <a href="{{ path('portal') }}"><button type="button" class="btn btn-primary button modalbutton modal-btn">{{ 'Learning Hub' | trans }}</button></a>
                                 </div>
                             </div>
                         </div>
@@ -129,8 +129,8 @@
 
             {% if test == false %}
                 <div class="row chapbutton_2quiz">
-                    <p id="completeText">Fill in all questions to submit</p>
-                    <button class="btn btn-default button_5quiz noClick" id="send-quiz">Submit test</button>
+                    <p id="completeText">{{ 'Fill in all questions to submit' | trans }}</p>
+                    <button class="btn btn-default button_5quiz noClick" id="send-quiz">{{ 'Submit test' | trans }}</button>
                 </div>
             {% endif %}
         </form>

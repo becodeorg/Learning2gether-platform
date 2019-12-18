@@ -3,7 +3,7 @@
 {% block title %}{{ 'Dashboard' | trans }}-{{ 'Question' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
     {% for crumb in question.dashboardBreadcrumbs(app.user.language) %}
         {{ include('partials/breadcrumbs.html.twig') }}
     {% endfor %}
@@ -14,7 +14,7 @@
         <h1 class="mod-title">{{ 'Question Dashboard' | trans }}</h1>
     </div>
     <div class="example-wrapper my-3">
-        <h3>Question: {{ question.title(language) }}</h3>
+        <h3>{{ 'Question' | trans }}: {{ question.title(language) }}</h3>
         <br>
 {#        <a class="btn btn-skills" href="{{ path('dashboard_chapter', {chapter: question.quiz.id}) }}">Back</a>#}
         <h3>{{ 'Answers' | trans }}</h3>
