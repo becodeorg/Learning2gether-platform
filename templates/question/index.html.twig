@@ -3,7 +3,8 @@
 {% block title %}L2G Forum{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a>
+    </li>
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('forum') }}">{{ 'Forum'|trans }}</a></li>
     {% for crumb in question.forumBreadcrumbs(app.user.language) %}
         {{ include('partials/breadcrumbs.html.twig') }}
@@ -29,7 +30,7 @@
                             {% if post.createdBy.avatar %}
                                 <img style="width: 50px; height: 50px"
                                      src="{{ asset(post.createdBy.avatar | imagine_filter('thumb')) }}"
-                                     alt="avatar of {{ post.createdBy.avatar  }}">
+                                     alt="avatar of {{ post.createdBy.avatar }}">
                             {% else %}
                                 <img style="width: 50px; height: 50px"
                                      src="{{ asset('/logo_transparent.png' | imagine_filter('thumb')) }}"
@@ -68,33 +69,34 @@
             {% else %}
 
 
+                <div class="row question-answer-row ">
 
+                    <div class="col-2 image-name-column imageForumAvatar justify-content-center">
+                        <div class="picturePost">
+                            {% if post.createdBy.avatar %}
+                                <img style="width: 50px; height: 50px"
+                                     src="{{ asset(post.createdBy.avatar | imagine_filter('thumb')) }}"
+                                     alt="avatar of {{ post.createdBy.avatar }}">
+                            {% else %}
+                                <img style="width: 50px; height: 50px"
+                                     src="{{ asset('/logo_transparent.png' | imagine_filter('thumb')) }}"
+                                     alt="avatar of {{ post.createdBy.avatar }}">
+                            {% endif %}
 
-
-                <div class="row question-answer-row">
-
-
-
-                    <div class="imageForumAvatar">
-                        {% if post.createdBy.avatar %}
-                            <img style="width: 50px; height: 50px" src="{{ asset(post.createdBy.avatar | imagine_filter('thumb')) }}"
-                                 alt="avatar of {{ post.createdBy.avatar }}">
-                        {% else %}
-                            <img style="width: 50px; height: 50px" src="{{ asset('/logo_transparent.png' | imagine_filter('thumb')) }}"
-                                 alt="avatar of {{ post.createdBy.avatar }}">
-                        {% endif %}
+                        </div>
+                        {# Reply to question author #}
+                        <div class="col text-center">{{ post.createdBy.username }} </div>
                     </div>
 
-
                     {# Reply to question #}
-                    <div class="col-11">
+                    <div class="col-9 question-answer-row">
                         {{ post.subject }}
                     </div>
 
 
                     {# UPVOTES #}
 
-                    <div class="col-1">
+                    <div class="col-1 imageWrapperPost">
                         <div class="float-right">
                             {{ form_start(upvotes[post.id]) }}
                             {{ upvoters[post.id] }}
@@ -110,8 +112,6 @@
 
 
                 <div class="row question-asked-info">
-                    {# Reply to question author #}
-                    <div class="col text-left">{{ post.createdBy.username }} </div>
 
                     {# Reply to question date posted #}
                     <div class="col text-right "> {{ post.dateFormatted }} </div>
@@ -126,12 +126,11 @@
             {% endif %}
         {% endfor %}
 
-        <div class="postbutton">
+        <div class="postform">
             {# Input answer to question#}
             {{ form_start(postForm) }}
             {{ form_widget(postForm.subjectPost) }}
-            <button type="submit" class="">{{ 'Sent' | trans }}</button>
-
+            <button class="btn-forum submitPost button_5" type="submit" class="">{{ 'Send' | trans }}</button>
             {{ form_end(postForm) }}
         </div>
 
