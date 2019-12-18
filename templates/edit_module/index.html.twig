@@ -42,7 +42,7 @@
                     {{ form_end(moduleImageForm) }}
                 </div>
                 <div class="col">
-                    <img style="width: 256px;" src="{{ asset('upload/' ~ module.image) }}" alt="">
+                    <img style="width: 256px;" src="{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="">
 
                 </div>
             </div>
