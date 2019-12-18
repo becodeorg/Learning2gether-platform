@@ -93,7 +93,7 @@
         </div>
 
         <div class="badges col-md-4 row">
-            <h5 class="title-css center">Your badges</h5>
+            <h5 class="title-css center">{{ 'Your badges' | trans }}:</h5>
             {% for badge in userBadges %}
                 <div class="badge col-sm-6">
                     <p class="badgename">{{ badge.result.0.name }}</p>

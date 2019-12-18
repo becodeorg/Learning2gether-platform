@@ -16,7 +16,7 @@
     {% endif %}
 
     <div class="loginwrap">
-    <label for="inputEmail" class="sr-only">Email</label>
+    <label for="inputEmail" class="sr-only">{{ 'Email' | trans }}</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'Email' | trans }}" required autofocus>
         <br>
     <label for="inputPassword" class="sr-only">Password</label>
