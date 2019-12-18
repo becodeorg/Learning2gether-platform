@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Domain\Breadcrumb;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -191,5 +192,23 @@ class Question
         return $this;
     }
 
+    public function getLearnerBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getChapter()->getLearnerBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb(
+            'Question'
+        );
 
+        return $breadcrumbs;
+    }
+
+    public function getForumBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getChapter()->getForumBreadcrumbs($language, $this->category);
+        $breadcrumbs[] = new Breadcrumb(
+            'Question'
+        );
+
+        return $breadcrumbs;
+    }
 }

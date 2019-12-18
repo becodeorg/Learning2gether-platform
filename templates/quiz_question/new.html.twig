@@ -3,20 +3,18 @@
 {% block title %}{{'New QuizQuestion' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <h6 class="breadcrumbs">
-        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
-        <span class="crumb crumb-separator"> > </span>
-        {% for crumb in quiz_question.breadcrumbs(app.user.language) %}
+        {% for crumb in quiz_question.getEditBreadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}
-    </h6>
 {% endblock %}
 
 {% block body %}
+    <div class="example-wrapper">
     <h1>{{'Create new QuizQuestion for:'  | trans }}</h1>
     <h2>{{ quiz_question.quiz.chapter.trTitle(app.request.query.get('lang')) }}</h2>
 
     {{ include('quiz_question/_form.html.twig') }}
 
     <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id, 'lang': app.request.query.get('lang')}) }}">{{ 'back to list' | trans }}</a>
+    </div>
 {% endblock %}

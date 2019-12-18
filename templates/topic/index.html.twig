@@ -2,6 +2,15 @@
 
 {% block title %}L2G Forums{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('forum') }}">{{ 'Forum'|trans }}</a></li>
+    {% for crumb in currentTopic.forumBreadcrumbs(app.user.language, category) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
+{% endblock %}
+
 {% block body %}
 
 
@@ -33,9 +42,8 @@
                         <p>{{ postCount[question.id] }} answer(s)</p>
                     </div>
 
-                    <div class="col-3">
-                        {# Question description for preview text#}
-                        {{ question.posts[0].subject }}
+                    <div class="col-3 questions-cards-forum">
+                        <p>By: {{ question.posts[0].getCreatedBy().username }}</p>
                     </div>
 
                     <div class="col-3">
@@ -45,13 +53,9 @@
                             MORE
                         </a>
                     </div>
-
                 </div>
-
             </div>
-
         {% endfor %}
-
 
         <section class="container topic-questions">
             {{ form_start(addQuestion) }}
@@ -79,10 +83,9 @@
                 </div>
             </section>
 
-           <button type="submit" class="btn-forum ">Send Question</button>
+            <button type="submit" class="btn-forum ">Send Question</button>
 
             {{ form_end(addQuestion) }}
-
 
 
         </section>

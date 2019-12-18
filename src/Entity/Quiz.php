@@ -88,4 +88,16 @@ class Quiz
 
         return $breadcrumbs;
     }
+
+    public function getLearnerBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getChapter()->getLearnerBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb(
+            'Quiz',
+            'quiz_show',
+            ['id' => $this->getId()]
+        );
+
+        return $breadcrumbs;
+    }
 }
