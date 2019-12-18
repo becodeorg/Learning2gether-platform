@@ -47,7 +47,8 @@ class ImageManager
 
     public function changeModuleImage(UploadedFile $uploadedImage, Image $image, LearningModule $module, User $user, string $uploads_directory): LearningModule
     {
-        if ($module->getImage() !== '') {
+        $imageSrc = $module->getImage();
+        if (($imageSrc !== '') && $imageSrc !== null) {
             unlink($uploads_directory . '/' . $module->getImage());
         }
 
@@ -55,7 +56,8 @@ class ImageManager
 
         $image->setSrc($filename);
         $image->setName($uploadedImage->getClientOriginalName());
-        $user->addImage($image); // not sure if this line is needed
+        $user->addImage($image);
+
         $module->setImage($filename);
 
         $uploadedImage->move(
