@@ -1038,8 +1038,9 @@ body {
   font-family: "Chivo", sans-serif;
   font-size: 15px;
   background-color: #f7f6f6;
-  padding: 10px 17px 0 17px;
-  margin-bottom: 10px; }
+  padding: 10px 17px 10px 17px;
+  margin-bottom: 10px;
+  border-radius: 20px; }
 
 .question-asked-info {
   font-family: "Chivo", sans-serif;
@@ -1058,10 +1059,29 @@ body {
 .question-answer-row {
   margin-top: 20px;
   background-color: #99cdd8;
-  padding: 10px 5px 10px 5px; }
+  padding: 10px 5px 10px 5px;
+  border-radius: 20px; }
 
 .upvote-img {
   background-image: url("../../public/assets/img/thumbsup.png"); }
+
+.imageWrapperPost {
+  top: 22px; }
+
+.postform {
+  background-color: #8b54a0;
+  font-family: "Chivo", sans-serif;
+  padding: 20px 20px 20px 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top: 20px; }
+
+.submitPost {
+  margin-top: 20px; }
+
+.picturePost {
+  display: flex;
+  justify-content: center; }
 
 /*
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
