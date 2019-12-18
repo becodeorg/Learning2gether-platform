@@ -3,7 +3,7 @@
 {% block title %}{{ 'Edit QuizAnswer' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
     {% if returnCode == 'dash' %}
         {% for crumb in quiz_answer.dashboardBreadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Howdy Partner!{% endblock %}
+{% block title %}{{ 'Hello partner' | trans }}!{% endblock %}
 
 {% block body %}
     <div class="example-wrapper">
-        <h1>Howdy Partner!</h1>
+        <h1>{{ 'Hello partner' | trans }}!</h1>
 
         <section class="row rowaddbutton">
             <a href="{{ path('create_module') }}">

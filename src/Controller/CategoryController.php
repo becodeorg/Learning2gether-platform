@@ -18,7 +18,7 @@ class CategoryController extends AbstractController
 {
     use LanguageTrait;
     /**
-     * @Route("/forum/{category}", name="category", requirements={"category"="\d+"})
+     * @Route("portal/forum/{category}", name="category", requirements={"category"="\d+"})
      */
     public function index(Request $request, Category $category): Response
     {

@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TopicController extends AbstractController
 {
     /**
-     * @Route("/forum/{category}/{chapter}", name="topic", requirements={
+     * @Route("portal/forum/{category}/{chapter}", name="topic", requirements={
      *     "category"="\d+",
      *     "chapter"="\d+",
      *     })
