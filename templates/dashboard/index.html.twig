@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G - Dashboard{% endblock %}
-
 {% block body %}
 
     <style>
@@ -9,22 +7,23 @@
             cursor: pointer;
         }
     </style>
-
+    <div id="overlay"></div>
     <div class="example-wrapper my-5">
-
         <!-- add module button -->
-        <section class="row justify-content-between rowaddbutton">
+        <section class="row justify-content-between rowaddbutton main-page-button">
             <a href="{{ path('create_module') }}">
                 <button type="button" class="btn  btn-circle btn-xl"
                         data-toggle="tooltip" data-placement="right" title="Add new module">
                     <img class="addicon" src="{{ asset('assets/img/plusicon.svg') }}" alt="add icon">
                 </button>
+                <p>Create a new module</p>
             </a>
             <a href="{{ path('forum') }}">
                 <button type="button" class="btn btn-circle btn-xl"
                         data-toggle="tooltip" data-placement="right" title="Go to forum">
-                    <img class="addiconflag" src="{{ asset('assets/img/flagicon.svg') }}" alt="flag icon">
+                    <img class="addiconflag" src="{{ asset('assets/img/chat.svg') }}" alt="flag icon">
                 </button>
+                <p>Go to forum page</p>
             </a>
         </section>
 
@@ -32,12 +31,15 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Module Name</th>
-                <th scope="col"># chapters</th>
+                <th scope="col">Title</th>
+                <th scope="col">Chapters</th>
                 <th scope="col">Translations <i
                             title="This module's title and description translations.&#10;Click to go to that module's edit page."
                             class="help-icon far fa-question-circle"></i></th>
-                <th scope="col">Check</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Check <i
+                            title="Click to check this module's problems.&#10;This process can take up to 15 seconds."
+                            class="help-icon far fa-question-circle"></i></th>
                 <th scope="col">Status</th>
                 <th scope="col">&#10060;</th>
                 <th scope="col">&#128269;</th>
@@ -63,29 +65,33 @@
                             {% endfor %}
                         </td>
                         <td>
+                            <a class="badge badge-secondary" href="{{ path('edit_module', {'module': module.id}) }}">overview</a>
+                        </td>
+                        <td>
                             <div id="flagbtn-{{ module.id }}" class="flagbtn badge badge-primary"
                                  onclick="checkModule({{ module.id }})">check
                             </div>
                         </td>
                         {% if module.isPublished %}
                             <td>
-                                <div class="badge badge-success">Published</div>
+                                <div class="text-success badge">published</div>
                             </td>
                         {% else %}
                             <td id="publish-{{ module.id }}">
-                                <div class="badge badge-warning">Unpublished</div>
+                                <div class="text-danger badge">unpublished</div>
                             </td>
                         {% endif %}
                         <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('Are you sure about that?')">delete</a></td>
                         <td><a class="badge badge-primary" href="{{ path('dashboard_module', {module: module.id}) }}">chapters</a></td>
                     </tr>
-                    <tr>
+
+                    <tr class="module-row">
                         {# sorry to the poor soul that has to style this #}
                         {# I did a lot of js styling on this one #}
                         {# displaying in a seperate table ruins the whole bootstrap table #}
                         {# maybe try bootstrap tootltips or popups ? #}
                         <td style="display: none; text-align: left; font-size: 0.75em"
-                            id="dump-{{ module.id }}"></td>
+                            id="dump-{{ module.id }}" class="module-alert"></td>
                     </tr>
                 {% else %}
                     <tr class="text-center">
