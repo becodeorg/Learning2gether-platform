@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <title>Learning2gether</title>
+    <title>{% block title %}Learning2gether{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     {% block stylesheets %}{% endblock %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -63,15 +63,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('forum') }}"><img height="25px"
                                                                         src="{{ asset('assets/img/lightlogo-10.png') }}"
-                                                                        alt="Meetingplace"></a>
+                                                                        alt="{{ 'Meetingplace' | trans }}"></a>
                 </li>
 
                 <li class="nav-item">
                     <div id="profiledrop"><img height="25px" src="{{ asset('assets/img/lightlogo-11.png') }}"
-                                               alt="Profile"></div>
+                                               alt="{{ 'Profile' | trans }}"></div>
                     <div id="reveal" class="gone">
-                        <a class="nav-link" href="{{ path('profile') }}">My profile</a>
-                        <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                        <a class="nav-link" href="{{ path('profile') }}">{{ 'My profile' | trans }}</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">{{ 'Logout' | trans }}</a>
                     </div>
                 </li>
             </ul>

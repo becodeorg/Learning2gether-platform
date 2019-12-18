@@ -1,12 +1,10 @@
 greeting: salut
-This friendly message is coming from: Ce message amical vient de
-Your controller at: Votre contrôleur à
-Your template at: Votre modèle à
-Controller: Manette
 Please sign in: Veuillez vous connecter
+Sign in: se connecter
 Welcome to the homepage: Bienvenue sur la page d'accueil
 language test : fr. Cette page est en anglais
 Login: Login
+Logout:
 Register: S’inscrire
 Email: Email
 Password: Mot de passe
@@ -16,15 +14,18 @@ Username: Nom d’utilisateur
 Image: Photo
 Welcome to: Bienvenue sur
 Learn more: En savoir plus
-Forgot Password: Mot de passe oublié?
-Don’t have an account yet: Pas encore de compte?
+Forgot your password?: Mot de passe oublié?
+No account yet?: Pas encore de compte?
+Already have an account? :
 Search: Rechercher
+Search results: Résultats de la recherche
 Learning Hub: Le learning Hub
 Learning Module: Le module d’apprentissage
 Learning Modules: Les modules d’apprentissage
 Language: Langue
 Follow this course: Suivre ce cours
 Profile: Profil
+My profile: Mon profil
 Forum: Forum
 Meeting place: Meeting place
 Chapters: Chapitres
@@ -37,6 +38,7 @@ Start quiz: Commencer le quiz
 Next: Suivant
 Previous: Précédent
 Back to chapter: Retourner au chapitre
+Back to forum: Retourner au forum
 Chapter info: Infos du chapitre
 Passed: Terminé
 Try again: Réessayer
@@ -59,6 +61,7 @@ Topic: Sujet
 Topics: Sujets
 Question: Question
 Questions: Questions
+Question(s): Question(s)
 View answers: Voir les réponses
 View questions: Voir les questions
 Title: Titre
@@ -67,6 +70,8 @@ Send: Envoyer
 Back to: En réponse à
 Post: Post
 Answer: Answer
+Answers: Answers
+Answer(s): Answer(s)
 Badge: Badge
 Badges: Badges
 Your courses: Vos cours

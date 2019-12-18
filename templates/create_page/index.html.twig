@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CreatePageController!{% endblock %}
+{% block title %}{{ 'Create Page' | trans }}{% endblock %}
+
 
 {% block body %}
-
+    <div class="row">
+        <h1 class="mod-title">{{ 'New Page Creation' | trans }}</h1>
+    </div>
     <!-- Modal -->
     <div id="imageModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
          aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -11,15 +14,15 @@
             <div class="modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Select a picture to insert</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">{{ 'Select a picture to insert' | trans }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <a class="btn btn-success" href="{{ path('upload_content') }}">Upload an image</a><br/>
-                        <strong>You have to reload the page for images to appear in this window, use the save button to
-                            store any changes.</strong>
+                        <a class="btn btn-success" href="{{ path('upload_content') }}">{{ 'Upload an image' | trans }}</a><br/>
+                        <strong>{{ 'You have to reload the page for images to appear in this window, use the save button to
+                            store any changes.' | trans }}</strong>
                         <hr>
                         {% for image in imagesAll %}
                             <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px"
@@ -27,7 +30,7 @@
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'Close' | trans }}</button>
                     </div>
                 </div>
             </div>
@@ -38,10 +41,10 @@
         <div class="row">
             <div class="col">
                 <section class="module-cube">
-                    <span>Chapter title: {{ chapter.title(english) }}</span><br>
-                    <span>Chapter description: {{ chapter.description(english) }}</span><br>
-                    <span>number of pages: {{ chapter.pages|length }}</span><br>
-                    <span>Module Title: {{ module.title(english) }}</span><br>
+                    <span>{{ 'Chapter title' | trans }}: {{ chapter.title(english) }}</span><br>
+                    <span>{{ 'Chapter description' | trans }}: {{ chapter.description(english) }}</span><br>
+                    <span>{{ 'number of pages' | trans }}: {{ chapter.pages|length }}</span><br>
+                    <span>{{ 'Module Title' | trans }}: {{ module.title(english) }}</span><br>
 
                 </section>
             </div>
@@ -49,16 +52,16 @@
         <div class="row mb-4">
             <div class="col">
                 <a class="btn btn-skills"
-                   href="{{ path('create_chapter', {'chapter': chapter.id, 'module': module.id}) }}">Back to
-                    chapter</a>
+                   href="{{ path('create_chapter', {'chapter': chapter.id, 'module': module.id}) }}">{{ 'Back to
+                    chapter' | trans }}</a>
             </div>
         </div>
 
         {{ form_start(form) }}
         {{ form_row(form.title) }}
         {{ form_row(form.content) }}
-        <button class="btn btn-skills" value="exit" name="button">Save & exit</button>
-        <button class="btn btn-skills" value="next" name="button">Save & create next page</button>
+        <button class="btn btn-skills" value="exit" name="button">{{ 'Save' | trans }} & {{ 'exit' | trans }}</button>
+        <button class="btn btn-skills" value="next" name="button">{{ 'Save' | trans }} & {{ 'create next page' | trans }}</button>
         {{ form_end(form) }}
 
     </div>
