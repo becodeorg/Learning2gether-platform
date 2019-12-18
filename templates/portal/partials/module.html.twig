@@ -1,7 +1,7 @@
 <div class="card text-center">
     <div class="card-body">
         {% if module.image != '' %}
-        <img class="card-img-top" src="../upload/{{ module.image }}" alt="Circle image" style="width: 78px;">
+        <img class="card-img-top" src="{{ asset(module.image | imagine_filter('thumb')) }}" alt="Circle image" style="width: 78px;">
         {% endif %}
 
         <h5 class="card-title pt-5">{{ module.title(language) }}</h5>
