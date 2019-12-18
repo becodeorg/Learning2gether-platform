@@ -16,6 +16,9 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <h1 class="mod-title">{{ 'Edit Question' | trans }}</h1>
+    </div>
     <div class="example-wrapper">
         <h1 class="title-css">{{ 'Chapter: ' }}{{ quiz_question.quiz.chapter.trTitle(app.request.query.get('lang')) }}</h1>
         <h2 class="subtitle-css">{{ 'Edit QuizQuestion ' | trans }} {{ quiz_question.questionNumber }}</h2>

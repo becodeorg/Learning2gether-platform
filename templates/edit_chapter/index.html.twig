@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}{{ 'Edit' | trans }}-{{ 'Chapter' | trans }}{% endblock %}
+
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
@@ -10,6 +12,9 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <h1 class="mod-title">{{ 'Edit Chapter' | trans }}</h1>
+    </div>
     <div class="example-wrapper">
         <h3>{{ 'Currently editing' | trans }}: {{ 'Module' | trans }} {{ module.id }}, {{ 'Chapter' | trans }} {{ chapter.chapterNumber }}</h3>
 

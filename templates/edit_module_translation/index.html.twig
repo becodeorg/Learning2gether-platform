@@ -2,6 +2,7 @@
 
 {% block title %}{{ 'Edit' | trans }}-{{ 'Module' | trans }}{% endblock %}
 
+
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
     {% for crumb in module.editBreadcrumbs(app.user.language) %}
@@ -10,6 +11,9 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <h1 class="mod-title">{{ 'Edit Learning Module Translation' | trans }}</h1>
+    </div>
     <div class="example-wrapper">
         <section class="module-cube">
             {{ form_start(form) }}
