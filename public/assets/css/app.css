@@ -605,7 +605,7 @@ footer a {
 
 .modal-message p {
   font-family: "Chivo", sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 18px; }
 
 .message-one {
@@ -929,7 +929,7 @@ th {
 .form-group {
   text-align: left; }
 
-.deletebtn {
+.deletebtn-table {
   float: right; }
 
 /*#330033d*/
@@ -946,6 +946,9 @@ th {
 
 .postbutton form .form-group button {
   background: red; }
+
+#question_questionDescription {
+  height: 120px; }
 
 /*#330033d*/
 body {

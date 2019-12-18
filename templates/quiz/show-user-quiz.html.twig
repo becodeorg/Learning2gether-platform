@@ -6,8 +6,8 @@
 {% block body %}
     <div class="example-wrapper">
         <form id="fetchForm" method="post" action="{{ path('quiz_send', {'quiz': quiz.id}) }}">
-            <p class="center">{{ module.getTitle(language) }}</p>
-            <h1>{{ 'Quiz'|trans }}</h1>
+            <h1 class="title-css">{{ module.getTitle(language) }}</h1>
+            <h1 class="subtitle-css">{{ 'Quiz'|trans }}</h1>
 
             {% if test == false %}
                 <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">
