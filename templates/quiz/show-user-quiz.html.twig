@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}{{ 'Quiz'|trans }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
+{#    {% for crumb in quiz.learnerBreadcrumbs(app.user.language) %}#}
+{#        {{ include('partials/breadcrumbs.html.twig') }}#}
+{#    {% endfor %}#}
+{% endblock %}
 
 {% block body %}
     <div class="example-wrapper">
         <form id="fetchForm" method="post" action="{{ path('quiz_send', {'quiz': quiz.id}) }}">
-            <p class="center">{{ module.getTitle(language) }}</p>
-            <h1>{{ 'Quiz'|trans }}</h1>
+            <h1 class="title-css">{{ module.getTitle(language) }}</h1>
+            <h1 class="subtitle-css">{{ 'Quiz'|trans }}</h1>
 
             {% if test == false %}
                 <a href="{{ path('module_view_page', {'chapterPage': quiz.getChapter().getFirstPage().id}) }}" class="btn btn-default button button_4chap btnchapquiz">

@@ -252,4 +252,26 @@ class LearningModule
             )
         ];
     }
+
+    public function getLearnerBreadcrumbs(Language $language) : array
+    {
+        return [
+            new Breadcrumb(
+                $this->getTitle($language),
+                'module',
+                ['module' => $this->getId()]
+            )
+        ];
+    }
+
+    public function getForumBreadcrumbs(Language $language, Category $category) : array
+    {
+        return [
+            new Breadcrumb(
+                $this->getTitle($language),
+                'category',
+                ['category' => $category->getId()]
+            )
+        ];
+    }
 }
