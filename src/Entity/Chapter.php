@@ -168,7 +168,7 @@ class Chapter
                 return $translation->getTitle();//change this line if needed when copied
             }
         }
-        return "Not defined";
+        return 'Not defined';
     }
 
     public function getDescription(Language $language)
@@ -242,6 +242,30 @@ class Chapter
             'Edit Chapter',
             'create_chapter',
             ['module' => $this->getLearningModule()->getId() , 'chapter' => $this->getId()]
+        );
+
+        return $breadcrumbs;
+    }
+
+    public function getLearnerBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getLearningModule()->getLearnerBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb(
+            $this->getTitle($language),
+            'module_view_page',
+            ['chapterPage' => $this->getPages()->first()->getId()]
+        );
+
+        return $breadcrumbs;
+    }
+
+    public function getForumBreadcrumbs(Language $language, Category $category) : array
+    {
+        $breadcrumbs = $this->getLearningModule()->getForumBreadcrumbs($language, $category);
+        $breadcrumbs[] = new Breadcrumb(
+            $this->getTitle($language),
+            'topic',
+            ['chapter' => $this->getId(), 'category' => $category->getId()]
         );
 
         return $breadcrumbs;

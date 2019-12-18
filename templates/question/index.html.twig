@@ -2,6 +2,14 @@
 
 {% block title %}L2G Forum{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('forum') }}">{{ 'Forum'|trans }}</a></li>
+    {% for crumb in question.forumBreadcrumbs(app.user.language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
+{% endblock %}
+
 {% block body %}
 
     <section class="example-wrapper">

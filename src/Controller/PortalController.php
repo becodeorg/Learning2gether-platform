@@ -17,17 +17,27 @@ class PortalController extends AbstractController
 {
     use LanguageTrait;
 
+
     /**
      * @Route("/portal", name="portal")
      */
     public function index(Request $request): Response
+
     {
+        if (isset($_GET['mode'])) {
+            $mode = $_GET['mode'];
+        } else {
+            $mode = 'ALL';
+        }
+
         $modules = !isset($_GET['mode'])?
             $this->getDoctrine()->getRepository(LearningModule::class)->findBy(['isPublished' => true])
             : $this->getDoctrine()->getRepository(LearningModule::class)->findBy([
                 'isPublished' => true,
                 'type' => strtoupper($_GET['mode'])
             ]);
+
+        $mode = $_GET['mode'] ?? 'ALL';
 
         $activeModules = $finishedModules = [];
 
@@ -42,11 +52,12 @@ class PortalController extends AbstractController
             }
         }
 
-
         return $this->render('portal/index.html.twig', [
+            'mode' => $mode,
             'language' => $this->getLanguage($request),
             'activeModules' => $activeModules,
             'finishedModules' => $finishedModules,
+            'mode' => $mode,
         ]);
     }
 }

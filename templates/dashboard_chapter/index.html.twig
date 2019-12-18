@@ -15,8 +15,11 @@
     </div>
 
     <div class="example-wrapper">
-{#        <a class="btn btn-skills" href="{{ path('dashboard_module', {module: chapter.learningModule.id }) }}">Back</a>#}
-        <hr>
+        <div class="text-center">
+            <a class="btn btn-primary"
+               href="{{ path('create_chapter', {module: chapter.learningModule.id, chapter: chapter.id }) }}">Chapter
+                overview</a>
+        </div>
         <h3>{{ 'Pages' | trans }}</h3>
         <table class="table table-hover text-center">
             <thead>
@@ -116,7 +119,6 @@
                                href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">{{ 'Answers' | trans }}</a>
                         </td>
                     </tr>
-
                 {% endfor %}
             {% endif %}
             </tbody>
