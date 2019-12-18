@@ -1,12 +1,10 @@
 greeting: Hola
-This friendly message is coming from: Este mensaje amistoso viene de
-Your controller at: Su controlador en
-Your template at: Tu plantilla en
-Controller: Controlador
 Please sign in: Por favor, registrese
+Sign in: registrarse
 Welcome to the homepage: Bienvenido a la pagina principal
 language test : es. Esta pagina esta en español
 Login: Acceso
+Logout:
 Register: Registro
 Email: Correo electrónico
 Password: Contraseña
@@ -16,15 +14,18 @@ Username: Apellido
 Image: Imagen
 Welcome to: Bienvenido a
 Learn more: Aprende más
-Forgot Password: ¿Has olvidado la contraseña?
-Don’t have an account yet: ¿Aún no tienes una cuenta?
+Forgot your password?: ¿Has olvidado la contraseña?
+No account yet?: ¿Aún no tienes una cuenta?
+Already have an account? :
 Search: Buscar
+Search results: Resultados de la búsqueda
 Learning Hub: Centro de aprendizaje
 Learning Module: Módulo de aprendizaje
 Learning Modules: Módulos de aprendizaje
 Language: Idioma
 Follow this course: Seguir este curso
 Profile: Perfil
+My profile: Mi perfil
 Forum: Foro
 Meeting place: Lugar de encuentro
 Chapters: Capítulos
@@ -37,6 +38,7 @@ Start quiz: Empezar el test
 Next: Siguiente
 Previous: Anterior
 Back to chapter: Volver al capítulo
+Back to forum: Volver al foro
 Chapter info: Información del capítulo
 Passed: Aprobado
 Try again: Volver a intentar
@@ -58,7 +60,8 @@ Categories: Categorías
 Topic: Tema
 Topics: Temas
 Question: Pregunta
-Questions: Preguntas
+Questionq: Preguntas
+Question(s): Pregunta(s)
 View answers: Ver respuestas
 View questions: Ver preguntas
 Title: Título
@@ -67,6 +70,8 @@ Send: Enviar
 Back to: Volver a
 Post: Entrada
 Answer: Respuesta
+Answers: Respuestas
+Answer(s): Respuesta(s)
 Badge: Insignia
 Badges: Insignias
 Your courses: Tus cursos

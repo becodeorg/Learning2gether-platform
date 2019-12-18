@@ -1,6 +1,6 @@
 {% extends 'home.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}L2G - {{ 'Login' | trans }}{% endblock %}
 
 {% block body %}
 <form method="post">
@@ -11,21 +11,19 @@
         <img class="logo" src="{{ asset('assets/img/logo_transparent.png') }}" alt="logo">
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            {{ 'You are logged in as' }} {{ app.user.username }}, <a href="{{ path('app_logout') }}">{{ 'Logout' | trans }}</a>
         </div>
     {% endif %}
 
     <div class="loginwrap">
     <label for="inputEmail" class="sr-only">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'Email' | trans }}" required autofocus>
         <br>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'Password' | trans }}" required>
         <br>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -39,12 +37,12 @@
     #}
 
     <button class="button button_1" type="submit">
-        Sign in
+        {{ 'Sign in' | trans }}
     </button>
     </div>
         <p class="forgot">
-            <a href= {{ path('password_reset') }}>Forgot your password?</a><br>
-            No account yet? <a href="{{ path('app_register') }}">Register</a>
+            <a href= {{ path('password_reset') }}>{{ 'Forgot your password?' | trans }}</a><br>
+            {{ 'No account yet?' | trans }} <a href="{{ path('app_register') }}">{{ 'Register' | trans }}</a>
         </p>
     </div>
 

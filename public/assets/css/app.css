@@ -862,6 +862,14 @@ a:hover {
   font-size: 20px;
   margin: 0; }
 
+.mod-step-partial {
+  color: black;
+  font-family: "Chivo", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 20px;
+  margin-right: 20px; }
+
 /*#330033d*/
 .example-wrapper {
   max-width: 1000px; }
@@ -961,6 +969,35 @@ a:hover {
   .chapbutton_2quiz {
     float: none;
     justify-content: center; } }
+table {
+  margin-top: 2em;
+  width: 100%; }
+
+th {
+  background-color: #faefff; }
+
+.table-main-header {
+  background-color: #8b54a0;
+  color: #fdfdfd; }
+
+.badge-dark {
+  background-color: #460e56; }
+
+.btn-secondary {
+  background-color: #8b54a0; }
+
+.btn-secondary:hover {
+  background-color: #460e56; }
+
+.btn-margin {
+  margin: 1em 0 1em 0; }
+
+.form-group {
+  text-align: left; }
+
+.deletebtn {
+  float: right; }
+
 /*#330033d*/
 /*#330033d*/
 .topic-questions {

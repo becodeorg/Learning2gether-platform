@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Meeting Place{% endblock %}
+{% block title %}L2G - {{ 'Forum' | trans }}{% endblock %}
 
 {% block body %}
 
    <section class="example-wrapper">
 
-       <p class="title-css">Forum</p>
-       <p class="subtitle-css">Categories</p>
+       <p class="title-css">{{ 'Forum' | trans }}</p>
+       <p class="subtitle-css">{{ 'Categories' | trans }}</p>
 
                 <div class="row forum-cat-row">
-                    <div class="col-3 col-md-auto skillset">select skillset:</div>
+                    <div class="col-3 col-md-auto skillset">{{ 'select skillset' | trans }}:</div>
 
                     <div class="col-3 col-md-auto">
-                        <a class="btn btn-default btn-skills {% if mode == 'ALL' %} active-mode {% endif %} "  href="{{ path('forum') }}">{{ 'ALL' | trans | upper }}</a>
+                        <a class="btn btn-default btn-skills {% if mode == 'ALL' %} active-mode {% endif %} "  href="{{ path('forum') }}">{{ 'All' | trans | upper }}</a>
                     </div>
                     <div class="col-3 col-md-auto">
                         <a class="btn btn-default btn-skills {% if mode == 'SOFT' %} active-mode {% endif %}" href="{{ path('forum', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>

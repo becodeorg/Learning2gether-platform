@@ -23,7 +23,7 @@ class CreateModuleType extends AbstractType
                 'mapped' => 'false'
             ])
             ->add('badge', TextType::class , [
-                'label' => 'badgr.io badge hash ',
+                'label' => 'badgr.io badge hash*',
             ])
             ->add('type', ChoiceType::class, [
                 'label' => 'Select type:',

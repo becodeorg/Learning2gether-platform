@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}L2G - {{ 'My Profile' | trans }}{% endblock %}
 
 {% block body %}
 <div class="example-wrapper">
@@ -10,16 +10,18 @@
             <div class="profileimgwrap card auto">
                 <div class="profileimg profileimgwrap">
                     {% if user.avatar %}
-                        <img src="{{ asset('upload/' ~ user.avatar) }}" alt="avatar of {{ user.name }}">
+                        <img src="{{ asset(user.avatar | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% else %}
-                        <img src="{{ asset('assets/img/logo_transparent.png') }}" alt="avatar of {{ user.name }}">
+                        <img src="{{ asset('logo_transparent.png' | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% endif %}
                 </div>
                 <div class="profiletext">
                     <p>{{ user.username }}</p>
                     <p>{{ user.name }}</p>
                     <p>{{ user.email }}</p>
-                    <div class="button button_2" id="imagebutton">Edit Profile</div>
+
+                    <div class="button button_2" id="imagebutton">{{ 'Edit' | trans }} {{ 'Profile' | trans }}</div>
+
                 </div>
             </div>
             {# edit mode : only if "edit-btn" is clicked #}
@@ -35,7 +37,8 @@
                         { 'attr': {'class': 'profileupload'}
                         }) }}
                     {#                    </div>#}
-                    <button class="button_2 button bottom">Update Profile</button>
+                    <button class="button_2 button bottom">{{ 'Update' | trans }} {{ 'Profile' | trans }}</button>
+
                     {{ form_end(profileForm) }}
                     <div>
                         {{ form_start(deleteBtn) }}
@@ -50,12 +53,24 @@
 
             {# Delete my account#}
 
+            <div>
+                {{ form_start(deleteBtn) }}
+                {{ form_widget(deleteBtn.delete_user,
+                    { 'label': 'Delete my account'
+
+                    , 'attr': {'onclick': 'return confirm("Are you sure you want to delete your profile?")'}
+                    }) }}
+                {{ form_end(deleteBtn) }}
+            </div>
+
 
 
             {% for module in user.activeModules(modules) %}
                 <div class="progression">
                     {% if loop.first %}
-                        <h3 class="title-css progresstitle">Active courses unlocked percentage</h3>
+
+                        <h3 class="title-css progresstitle">{{ 'Active courses unlocked percentage' | trans }}</h3>
+
                     {% endif %}
                     <p class="coursetitle">{{ module.title(language) }}</p>
                     {% set userProgress = 0 %}
@@ -70,7 +85,9 @@
                              aria-valuemin="0" aria-valuemax="100"> {{ (userProgress / module.chapters | length) * 100 }}%
                         </div>
                     </div>
-                    <a href="{{ path('module', {'module': module.id}) }}" class="completebutton button_2 button">Continue</a>
+
+                    <a href="{{ path('module', {'module': module.id}) }}" class="completebutton button_2 button">{{ 'Continue' | trans }}</a>
+
                 </div>
             {% endfor %}
         </div>

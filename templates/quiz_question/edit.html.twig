@@ -16,14 +16,17 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <h1 class="mod-title">{{ 'Edit Question' | trans }}</h1>
+    </div>
     <div class="example-wrapper">
-        <h1>{{ 'Chapter: ' }}{{ quiz_question.quiz.chapter.trTitle(app.request.query.get('lang')) }}</h1>
-        <h2>{{ 'Edit QuizQuestion ' | trans }} {{ quiz_question.questionNumber }}</h2>
+        <h1 class="title-css">{{ 'Chapter: ' }}{{ quiz_question.quiz.chapter.trTitle(app.request.query.get('lang')) }}</h1>
+        <h2 class="subtitle-css">{{ 'Edit QuizQuestion ' | trans }} {{ quiz_question.questionNumber }}</h2>
 
         {{ include('quiz_question/_form.html.twig', {'button_label': 'Update'}) }}
-
-        <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id, 'lang': app.request.query.get('lang')}) }}">{{ 'back to list' | trans }}</a>
-
         {{ include('quiz_question/_delete_form.html.twig') }}
+        <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id, 'lang': app.request.query.get('lang')}) }}">
+            <button class="button button_2 btn-margin">{{ 'Back to list' | trans }}</button>
+        </a>
     </div>
 {% endblock %}

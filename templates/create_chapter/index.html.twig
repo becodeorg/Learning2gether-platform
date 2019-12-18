@@ -1,52 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CreateChapterController!{% endblock %}
+{% block title %} {{ 'Create Chapter' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
     {% for crumb in chapter.editBreadcrumbs(app.user.language) %}
         {{ include('partials/breadcrumbs.html.twig') }}
     {% endfor %}
 {% endblock %}
 
 {% block body %}
-
+    <div class="row">
+        <h1 class="mod-title">{{ 'New Chapter Creation' | trans }}</h1>
+    </div>
     <div class="container my-3">
         <div class="row">
-            <p class="mod-step">Edit the chapters english title and description</p>
+            <p class="mod-step">{{ 'Edit the chapters english title and description' | trans }}</p>
         </div>
 
         <section class="module-cube">
             {{ form_start(chapterTranslationForm) }}
             {{ form_row(chapterTranslationForm.title) }}
             {{ form_row(chapterTranslationForm.description) }}
-            <button class="btn btn-skills">Update</button>
+            <button class="btn btn-skills">{{ 'Update' | trans }}</button>
             {{ form_end(chapterTranslationForm) }}
         </section>
 
         <div class="row">
-            <p class="mod-step">Pages overview</p>
+            <p class="mod-step">{{ 'Pages overview' | trans }}</p>
         </div>
 
         {% for page in chapter.pages %}
 
             <section class="module-cube">
-                <span>Page nr: {{ loop.index }}</span><br>
-                <span>Page title: {{ page.title(english) }}</span><br>
+                <span>{{ 'Page nr' | trans }}: {{ loop.index }}</span><br>
+                <span>{{ 'Page title' | trans }}: {{ page.title(english) }}</span><br>
                 <a class="badge btn-primary"
-                   href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">Edit
-                    Page</a>
+                   href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">
+                    {{ 'Edit Page' | trans }}</a>
                 <a class="badge badge-danger" onclick="return confirm('Are you sure you want to delete this page?')"
-                   href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id, return: 'flow'}) }}">Delete
-                    Page</a>
+                   href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id, return: 'flow'}) }}">
+                    {{ 'Delete Page' | trans }}</a>
             </section>
 
         {% endfor %}
 
         <div class="text-center">
-            <a class="btn btn-skills" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">Add
-                Page</a>
-            <a class="btn btn-skills" href="{{ path('edit_module', {module: module.id}) }}">Module overview</a>
+            <a class="btn btn-skills" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">
+            {{ 'Add Page' | trans }}</a>
+            <a class="btn btn-skills" href="{{ path('edit_module', {module: module.id}) }}">
+            {{ 'Module overview' | trans }}</a>
         </div>
     </div>
 
