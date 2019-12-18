@@ -56,11 +56,10 @@
                     <img style="width: 180px;" src="{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="">
                 </div>
             </div>
-
-
         </section>
 
         {% for chapter in module.chapters %}
+
             <section class="module-cube">
                 <span>{{ 'chapter' |trans }} nr: {{ chapter.chapterNumber }}</span><br>
                 <span>{{ 'chapter' |trans }} {{ 'title' |trans }}: {{ chapter.title(english) }}</span><br>
@@ -71,6 +70,7 @@
                    href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">{{ 'edit chapter' |trans }}</a>
                 <a class="badge btn-primary" href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">{{ 'edit quiz' |trans }}</a>
             </section>
+
         {% endfor %}
 
         <div class="text-center">
@@ -78,7 +78,6 @@
             <button class="btn btn-skills">{{ 'Add a chapter' |trans }}</button>
             {{ form_end(addNewChapterBtn) }}
         </div>
-
     </div>
 
     <script src="{{ asset('assets/js/UploaderPreviewScript.js') }}"></script>
