@@ -120,3 +120,40 @@
     justify-content: center;
   }
 }
+
+//Quiz creation style
+table{
+  margin-top: 2em;
+  width: 100%;
+}
+
+th {
+  background-color: $lightpurple;
+}
+
+.table-main-header {
+  background-color: $purple;
+  color: $white;
+}
+
+.badge-dark{
+  background-color: $darkpurple;
+}
+
+.btn-secondary{
+  background-color: $purple;
+}
+.btn-secondary:hover {
+  background-color: $darkpurple;
+}
+.btn-margin{
+  margin: 1em 0 1em 0;
+}
+
+.form-group{
+  text-align: left;
+}
+
+.deletebtn{
+  float: right;
+}

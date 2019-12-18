@@ -23,8 +23,12 @@
 .profileimg{
   height: 300px;
   overflow: hidden;
+  padding: 20px;
 }
 
+.bottom{
+  margin-bottom: 20px;
+}
 
 #imagebutton{
   font-size: 12px;
@@ -57,6 +61,18 @@
   width: 20%;
   float: right;
   height: 40px;
+  line-height: 20px;
+}
+
+.progresstitle{
+  font-size: 1.5em;
+  text-align: left;
+  margin-top: 50px;
+}
+
+.coursetitle{
+  font-size: 1.2em;
+  margin-top: 20px;
 }
 
 .badges{
@@ -95,10 +111,62 @@
   border: 1px solid black;
 }
 
+.badges h5{
+  width: 100%;
+  font-size: 1.5em;
+}
+
+.profiletext p:first-child{
+  font-size: 1.5em;
+  margin-bottom: 40px;
+  font-family: $chivofamily;
+}
+
+.profiletext{
+  padding-left: 50px;
+  width: 300px;
+}
+
+.badge{
+  font-weight: normal;
+  line-height: normal;
+}
+
+.badgename{
+  font-family: $chivofamily;
+  font-size: 1.2em;
+}
+.badgedescription{
+  text-align: left;
+  font-style: italic;
+}
+
+.badgecriteria{
+  font-weight: bold;
+  text-align: left;
+}
+
+.badges{
+  font-size: 1.2em;
+}
+
+@media only screen and (max-width: 767px) {
+  .badges{
+    margin-top: 80px;
+  }
+}
+
+@media only screen and (max-width: 567px) {
+  .badge p{
+    text-align: center;
+  }
+}
+
 
 @media only screen and (max-width: 600px) {
   .profiletext{
     position: relative;
+    padding-left: 0;
   }
 
   .progression{
@@ -112,4 +180,5 @@
   .absCenter{
     left: calc(50% - 150px);
   }
+
 }

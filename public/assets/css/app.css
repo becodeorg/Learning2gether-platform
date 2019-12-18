@@ -8,7 +8,8 @@ body {
   margin: 0; }
 
 body {
-  background-color: #fdfdfd; }
+  background-color: #fdfdfd;
+  overflow-x: hidden; }
 
 .chevron_front {
   color: #fdfdfd;
@@ -256,12 +257,16 @@ body {
   font-family: "Chivo", sans-serif;
   color: darkgrey; }
 
+.margintop {
+  margin-top: 50px; }
+
 @media only screen and (max-width: 1100px) {
   .navwrap nav {
     padding: 10px 20px; }
 
   .example-wrapper {
-    margin-top: 20px; } }
+    margin-top: 20px;
+    padding: 0 20px; } }
 @media only screen and (max-width: 767px) {
   #reveal {
     left: 0;
@@ -411,7 +416,7 @@ h1 {
   text-align: center; }
 
 .chapcard {
-  padding: 20px 10px 20px 5px;
+  padding: 20px 10px 20px 20px;
   border-radius: 20px;
   background-color: #8b54a0;
   color: #fdfdfd; }
@@ -632,7 +637,11 @@ footer a {
 
 .profileimg {
   height: 300px;
-  overflow: hidden; }
+  overflow: hidden;
+  padding: 20px; }
+
+.bottom {
+  margin-bottom: 20px; }
 
 #imagebutton {
   font-size: 12px;
@@ -659,7 +668,17 @@ footer a {
 .completebutton {
   width: 20%;
   float: right;
-  height: 40px; }
+  height: 40px;
+  line-height: 20px; }
+
+.progresstitle {
+  font-size: 1.5em;
+  text-align: left;
+  margin-top: 50px; }
+
+.coursetitle {
+  font-size: 1.2em;
+  margin-top: 20px; }
 
 .badges {
   padding: 0;
@@ -689,9 +708,48 @@ footer a {
 .testborder {
   border: 1px solid black; }
 
+.badges h5 {
+  width: 100%;
+  font-size: 1.5em; }
+
+.profiletext p:first-child {
+  font-size: 1.5em;
+  margin-bottom: 40px;
+  font-family: "Chivo", sans-serif; }
+
+.profiletext {
+  padding-left: 50px;
+  width: 300px; }
+
+.badge {
+  font-weight: normal;
+  line-height: normal; }
+
+.badgename {
+  font-family: "Chivo", sans-serif;
+  font-size: 1.2em; }
+
+.badgedescription {
+  text-align: left;
+  font-style: italic; }
+
+.badgecriteria {
+  font-weight: bold;
+  text-align: left; }
+
+.badges {
+  font-size: 1.2em; }
+
+@media only screen and (max-width: 767px) {
+  .badges {
+    margin-top: 80px; } }
+@media only screen and (max-width: 567px) {
+  .badge p {
+    text-align: center; } }
 @media only screen and (max-width: 600px) {
   .profiletext {
-    position: relative; }
+    position: relative;
+    padding-left: 0; }
 
   .progression {
     margin-top: 80px; }
@@ -903,6 +961,35 @@ a:hover {
   .chapbutton_2quiz {
     float: none;
     justify-content: center; } }
+table {
+  margin-top: 2em;
+  width: 100%; }
+
+th {
+  background-color: #faefff; }
+
+.table-main-header {
+  background-color: #8b54a0;
+  color: #fdfdfd; }
+
+.badge-dark {
+  background-color: #460e56; }
+
+.btn-secondary {
+  background-color: #8b54a0; }
+
+.btn-secondary:hover {
+  background-color: #460e56; }
+
+.btn-margin {
+  margin: 1em 0 1em 0; }
+
+.form-group {
+  text-align: left; }
+
+.deletebtn {
+  float: right; }
+
 /*#330033d*/
 /*#330033d*/
 .topic-questions {
@@ -917,6 +1004,9 @@ a:hover {
 
 .postbutton form .form-group button {
   background: red; }
+
+#question_questionDescription {
+  height: 120px; }
 
 /*#330033d*/
 body {

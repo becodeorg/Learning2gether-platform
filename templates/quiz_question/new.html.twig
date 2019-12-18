@@ -15,6 +15,8 @@
 
     {{ include('quiz_question/_form.html.twig') }}
 
-    <a href="{{ path('quiz_show', {'id': quiz_question.quiz.id, 'lang': app.request.query.get('lang')}) }}">{{ 'back to list' | trans }}</a>
+            <a class="" href="{{ path('quiz_show', {'id': quiz_question.quiz.id, 'lang': app.request.query.get('lang')}) }}">
+                <button class="button button_2 centerbutton btn-margin">{{ 'back to list' | trans }}</button>
+            </a>
     </div>
 {% endblock %}
