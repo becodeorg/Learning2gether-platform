@@ -50,7 +50,7 @@
                         {# Link to the question's detail page#}
                         <a class="btn-forum "
                            href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
-                            MORE
+                            {{ 'Show' | trans }}
                         </a>
                     </div>
                 </div>
