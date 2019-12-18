@@ -2,6 +2,14 @@
 
 {% block title %}{{ 'Forum' | trans }} - {{ 'Topics' | trans }}{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('forum') }}">{{ 'Forum'|trans }}</a></li>
+        {% for crumb in category.learningModule.getForumBreadcrumbs(app.user.language, category) %}
+            {{ include('partials/breadcrumbs.html.twig') }}
+        {% endfor %}
+{% endblock %}
+
 {% block body %}
 
 
@@ -28,7 +36,7 @@
 
                     <div class="col-3 questions-cards-forum">
                         {# Count Questions for that Topic#}
-                        <p>{{ questionCount[topic.id] }} {{ 'Question(s)' | trans | lower }}</p>
+                        <p>{{ qRepo.getQuestionCount(topic) }} {{ 'Question(s)' | trans | lower }}</p>
                     </div>
 
                     <div class="col-3">
@@ -38,17 +46,10 @@
                             {{ 'More' | trans | upper }}
                         </a>
                     </div>
-
                 </div>
-
-
             </div>
-
         {% endfor %}
-
-
     </section>
-
 {% endblock %}
 
 
