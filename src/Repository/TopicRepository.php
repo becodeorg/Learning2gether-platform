@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Chapter;
 use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -17,6 +18,15 @@ class TopicRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Question::class);
+    }
+
+    public function getQuestionCount(Chapter $chapter) : int
+    {
+        $em = $this->getEntityManager();
+        $dql = 'SELECT count(q) FROM App\Entity\Question q WHERE q.chapter = :chapter';
+        $query = $em->createQuery($dql);
+        $query->setParameter(':chapter', $chapter->getId());
+        return $query->getResult()[0][1];
     }
 
     // /**

@@ -29,6 +29,8 @@ class PortalController extends AbstractController
                 'type' => strtoupper($_GET['mode'])
             ]);
 
+        $mode = $_GET['mode'] ?? 'ALL';
+
         $activeModules = $finishedModules = [];
 
         /** @var User $user */
@@ -42,11 +44,11 @@ class PortalController extends AbstractController
             }
         }
 
-
         return $this->render('portal/index.html.twig', [
             'language' => $this->getLanguage($request),
             'activeModules' => $activeModules,
             'finishedModules' => $finishedModules,
+            'mode' => $mode,
         ]);
     }
 }

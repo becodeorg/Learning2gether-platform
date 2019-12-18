@@ -2,13 +2,20 @@
 
 {% block title %}{{ module.getTitle(language) }}{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
+    {% for crumb in module.learnerBreadcrumbs(app.user.language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
+{% endblock %}
+
 {% block body %}
 
     <div class="example-wrapper">
 
         <h2>{{ module.getTitle(language) }}</h2>
 
-        <a href="{{ path('forum') }}"><button class="btn btn-default button_4chap btnchap">Meeting Place</button></a>
+        <a href="{{ path('forum') }}"><button class="btn btn-default button_4chap btnchap">{{ 'Forum' | trans }}</button></a>
 
         <section id="chapter-overview">
             {% if module.getUserChapters(app.user)|length > 0 %}
@@ -17,11 +24,7 @@
                 <div class="container chapcontainer">
                     <div class="row"><h3>{{ userChapter.chapter.getTitle(language) }}</h3></div>
                     <div class="row chapcard">
-                        <div class="col-md-3 chapimg">
-                            {#       Needs too show percentage of chapter made       #}
-                            <img src="http://placehold.jp/150x150.png">
-                        </div>
-                        <div class="col-md-9 chapinfo">
+                        <div class="chapinfo">
                             <div class="row">
                                 <div class="col-10"><h5>{{ userChapter.chapter.getDescription(language) }}</h5></div>
                             </div>
@@ -47,7 +50,7 @@
 
         </section>
         {% else %}
-            <p>no chapters yet!</p>
+            <p>{{ 'no chapters yet' | trans }}!</p>
         {% endif %}
     </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'home.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}L2G - {{ 'Register' | trans }}{% endblock %}
 
 {% block body %}
 <div class="sidebar">
@@ -15,11 +15,11 @@
                 {{ form_row(registrationForm.passwordRepeat) }}
                 {{ form_row(registrationForm.agreeTerms) }}
 
-                <button class="button button_1">Register</button>
+                <button class="button button_1">{{ 'Register' | trans }}</button>
         </div>
     {{ form_end(registrationForm) }}
         <p class="accountgot">
-                Already have an account? <a href="{{ path('app_login') }}">Login</a>
+                Already have an account? <a href="{{ path('app_login') }}">{{ 'Login' | trans }}</a>
         </p>
 </div>
 {% endblock %}

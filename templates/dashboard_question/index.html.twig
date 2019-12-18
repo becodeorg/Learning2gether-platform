@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardQuestionController!{% endblock %}
+{% block title %}{{ 'Dashboard' | trans }}-{{ 'Question' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
@@ -10,16 +10,20 @@
 {% endblock %}
 
 {% block body %}
-
+    <div class="row">
+        <h1 class="mod-title">{{ 'Question Dashboard' | trans }}</h1>
+    </div>
     <div class="example-wrapper my-3">
+        <h3>Question: {{ question.title(language) }}</h3>
+        <br>
 {#        <a class="btn btn-skills" href="{{ path('dashboard_chapter', {chapter: question.quiz.id}) }}">Back</a>#}
-        <h3>Answers</h3>
+        <h3>{{ 'Answers' | trans }}</h3>
         <table class="table table-hover">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Answer</th>
-                <th scope="col">Translations <i
+                <th scope="col">{{ 'Answer' | trans }}</th>
+                <th scope="col">{{ 'Translations' | trans }} <i
                             title="This page's title and description translations.&#10;Click to go to that page's edit page.&#10;Hover to see the missing translations."
                             class="help-icon far fa-question-circle"></i>
                 </th>
@@ -34,7 +38,7 @@
                     <td>{% for answerTL in answer['translations'] %}
                             {% if answerTL['language']['name'] == language.name %}
                                 {% if answerTL['title'] == '' %}
-                                    Not yet translated
+                                    {{ 'Not yet translated' | trans }}
                                 {% else %}
                                     {{ answerTL['title'] }}
                                 {% endif %}

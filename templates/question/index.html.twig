@@ -2,6 +2,14 @@
 
 {% block title %}L2G Forum{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('forum') }}">{{ 'Forum'|trans }}</a></li>
+    {% for crumb in question.forumBreadcrumbs(app.user.language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
+{% endblock %}
+
 {% block body %}
 
     <section class="example-wrapper">
@@ -9,11 +17,9 @@
         {# question asked #}
         {#        <p class="title-css">{{ question.subject }}</p> #}
 
-
-        {% set firstpost = true %}
         {% for post in posts %}
 
-            {% if firstpost == true %}
+            {% if loop.first %}
                 {# Question asked #}
 
                 <div class="row question-asked">
@@ -22,11 +28,11 @@
                         <div class="row image-row imageForumAvatar justify-content-center">
                             {% if post.createdBy.avatar %}
                                 <img style="width: 50px; height: 50px"
-                                     src="{{ asset('upload/' ~ post.createdBy.avatar) }}"
-                                     alt="avatar of {{ post.createdBy.avatar }}">
+                                     src="{{ asset(post.createdBy.avatar | imagine_filter('thumb')) }}"
+                                     alt="avatar of {{ post.createdBy.avatar  }}">
                             {% else %}
                                 <img style="width: 50px; height: 50px"
-                                     src="{{ asset('assets/img/logo_transparent.png') }}"
+                                     src="{{ asset('/logo_transparent.png' | imagine_filter('thumb')) }}"
                                      alt="avatar of {{ post.createdBy.avatar }}">
                             {% endif %}
                         </div>
@@ -59,8 +65,6 @@
                     {{ include('question/_delete_question.html.twig') }}
                 {% endif %}
 
-                {% set firstpost = false %}
-
             {% else %}
 
 
@@ -73,10 +77,10 @@
 
                     <div class="imageForumAvatar">
                         {% if post.createdBy.avatar %}
-                            <img style="width: 50px; height: 50px" src="{{ asset('upload/' ~ post.createdBy.avatar) }}"
+                            <img style="width: 50px; height: 50px" src="{{ asset(post.createdBy.avatar | imagine_filter('thumb')) }}"
                                  alt="avatar of {{ post.createdBy.avatar }}">
                         {% else %}
-                            <img style="width: 50px; height: 50px" src="{{ asset('assets/img/logo_transparent.png') }}"
+                            <img style="width: 50px; height: 50px" src="{{ asset('/logo_transparent.png' | imagine_filter('thumb')) }}"
                                  alt="avatar of {{ post.createdBy.avatar }}">
                         {% endif %}
                     </div>

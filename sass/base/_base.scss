@@ -7,6 +7,7 @@
 
 body {
   background-color: $offwhite;
+  overflow-x: hidden;
 }
 
 
@@ -310,6 +311,10 @@ body {
   color: darkgrey;
 }
 
+.margintop{
+  margin-top: 50px;
+}
+
 @media only screen and (max-width: 1100px) {
   .navwrap nav {
     padding: 10px 20px;
@@ -317,7 +322,7 @@ body {
 
   .example-wrapper {
     margin-top: 20px;
-
+    padding: 0 20px;
   }
 }
 
