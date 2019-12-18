@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EditModuleTranslationController!{% endblock %}
+{% block title %}{{ 'Edit' | trans }}-{{ 'Module' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
     {% for crumb in module.editBreadcrumbs(app.user.language) %}
         {{ include('partials/breadcrumbs.html.twig') }}
     {% endfor %}
@@ -15,7 +15,7 @@
             {{ form_start(form) }}
             {{ form_row(form.title) }}
             {{ form_row(form.description) }}
-            <button class="btn btn-skills">Save</button>
+            <button class="btn btn-skills">{{ 'Save' | trans }}</button>
             {{ form_end(form) }}
         </section>
     </div>

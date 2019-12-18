@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CreateModuleController!{% endblock %}
+{% block title %}{{ 'Create Module' | trans }}{% endblock %}
 
 {#{% block breadcrumbs %}#}
 {#        <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>#}
@@ -11,11 +11,11 @@
     <section class="container my-3">
 
         <div class="row">
-            <h1 class="mod-title">Module creation</h1>
+            <h1 class="mod-title">{{ 'Module creation' | trans }}</h1>
         </div>
 
         <div class="row">
-            <p class="mod-step">Step 1: To create a new module, please fill in the english title and description </p>
+            <p class="mod-step">{{ 'Step 1: To create a new module, please fill in the english title and description' | trans }} </p>
         </div>
 
         {{ form_start(form) }}
@@ -25,7 +25,7 @@
         </section>
 
         <div class="row">
-            <p class="mod-step">Step 2: Assign a badge and select the module type.</p>
+            <p class="mod-step">{{ 'Step 2: Assign a badge and select the module type.' | trans }}</p>
         </div>
 
         <section class="module-cube">
@@ -34,7 +34,7 @@
             {{ form_row(form.image) }}
 
         </section>
-        <button class="btn btn-skills">Add a Chapter</button>
+        <button class="btn btn-skills">{{ 'Add a Chapter' | trans }}</button>
         {{ form_end(form) }}
     </section>
 

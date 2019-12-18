@@ -8,7 +8,7 @@
 
         <h2>{{ module.getTitle(language) }}</h2>
 
-        <a href="{{ path('forum') }}"><button class="btn btn-default button_4chap btnchap">Meeting Place</button></a>
+        <a href="{{ path('forum') }}"><button class="btn btn-default button_4chap btnchap">{{ 'Forum' | trans }}</button></a>
 
         <section id="chapter-overview">
             {% if module.getUserChapters(app.user)|length > 0 %}
@@ -47,7 +47,7 @@
 
         </section>
         {% else %}
-            <p>no chapters yet!</p>
+            <p>{{ 'no chapters yet' | trans }}!</p>
         {% endif %}
     </div>
 {% endblock %}

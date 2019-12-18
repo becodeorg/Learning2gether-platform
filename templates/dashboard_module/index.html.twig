@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dashboard - Module{% endblock %}
+{% block title %}{{ 'Dashboard' | trans }}-{{ 'Module' | trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
     {% for crumb in module.dashboardBreadcrumbs(app.user.language) %}
         {{ include('partials/breadcrumbs.html.twig') }}
     {% endfor %}
@@ -19,17 +19,17 @@
 
         <div class="example-wrapper my-3">
             <div class="text-center">
-                <a class="btn btn-primary" href="{{ path('edit_module', {'module': module.id}) }}">Module overview</a>
+                <a class="btn btn-primary" href="{{ path('edit_module', {'module': module.id}) }}">{{ 'Module overview' | trans }}</a>
             </div>
 {#            <a class="btn btn-skills" href="{{ path('dashboard') }}">Back</a>#}
-            <h3>Chapters</h3>
+            <h3>{{ 'Chapters' | trans }}</h3>
             <table class="table table-hover text-center">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Chapter</th>
-                    <th scope="col"># pages</th>
-                    <th scope="col">Translations <i
+                    <th scope="col">{{ 'Chapter' | trans }}</th>
+                    <th scope="col"># {{ 'pages' | trans }}</th>
+                    <th scope="col">{{ 'Translations' | trans }} <i
                                 title="This chapters' title and description translations.&#10;Click to go to that chapters edit page.&#10;Hover to see the missing translations."
                                 class="help-icon far fa-question-circle"></i></th>
                     <th scope="col">&#10060;</th>
@@ -46,7 +46,7 @@
                             <td>{% for chapterTranslation in chapter[0]['translations'] %}
                                     {% if chapterTranslation['language']['name'] == language.name %}
                                         {% if chapterTranslation['title'] == '' %}
-                                            Not yet translated
+                                            {{ 'Not yet translated' | trans }}
                                         {% else %}
                                             {{ chapterTranslation['title'] }}
                                         {% endif %}
@@ -64,18 +64,18 @@
                                 {% endfor %}
                             </td>
                             <td><a class="badge badge-danger"
-                                   href="{{ path('delete_chapter', {'chapter': chapter[0]['id'], return: 'dash'}) }}">delete</a>
+                                   href="{{ path('delete_chapter', {'chapter': chapter[0]['id'], return: 'dash'}) }}">{{ 'delete' | trans }}</a>
                             </td>
                             <td><a class="badge btn badge-primary"
-                                   href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">pages & quiz</a>
+                                   href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">{{ 'Pages'| trans }} & {{ 'Quiz'| trans }}</a>
                             </td>
                         </tr>
                     {% else %}
                         <tr>
                             <th scope="row">{{ loop.index }}</th>
-                            <td colspan="6">This chapter needs more pages! <a class="badge btn badge-warning"
-                                                                              href="{{ path('create_chapter', {'module': module.id, 'chapter':  chapterObj.id}) }}">Add
-                                    one!</a></td>
+                            <td colspan="6">{{ 'This chapter needs more pages'| trans }}! <a class="badge btn badge-warning"
+                                                                              href="{{ path('create_chapter', {'module': module.id, 'chapter':  chapterObj.id}) }}">{{'Add
+                                    one' | trans }}!</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}

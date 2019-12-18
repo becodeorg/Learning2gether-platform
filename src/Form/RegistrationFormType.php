@@ -85,7 +85,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr'=>
                     array(
-                        'placeholder'=>'Password repeat',
+                        'placeholder'=>'Re-enter password',
                         'class'=>'registerInput'),
                 'constraints' => [
                     new NotBlank([

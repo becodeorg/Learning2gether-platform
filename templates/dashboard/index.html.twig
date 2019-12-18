@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G - Dashboard{% endblock %}
+{% block title %} L2G - {{ 'Dashboard' | trans }}{% endblock %}
 
 {% block body %}
 
@@ -19,7 +19,7 @@
                         data-toggle="tooltip" data-placement="right" title="Add new module">
                     <img class="addicon" src="{{ asset('assets/img/plusicon.svg') }}" alt="add icon">
                 </button>
-                <p>Create a new module</p>
+                <p>{{ 'Create a new module' | trans }}</p>
             </a>
             <a href="{{ path('forum') }}">
                 <button type="button" class="btn btn-circle btn-xl"
@@ -27,7 +27,7 @@
                     <img class="addiconflag" src="{{ asset('assets/img/chat.svg') }}" alt="flag icon">
 
                 </button>
-                <p>Go to forum page</p>
+                <p>{{ 'Go to forum page' | trans }}</p>
             </a>
         </section>
 
@@ -35,13 +35,13 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Module Name</th>
-                <th scope="col"># chapters</th>
-                <th scope="col">Translations <i
+                <th scope="col">{{ 'Module' | trans }} {{ 'Name' | trans }}</th>
+                <th scope="col"># {{ 'chapters' | trans }}</th>
+                <th scope="col">{{ 'Translations' | trans }} <i
                             title="This module's title and description translations.&#10;Click to go to that module's edit page."
                             class="help-icon far fa-question-circle"></i></th>
-                <th scope="col">Check</th>
-                <th scope="col">Status</th>
+                <th scope="col">{{ 'Check' | trans }}</th>
+                <th scope="col">{{ 'Status' | trans }}</th>
                 <th scope="col">&#10060;</th>
                 <th scope="col">&#128269;</th>
             </tr>
