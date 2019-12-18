@@ -24,7 +24,6 @@
                         <div class="col-md-9 chapinfo">
                             <div class="row">
                                 <div class="col-10"><h5>{{ userChapter.chapter.getDescription(language) }}</h5></div>
-                                <div class="col-2">10%</div>
                             </div>
                         </div>
                     </div>
@@ -34,6 +33,11 @@
                             <a class="btn btn-default button_5" href="{{ path('module_view_page',
                                 {'chapterPage': userChapter.chapter.getFirstPage().id}) }}">
                                 {{ 'Follow this chapter' | trans }}
+                            </a>
+                        {% else %}
+                            <a class="btn btn-default button_5 disabled" style="width: 165px" href="{{ path('module_view_page',
+                                {'chapterPage': userChapter.chapter.getFirstPage().id}) }}">
+                                {{ 'Locked' | trans }}
                             </a>
                         {% endif %}
                     </div>
