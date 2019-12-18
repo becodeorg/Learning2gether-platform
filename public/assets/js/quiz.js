@@ -19,7 +19,6 @@ for(let i=0; i<checkboxes.length; i++){
             document.getElementById('send-quiz').classList.remove('noClick');
             document.getElementById('completeText').classList.add('gone');
         }
-        document.getElementById('send-quiz').setAttribute("disabled", "enabled");
     });
 }
 

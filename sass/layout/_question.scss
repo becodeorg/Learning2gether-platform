@@ -1,5 +1,19 @@
 @import "./../variables/variables";
 
+body {
+
+  background-color: $offwhite ;
+
+}
+
+.title-question-row {
+  padding-top: 5px;
+}
+
+.title-question-row {
+  font-weight: 700;
+}
+
 .date-created-question {
   color: grey;
   font-family: $chivofamily;
@@ -9,8 +23,9 @@
 .question-asked {
   font-family: $chivofamily;
   font-size: 15px;
-  background-color: lightgrey;
-  padding: 10px 17px 10px 17px;
+  background-color: $lightgrey;
+  padding: 10px 17px 0 17px;
+  margin-bottom: 10px;
 }
 
 .question-asked-info {

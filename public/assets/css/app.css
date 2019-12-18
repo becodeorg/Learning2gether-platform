@@ -632,40 +632,26 @@ footer a {
 
 .profileimg {
   height: 300px;
-  border: 2px solid #8b54a0;
   overflow: hidden; }
 
 #imagebutton {
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  background: blue;
-  border-radius: 50%;
-  color: white;
+  font-size: 12px;
   text-align: center;
-  position: absolute;
-  top: 285px;
-  left: 285px;
-  font-size: 10px; }
+  float: left; }
 
 #imagebutton:hover {
-  background: red;
   cursor: pointer; }
-
-#changeavatar {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  margin-top: -300px; }
 
 .gone {
   display: none; }
 
 #show {
   background: #fdfdfd;
-  width: 300px;
-  height: 300px;
-  padding: 20px; }
+  position: absolute;
+  padding: 20px;
+  top: 0px;
+  margin: 0 auto;
+  width: 300px; }
 
 #moduleprogress {
   width: 25%; }
@@ -674,6 +660,17 @@ footer a {
   width: 20%;
   float: right;
   height: 40px; }
+
+.badges {
+  padding: 0;
+  padding-left: 20px; }
+
+.profilechange form .form-group .custom-file .custom-file-input {
+  opacity: 1;
+  width: auto; }
+
+.profilechange form .form-group .custom-file {
+  width: auto; }
 
 .badgeimage {
   width: 70%;
@@ -692,6 +689,18 @@ footer a {
 .testborder {
   border: 1px solid black; }
 
+@media only screen and (max-width: 600px) {
+  .profiletext {
+    position: relative; }
+
+  .progression {
+    margin-top: 80px; }
+
+  .auto {
+    margin-left: calc(50% - 150px); }
+
+  .absCenter {
+    left: calc(50% - 150px); } }
 /*#330033d*/
 .forum-cat-title {
   font-size: 23px;
@@ -866,6 +875,15 @@ footer a {
   background: red; }
 
 /*#330033d*/
+body {
+  background-color: #fdfdfd; }
+
+.title-question-row {
+  padding-top: 5px; }
+
+.title-question-row {
+  font-weight: 700; }
+
 .date-created-question {
   color: grey;
   font-family: "Chivo", sans-serif;
@@ -874,8 +892,9 @@ footer a {
 .question-asked {
   font-family: "Chivo", sans-serif;
   font-size: 15px;
-  background-color: lightgrey;
-  padding: 10px 17px 10px 17px; }
+  background-color: #f7f6f6;
+  padding: 10px 17px 0 17px;
+  margin-bottom: 10px; }
 
 .question-asked-info {
   font-family: "Chivo", sans-serif;

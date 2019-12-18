@@ -9,7 +9,8 @@
      {{ category.learningModule.title(language) }}<br>
      {{ category.learningModule.description(language) }} <br><br>#}
 
-    <section class="wrapper">
+
+    <section class="example-wrapper">
 
         {#    TOPIC TITLE#}
         <p class="title-css">
@@ -78,17 +79,10 @@
                 </div>
             </section>
 
-            {# question button #}
-            {#<div class="row">
-                {{ form_widget(addQuestion.postTopic, {'attr': {'class': 'topic-question-button'}}) }}
-            </div>#}
+           <button type="submit" class="btn-forum ">Send Question</button>
 
             {{ form_end(addQuestion) }}
 
-            {# {{ form_start(addQuestion) }}
-              {{ form_widget(addQuestion) }}
-              <button type="submit" class="">Send Question</button>
-              {{ form_end(addQuestion) }}#}
 
 
         </section>

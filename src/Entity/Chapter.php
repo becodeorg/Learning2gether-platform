@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Domain\Breadcrumb;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -220,5 +221,17 @@ class Chapter
         }
 
         return $this->getPages()[0];
+    }
+
+    public function getBreadcrumbs(Language $language) : array
+    {
+        $breadcrumbs = $this->getLearningModule()->getBreadcrumbs($language);
+        $breadcrumbs[] = new Breadcrumb(
+            $this->getTitle($language),
+            'dashboard_chapter',
+            ['chapter' => $this->getId()]
+        );
+
+        return $breadcrumbs;
     }
 }

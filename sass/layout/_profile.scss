@@ -22,35 +22,18 @@
 
 .profileimg{
   height: 300px;
-  border: 2px solid $purple;
   overflow: hidden;
 }
 
 
 #imagebutton{
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  background: blue;
-  border-radius: 50%;
-  color: white;
+  font-size: 12px;
   text-align: center;
-  position: absolute;
-  top: 285px;
-  left: 285px;
-  font-size: 10px;
+  float: left;
 }
 
 #imagebutton:hover{
-  background: red;
   cursor: pointer;
-}
-
-#changeavatar{
-  position: absolute;
-  width: $imgWidth;
-  height: $imgWidth;
-  margin-top: -$imgWidth;
 }
 
 .gone{
@@ -59,9 +42,11 @@
 
 #show{
   background: $offwhite;
-  width: $imgWidth;
-  height: $imgWidth;
+  position: absolute;
   padding: 20px;
+  top: 0px;
+  margin: 0 auto;
+  width: $imgWidth;
 }
 
 #moduleprogress{
@@ -72,6 +57,20 @@
   width: 20%;
   float: right;
   height: 40px;
+}
+
+.badges{
+  padding: 0;
+  padding-left: 20px;
+}
+
+.profilechange form .form-group .custom-file .custom-file-input{
+  opacity: 1;
+  width: auto;
+}
+
+.profilechange form .form-group .custom-file{
+  width: auto;
 }
 
 .badgeimage{
@@ -94,4 +93,23 @@
 
 .testborder{
   border: 1px solid black;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .profiletext{
+    position: relative;
+  }
+
+  .progression{
+    margin-top: 80px;
+  }
+
+  .auto{
+    margin-left: calc(50% - 150px);
+  }
+
+  .absCenter{
+    left: calc(50% - 150px);
+  }
 }

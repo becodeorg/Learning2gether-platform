@@ -2,6 +2,16 @@
 
 {% block title %}Hello DashboardChapterController!{% endblock %}
 
+{% block breadcrumbs %}
+    <h6 class="breadcrumbs">
+        <a class="crumb crumb-link" href="{{ path('partner') }}">Partner</a>
+        <span class="crumb crumb-separator"> > </span>
+        {% for crumb in chapter.breadcrumbs(app.user.language) %}
+            {{ include('partials/breadcrumbs.html.twig') }}
+        {% endfor %}
+    </h6>
+{% endblock %}
+
 {% block body %}
     <style>
 
@@ -74,37 +84,50 @@
             </tr>
             </thead>
             <tbody>
-            {% for question in cr.chapterQuizAsArray(chapter)[0]['quiz']['quizQuestions'] %}
+
+            {% if cr.chapterQuizAsArray(chapter) is empty %}
                 <tr>
-                    <th scope="row">{{ question['questionNumber'] }}</th>
-                    <td>{% for questionTranslation in question['translations'] %}
-                            {% if questionTranslation['language']['name'] == language.name %}
-                                {% if questionTranslation['title'] == '' %}
-                                    Not yet translated
-                                {% else %}
-                                    {{ questionTranslation['title'] |slice(0, 40) ~ '...' }}
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>{{ question['answers']|length }}</td>
-                    <td>
-                        {% for questionTL in question['translations'] %}
-                            {% set badgeclass = 'badge-danger' %}
-                            {% if questionTL['title'] != '' %}
-                                {% set badgeclass = 'badge-success' %}
-                            {% endif %}
-                            <a class="badge {{ badgeclass }}"
-                               href="{{ path('quiz_question_edit', {'id': question['id'], lang: questionTL['language']['code'], return: 'dash'}) }}">{{ questionTL['language']['name'] }}</a>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        <a class="badge btn-skills"
-                           href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">Answers</a>
-                    </td>
+                    <td colspan="6">This quiz has no questions! <a class="badge btn badge-warning"
+                                                                   href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">Add
+                            one!</a></td>
                 </tr>
-            {% endfor %}
+            {% else %}
+                {% for question in cr.chapterQuizAsArray(chapter)[0]['quiz']['quizQuestions'] %}
+                    <tr>
+                        <th scope="row">{{ question['questionNumber'] }}</th>
+                        <td>{% for questionTranslation in question['translations'] %}
+                                {% if questionTranslation['language']['name'] == language.name %}
+                                    {% if questionTranslation['title'] == '' %}
+                                        Not yet translated
+                                    {% else %}
+                                        {{ questionTranslation['title'] |slice(0, 40) ~ '...' }}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ question['answers']|length }}</td>
+                        <td>
+                            {% for questionTL in question['translations'] %}
+                                {% set badgeclass = 'badge-danger' %}
+                                {% if questionTL['title'] != '' %}
+                                    {% set badgeclass = 'badge-success' %}
+                                {% endif %}
+                                <a class="badge {{ badgeclass }}"
+                                   href="{{ path('quiz_question_edit', {'id': question['id'], lang: questionTL['language']['code'], return: 'dash'}) }}">{{ questionTL['language']['name'] }}</a>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a class="badge btn-skills"
+                               href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">Answers</a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
+        <div class="text-center">
+            <a class="badge btn-skills" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">++ Add more pages ++</a>
+        </div>
     </div>
 {% endblock %}
