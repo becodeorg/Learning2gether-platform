@@ -11,6 +11,9 @@ body {
   background-color: #fdfdfd;
   overflow-x: hidden; }
 
+.spinnerstyle {
+  margin-right: 120px; }
+
 .chevron_front {
   color: #fdfdfd;
   font-weight: bold; }
@@ -273,7 +276,10 @@ body {
     margin-top: 10px; }
 
   #reveal a {
-    padding: 5px; } }
+    padding: 5px; }
+
+  .spinnerstyle {
+    margin-right: 0; } }
 /*#330033d*/
 .nav-bar-color {
   background-color: #8b54a0; }

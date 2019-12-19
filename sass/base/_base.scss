@@ -10,6 +10,9 @@ body {
   overflow-x: hidden;
 }
 
+.spinnerstyle{
+  margin-right: 120px;
+}
 
 .chevron_front {
   color: $offwhite;
@@ -336,4 +339,8 @@ body {
     #reveal a{
         padding: 5px;
     }
+
+  .spinnerstyle{
+    margin-right: 0;
+  }
 }

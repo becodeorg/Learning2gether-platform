@@ -27,6 +27,9 @@ form.addEventListener("submit", function(event){
     event.preventDefault();
 
     const data = new URLSearchParams();
+    document.getElementById('send-quiz').classList.remove('spinner-border', 'spinner-border-sm', 'btn', 'btn-default', 'button_5quiz', 'noClick');
+    document.getElementById('send-quiz').classList.add('spinner-border', 'spinner-border-sm', 'spinnerstyle');
+    document.getElementById('send-quiz').innerHTML = "";
     for (const pair of new FormData(form)) {
         data.append(pair[0], pair[1]);
     }
@@ -56,5 +59,9 @@ form.addEventListener("submit", function(event){
                 document.getElementById('module-pop').classList.add('shown');
                 document.getElementById('badgr-image').src = json.image;
             }
+            document.getElementById('send-quiz').innerHTML = "Submit test";
+            document.getElementById('send-quiz').classList.remove('spinner-border', 'spinner-border-sm', 'spinnerstyle');
+            document.getElementById('send-quiz').classList.add('btn', 'btn-default', 'button_5quiz', 'noClick');
+
         })
 });
