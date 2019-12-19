@@ -15,13 +15,13 @@
             <div class="col-3 col-md-auto skillset">{{ 'select skillset' | trans }}:</div>
 
             <div class="col-3 col-md-auto">
-                <a class="btn btn-default btn-skills {% if mode == 'ALL' %} active-mode {% endif %} "  href="{{ path('portal') }}">{{ 'All' | trans | upper }}</a>
+                <a class="btn button_1 btn-default btn-skills {% if mode == 'ALL' %} active-mode {% endif %} "  href="{{ path('portal') }}">{{ 'All' | trans | upper }}</a>
             </div>
             <div class="col-3 col-md-auto">
-                <a class="btn btn-default btn-skills {% if mode == 'SOFT' %} active-mode {% endif %}" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
+                <a class="btn button_1 btn-default btn-skills {% if mode == 'SOFT' %} active-mode {% endif %}" href="{{ path('portal', {'mode': 'SOFT'}) }}">{{ 'soft' | trans | upper }}</a>
             </div>
             <div class="col-3 col-md-auto">
-                <a class="btn btn-default btn-skills {% if mode == 'HARD' %} active-mode {% endif %}" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
+                <a class="btn button_1 btn-default btn-skills {% if mode == 'HARD' %} active-mode {% endif %}" href="{{ path('portal', {'mode': 'HARD'}) }}">{{ 'hard' | trans | upper }}</a>
             </div>
         </div>
 
