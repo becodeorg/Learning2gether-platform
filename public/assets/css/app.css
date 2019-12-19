@@ -879,6 +879,9 @@ a:hover {
   margin-left: 20px;
   margin-right: 20px; }
 
+.buttonNavBox {
+  width: 150px; }
+
 /*#330033d*/
 .example-wrapper {
   max-width: 1000px; }

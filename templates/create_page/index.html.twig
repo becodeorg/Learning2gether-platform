@@ -51,7 +51,7 @@
         </div>
         <div class="row mb-4">
             <div class="col">
-                <a class="btn btn-skills"
+                <a class="p-1 btn btn-skills button_4 buttonNavBox"
                    href="{{ path('create_chapter', {'chapter': chapter.id, 'module': module.id}) }}">{{ 'Back to
                     chapter' | trans }}</a>
             </div>
@@ -60,11 +60,14 @@
         {{ form_start(form) }}
         {{ form_row(form.title) }}
         {{ form_row(form.content) }}
-        <button class="btn btn-skills" value="exit" name="button">{{ 'Save' | trans }} & {{ 'exit' | trans }}</button>
-        <button class="btn btn-skills" value="next" name="button">{{ 'Save' | trans }} & {{ 'create next page' | trans }}</button>
+        <div class="text-center">
+            <button class="p-3 btn btn-skills button_4 buttonNavBox" value="exit" name="button">{{ 'Save' | trans }} & {{ 'exit' | trans }}</button>
+            <button class="p-1 btn btn-skills button_4 buttonNavBox" value="next" name="button">{{ 'Save' | trans }} & {{ 'create next page' | trans }}</button>
+        </div>
         {{ form_end(form) }}
 
     </div>
+    <br>
 
     <!-- markdown editor -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">

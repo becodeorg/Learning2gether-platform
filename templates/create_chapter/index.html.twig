@@ -22,7 +22,7 @@
             {{ form_start(chapterTranslationForm) }}
             {{ form_row(chapterTranslationForm.title) }}
             {{ form_row(chapterTranslationForm.description) }}
-            <button class="btn btn-skills">{{ 'Update' | trans }}</button>
+            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Update' | trans }}</button>
             {{ form_end(chapterTranslationForm) }}
         </section>
 
@@ -35,10 +35,10 @@
             <section class="module-cube">
                 <span>{{ 'Page nr' | trans }}: {{ loop.index }}</span><br>
                 <span>{{ 'Page title' | trans }}: {{ page.title(english) }}</span><br>
-                <a class="badge btn-primary"
+                <a class="p-1 btn btn-skills button_4 buttonNavBox"
                    href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">
                     {{ 'Edit Page' | trans }}</a>
-                <a class="badge badge-danger" onclick="return confirm('Are you sure you want to delete this page?')"
+                <a class="btn-deletequestion button_2 deleteHover float-right" onclick="return confirm('Are you sure you want to delete this page?')"
                    href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id, return: 'flow'}) }}">
                     {{ 'Delete Page' | trans }}</a>
             </section>
@@ -46,9 +46,9 @@
         {% endfor %}
 
         <div class="text-center">
-            <a class="p-1 button btn-skills" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">{{ 'Add Page' | trans }}</a>
-            <a class="p-1 button btn-skills" href="{{ path('edit_module', {module: module.id}) }}">{{ 'Module overview' | trans }}</a>
-            <a class="p-1 button btn-skills" href="{{ path('quiz_show', {id: chapter.quiz.id}) }}">{{ 'Edit Quiz' | trans }}</a>
+            <a class="p-1 button btn-skills button_3" href="{{ path('create_page', {module: module.id, chapter: chapter.id}) }}">{{ 'Add Page' | trans }}</a>
+            <a class="p-1 button btn-skills button_3" href="{{ path('edit_module', {module: module.id}) }}">{{ 'Module overview' | trans }}</a>
+            <a class="p-1 button btn-skills button_3" href="{{ path('quiz_show', {id: chapter.quiz.id}) }}">{{ 'Edit Quiz' | trans }}</a>
         </div>
     </div>
 
