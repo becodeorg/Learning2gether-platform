@@ -917,6 +917,9 @@ a:hover {
   margin-left: 20px;
   margin-right: 20px; }
 
+.buttonNavBox {
+  width: 150px; }
+
 /*#330033d*/
 .example-wrapper {
   max-width: 1000px; }
@@ -1129,6 +1132,10 @@ body {
 .picturePost {
   display: flex;
   justify-content: center; }
+
+.deleteHover:hover {
+  border: 3pt solid lightcoral;
+  color: red; }
 
 /*
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css

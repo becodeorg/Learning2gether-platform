@@ -52,10 +52,13 @@
         {{ form_start(form) }}
         {{ form_row(form.title) }}
         {{ form_row(form.content) }}
-        <button class="btn btn-skills">{{ 'Save' | trans }}</button>
-        {{ form_end(form) }}
-        <hr>
-        <a class="btn btn-skills" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">{{ 'Back to chapter' | trans }}</a>
+        <div class="text-center">
+            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Save' | trans }}</button>
+            {{ form_end(form) }}
+            <hr>
+            <a class="p-1 btn btn-skills button_4 buttonNavBox" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">{{ 'Back to chapter' | trans }}</a>
+        </div>
+
     </div>
 </div>
 

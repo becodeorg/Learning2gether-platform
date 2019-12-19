@@ -19,7 +19,7 @@ class CreateModuleType extends AbstractType
 
         $builder
             ->add('image', FileType::class, [
-                'label' => 'upload image ',
+                'label' => 'upload image (Size Limit: 5mb, Permitted File Formats: .png, .jpg, .gif)',
                 'mapped' => 'false'
             ])
             ->add('badge', TextType::class , [

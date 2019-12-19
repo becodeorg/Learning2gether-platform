@@ -15,9 +15,9 @@
 
     <div class="example-wrapper">
         <div class="text-center">
-            <a class="btn button_1"
-               href="{{ path('create_chapter', {module: chapter.learningModule.id, chapter: chapter.id }) }}">{{ 'Chapter
-                    overview' | trans }}</a>
+            <a class="p-1 btn btn-skills button_4 buttonNavBox"
+               href="{{ path('create_chapter', {module: chapter.learningModule.id, chapter: chapter.id }) }}">{{ 'Chapter Overview' | trans}}
+                </a>
         </div>
         <h3 class="subtitle-css">{{ 'Pages' | trans }}</h3>
         <table class="table table-hover text-center">
@@ -63,11 +63,12 @@
             </tbody>
         </table>
         <div class="text-center">
-            <a class="badge badge-primary"
+            <a class="p-1 btn btn-skills button_4 buttonNavBox"
                href="{{ path('create_chapter', {'module': chapter.learningModule.id, 'chapter': chapter.id}) }}">{{ 'Edit Chapter' | trans }}</a>
         </div>
-        <h3 class="subtitle-css">Quiz <a class="btn btn-skills"
-                    href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">Test</a></h3>
+        <br>
+        <h3 class="subtitle-css">Quiz <a class="p-1 btn btn-skills button_4"
+                    href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">{{ 'Test' | trans }}</a></h3>
         <table class="table table-hover text-center">
             <thead>
             <tr>
@@ -123,7 +124,7 @@
             </tbody>
         </table>
         <div class="text-center">
-            <a class="badge badge-primary" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">{{ 'Edit quiz' | trans }}</a>
+            <a class="p-1 btn btn-skills button_4 buttonNavBox" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">{{ 'Edit Quiz' | trans }}</a>
         </div>
     </div>
 {% endblock %}

@@ -31,9 +31,12 @@
             {{ form_row(form.badge) }}
             {{ form_row(form.type) }}
             {{ form_row(form.image) }}
+            {{ form_errors(form) }}
 
         </section>
-        <button class="btn btn-skills">{{ 'Add a Chapter' | trans }}</button>
+        <div class="text-center">
+            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Save & add Chapter' | trans }}</button>
+        </div>
         {{ form_end(form) }}
     </section>
 

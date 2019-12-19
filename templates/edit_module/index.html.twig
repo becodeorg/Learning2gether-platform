@@ -19,7 +19,7 @@
             {{ form_start(moduleTLForm) }}
             {{ form_row(moduleTLForm.title) }}
             {{ form_row(moduleTLForm.description) }}
-            <button class="btn btn-skills">{{ 'Update' | trans }}</button>
+            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Update' | trans }}</button>
             {{ form_end(moduleTLForm) }}
         </section>
 
@@ -29,7 +29,7 @@
             {{ form_row(moduleForm.badge) }}
             {{ form_row(moduleForm.type) }}
             <h6>{{ 'Current type' |trans }}: {{ module.type }}</h6>
-            <button class="btn btn-skills">{{ 'Update' |trans }}</button>
+            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Update' |trans }}</button>
             {{ form_end(moduleForm) }}
         </section>
 
@@ -42,7 +42,7 @@
 
                     {{ form_widget(moduleImageForm.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
                     {{ form_errors(moduleImageForm.upload) }}
-                    <button class="mt-2 btn btn-skills">{{ 'Update' |trans }}</button>
+                    <button class="mt-2 p-1 btn btn-skills button_4 buttonNavBox">{{ 'Update' |trans }}</button>
 
                     {{ form_end(moduleImageForm) }}
                 </div>
@@ -64,19 +64,19 @@
             <section class="module-cube">
                 <span>{{ 'chapter' |trans }} nr: {{ chapter.chapterNumber }}</span><br>
                 <span>{{ 'chapter' |trans }} {{ 'title' |trans }}: {{ chapter.title(english) }}</span><br>
-                <a class="badge badge-danger"
+                <a class="btn-deletequestion button_2 deleteHover float-right"
                    href="{{ path('delete_chapter', {module: module.id, chapter: chapter.id, return: 'flow'}) }}">{{ 'Delete
                     Chapter' |trans }}</a>
-                <a class="badge badge-primary"
-                   href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">{{ 'edit chapter' |trans }}</a>
-                <a class="badge btn-primary" href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">{{ 'edit quiz' |trans }}</a>
+                <a class="p-1 btn btn-skills button_4 buttonNavBox"
+                   href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">{{ 'Edit Chapter' |trans }}</a>
+                <a class="p-1 btn btn-skills button_4 buttonNavBox" href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">{{ 'Edit Quiz' |trans }}</a>
             </section>
 
         {% endfor %}
 
         <div class="text-center">
             {{ form_start(addNewChapterBtn) }}
-            <button class="btn btn-skills">{{ 'Add a chapter' |trans }}</button>
+            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Add a Chapter' |trans }}</button>
             {{ form_end(addNewChapterBtn) }}
         </div>
     </div>

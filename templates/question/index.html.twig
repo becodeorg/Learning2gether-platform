@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G Forum{% endblock %}
+{% block title %}L2G - {{ 'Forum' | trans}}{% endblock %}
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a>
@@ -17,7 +17,7 @@
 
         {# question asked #}
         {#        <p class="title-css">{{ question.subject }}</p> #}
-
+        <p class="subtitle-css">{{ 'Question' | trans | upper }}</p>
         {% for post in posts %}
 
             {% if loop.first %}
@@ -65,9 +65,8 @@
                 {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
                     {{ include('question/_delete_question.html.twig') }}
                 {% endif %}
-
+                <p class="subtitle-css">{{ 'Replies' | trans | upper }}</p>
             {% else %}
-
 
                 <div class="row question-answer-row ">
 
@@ -130,7 +129,7 @@
             {# Input answer to question#}
             {{ form_start(postForm) }}
             {{ form_widget(postForm.subjectPost) }}
-            <button class="btn-forum submitPost button_5" type="submit" class="">{{ 'Send' | trans }}</button>
+            <button class="btn-forum submitPost button_4" type="submit" class="">{{ 'Send' | trans }}</button>
             {{ form_end(postForm) }}
         </div>
 
