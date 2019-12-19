@@ -10,10 +10,9 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <h1 class="mod-title">{{ 'Edit Learning Module' | trans }}</h1>
-    </div>
-    <div class="container my-3">
+    <div class="example-wrapper">
+        <h1 class="title-css">{{ 'Edit Learning Module' | trans }}</h1>
+        <div class="container my-3">
 
         <section class="module-cube">
             <h3>{{ 'Title' | trans }} {{ 'and' | trans }} {{ 'description' | trans }} </h3>
@@ -43,7 +42,7 @@
 
                     {{ form_widget(moduleImageForm.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
                     {{ form_errors(moduleImageForm.upload) }}
-                    <button class="mt-2 p-1 btn btn-skills button_4 buttonNavBox">Update</button>
+                    <button class="mt-2 p-1 btn btn-skills button_4 buttonNavBox">{{ 'Update' |trans }}</button>
 
                     {{ form_end(moduleImageForm) }}
                 </div>
@@ -53,7 +52,9 @@
                 </div>
                 <div class="col">
                     <p>{{ 'Current image' | trans }}</p>
-                    <img style="width: 180px;" src="{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="">
+                    {% if module.image != '' %}
+                        <img style="width: 180px;" src="{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="">
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -78,6 +79,7 @@
             <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Add a Chapter' |trans }}</button>
             {{ form_end(addNewChapterBtn) }}
         </div>
+    </div>
     </div>
 
     <script src="{{ asset('assets/js/UploaderPreviewScript.js') }}"></script>

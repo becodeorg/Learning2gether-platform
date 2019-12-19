@@ -4,47 +4,46 @@
 
 
 {% block body %}
-    <div class="row">
-        <h1 class="mod-title">{{ 'New Page Creation' | trans }}</h1>
-    </div>
-    <!-- Modal -->
-    <div id="imageModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-         aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+    <div class="example-wrapper">
+        <h1 class="title-css">{{ 'New Page Creation' | trans }}</h1>
+        <!-- Modal -->
+        <div id="imageModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+             aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">{{ 'Select a picture to insert' | trans }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <a class="btn btn-success" href="{{ path('upload_content') }}">{{ 'Upload an image' | trans }}</a><br/>
-                        <strong>{{ 'You have to reload the page for images to appear in this window, use the save button to
-                            store any changes.' | trans }}</strong>
-                        <hr>
-                        {% for image in imagesAll %}
-                            <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px"
-                                 alt="{{ image.name }}">
-                        {% endfor %}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'Close' | trans }}</button>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">{{ 'Select a picture to insert' | trans }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <a class="btn btn-success" href="{{ path('upload_content') }}">{{ 'Upload an image' | trans }}</a><br/>
+                            <strong>{{ 'You have to reload the page for images to appear in this window, use the save button to
+                                store any changes.' | trans }}</strong>
+                            <hr>
+                            {% for image in imagesAll %}
+                                <img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px"
+                                     alt="{{ image.name }}">
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'Close' | trans }}</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <section class="module-cube">
-                    <span>{{ 'Chapter title' | trans }}: {{ chapter.title(english) }}</span><br>
-                    <span>{{ 'Chapter description' | trans }}: {{ chapter.description(english) }}</span><br>
-                    <span>{{ 'number of pages' | trans }}: {{ chapter.pages|length }}</span><br>
-                    <span>{{ 'Module Title' | trans }}: {{ module.title(english) }}</span><br>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <section class="module-cube">
+                        <span>{{ 'Chapter title' | trans }}: {{ chapter.title(english) }}</span><br>
+                        <span>{{ 'Chapter description' | trans }}: {{ chapter.description(english) }}</span><br>
+                        <span>{{ 'number of pages' | trans }}: {{ chapter.pages|length }}</span><br>
+                        <span>{{ 'Module Title' | trans }}: {{ module.title(english) }}</span><br>
 
                 </section>
             </div>
@@ -66,6 +65,7 @@
         </div>
         {{ form_end(form) }}
 
+        </div>
     </div>
     <br>
 
