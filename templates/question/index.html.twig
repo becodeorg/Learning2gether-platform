@@ -65,9 +65,9 @@
                 {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
                     {{ include('question/_delete_question.html.twig') }}
                 {% endif %}
-
-            {% else %}
                 <p class="subtitle-css">{{ 'Replies' | trans | upper }}</p>
+            {% else %}
+
                 <div class="row question-answer-row ">
 
                     <div class="col-2 image-name-column imageForumAvatar justify-content-center">
