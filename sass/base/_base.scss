@@ -319,6 +319,10 @@ body {
   margin-top: 50px;
 }
 
+.navbar-toggler{
+  border: none;
+}
+
 @media only screen and (max-width: 1100px) {
   .navwrap nav {
     padding: 10px 20px;
@@ -342,5 +346,30 @@ body {
 
   .spinnerstyle{
     margin-right: 0;
+  }
+
+  .formnav{
+    position: absolute;
+    top: 170px;
+    left: 130px;
+  }
+
+  .hubnav{
+    position: absolute;
+    top: 170px;
+    left: 70px;
+  }
+
+  .profilenav{
+    margin-top: 10px
+  }
+
+  .nav-bar-collapse{
+    margin-bottom: 5px;
+  }
+
+  #searchbar_keywords{
+    width: 100%;
+    margin-right: 0!important;
   }
 }
