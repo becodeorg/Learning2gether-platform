@@ -12,20 +12,19 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <h1 class="mod-title">{{ 'Edit Chapter' | trans }}</h1>
-    </div>
     <div class="example-wrapper">
-        <h3>{{ 'Currently editing' | trans }}: {{ 'Module' | trans }} {{ module.id }}, {{ 'Chapter' | trans }} {{ chapter.chapterNumber }}</h3>
+        <h1 class="title-css">{{ 'Edit Chapter' | trans }}</h1>
+        <div class="example-wrapper">
+            <h3>{{ 'Currently editing' | trans }}: {{ 'Module' | trans }} {{ module.id }}, {{ 'Chapter' | trans }} {{ chapter.chapterNumber }}</h3>
 
-        <section class="module-cube">
-            {{ form_start(form) }}
-            {{ form_row(form.title) }}
-            {{ form_row(form.description) }}
-        </section>
+            <section class="module-cube">
+                {{ form_start(form) }}
+                {{ form_row(form.title) }}
+                {{ form_row(form.description) }}
+            </section>
 
-        <button class="btn btn-skills">{{ 'Save' | trans }}</button>
-        {{ form_end(form) }}
-
+            <button class="btn btn-skills">{{ 'Save' | trans }}</button>
+            {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

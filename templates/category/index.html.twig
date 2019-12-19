@@ -15,11 +15,11 @@
 
     <section class="example-wrapper">
 
-        <p class="title-css"> {{ category.learningModule.title(language) }}</p>
+        <h1 class="title-css"> {{ category.learningModule.title(language) }}</h1>
         {#    <p>{{ category.learningModule.description(language) }}</p>#}
 
 
-        <p class="subtitle-css">{{ 'Topics' | trans | upper }}</p>
+        <h4 class="subtitle-css">{{ 'Topics' | trans | upper }}</h4>
 
 
         {% for topic in topics %}
@@ -41,7 +41,7 @@
 
                     <div class="col-3">
                         {# Link to the Topic's detail (all question) page#}
-                        <a class="btn-forum "
+                        <a class="btn-forum button_4 "
                            href="{{ path('topic', {'category': category.id, 'chapter': topic.id}) }}">
                             {{ 'Show' | trans }}
                         </a>

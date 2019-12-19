@@ -10,9 +10,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <h1 class="mod-title">{{ 'Question Dashboard' | trans }}</h1>
-    </div>
+<div class="example-wrapper">
+    <h1 class="title-css">{{ 'Question Dashboard' | trans }}</h1>
     <div class="example-wrapper my-3">
         <h3>{{ 'Question' | trans }}: {{ question.title(language) }}</h3>
         <br>
@@ -59,4 +58,5 @@
             </tbody>
         </table>
     </div>
+</div>
 {% endblock %}

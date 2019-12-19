@@ -72,13 +72,12 @@ body {
   border: 3pt solid #fdfdfd; }
 
 .button_4 {
-  border: 1pt solid #fdfdfd;
-  background-color: #fdfdfd;
-  color: #7a7a7a; }
+  border: 3pt solid #4b4b4b;
+  background-color: #4b4b4b;
+  color: #fdfdfd; }
 
 .button_4:hover {
-  color: #606060;
-  background: #fdfdfd; }
+  color: #fdfdfd; }
 
 .button_5 {
   border: 3pt solid #33003d;
@@ -461,6 +460,12 @@ h1 {
   padding: 20px 10px 20px 20px;
   border-radius: 20px;
   background-color: #8b54a0;
+  color: #fdfdfd; }
+
+.chapcard-locked {
+  padding: 20px 10px 20px 20px;
+  border-radius: 20px;
+  background: #8c8c8c;
   color: #fdfdfd; }
 
 .chapcontainer {
@@ -912,6 +917,9 @@ a:hover {
   margin-left: 20px;
   margin-right: 20px; }
 
+.buttonNavBox {
+  width: 150px; }
+
 /*#330033d*/
 .example-wrapper {
   max-width: 1000px; }
@@ -1124,6 +1132,10 @@ body {
 .picturePost {
   display: flex;
   justify-content: center; }
+
+.deleteHover:hover {
+  border: 3pt solid lightcoral;
+  color: red; }
 
 /*
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css

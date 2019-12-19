@@ -8,11 +8,9 @@
 
 {% block body %}
 
-    <section class="container my-3">
+    <section class="container my-3 example-wrapper">
 
-        <div class="row">
-            <h1 class="mod-title">{{ 'New Learning Module Creation' | trans }}</h1>
-        </div>
+            <h1 class="title-css">{{ 'New Learning Module Creation' | trans }}</h1>
 
         <div class="row">
             <p class="mod-step">{{ 'Step 1: To create a new module, please fill in the english title and description' | trans }} </p>
@@ -33,9 +31,12 @@
             {{ form_row(form.badge) }}
             {{ form_row(form.type) }}
             {{ form_row(form.image) }}
+            {{ form_errors(form) }}
 
         </section>
-        <button class="btn btn-skills">{{ 'Add a Chapter' | trans }}</button>
+        <div class="text-center">
+            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Save & add Chapter' | trans }}</button>
+        </div>
         {{ form_end(form) }}
     </section>
 

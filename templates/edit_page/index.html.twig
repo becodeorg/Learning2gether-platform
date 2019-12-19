@@ -17,9 +17,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <h1 class="mod-title">{{ 'Edit Page' | trans }}</h1>
-    </div>
+<div class="example-wrapper">
+    <h1 class="title-css">{{ 'Edit Page' | trans }}</h1>
     <!-- Modal -->
     <div id="imageModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
          aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -53,12 +52,15 @@
         {{ form_start(form) }}
         {{ form_row(form.title) }}
         {{ form_row(form.content) }}
-        <button class="btn btn-skills">Save</button>
-        {{ form_end(form) }}
-        <hr>
-        <a class="btn btn-skills" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">{{ 'Back to chapter' | trans }}</a>
-    </div>
+        <div class="text-center">
+            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Save' | trans }}</button>
+            {{ form_end(form) }}
+            <hr>
+            <a class="p-1 btn btn-skills button_4 buttonNavBox" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">{{ 'Back to chapter' | trans }}</a>
+        </div>
 
+    </div>
+</div>
 
     <!-- markdown editor -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
