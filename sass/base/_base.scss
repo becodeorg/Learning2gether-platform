@@ -84,14 +84,13 @@ body {
 }
 
 .button_4 {
-  border: 1pt solid $offwhite;
-  background-color: $offwhite;
-  color: $darkgrey;
+  border: 3pt solid rgb(75,75,75);
+  background-color: rgb(75,75,75);
+  color: $offwhite;
 }
 
 .button_4:hover {
-  color: #606060;
-  background: $offwhite;
+  color: $offwhite;
 }
 
 .button_5 {
