@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G Forum{% endblock %}
+{% block title %}L2G - {{ 'Forum' | trans}}{% endblock %}
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a>
@@ -17,7 +17,7 @@
 
         {# question asked #}
         {#        <p class="title-css">{{ question.subject }}</p> #}
-
+        <p class="subtitle-css">{{ 'Question' | trans | upper }}</p>
         {% for post in posts %}
 
             {% if loop.first %}
@@ -67,8 +67,7 @@
                 {% endif %}
 
             {% else %}
-
-
+                <p class="subtitle-css">{{ 'Replies' | trans | upper }}</p>
                 <div class="row question-answer-row ">
 
                     <div class="col-2 image-name-column imageForumAvatar justify-content-center">

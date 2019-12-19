@@ -26,6 +26,8 @@
             {{ currentTopic.title(language) }}
         </p>
 
+        <p class="subtitle-css">{{ 'Questions' | trans | upper }}</p>
+
         {% for question in questions %}
 
             <div class="container ">
@@ -48,7 +50,7 @@
 
                     <div class="col-3">
                         {# Link to the question's detail page#}
-                        <a class="btn-forum "
+                        <a class="btn-forum button_4"
                            href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
                             {{ 'Show' | trans }}
                         </a>

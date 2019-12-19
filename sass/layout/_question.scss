@@ -81,3 +81,8 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.deleteHover:hover {
+  border: 3pt solid lightcoral;
+  color: red;
+}
