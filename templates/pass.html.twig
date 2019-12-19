@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}{{ 'Welcome' | trans}}!{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     {% block stylesheets %}{% endblock %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Chivo:300,400,700,900&display=swap" rel="stylesheet">
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('assets/img/favicon.ico') }}' />
 </head>
 <body class="loginbody">
 {% for type, messages in app.session.flashbag.all() %}

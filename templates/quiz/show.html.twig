@@ -3,7 +3,7 @@
 {% block title %}Quiz{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
         {% for crumb in quiz.editBreadcrumbs(app.user.language) %}
             {{ include('partials/breadcrumbs.html.twig') }}
         {% endfor %}
@@ -11,6 +11,7 @@
 
 {% block body %}
     <div class="example-wrapper">
+
         {#<ul class="lang-menu nav navbar-light bg-light">
             <li class="navbar-brand">Select Language</li>
             <li class="nav-item"><a class="nav-link"
@@ -30,7 +31,7 @@
             </li>
         </ul>#}
 
-        <h1 class="title-css">{{ 'Quiz for chapter' | trans }}: {{ chapter.title(language) }}</h1>
+    <h1 class="title-css">{{ 'Quiz for chapter' | trans }}: {{ chapter.title(language) }}</h1>
 
         <table class="table">
             <tbody>

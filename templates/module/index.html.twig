@@ -3,7 +3,8 @@
 {% block title %}{{ module.getTitle(language) }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
+    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a>
+    </li>
     {% for crumb in module.learnerBreadcrumbs(app.user.language) %}
         {{ include('partials/breadcrumbs.html.twig') }}
     {% endfor %}
@@ -15,42 +16,58 @@
 
         <h1 class="title-css">{{ module.getTitle(language) }}</h1>
 
-        <a href="{{ path('forum') }}"><button class="btn btn-default button_4chap btnchap">{{ 'Forum' | trans }}</button></a>
+        <a href="{{ path('forum') }}">
+            <button class="btn btn-default button_4chap btnchap">{{ 'Forum' | trans }}</button>
+        </a>
 
         <section id="chapter-overview">
             {% if module.getUserChapters(app.user)|length > 0 %}
             {% for userChapter in module.getUserChapters(app.user) %}
 
-                <div class="container chapcontainer">
-                    <div class="row"><h3>{{ userChapter.chapter.getTitle(language) }}</h3></div>
-                    <div class="row chapcard">
-                        <div class="chapinfo">
-                            <div class="row">
-                                <div class="col-10"><h5>{{ userChapter.chapter.getDescription(language) }}</h5></div>
+                {% if userChapter.isUnlocked() %}
+                    <div class="container chapcontainer">
+                        <div class="row"><h3>{{ userChapter.chapter.getTitle(language) }}</h3></div>
+                        <div class="row chapcard">
+                            <div class="chapinfo">
+                                <div class="row">
+                                    <div class="col-10"><h5>{{ userChapter.chapter.getDescription(language) }}</h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row chapbutton_2">
-                        {% if userChapter.isUnlocked() %}
+                        <div class="row chapbutton_2">
                             <a class="btn btn-default button_5" href="{{ path('module_view_page',
                                 {'chapterPage': userChapter.chapter.getFirstPage().id}) }}">
                                 {{ 'Follow this chapter' | trans }}
                             </a>
-                        {% else %}
-                            <a class="btn btn-default button_5 disabled" style="width: 165px" href="{{ path('module_view_page',
-                                {'chapterPage': userChapter.chapter.getFirstPage().id}) }}">
-                                {{ 'Locked' | trans }}
-                            </a>
-                        {% endif %}
+                        </div>
                     </div>
-                </div>
+                {% else %}
+                    <div class="container chapcontainer">
+                        <div class="row"><h3>{{ userChapter.chapter.getTitle(language) }}</h3></div>
+                        <div class="row chapcard-locked">
+                            <div class="chapinfo">
+                                <div class="row">
+                                    <div class="col-10"><h5>{{ userChapter.chapter.getDescription(language) }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row chapbutton_2">
+                            <div class="btn btn-default button_4" style="width: 165px">
+{#                               href="{{ path('module_view_page',#}
+{#                                   {'chapterPage': userChapter.chapter.getFirstPage().id}) }}">#}
+                                {{ 'Locked' | trans }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
             <div class="vertical-line"></div>
-
         </section>
         {% else %}
-            <p>{{ 'no chapters yet' | trans }}!</p>
+            <p>{{ 'No chapters yet' | trans }}!</p>
         {% endif %}
     </div>
 {% endblock %}

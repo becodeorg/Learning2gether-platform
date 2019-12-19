@@ -10,53 +10,53 @@
 {% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1 class="title-css">{{ 'Question Dashboard' | trans }}</h1>
-        <div class="example-wrapper my-3">
-            <h3>{{ 'Question' | trans }}: {{ question.title(language) }}</h3>
-            <br>
-    {#        <a class="btn btn-skills" href="{{ path('dashboard_chapter', {chapter: question.quiz.id}) }}">Back</a>#}
-            <h3>{{ 'Answers' | trans }}</h3>
-            <table class="table table-hover">
-                <thead>
+<div class="example-wrapper">
+    <h1 class="title-css">{{ 'Question Dashboard' | trans }}</h1>
+    <div class="example-wrapper my-3">
+        <h3>{{ 'Question' | trans }}: {{ question.title(language) }}</h3>
+        <br>
+{#        <a class="btn btn-skills" href="{{ path('dashboard_chapter', {chapter: question.quiz.id}) }}">Back</a>#}
+        <h3>{{ 'Answers' | trans }}</h3>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ 'Answer' | trans }}</th>
+                <th scope="col">{{ 'Translations' | trans }} <i
+                            title="This page's title and description translations.&#10;Click to go to that page's edit page.&#10;Hover to see the missing translations."
+                            class="help-icon far fa-question-circle"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for answer in questionArray['answers'] %}
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">{{ 'Answer' | trans }}</th>
-                    <th scope="col">{{ 'Translations' | trans }} <i
-                                title="This page's title and description translations.&#10;Click to go to that page's edit page.&#10;Hover to see the missing translations."
-                                class="help-icon far fa-question-circle"></i>
-                    </th>
+                    <td>
+                        {{ loop.index }}
+                    </td>
+                    <td>{% for answerTL in answer['translations'] %}
+                            {% if answerTL['language']['name'] == language.name %}
+                                {% if answerTL['title'] == '' %}
+                                    {{ 'Not yet translated' | trans }}
+                                {% else %}
+                                    {{ answerTL['title'] }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for answerTL in answer['translations'] %}
+                            {% set badgeclass = 'badge-danger' %}
+                            {% if answerTL['title'] != '' %}
+                                {% set badgeclass = 'badge-success' %}
+                            {% endif %}
+                            <a class="badge {{ badgeclass }}" href="{{ path('quiz_answer_edit', {'id': answer['id'], lang: answerTL['language']['code'], return: 'dash'}) }}">{{ answerTL['language']['name'] }}</a>
+                        {% endfor %}
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for answer in questionArray['answers'] %}
-                    <tr>
-                        <td>
-                            {{ loop.index }}
-                        </td>
-                        <td>{% for answerTL in answer['translations'] %}
-                                {% if answerTL['language']['name'] == language.name %}
-                                    {% if answerTL['title'] == '' %}
-                                        {{ 'Not yet translated' | trans }}
-                                    {% else %}
-                                        {{ answerTL['title'] }}
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for answerTL in answer['translations'] %}
-                                {% set badgeclass = 'badge-danger' %}
-                                {% if answerTL['title'] != '' %}
-                                    {% set badgeclass = 'badge-success' %}
-                                {% endif %}
-                                <a class="badge {{ badgeclass }}" href="{{ path('quiz_answer_edit', {'id': answer['id'], lang: answerTL['language']['code'], return: 'dash'}) }}">{{ answerTL['language']['name'] }}</a>
-                            {% endfor %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+</div>
 {% endblock %}

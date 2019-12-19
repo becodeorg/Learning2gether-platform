@@ -24,8 +24,9 @@ body {
   font-family: $chivofamily;
   font-size: 15px;
   background-color: $lightgrey;
-  padding: 10px 17px 0 17px;
+  padding: 10px 17px 10px 17px;
   margin-bottom: 10px;
+  border-radius: 20px;
 }
 
 .question-asked-info {
@@ -48,8 +49,35 @@ body {
   margin-top: 20px;
   background-color: #99cdd8;
   padding: 10px 5px 10px 5px;
+  border-radius: 20px;
 }
 
 .upvote-img {
   background-image:url("../../public/assets/img/thumbsup.png");
+}
+
+.imageWrapperPost {
+  top: 22px;
+}
+
+.postform {
+  background-color: $purple;
+  font-family: $chivofamily;
+  padding: 20px 20px 20px 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top: 20px;
+}
+
+.submitPost {
+  margin-top: 20px;
+}
+
+.submitPost:hover {
+  color: white;
+}
+
+.picturePost {
+  display: flex;
+  justify-content: center;
 }

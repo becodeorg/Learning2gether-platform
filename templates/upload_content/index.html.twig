@@ -4,12 +4,21 @@
 
 {% block body %}
 <div class="example-wrapper">
-    {{ form_start(uploader) }}
-    {{ form_row(uploader.upload) }}
-    {{ form_row(uploader.submit) }}
-    {{ form_end(uploader) }}
-    {% for image in imagesAll %}
-        <img src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
-    {% endfor %}
+        <div class="row">
+                <div class="col">
+                        {{ form_start(uploader) }}
+                        {{ form_row(uploader.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
+                        <button class="btn btn-skills">{{ 'Upload' | trans }}</button>
+                        {{ form_end(uploader) }}
+                </div>
+            <div class="col">
+                <img style="height: 180px" class="uploadPreview" src="#" alt="">
+            </div>
+        </div>
+    <div class="container border border-dark">
+        {% for image in imagesAll %}
+            <img src="{{ asset(image.src | imagine_filter('learningModuleImage')) }}" width="200px" alt="{{ image.name }}">
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

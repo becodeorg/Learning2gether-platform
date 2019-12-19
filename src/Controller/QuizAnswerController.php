@@ -62,6 +62,7 @@ class QuizAnswerController extends AbstractController
         return $this->render('quiz_answer/new.html.twig', [
             'quiz_answer' => $quizAnswer,
             'form' => $form->createView(),
+            'language' => $language
         ]);
     }
 
