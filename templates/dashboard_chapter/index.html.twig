@@ -10,17 +10,16 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <h1 class="mod-title">{{ 'Chapter Dashboard' | trans }}</h1>
-    </div>
+    <div class="example-wrapper">
+        <h1 class="title-css">{{ 'Chapter Dashboard' | trans }}</h1>
 
     <div class="example-wrapper">
         <div class="text-center">
-            <a class="btn btn-primary"
-               href="{{ path('create_chapter', {module: chapter.learningModule.id, chapter: chapter.id }) }}">Chapter
-                overview</a>
+            <a class="btn button_1"
+               href="{{ path('create_chapter', {module: chapter.learningModule.id, chapter: chapter.id }) }}">{{ 'Chapter
+                    overview' | trans }}</a>
         </div>
-        <h3>{{ 'Pages' | trans }}</h3>
+        <h3 class="subtitle-css">{{ 'Pages' | trans }}</h3>
         <table class="table table-hover text-center">
             <thead>
             <tr>
@@ -57,7 +56,7 @@
                     </td>
                     <td><a class="badge badge-danger"
                            onclick="return confirm('Are you sure you want to delete this page?')"
-                           href="{{ path('delete_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, return: 'dash'}) }}">{{ 'Delete' | trans }}</a>
+                           href="{{ path('delete_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, return: 'dash'}) }}">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -67,8 +66,8 @@
             <a class="badge badge-primary"
                href="{{ path('create_chapter', {'module': chapter.learningModule.id, 'chapter': chapter.id}) }}">{{ 'Edit Chapter' | trans }}</a>
         </div>
-        <h3>Quiz <a class="btn btn-skills"
-                    href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">{{ 'Test' | trans }}</a></h3>
+        <h3 class="subtitle-css">Quiz <a class="btn btn-skills"
+                    href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">Test</a></h3>
         <table class="table table-hover text-center">
             <thead>
             <tr>
@@ -87,7 +86,7 @@
             {% if cr.chapterQuizAsArray(chapter) is empty %}
                 <tr>
                     <td colspan="6">{{ 'This quiz has no questions!' | trans }}<a class="badge btn badge-warning"
-                                                                   href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">{{ 'Add one!' | trans }}</a></td>
+                                                                                  href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">{{ 'Add one!' | trans }}</a></td>
                 </tr>
             {% else %}
                 {% for question in cr.chapterQuizAsArray(chapter)[0]['quiz']['quizQuestions'] %}
@@ -96,7 +95,7 @@
                         <td>{% for questionTranslation in question['translations'] %}
                                 {% if questionTranslation['language']['name'] == language.name %}
                                     {% if questionTranslation['title'] == '' %}
-                                        Not yet translated
+                                        {{ 'Not yet translated' | trans }}
                                     {% else %}
                                         {{ questionTranslation['title'] |slice(0, 40) ~ '...' }}
                                     {% endif %}

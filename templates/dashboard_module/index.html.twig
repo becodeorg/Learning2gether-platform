@@ -16,74 +16,73 @@
                 cursor: pointer;
             }
         </style>
-        <div class="row">
-            <h1 class="mod-title">{{ 'Module Dashboard' | trans }}</h1>
-        </div>
+        <div class="example-wrapper">
+            <h1 class="title-css">{{ 'Module Dashboard' | trans }}</h1>
 
-        <div class="example-wrapper my-3">
-            <div class="text-center">
-                <a class="btn btn-primary" href="{{ path('edit_module', {'module': module.id}) }}">{{ 'Module overview' | trans }}</a>
-            </div>
-{#            <a class="btn btn-skills" href="{{ path('dashboard') }}">Back</a>#}
-            <h3>{{ 'Chapters' | trans }}</h3>
-            <table class="table table-hover text-center">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">{{ 'Chapter' | trans }}</th>
-                    <th scope="col"># {{ 'pages' | trans }}</th>
-                    <th scope="col">{{ 'Translations' | trans }} <i
-                                title="This chapters' title and description translations.&#10;Click to go to that chapters edit page.&#10;Hover to see the missing translations."
-                                class="help-icon far fa-question-circle"></i></th>
-                    <th scope="col">&#10060;</th>
-                    <th scope="col">&#128269;</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for chapterObj in module.chapters %}
-                    {% set chapter = cr.chapterAsArray(chapterObj) %}
-                    {% if chapter is not empty %}
-                        {% set chapterNumber = chapter[0]['chapterNumber'] %}
-                        <tr>
-                            <th scope="row">{{ chapterNumber }}</th>
-                            <td>{% for chapterTranslation in chapter[0]['translations'] %}
-                                    {% if chapterTranslation['language']['name'] == language.name %}
-                                        {% if chapterTranslation['title'] == '' %}
-                                            {{ 'Not yet translated' | trans }}
-                                        {% else %}
-                                            {{ chapterTranslation['title'] }}
+            <div class="example-wrapper my-3">
+                <div class="text-center">
+                    <a class="btn button_1" href="{{ path('edit_module', {'module': module.id}) }}">{{ 'Module overview' | trans }}</a>
+                </div>
+    {#            <a class="btn btn-skills" href="{{ path('dashboard') }}">Back</a>#}
+                <h3>{{ 'Chapters' | trans }}</h3>
+                <table class="table table-hover text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{{ 'Chapter' | trans }}</th>
+                        <th scope="col"># {{ 'pages' | trans }}</th>
+                        <th scope="col">{{ 'Translations' | trans }} <i
+                                    title="This chapters' title and description translations.&#10;Click to go to that chapters edit page.&#10;Hover to see the missing translations."
+                                    class="help-icon far fa-question-circle"></i></th>
+                        <th scope="col">&#10060;</th>
+                        <th scope="col">&#128269;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for chapterObj in module.chapters %}
+                        {% set chapter = cr.chapterAsArray(chapterObj) %}
+                        {% if chapter is not empty %}
+                            {% set chapterNumber = chapter[0]['chapterNumber'] %}
+                            <tr>
+                                <th scope="row">{{ chapterNumber }}</th>
+                                <td>{% for chapterTranslation in chapter[0]['translations'] %}
+                                        {% if chapterTranslation['language']['name'] == language.name %}
+                                            {% if chapterTranslation['title'] == '' %}
+                                                {{ 'Not yet translated' | trans }}
+                                            {% else %}
+                                                {{ chapterTranslation['title'] }}
+                                            {% endif %}
                                         {% endif %}
-                                    {% endif %}
-                                {% endfor %}</td>
-                            <td>{{ chapter[0]['pages']|length }}</td>
-                            <td>
-                                {% for chapterTL in chapter[0]['translations'] %}
-                                    {% set badgeclass = 'badge-danger' %}
-                                    {% if chapterTL['title'] != '' %}
-                                        {% set badgeclass = 'badge-success' %}
-                                    {% endif %}
-                                    <a class="badge {{ badgeclass }}"
-                                       href="{{ path('edit_chapter', {'chapter': chapter[0]['id'], 'module': module.id, lang: chapterTL['language']['code']}) }}">{{ chapterTL['language']['name'] | lower }}</a>
-                                {% endfor %}
-                            </td>
-                            <td><a class="badge badge-danger"
-                                   href="{{ path('delete_chapter', {'chapter': chapter[0]['id'], return: 'dash'}) }}">{{ 'delete' | trans }}</a>
-                            </td>
-                            <td><a class="badge btn badge-primary"
-                                   href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">{{ 'Pages'| trans }} & {{ 'Quiz'| trans }}</a>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <th scope="row">{{ loop.index }}</th>
-                            <td colspan="6">{{ 'This chapter needs more pages'| trans }}! <a class="badge btn badge-warning"
-                                                                              href="{{ path('create_chapter', {'module': module.id, 'chapter':  chapterObj.id}) }}">{{'Add
-                                    one' | trans }}!</a></td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-                </tbody>
-            </table>
+                                    {% endfor %}</td>
+                                <td>{{ chapter[0]['pages']|length }}</td>
+                                <td>
+                                    {% for chapterTL in chapter[0]['translations'] %}
+                                        {% set badgeclass = 'badge-danger' %}
+                                        {% if chapterTL['title'] != '' %}
+                                            {% set badgeclass = 'badge-success' %}
+                                        {% endif %}
+                                        <a class="badge {{ badgeclass }}"
+                                           href="{{ path('edit_chapter', {'chapter': chapter[0]['id'], 'module': module.id, lang: chapterTL['language']['code']}) }}">{{ chapterTL['language']['name'] | lower }}</a>
+                                    {% endfor %}
+                                </td>
+                                <td><a class="badge badge-danger"
+                                       href="{{ path('delete_chapter', {'chapter': chapter[0]['id'], return: 'dash'}) }}">{{ 'delete' | trans }}</a>
+                                </td>
+                                <td><a class="badge btn badge-primary"
+                                       href="{{ path('dashboard_chapter', {chapter: chapter[0]['id']}) }}">{{ 'Pages'| trans }} & {{ 'Quiz'| trans }}</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <th scope="row">{{ loop.index }}</th>
+                                <td colspan="6">{{ 'This chapter needs more pages'| trans }}! <a class="badge btn badge-warning"
+                                                                                  href="{{ path('create_chapter', {'module': module.id, 'chapter':  chapterObj.id}) }}">{{'Add
+                                        one' | trans }}!</a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-
     {% endblock %}
