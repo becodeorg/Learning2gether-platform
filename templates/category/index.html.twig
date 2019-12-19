@@ -15,11 +15,11 @@
 
     <section class="example-wrapper">
 
-        <p class="title-css"> {{ category.learningModule.title(language) }}</p>
+        <h1 class="title-css"> {{ category.learningModule.title(language) }}</h1>
         {#    <p>{{ category.learningModule.description(language) }}</p>#}
 
 
-        <p class="subtitle-css">{{ 'Topics' | trans | upper }}</p>
+        <h4 class="subtitle-css">{{ 'Topics' | trans | upper }}</h4>
 
 
         {% for topic in topics %}

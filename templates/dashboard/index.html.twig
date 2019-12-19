@@ -10,9 +10,8 @@
     <div id="overlay"></div>
     <div class="example-wrapper my-5">
 
-        <div class="row">
-            <h1 class="mod-title">{{ 'Learning Module Dashboard' | trans }}</h1>
-        </div>
+        <h1 class="title-css my-5">{{ 'Learning Module Dashboard' | trans }}</h1>
+
         <!-- add module button -->
         <section class="row justify-content-between rowaddbutton main-page-button">
             <a href="{{ path('create_module') }}">
@@ -35,16 +34,16 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Chapters</th>
-                <th scope="col">Translations <i
+                <th scope="col">{{ 'Title' | trans }}</th>
+                <th scope="col">{{ 'Chapters' | trans }}</th>
+                <th scope="col">{{ 'Translations' | trans }}<i
                             title="This module's title and description translations.&#10;Click to go to that module's edit page."
                             class="help-icon far fa-question-circle"></i></th>
-                <th scope="col">Edit</th>
-                <th scope="col">Check <i
+                <th scope="col">{{ 'Edit' | trans }}</th>
+                <th scope="col">{{'Check' | trans }}<i
                             title="Click to check this module's problems.&#10;This process can take up to 15 seconds."
                             class="help-icon far fa-question-circle"></i></th>
-                <th scope="col">Status</th>
+                <th scope="col">{{ 'Status' | trans }}</th>
                 <th scope="col">&#10060;</th>
                 <th scope="col">&#128269;</th>
             </tr>
@@ -69,24 +68,24 @@
                             {% endfor %}
                         </td>
                         <td>
-                            <a class="badge badge-secondary" href="{{ path('edit_module', {'module': module.id}) }}">overview</a>
+                            <a class="badge badge-secondary" href="{{ path('edit_module', {'module': module.id}) }}">{{ 'overview' | trans }}</a>
                         </td>
                         <td>
                             <div id="flagbtn-{{ module.id }}" class="flagbtn badge badge-primary"
-                                 onclick="checkModule({{ module.id }})">check
+                                 onclick="checkModule({{ module.id }})">{{ 'check' | trans }}
                             </div>
                         </td>
                         {% if module.isPublished %}
                             <td>
-                                <div class="text-success badge">published</div>
+                                <div class="text-success badge">{{ 'published' | trans }}</div>
                             </td>
                         {% else %}
                             <td id="publish-{{ module.id }}">
-                                <div class="text-danger badge">unpublished</div>
+                                <div class="text-danger badge">{{ 'unpublished' | trans }}</div>
                             </td>
                         {% endif %}
-                        <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('Are you sure about that?')">delete</a></td>
-                        <td><a class="badge badge-primary" href="{{ path('dashboard_module', {module: module.id}) }}">chapters</a></td>
+                        <td><a class="badge badge-danger" href="{{ path('delete_module', {module: module.id}) }}" onclick="return confirm('Are you sure about that?')">{{ 'delete' | trans }}</a></td>
+                        <td><a class="badge badge-primary" href="{{ path('dashboard_module', {module: module.id}) }}">{{ 'chapters' | trans }}</a></td>
                     </tr>
 
                     <tr class="module-row">

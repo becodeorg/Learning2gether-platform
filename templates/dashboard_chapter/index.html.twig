@@ -10,120 +10,120 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <h1 class="mod-title">{{ 'Chapter Dashboard' | trans }}</h1>
-    </div>
-
     <div class="example-wrapper">
-        <div class="text-center">
-            <a class="btn btn-primary"
-               href="{{ path('create_chapter', {module: chapter.learningModule.id, chapter: chapter.id }) }}">Chapter
-                overview</a>
-        </div>
-        <h3>Pages</h3>
-        <table class="table table-hover text-center">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">{{ 'Page' | trans }} {{ 'title' | trans }}</th>
-                <th scope="col">{{ 'Translations' | trans }} <i
-                            title="This page's title and description translations.&#10;Click to go to that page's edit page."
-                            class="help-icon far fa-question-circle"></i>
-                </th>
-                <th scope="col">&#10060;</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for page in chapter.pages %}
-                {% set pageArray = pr.pageAsArray(page)[0] %}
-                {% set pageFlags = fm.checkPageTranslationSolo(pageArray, languagecount) %}
-                <tr>
-                    <th scope="row">{{ pageArray['pageNumber'] }}</th>
-                    <td>{% for pageTranslation in pageArray['translations'] %}
-                            {% if pageTranslation['language']['name'] == language.name %}
-                                {{ pageTranslation['title'] }}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for pageTL in pageArray['translations'] %}
-                            {% set badgeclass = 'badge-danger' %}
-                            {% if pageTL['title'] != '' %}
-                                {% set badgeclass = 'badge-success' %}
-                            {% endif %}
-                            <a class="badge {{ badgeclass }}"
-                               href="{{ path('edit_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, lang: pageTL['language']['code'], return: 'dash'}) }}">{{ pageTL['language']['name'] }}</a>
-                        {% endfor %}
-                    </td>
-                    <td><a class="badge badge-danger"
-                           onclick="return confirm('Are you sure you want to delete this page?')"
-                           href="{{ path('delete_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, return: 'dash'}) }}">Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <h3>Quiz <a class="btn btn-skills"
-                    href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">Test</a></h3>
-        <table class="table table-hover text-center">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Question</th>
-                <th scope="col"># answers</th>
-                <th scope="col">Translations <i
-                            title="This question's title and description translations.&#10;Click to go to that question's edit page.&#10;Hover to see the missing translations."
-                            class="help-icon far fa-question-circle"></i>
-                </th>
-                <th scope="col">&#128269;</th>
-            </tr>
-            </thead>
-            <tbody>
+        <h1 class="title-css">{{ 'Chapter Dashboard' | trans }}</h1>
 
-            {% if cr.chapterQuizAsArray(chapter) is empty %}
+        <div class="example-wrapper">
+            <div class="text-center">
+                <a class="btn button_1"
+                   href="{{ path('create_chapter', {module: chapter.learningModule.id, chapter: chapter.id }) }}">{{ 'Chapter
+                    overview' | trans }}</a>
+            </div>
+            <h3>Pages</h3>
+            <table class="table table-hover text-center">
+                <thead>
                 <tr>
-                    <td colspan="6">
-                        This quiz has no questions! <a class="badge btn badge-warning"
-                                                       href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">
-                            Add one!</a>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">{{ 'Page' | trans }} {{ 'title' | trans }}</th>
+                    <th scope="col">{{ 'Translations' | trans }} <i
+                                title="This page's title and description translations.&#10;Click to go to that page's edit page."
+                                class="help-icon far fa-question-circle"></i>
+                    </th>
+                    <th scope="col">&#10060;</th>
                 </tr>
-            {% else %}
-                {% for question in cr.chapterQuizAsArray(chapter)[0]['quiz']['quizQuestions'] %}
+                </thead>
+                <tbody>
+                {% for page in chapter.pages %}
+                    {% set pageArray = pr.pageAsArray(page)[0] %}
+                    {% set pageFlags = fm.checkPageTranslationSolo(pageArray, languagecount) %}
                     <tr>
-                        <th scope="row">{{ question['questionNumber'] }}</th>
-                        <td>{% for questionTranslation in question['translations'] %}
-                                {% if questionTranslation['language']['name'] == language.name %}
-                                    {% if questionTranslation['title'] == '' %}
-                                        Not yet translated
-                                    {% else %}
-                                        {{ questionTranslation['title'] |slice(0, 40) ~ '...' }}
-                                    {% endif %}
+                        <th scope="row">{{ pageArray['pageNumber'] }}</th>
+                        <td>{% for pageTranslation in pageArray['translations'] %}
+                                {% if pageTranslation['language']['name'] == language.name %}
+                                    {{ pageTranslation['title'] }}
                                 {% endif %}
                             {% endfor %}
                         </td>
-                        <td>{{ question['answers']|length }}</td>
                         <td>
-                            {% for questionTL in question['translations'] %}
+                            {% for pageTL in pageArray['translations'] %}
                                 {% set badgeclass = 'badge-danger' %}
-                                {% if questionTL['title'] != '' %}
+                                {% if pageTL['title'] != '' %}
                                     {% set badgeclass = 'badge-success' %}
                                 {% endif %}
                                 <a class="badge {{ badgeclass }}"
-                                   href="{{ path('quiz_question_edit', {'id': question['id'], lang: questionTL['language']['code'], return: 'dash'}) }}">{{ questionTL['language']['name'] }}</a>
+                                   href="{{ path('edit_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, lang: pageTL['language']['code'], return: 'dash'}) }}">{{ pageTL['language']['name'] }}</a>
                             {% endfor %}
                         </td>
-                        <td>
-                            <a class="badge badge-primary"
-                               href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">answers</a>
+                        <td><a class="badge badge-danger"
+                               onclick="return confirm('Are you sure you want to delete this page?')"
+                               href="{{ path('delete_page', {'chapter': chapter.id, 'module': chapter.learningModule.id, 'page': page.id, return: 'dash'}) }}">{{ 'Delete' | trans }}</a>
                         </td>
                     </tr>
                 {% endfor %}
-            {% endif %}
-            </tbody>
-        </table>
-        <div class="text-center">
-            <a class="badge badge-primary" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">edit quiz</a>
+                </tbody>
+            </table>
+            <h3>Quiz <a class="btn btn-skills"
+                        href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">{{ 'Test' | trans }}</a></h3>
+            <table class="table table-hover text-center">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">{{ 'Question' | trans }}</th>
+                    <th scope="col"># {{ 'answers' | trans }}</th>
+                    <th scope="col">{{ 'Translations' | trans }} <i
+                                title="This question's title and description translations.&#10;Click to go to that question's edit page.&#10;Hover to see the missing translations."
+                                class="help-icon far fa-question-circle"></i>
+                    </th>
+                    <th scope="col">&#128269;</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if cr.chapterQuizAsArray(chapter) is empty %}
+                    <tr>
+                        <td colspan="6">
+                            {{ 'This quiz has no questions' | trans }}! <a class="badge btn badge-warning"
+                                                           href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">
+                                {{ 'Add one' | trans }}!</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    {% for question in cr.chapterQuizAsArray(chapter)[0]['quiz']['quizQuestions'] %}
+                        <tr>
+                            <th scope="row">{{ question['questionNumber'] }}</th>
+                            <td>{% for questionTranslation in question['translations'] %}
+                                    {% if questionTranslation['language']['name'] == language.name %}
+                                        {% if questionTranslation['title'] == '' %}
+                                            {{ 'Not yet translated' | trans }}
+                                        {% else %}
+                                            {{ questionTranslation['title'] |slice(0, 40) ~ '...' }}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>{{ question['answers']|length }}</td>
+                            <td>
+                                {% for questionTL in question['translations'] %}
+                                    {% set badgeclass = 'badge-danger' %}
+                                    {% if questionTL['title'] != '' %}
+                                        {% set badgeclass = 'badge-success' %}
+                                    {% endif %}
+                                    <a class="badge {{ badgeclass }}"
+                                       href="{{ path('quiz_question_edit', {'id': question['id'], lang: questionTL['language']['code'], return: 'dash'}) }}">{{ questionTL['language']['name'] }}</a>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a class="badge badge-primary"
+                                   href="{{ path('dashboard_question', {chapter: chapter.id , question: question['id']}) }}">{{ 'answers' | trans }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+            <div class="text-center">
+                <a class="badge badge-primary" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">{{ 'edit quiz' | trans }}</a>
+            </div>
         </div>
     </div>
 {% endblock %}
