@@ -190,18 +190,14 @@ body {
   background-color: #33003d;
   color: #fdfdfd; }
 
-#profiledrop {
-  padding-top: 5px; }
-
 #reveal {
   position: absolute;
   background: #fdfdfd;
   width: 100px;
-  margin-top: 30px;
+  margin-top: 19px;
   z-index: 55;
   right: 15px;
-  background: #8b54a0;
-  border: 1px solid #fdfdfd; }
+  background: #8b54a0; }
 
 #reveal a {
   color: #fdfdfd; }
@@ -275,7 +271,7 @@ body {
 @media only screen and (max-width: 767px) {
   #reveal {
     left: 0;
-    margin-top: 10px; }
+    margin-top: 14px; }
 
   #reveal a {
     padding: 5px; }
@@ -816,6 +812,9 @@ footer a {
 
 .forum-cat-row {
   margin-bottom: 35px; }
+
+.forum-upvote-count {
+  margin-top: 9px !important; }
 
 a {
   color: #8b54a0; }
