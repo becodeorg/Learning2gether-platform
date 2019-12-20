@@ -13,12 +13,6 @@
 
 {% block body %}
 
-
-    {# <h2>Current Category</h2>
-     {{ category.learningModule.title(language) }}<br>
-     {{ category.learningModule.description(language) }} <br><br>#}
-
-
     <section class="example-wrapper">
 
         {#    TOPIC TITLE#}
@@ -41,7 +35,7 @@
 
                     <div class="col-2 questions-cards-forum">
                         {# Count Replies#}
-                        <p>{{ postCount[question.id] }}{{ 'Answer(s)' | trans }}</p>
+                        <p>{{ postCount[question.id] }} {{ 'Answer(s)' | trans | lower}}</p>
                     </div>
 
                     <div class="col-3 questions-cards-forum">
@@ -50,7 +44,7 @@
 
                     <div class="col-3">
                         {# Link to the question's detail page#}
-                        <a class="btn-forum button_4"
+                        <a class="btn-forum button_8"
                            href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
                             {{ 'Show' | trans }}
                         </a>
@@ -59,13 +53,16 @@
             </div>
         {% endfor %}
 
+        <p class="subtitle-css mt-5">{{ 'Add new question' | trans | upper }}</p>
+
         <section class="container topic-questions">
+
             {{ form_start(addQuestion) }}
 
             <section class="row question-row">
                 <div class="col-3">
                     {# Form text #}
-                    {{ form_label(addQuestion.question, 'Question Title:', { 'label_attr': {'class': 'question-text'} }) }}
+                    {{ form_label(addQuestion.question, 'Title:', { 'label_attr': {'class': 'question-text'} }) }}
                 </div>
                 <div class="col-9">
                     {# Form inputfield #}
@@ -76,7 +73,7 @@
             <section class="row">
                 <div class="col-3">
                     {# Form text #}
-                    {{ form_label(addQuestion.questionDescription, 'Question Description:', { 'label_attr': {'class': 'questionDescription-text'} }) }}
+                    {{ form_label(addQuestion.questionDescription, 'Description:', { 'label_attr': {'class': 'questionDescription-text'} }) }}
                 </div>
 
                 <div class="col-9">
@@ -85,7 +82,7 @@
                 </div>
             </section>
 
-           <button type="submit" class="btn-forum button_4">{{ 'Send Question' | trans }}</button>
+           <button type="submit" class="btn-forum button_8">{{ 'Send Question' | trans }}</button>
 
             {{ form_end(addQuestion) }}
 

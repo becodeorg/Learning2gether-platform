@@ -125,11 +125,12 @@
             {% endif %}
         {% endfor %}
 
+        <p class="subtitle-css mt-5">{{ 'Add new reply' | trans | upper }}</p>
         <div class="postform">
             {# Input answer to question#}
             {{ form_start(postForm) }}
             {{ form_widget(postForm.subjectPost) }}
-            <button class="btn-forum submitPost button_4" type="submit" class="">{{ 'Send' | trans }}</button>
+            <button class="btn-forum submitPost button_8" type="submit" class="">{{ 'Send' | trans }}</button>
             {{ form_end(postForm) }}
         </div>
 

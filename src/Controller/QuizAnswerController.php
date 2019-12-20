@@ -35,34 +35,45 @@ class QuizAnswerController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($request->query->get('lang') === null){
-            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
-            $request->query->set('lang', $language->getCode());
-        }else {
-            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
+        if(isset($_GET['lang'])){
+            $crumbLang = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => $_GET['lang']]);
+        } else {
+            return $this->redirectToRoute('quiz_show', ['id' => $quizQuestion->getQuiz()->getId()]);
         }
 
+        $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
+
         $quizAnswer = new QuizAnswer($quizQuestion);
-        $quizAnswerTranslation = new QuizAnswerTranslation($quizAnswer,$language);
+        $quizAnswerTranslation = new QuizAnswerTranslation($quizAnswer,$english);
 
         $form = $this->createForm(QuizAnswerTranslationType::class, $quizAnswerTranslation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Successfully added a new answer');
-            $quizAnswerTranslation = $form->getData();
-            $quizAnswer->addTranslation($quizAnswerTranslation);
+
+            $englishTranslation = $form->getData();
+            $quizAnswer->addTranslation($englishTranslation);
+
+            $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+
+            foreach ($languageAll as $language) {
+                if ($language->getCode() !== 'en') {
+                    $translation = new QuizAnswerTranslation($quizAnswer, $language);
+                    $quizAnswer->addTranslation($translation);
+                }
+            }
 
             $em->persist($quizAnswer);
             $em->flush();
 
+            $this->addFlash('success', 'Successfully added a new answer');
             return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
         }
 
         return $this->render('quiz_answer/new.html.twig', [
             'quiz_answer' => $quizAnswer,
             'form' => $form->createView(),
-            'language' => $language
+            'language' => $crumbLang
         ]);
     }
 
@@ -119,15 +130,13 @@ class QuizAnswerController extends AbstractController
             if (isset($returnCode)) {
                 switch ($returnCode) {
                     case 'flow':
-                        return $this->redirectToRoute('quiz_show', ['id'=>$quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
+                        return $this->redirectToRoute('quiz_show', ['id' => $quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
                     case 'dash':
                         return $this->redirectToRoute('dashboard_question', ['chapter' => $quizAnswer->getQuizQuestion()->getQuiz()->getChapter()->getId(), 'question' => $quizAnswer->getQuizQuestion()->getId()]);
                     default:
                         return $this->redirectToRoute('partner');
                 }
             }
-
-//            return $this->redirectToRoute('quiz_show', ['id'=>$quizAnswer->getQuizQuestion()->getQuiz()->getId()]);
         }
 
         return $this->render('quiz_answer/edit.html.twig', [

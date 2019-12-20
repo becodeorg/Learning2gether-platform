@@ -128,6 +128,11 @@ body {
   text-decoration: none;
 }
 
+.button_8 {
+  background-color: rgb(75,75,75);
+  color: $offwhite;
+}
+
 .round_button {
   width: 30px;
   height: 30px;
@@ -232,18 +237,18 @@ body {
 }
 
 #profiledrop {
-  padding-top: 5px;
+  //padding-top: 5px;
 }
 
 #reveal{
     position: absolute;
     background: $offwhite;
     width: 100px;
-    margin-top: 30px;
+    margin-top: 19px;
     z-index: 55;
     right: 15px;
     background: $purple;
-    border: 1px solid $white;
+    //border: 1px solid $white;
 }
 
 #reveal a{
@@ -336,12 +341,13 @@ body {
 @media only screen and (max-width: 767px) {
     #reveal{
         left: 0;
-        margin-top: 10px;
+        margin-top: 14px;
     }
 
     #reveal a{
         padding: 5px;
     }
+
 
   .spinnerstyle{
     margin-right: 0;

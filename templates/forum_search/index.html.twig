@@ -4,7 +4,7 @@
 
 {% block body %}
     <section class="example-wrapper">
-        <h3 class="title-css">{{ 'Search results' | trans }}</h3>
+        <h3 class="title-css">{{ 'Search Results' | trans }}</h3>
         <p class="subtitle-css">{{ 'Forum' | trans }} {{ 'Question(s)' | trans }} </p>
         {% for results in resultsFromQuestion %}
             <a      class=""
@@ -14,7 +14,7 @@
         {% endfor %}
         <br>
         <hr><br>
-        <p class="subtitle-css">{{ 'Answer(s)' | trans }}</p>
+        <p class="subtitle-css">{{ 'Replies' | trans }}</p>
         {% for results in resultsFromPost %}
 
             <a href="{{ path('question', {'category': results.question.category.id, 'chapter': results.question.chapter.id, 'question': results.question.id}) }}"><br>
