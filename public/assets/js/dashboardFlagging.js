@@ -21,7 +21,7 @@ function checkModule(moduleId) {
             overlay.style.display='block';
             let listDump = '<ul style="width: 100%">';
             for (let i = 0; i < data.length; i++){
-                listDump += '<li>' + data[i] + '</li>';
+                listDump += '<li>' + data[i] + '.&nbsp</li>';
             }
             listDump += '</ul>';
             dump.innerHTML = listDump;
