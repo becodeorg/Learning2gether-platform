@@ -99,7 +99,8 @@
                 {% else %}
                     <tr class="text-center">
                         <th scope="row">{{ loop.index }}</th>
-                        <td colspan="6">{{ 'This module needs more chapters!' | trans }} {link to module overview}</td>
+                        <td colspan="6">{{ 'This module needs more chapters!' | trans }} <a class="badge badge-warning" href="{{ path('edit_module', {'module': module.id}) }}">{{ 'add one' | trans }}</a>
+                        </td>
                     </tr>
                 {% endif %}
             {% endfor %}
