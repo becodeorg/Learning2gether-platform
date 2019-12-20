@@ -21,7 +21,7 @@
             {{ form_start(chapterTranslationForm) }}
             {{ form_row(chapterTranslationForm.title) }}
             {{ form_row(chapterTranslationForm.description) }}
-            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Update' | trans }}</button>
+            <button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' | trans }}</button>
             {{ form_end(chapterTranslationForm) }}
         </section>
 
@@ -34,7 +34,7 @@
             <section class="module-cube">
                 <span>{{ 'Page nr' | trans }}: {{ loop.index }}</span><br>
                 <span>{{ 'Page title' | trans }}: {{ page.title(english) }}</span><br>
-                <a class="p-1 btn btn-skills button_4 buttonNavBox"
+                <a class="p-1 btn btn-skills button_8 buttonNavBox"
                    href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">
                     {{ 'Edit Page' | trans }}</a>
                 <a class="btn-deletequestion button_2 deleteHover float-right" onclick="return confirm('Are you sure you want to delete this page?')"

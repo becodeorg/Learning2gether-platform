@@ -15,7 +15,7 @@
 
     <div class="example-wrapper">
         <div class="text-center">
-            <a class="p-1 btn btn-skills button_4 buttonNavBox"
+            <a class="p-1 btn btn-skills button_8 buttonNavBox"
                href="{{ path('create_chapter', {module: chapter.learningModule.id, chapter: chapter.id }) }}">{{ 'Chapter Overview' | trans}}
                 </a>
         </div>
@@ -63,11 +63,11 @@
             </tbody>
         </table>
         <div class="text-center">
-            <a class="p-1 btn btn-skills button_4 buttonNavBox"
+            <a class="p-1 btn btn-skills button_8 buttonNavBox"
                href="{{ path('create_chapter', {'module': chapter.learningModule.id, 'chapter': chapter.id}) }}">{{ 'Edit Chapter' | trans }}</a>
         </div>
         <br>
-        <h3 class="subtitle-css">Quiz <a class="p-1 btn btn-skills button_4"
+        <h3 class="subtitle-css">Quiz <a class="p-1 btn btn-skills button_8"
                     href="{{ path('quiz_show_user', {'quiz': chapter.quiz.id, 'test': 'true'}) }}">{{ 'Test' | trans }}</a></h3>
         <table class="table table-hover text-center">
             <thead>
@@ -124,7 +124,7 @@
             </tbody>
         </table>
         <div class="text-center">
-            <a class="p-1 btn btn-skills button_4 buttonNavBox" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">{{ 'Edit Quiz' | trans }}</a>
+            <a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('quiz_show', {'id': chapter.quiz.id}) }}">{{ 'Edit Quiz' | trans }}</a>
         </div>
     </div>
 {% endblock %}
