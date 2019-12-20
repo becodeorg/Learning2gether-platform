@@ -820,6 +820,9 @@ footer a {
 .forum-cat-row {
   margin-bottom: 35px; }
 
+.forum-upvote-count {
+  margin-top: 9px !important; }
+
 a {
   color: #8b54a0; }
 

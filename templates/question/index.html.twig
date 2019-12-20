@@ -98,10 +98,9 @@
                     <div class="col-1 imageWrapperPost">
                         <div class="float-right">
                             {{ form_start(upvotes[post.id]) }}
-                            {{ upvoters[post.id] }}
-
-                            <button type="submit" class=""><img src="{{ asset('assets/img/thumbicon.png') }}"
-                                                                alt="btn-delete"></button>
+                            <div class="d-flex"><strong class="my-auto forum-upvote-count">{{ upvoters[post.id] }}</strong>
+                                <button type="submit" class="btn"><i class="fas fa-thumbs-up"></i></button>
+                            </div>
                             {#                            {{ form_widget(upvotes[post.id].upvote, {'attr': {'class': 'upvote-img'}}) }}#}
                             {{ form_end(upvotes[post.id]) }}
                         </div>
