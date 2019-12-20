@@ -50,7 +50,7 @@
 
                     <div class="col-3">
                         {# Link to the question's detail page#}
-                        <a class="btn-forum button_4"
+                        <a class="btn-forum button_8"
                            href="{{ path('question', {'category': category.id, 'chapter': currentTopic.id, 'question': question.id}) }}">
                             {{ 'Show' | trans }}
                         </a>
@@ -85,7 +85,7 @@
                 </div>
             </section>
 
-           <button type="submit" class="btn-forum button_4">{{ 'Send Question' | trans }}</button>
+           <button type="submit" class="btn-forum button_8">{{ 'Send Question' | trans }}</button>
 
             {{ form_end(addQuestion) }}
 

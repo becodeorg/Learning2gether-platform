@@ -53,10 +53,10 @@
         {{ form_row(form.title) }}
         {{ form_row(form.content) }}
         <div class="text-center">
-            <button class="p-1 btn btn-skills button_4 buttonNavBox">{{ 'Save' | trans }}</button>
+            <button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Save' | trans }}</button>
             {{ form_end(form) }}
             <hr>
-            <a class="p-1 btn btn-skills button_4 buttonNavBox" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">{{ 'Back to chapter' | trans }}</a>
+            <a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('create_chapter', {module : page.chapter.learningModule.id , chapter : page.chapter.id}) }}">{{ 'Back to chapter' | trans }}</a>
         </div>
 
     </div>
