@@ -63,6 +63,12 @@ class Quiz
         return $this;
     }
 
+    public function createNewQuestion(): QuizQuestion
+    {
+        $questionCount = count($this->getQuizQuestions());
+        return new QuizQuestion(++$questionCount, $this);
+    }
+
     public function removeQuizQuestion(QuizQuestion $quizQuestion): self
     {
         if ($this->quizQuestions->contains($quizQuestion)) {

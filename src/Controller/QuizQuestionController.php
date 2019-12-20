@@ -18,7 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class QuizQuestionController extends AbstractController
 {
-
     /**
      * @Route("/partner/quiz/question/", name="quiz_question_index", methods={"GET"})
      */
@@ -38,29 +37,31 @@ class QuizQuestionController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(QuizQuestion::class);
 
-        if ($request->query->get('lang') === null){
-            $language = $em->getRepository(Language::class)->findOneBy(['code'=>$request->getLocale()]);
-            $request->query->set('lang', $language->getCode());
-        }else {
-            $language = $em->getRepository(Language::class)->findOneBy(['code' => $request->query->get('lang')]);
-        }
+        $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
 
-        $questionNmbr = $repo->findNumberOfQuestionsForGivenID($quiz->getId());
-
-        $quizQuestion = new QuizQuestion(++$questionNmbr, $quiz);
-        $quizQuestionTranslation = new QuizQuestionTranslation($quizQuestion, $language);
+        $quizQuestion = $quiz->createNewQuestion();
+        $quizQuestionTranslation = new QuizQuestionTranslation($quizQuestion, $english);
 
         $form = $this->createForm(QuizQuestionTranslationType::class, $quizQuestionTranslation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Successfully added a new question');
-            $quizQuestionTranslation = $form->getData();
-            $quizQuestion->addTranslation($quizQuestionTranslation);
+            $englishTranslation = $form->getData();
+
+            $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
+            $quizQuestion->addTranslation($englishTranslation);
+
+            foreach ($languageAll as $language) {
+                if ($language->getCode() !== 'en') {
+                    $translation = new QuizQuestionTranslation($quizQuestion, $language);
+                    $quizQuestion->addTranslation($translation);
+                }
+            }
 
             $em->persist($quizQuestion);
             $em->flush();
 
+            $this->addFlash('success', 'Successfully added a new question');
             return $this->redirectToRoute('quiz_show', ['id'=>$quizQuestion->getQuiz()->getId()]);
         }
 
