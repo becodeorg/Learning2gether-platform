@@ -17,7 +17,7 @@
 
         {# question asked #}
         {#        <p class="title-css">{{ question.subject }}</p> #}
-        <p class="subtitle-css">{{ 'Question' | trans | upper }}</p>
+        <p class="subtitle-css">{{ 'Question' | trans | title  }}</p>
         {% for post in posts %}
 
             {% if loop.first %}
@@ -65,7 +65,7 @@
                 {% if is_granted('ROLE_PARTNER') or (userId == question.createdBy.Id) %}
                     {{ include('question/_delete_question.html.twig') }}
                 {% endif %}
-                <p class="subtitle-css">{{ 'Replies' | trans | upper }}</p>
+                <p class="subtitle-css">{{ 'Replies' | trans | title  }}</p>
             {% else %}
 
                 <div class="row question-answer-row ">
@@ -125,7 +125,7 @@
             {% endif %}
         {% endfor %}
 
-        <p class="subtitle-css mt-5">{{ 'Add new reply' | trans | upper }}</p>
+        <p class="subtitle-css mt-5">{{ 'Add new reply' | trans | title  }}</p>
         <div class="postform">
             {# Input answer to question#}
             {{ form_start(postForm) }}

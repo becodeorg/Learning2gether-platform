@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G - {{ 'Forum' | trans}}{% endblock %}
+{% block title %}L2G - {{ 'Forum' | trans | title }}{% endblock %}
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a>
@@ -20,7 +20,7 @@
             {{ currentTopic.title(language) }}
         </h1>
 
-        <p class="subtitle-css">{{ 'Questions' | trans | upper }}</p>
+        <p class="subtitle-css">{{ 'Questions' | trans | title  }}</p>
 
         {% for question in questions %}
 
@@ -53,7 +53,7 @@
             </div>
         {% endfor %}
 
-        <p class="subtitle-css mt-5">{{ 'Add new question' | trans | upper }}</p>
+        <p class="subtitle-css mt-5">{{ 'Add new question' | trans | title  }}</p>
 
         <section class="container topic-questions">
 

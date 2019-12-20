@@ -6,10 +6,10 @@
 
     <div class="example-wrapper">
 
-        <h1 class="title-css">{{ 'Learning Hub' | trans }}</h1>
+        <h1 class="title-css">{{ 'Learning hub' | trans | title }}</h1>
         <p class="text-center intro-lh">{{ 'Navigate through the Learning Modules and find the right training for you to advance your skills' | trans }}</p>
 
-        <h2 class="subtitle-css">{{ 'Your courses' | trans }}</h2>
+        <h2 class="subtitle-css">{{ 'Your courses' | trans | title }}</h2>
 
         <div class="row forum-cat-row">
             <div class="col-3 col-md-auto skillset">select skillset:</div>
@@ -35,7 +35,7 @@
 
         {% for module in finishedModules %}
             {% if loop.first %}
-                <h2 class="subtitle-css">{{ 'Completed courses' | trans }}</h2>
+                <h2 class="subtitle-css mt-5 mb-3">{{ 'your ompleted courses' | trans | title }}</h2>
                 <div class="card-columns">
             {% endif %}
             {% include 'portal/partials/module.html.twig' with {'module': module, 'label': 'Restart this course'} %}
@@ -43,12 +43,5 @@
                 </div>
             {% endif %}
         {% endfor %}
-
-        <hr>
-        <a href="{{ path('forum') }}">{{ 'Forum' | trans }}</a>
-
-        {#
-                <a href="{{ path('app_logout') }}">Logout</a>
-        #}
     </div>
 {% endblock %}
