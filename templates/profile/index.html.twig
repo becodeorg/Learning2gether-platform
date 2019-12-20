@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}L2G - {{ 'My Profile' | trans }}{% endblock %}
+{% block title %}L2G - {{ 'My profile' | trans | title }}{% endblock %}
 
 {% block body %}
 <div class="example-wrapper">
@@ -40,36 +40,24 @@
                     <button class="button_2 button bottom">{{ 'Update' | trans }} {{ 'Profile' | trans }}</button>
 
                     {{ form_end(profileForm) }}
+
+                    {# Delete my account#}
                     <div>
                         {{ form_start(deleteBtn) }}
                         {{ form_widget(deleteBtn.delete_user,
                             { 'label': 'Delete my account'
-                                , 'attr': {'onclick': 'return confirm("Are you sure to delete your account?")', 'class': 'button btn-danger'}
+                                , 'attr': {'onclick': 'return confirm("Are you sure to delete your account?")', 'class': 'btn-deletequestion button_2 deleteHover'}
                             }) }}
                         {{ form_end(deleteBtn) }}
                     </div>
                 </div>
             </div>
 
-            {# Delete my account#}
-
-            <div>
-                {{ form_start(deleteBtn) }}
-                {{ form_widget(deleteBtn.delete_user,
-                    { 'label': 'Delete my account'
-
-                    , 'attr': {'onclick': 'return confirm("Are you sure you want to delete your profile?")'}
-                    }) }}
-                {{ form_end(deleteBtn) }}
-            </div>
-
-
-
             {% for module in user.activeModules(modules) %}
                 <div class="progression">
                     {% if loop.first %}
 
-                        <h3 class="title-css progresstitle">{{ 'Active courses unlocked percentage' | trans }}</h3>
+                        <h3 class="title-css progresstitle">{{ 'Active courses unlocked percentage' | trans | title }}</h3>
 
                     {% endif %}
                     <p class="coursetitle">{{ module.title(language) }}</p>
@@ -93,7 +81,7 @@
         </div>
 
         <div class="badges col-md-4 row">
-            <h5 class="title-css center">{{ 'Your badges' | trans }}:</h5>
+            <h5 class="title-css center">{{ 'Your badges' | trans | title }}:</h5>
             {% for badge in userBadges %}
                 <div class="badge col-sm-6">
                     <p class="badgename">{{ badge.result.0.name }}</p>
