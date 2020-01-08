@@ -18,7 +18,10 @@ class EditModuleType extends AbstractType
             ->add('badge')
             ->add('type', ChoiceType::class, [
                 'label' => 'Select type:',
-                'choices' => [LearningModuleType::soft(), LearningModuleType::hard()],
+                'choices' => [
+                    (string)LearningModuleType::soft(),
+                    (string)LearningModuleType::hard()
+                ],
                 'choice_label' => static function($value){ return $value; },
                 'multiple'=>false,
                 'expanded'=>true

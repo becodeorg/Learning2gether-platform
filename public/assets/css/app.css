@@ -1099,7 +1099,7 @@ body {
   color: grey; }
 
 .btn-deletequestion {
-  border: none;
+  border: 3px solid lightcoral;
   background-color: lightcoral;
   color: #fdfdfd;
   font-family: "Chivo", sans-serif;
@@ -1109,15 +1109,29 @@ body {
 
 .question-answer-row {
   margin-top: 20px;
-  background-color: #99cdd8;
   padding: 10px 5px 10px 5px;
-  border-radius: 20px; }
+  border-radius: 20px;
+  background-color: #b369b5;
+  position: relative; }
+
+.question-answer-row.odd {
+  background-color: #faefff; }
 
 .upvote-img {
   background-image: url("../../public/assets/img/thumbsup.png"); }
 
+button.btn-no-bg {
+  background: no-repeat;
+  border: none; }
+
 .imageWrapperPost {
   top: 22px; }
+
+.btn-forum {
+  border: 0px solid white;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75); }
 
 .postform {
   background-color: #8b54a0;
@@ -1126,6 +1140,11 @@ body {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   margin-top: 20px; }
+
+.delete-post-form {
+  position: absolute;
+  top: -20px;
+  right: 6px; }
 
 .submitPost {
   margin-top: 20px; }
@@ -1142,6 +1161,7 @@ body {
   color: red; }
 
 /*
+
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
  */
 

@@ -3,11 +3,9 @@
 {% block title %}{{ 'Quiz'|trans }}{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
-{#    {% for crumb in quiz.learnerBreadcrumbs(app.user.language) %}#}
-{#        {{ include('partials/breadcrumbs.html.twig') }}#}
-{#    {% endfor %}#}
+    {% for crumb in quiz.learnerBreadcrumbs(app.user.language) %}
+        {{ include('partials/breadcrumbs.html.twig') }}
+    {% endfor %}
 {% endblock %}
 
 {% block body %}

@@ -11,6 +11,9 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- CHIVO FONT -->
     <link href="https://fonts.googleapis.com/css?family=Chivo:300,400,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
     <script src="https://kit.fontawesome.com/c1a3a3bd8a.js" crossorigin="anonymous"></script>
@@ -41,29 +44,35 @@
 
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                 <li class="nav-item active hubnav">
-                    <a class="nav-link" href="{{ path('portal') }}"><img height="25px"
+                    <a class="nav-link"
+                       data-toggle="tooltip" data-placement="right" title="{{ 'Portal' | trans }}"
+                       href="{{ path('portal') }}"><img height="25px"
                                                                          src="{{ asset('assets/img/lightlogo-09.png') }}"
-                                                                         alt="Learninghub"><span
+                                                                         alt="{{ 'Portal' | trans }}"><span
                                 class="sr-only">(current)</span></a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    {{ include('language_switcher/_switcher.html.twig') }} {# have switcherForm in the header of every page#}
-                </li>
+
 
                 <li class="nav-item formnav">
-                    <a class="nav-link" href="{{ path('forum') }}"><img height="25px"
+                    <a class="nav-link"
+                       data-toggle="tooltip" data-placement="right" title="{{ 'Meetingplace' | trans }}"
+                       href="{{ path('forum') }}"><img height="25px"
                                                                         src="{{ asset('assets/img/lightlogo-10.png') }}"
                                                                         alt="{{ 'Meetingplace' | trans }}"></a>
                 </li>
 
                 <li class="nav-item profilenav">
-                    <div class="nav-link" id="profiledrop"><img height="25px" src="{{ asset('assets/img/lightlogo-11.png') }}"
+                    <div class="nav-link" id="profiledrop"><img data-toggle="tooltip" data-placement="right" title="{{ 'Profile' | trans }}" height="25px" src="{{ asset('assets/img/lightlogo-11.png') }}"
                                                alt="{{ 'Profile' | trans }}"></div>
                     <div id="reveal" class="gone">
                         <a class="nav-link" href="{{ path('profile') }}">{{ 'My profile' | trans }}</a>
                         <a class="nav-link" href="{{ path('app_logout') }}">{{ 'Logout' | trans }}</a>
                     </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    {{ include('language_switcher/_switcher.html.twig') }} {# have switcherForm in the header of every page#}
                 </li>
             </ul>
 
@@ -93,5 +102,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <script src="{{ asset('assets/js/script.js') }}"></script>
+<script>$('[data-toggle="tooltip"]').tooltip();</script>
 </body>
 </html>

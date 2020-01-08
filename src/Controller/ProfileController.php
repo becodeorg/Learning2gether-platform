@@ -16,6 +16,7 @@ use Swift_Mailer;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +48,13 @@ class ProfileController extends AbstractController
             $badgeKeys[] = $badgeKey;
         }
         $badgrHandler = new Badgr;
-        $userBadges = $badgrHandler->getAllBadges($badgeKeys, $user);
+        try {
+            $userBadges = $badgrHandler->getAllBadges($badgeKeys, $user);
+        }
+        catch(ClientException $e) {
+            //nothing happens, badge was not configured correctly.
+            $this->addFlash('error', 'You completed a module with a broken badge. Please contact Learning2Gether to fix this.');
+        }
 
         // Edit-profile
         $form = $this->createForm(EditProfileType::class, $user);

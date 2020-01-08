@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Domain\Badgr;
 use App\Domain\ImageManager;
 use App\Entity\Chapter;
 use App\Entity\ChapterTranslation;
@@ -18,6 +19,7 @@ use App\Form\ImageUploaderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,11 +52,18 @@ class EditModuleController extends AbstractController
         $moduleImageForm->handleRequest($request);
 
         if ($moduleForm->isSubmitted() && $moduleForm->isValid()) {
-            $module = $moduleForm->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($module);
-            $em->flush();
-            $this->addFlash('success', 'Changes saved!');
+            $badgr = new Badgr();
+            try {
+                $badgr->getImage($this->getUser(), $module->getBadge());
+                $module = $moduleForm->getData();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($module);
+                $em->flush();
+                $this->addFlash('success', 'Changes saved!');
+            }
+            catch(ClientException $e) {
+                $this->addFlash('error', 'This is an invalid badge hash!');
+            }
         }
 
         if ($moduleTLForm->isSubmitted() && $moduleTLForm->isValid()){

@@ -50,7 +50,7 @@ class L2gImportUsersCommand extends Command
 
             $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
 
-            //$this->em->persist($user);
+            $this->em->persist($user);
 
             $io->comment(sprintf('%s : %s', $email, $password));
         }

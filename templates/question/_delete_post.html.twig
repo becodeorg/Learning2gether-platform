@@ -1,11 +1,16 @@
-<form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" class="delete-post-form">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
 
 
     <div class="row">
         <div class="col">
-            <button class="btn-deletequestion button_2 deleteHover float-right">{{ 'Delete' | trans }}</button>
+            <button
+                    data-toggle="tooltip" data-placement="top" title="{{ 'Delete' | trans }}"
+                    class="btn-no-bg float-right"><span class="material-icons">&#xe872;</span></button>
         </div>
     </div>
+
+
+
 </form>

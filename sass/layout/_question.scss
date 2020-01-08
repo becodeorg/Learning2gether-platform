@@ -47,17 +47,33 @@ body {
 
 .question-answer-row {
   margin-top: 20px;
-  background-color: #99cdd8;
   padding: 10px 5px 10px 5px;
   border-radius: 20px;
+  background-color: $pink;
+  position: relative;
+  
+}
+
+.question-answer-row.odd {
+  background-color: $lightpurple;
 }
 
 .upvote-img {
   background-image:url("../../public/assets/img/thumbsup.png");
 }
 
+button.btn-no-bg {
+  background: no-repeat;
+  border: none;
+}
+
 .imageWrapperPost {
   top: 22px;
+}
+
+.btn-forum {
+  border: 0px solid white;
+  @include box-shadow;
 }
 
 .postform {
@@ -67,6 +83,12 @@ body {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   margin-top: 20px;
+}
+
+.delete-post-form {
+  position: absolute;
+  top: -20px;
+  right: 6px;
 }
 
 .submitPost {

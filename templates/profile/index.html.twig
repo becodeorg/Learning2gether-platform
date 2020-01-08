@@ -80,17 +80,17 @@
             {% endfor %}
         </div>
 
+        {% if userBadges %}
         <div class="badges col-md-4 row">
-            <h5 class="title-css center">{{ 'Your badges' | trans | title }}:</h5>
+            <h5 class="title-css center">{{ 'Your badges' | trans | title }}</h5>
             {% for badge in userBadges %}
                 <div class="badge col-sm-6">
                     <p class="badgename">{{ badge.result.0.name }}</p>
                     <img class="badgeimage" src="{{ badge.result.0.image}}" alt="Badge" height="150" width="150">
-                    <p class="badgedescription">{{ badge.result.0.description }}</p>
-                    <p class="badgecriteria">{{ badge.result.0.criteriaNarrative }}</p>
                 </div>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
 </div>
     <script src="{{ asset('assets/js/profile.js') }}"></script>
