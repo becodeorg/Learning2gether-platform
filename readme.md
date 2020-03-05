@@ -1,6 +1,6 @@
 # Learning2Gether
-This repository contains the e-learning platform "Learning2Gether".
-This platform will be built on the open source Symfony Framework.
+This repository contains the e-learning platform "Learning2Gether": https://platform.learning2gether.org/
+This platform is built on the open source Symfony Framework, v3.
 
 This readme contains installation instructions and documentation links.
 
