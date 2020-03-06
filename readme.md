@@ -1,23 +1,52 @@
 # Learning2Gether
-This repository contains the e-learning platform "Learning2Gether": https://platform.learning2gether.org/
+
+This repository contains the e-learning platform "Learning2Gether":
+
+https://platform.learning2gether.org/
+
 This platform is built on the open source Symfony Framework, v3.
 
 This readme contains installation instructions and documentation links.
 
+## Deployment
+
+Via Git Pull
+
+command to upgrade normal users to partners:
+
+```bash
+sudo ./bin/console l2g:upgrade-partner $emailadres
+```
+
+They have to login again to have this work. I just checked that this command works.
+
+I suggest you just make the accounts for them when you are there, just make them register, pick their own password and then you upgrade them with the command line.
+
 ## Contributers
+
 This project was created during our training at [Becode](http://becode.org).
 The main contributers were, in no specific order:
-- @Anastasiyavyp	Anastasiya Vyprytska
-- @bona-kim	        Bona Kim
-- @janvdv96	        Jan Van de Velde
-- @joostvannieu	        Joost Vannieuwenhuyse
-- @JosephLindzius	Joseph Lindzius
-- @Nicnicsai	        Nicole Reyes Guttmann
-- @Timmeahj	        Tim Broos
-	
+
+- @Anastasiyavyp Anastasiya Vyprytska
+- @bona-kim Bona Kim
+- @janvdv96 Jan Van de Velde
+- @joostvannieu Joost Vannieuwenhuyse
+- @JosephLindzius Joseph Lindzius
+- @Nicnicsai Nicole Reyes Guttmann
+- @Timmeahj Tim Broos
+
 We received technical support from our coach @grubolsch (Koen Eelen).
 
+## How to connect ot server
+
+Find the PEM file in 1Password and store it on your local hard drive. Chmod it 400, then :
+
+```
+ssh -i ./path/to/learning2gether-platform.pem ubuntu@platform.learning2gether.org
+```
+
 ## How to install
+
 The vhost for this project is more complex than a simple PHP script, and is based on the Symfony Vhost style.
 This configuration assumes that your site will be called **l2g.local** and use the directory **/var/www/l2g-platform/**. If you use something different you will have to adapt the vhost configuration.
 
@@ -34,7 +63,7 @@ Please be aware that in this project the root directory for PHP will be public/.
         	AllowOverride All
         	Order Allow,Deny
        		Allow from All
-       
+
 		FallbackResource /index.php
 	 </Directory>
 
@@ -44,24 +73,29 @@ Please be aware that in this project the root directory for PHP will be public/.
 ```
 
 ### Installing the project
+
 After cloning this repo, you have to run `composer install` inside the root directory. You might need to install [Composer](https://getcomposer.org/download/) to do this.
 
 ### Creating the database
+
 Inside the `.env` file you can change the `DATABASE_URL` parameter with your database configuration. Make sure to never commit this file!
 
 ### Installing the database.
+
 Make sure you create a new database `l2g`.
 
 The run the following command in the project root:
 `php bin/console doctrine:migrations:migrate`
 
 ## Documentation
+
 - [Logos](https://drive.google.com/open?id=1vpV13Va6My1ITQnwXOLbVLUsE1hiwB2x)
 - [Summary of the features required](https://docs.google.com/document/d/1Zps_QZvev8AFjrzgFvTFNxEYxrnZHyXtU2FgkRBko6U/edit?usp=sharing)
 - [Symfony documentation](https://symfony.com/doc/current/index.html)
 - [The symfony maker bundle](https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html)
 
-### Security 
+### Security
+
 It is easy to prevent pages to be accessible only for logged in user or partners.
 
 If you want to protect a page you need to start the route with a certain prefix:
