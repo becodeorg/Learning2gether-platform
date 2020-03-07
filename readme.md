@@ -8,24 +8,11 @@ This platform is built on the open source Symfony Framework, v3.
 
 This readme contains installation instructions and documentation links.
 
-## Deployment
 
-Via Git Pull
+## Contributors
 
-command to upgrade normal users to partners:
-
-```bash
-sudo ./bin/console l2g:upgrade-partner $emailadres
-```
-
-They have to login again to have this work. I just checked that this command works.
-
-I suggest you just make the accounts for them when you are there, just make them register, pick their own password and then you upgrade them with the command line.
-
-## Contributers
-
-This project was created during our training at [Becode](http://becode.org).
-The main contributers were, in no specific order:
+This project was created during our training at [BeCode](http://becode.org).
+The main contributors were, in no specific order:
 
 - @Anastasiyavyp Anastasiya Vyprytska
 - @bona-kim Bona Kim
@@ -37,13 +24,6 @@ The main contributers were, in no specific order:
 
 We received technical support from our coach @grubolsch (Koen Eelen).
 
-## How to connect ot server
-
-Find the PEM file in 1Password and store it on your local hard drive. Chmod it 400, then :
-
-```
-ssh -i ./path/to/learning2gether-platform.pem ubuntu@platform.learning2gether.org
-```
 
 ## How to install
 
