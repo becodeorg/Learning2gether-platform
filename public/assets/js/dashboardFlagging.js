@@ -1,9 +1,3 @@
-const routes = require('./fos_js_routes.json');
-import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
-
-Routing.setRoutingData(routes);
-Routing.generate('rep_log_list');
-
 function checkModule(moduleId) {
     let overlay = document.getElementById('overlay');
     let url = Routing.generate('api_module', { module: moduleId }, true);
