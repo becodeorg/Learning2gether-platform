@@ -54,7 +54,7 @@
                         <p>{{ 'Current image' | trans }}</p>
                         {% if module.image != '' %}
                             <img style="width: 180px;"
-                                 src="/upload/{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="">
+                                 src="{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="">
                         {% endif %}
                     </div>
                 </div>
