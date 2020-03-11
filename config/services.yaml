@@ -38,7 +38,9 @@ liip_imagine:
 
     resolvers:
         default:
-            web_path: "upload"
+            web_path:
+                web_root: "%kernel.project_dir%/public/upload" # %kernel.project_dir%/public (%kernel.project_dir%/web for Symfony < 4.0.0)
+                cache_prefix: media/cache
 
     filter_sets:
         cache: ~
