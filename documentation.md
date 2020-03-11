@@ -10,9 +10,13 @@ ssh -i ./path/to/learning2gether-platform.pem ubuntu@platform.learning2gether.or
 
 ## Deployment
 
-Via Git Pull
+ssh into the server, cd into /var/www/l2g-prod
 
-command to upgrade normal users to partners:
+```
+sudo Git Pull
+```
+
+### command to upgrade normal users to partners:
 
 ```bash
 sudo ./bin/console l2g:upgrade-partner $emailadres
@@ -22,7 +26,11 @@ They have to login again to have this work. I just checked that this command wor
 
 I suggest you just make the accounts for them when you are there, just make them register, pick their own password and then you upgrade them with the command line.
 
+### Clear cache
 
+```
+./bin/console cache:clear --env=prod
+```
 
 ## Routes
 
