@@ -58,7 +58,7 @@ liip_imagine:
         thumb:
             # adjust the image quality to 75%
             # quality: 75
-
+            cache: default
             # list of transformations to apply (the "filters")
             filters:
                 # create a thumbnail: set size to 120x90 and use the "outbound" mode
