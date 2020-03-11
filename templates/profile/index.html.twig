@@ -10,9 +10,9 @@
             <div class="profileimgwrap card auto">
                 <div class="profileimg profileimgwrap">
                     {% if user.avatar %}
-                        <img src="/upload{{ asset(user.avatar | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
+                        <img src="{{ asset(user.avatar | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% else %}
-                        <img src="/upload{{ asset('logo_transparent.png' | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
+                        <img src="{{ asset('logo_transparent.png' | imagine_filter('profile')) }}" alt="avatar of {{ user.name }}">
                     {% endif %}
                 </div>
                 <div class="profiletext">
