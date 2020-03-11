@@ -51,7 +51,7 @@ I suggest you just make the accounts for them when you are there, just make them
 ### manually fix image url resolve
 
 ```
-./bin/console liip:imagine:cache:resolve f32b18e6fa571f001b94f0a1bfe48a8d.png --filter=learningModuleImage
+./bin/console liip:imagine:cache:resolve da305b9a0fee3eb7bdc5bfc9b64e88ff.jpeg --filter=learningModuleImage
 ```
 
 ## Routes

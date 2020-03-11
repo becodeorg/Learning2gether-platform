@@ -43,7 +43,6 @@ liip_imagine:
                 cache_prefix: media/cache
 
     filter_sets:
-        cache: ~
         learningModuleImage:
             filters:
                 downscale:
