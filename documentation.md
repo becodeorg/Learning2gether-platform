@@ -8,12 +8,20 @@ Find the PEM file in 1Password and store it on your local hard drive. Chmod it 4
 ssh -i ./path/to/learning2gether-platform.pem ubuntu@platform.learning2gether.org
 ```
 
-## Deployment
-
-ssh into the server, cd into /var/www/l2g-prod
+Once on the server, switch to the www-data user
 
 ```
-sudo Git Pull
+sudo -u www-data sh
+```
+
+(use CTRL+D to exit and switch back to the ubuntu user)
+
+## Deployment
+
+ssh into the server, cd into /var/www/l2g-prod and pull as www-data
+
+```
+sudo -u www-data git pull
 ```
 
 ### command to upgrade normal users to partners:

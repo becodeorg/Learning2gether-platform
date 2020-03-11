@@ -4,26 +4,26 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    uploads_directory: '%kernel.project_dir%/public/upload'
-    public_directory: '%kernel.project_dir%/public'
+    uploads_directory: "%kernel.project_dir%/public/upload"
+    public_directory: "%kernel.project_dir%/public"
 
 services:
     # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
+        autowire: true # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        resource: "../src/*"
+        exclude: "../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
-        resource: '../src/Controller'
-        tags: ['controller.service_arguments']
+        resource: "../src/Controller"
+        tags: ["controller.service_arguments"]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -33,12 +33,12 @@ liip_imagine:
         default:
             filesystem:
                 data_root:
-                    - '%kernel.project_dir%/public/upload'
-                    - '%kernel.project_dir%/public/assets/img'
+                    - "%kernel.project_dir%/public/upload"
+                    - "%kernel.project_dir%/public/assets/img"
 
     resolvers:
         default:
-            web_path: ~
+            web_path: "upload"
 
     filter_sets:
         cache: ~
@@ -53,17 +53,14 @@ liip_imagine:
 
         # the name of the "filter set"
         thumb:
-
             # adjust the image quality to 75%
             # quality: 75
 
             # list of transformations to apply (the "filters")
             filters:
-
                 # create a thumbnail: set size to 120x90 and use the "outbound" mode
                 # to crop the image when the size ratio of the input differs
                 thumbnail: { size: [128, 128], mode: outbound }
-
                 # create a 2px black border: center the thumbnail on a black background
                 # 4px larger to create a 2px border around the final image
                 # background: { size: [124, 94], position: center, color: '#000000' }
