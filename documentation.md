@@ -1,5 +1,13 @@
 # Documentation
 
+Current Symfony version: `Symfony 4.4.2`
+
+to check:
+
+```
+bin/console --version
+```
+
 ## How to connect to server
 
 Find the PEM file in 1Password and store it on your local hard drive. Chmod it 400, then :
