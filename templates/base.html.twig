@@ -103,5 +103,12 @@
         crossorigin="anonymous"></script>
 <script src="{{ asset('assets/js/script.js') }}"></script>
 <script>$('[data-toggle="tooltip"]').tooltip();</script>
+
+<script src="https://cdn.jsdelivr.net/gh/pixeline/portable-github-issues-form/bundle.js" ></script>
+<script>
+var githubForm =  new GithubIssueForm({ 'token': 'c2d960bda62319bfb1d47d702b5a3f52f0af597c', 'useragent': 'portable-github-issues-form', 'repository': 'becodeorg/Learning2gether-platform', 'milestone': null });
+githubForm.inject();
+Issue.inject();
+</script>
 </body>
 </html>
