@@ -52,7 +52,6 @@
                     </div>
                     <div class="col">
                         <p>{{ 'Current image' | trans }}</p>
-                        image: {{ module.image }}
                         {% if module.image %}
                             <img style="width: 180px;" src="{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="{{ module.image }}">
                         {% endif %}
