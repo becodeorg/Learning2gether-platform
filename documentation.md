@@ -40,6 +40,12 @@ I suggest you just make the accounts for them when you are there, just make them
 ./bin/console cache:clear --env=prod
 ```
 
+### manually fix image url resolve
+
+```
+./bin/console liip:imagine:cache:resolve f32b18e6fa571f001b94f0a1bfe48a8d.png --filter=learningModuleImage
+```
+
 ## Routes
 
 ```bash
