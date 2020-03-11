@@ -1,11 +1,11 @@
 <IfModule mod_ssl.c>
 <VirtualHost *:443>
-        ServerName platform.learning2gether.org
+        ServerName domain.tld
 
-        DocumentRoot /var/www/l2g-prod/public
+        DocumentRoot /var/www/project/public
         DirectoryIndex /index.php
 
-        <Directory /var/www/l2g-prod/public>
+        <Directory /var/www/project/public>
                 AllowOverride All
                 Order Allow,Deny
                 Allow from All
@@ -13,19 +13,14 @@
                 Require all granted
 
                 FallbackResource /index.php
-
-        #       AuthType Basic
-        #       AuthName "This is the production site - only access for l2g personal"
-        #       AuthUserFile /etc/apache2/.htpasswd
-        #       Require valid-user
          </Directory>
 
-        ErrorLog ${APACHE_LOG_DIR}/error-l2g-prod.log
-        CustomLog ${APACHE_LOG_DIR}/access-l2g-prod.log combined
+        ErrorLog ${APACHE_LOG_DIR}/error-project.log
+        CustomLog ${APACHE_LOG_DIR}/access-project.log combined
 
         # Include /etc/letsencrypt/options-ssl-apache.conf
-        SSLCertificateFile /etc/letsencrypt/live/platform.learning2gether.org/fullchain.pem
-        SSLCertificateKeyFile /etc/letsencrypt/live/platform.learning2gether.org/privkey.pem
+        SSLCertificateFile /etc/letsencrypt/live/domain.tld/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/domain.tld/privkey.pem
         Include /etc/letsencrypt/options-ssl-apache.conf
 </VirtualHost>
 </IfModule>
