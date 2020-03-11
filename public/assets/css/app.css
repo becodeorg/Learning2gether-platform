@@ -1160,6 +1160,9 @@ button.btn-no-bg {
   border: 3pt solid lightcoral;
   color: red; }
 
+.custom-file-input {
+  opacity: 1; }
+
 /*
 
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
