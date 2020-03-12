@@ -54,6 +54,14 @@ I suggest you just make the accounts for them when you are there, just make them
 ./bin/console liip:imagine:cache:resolve da305b9a0fee3eb7bdc5bfc9b64e88ff.jpeg --filter=learningModuleImage
 ```
 
+## Local development environement
+
+see: https://symfony.com/doc/current/setup/symfony_server.html
+
+1. [Install Symfony binary](https://symfony.com/download)
+2. Install certificates `symfony server:ca:install`
+3. Run local server : `symfony server:start`
+
 ## Routes
 
 ```bash

@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "erusev/parsedown": "^1.7",
+        "erusev/parsedown-extra": "^0.8.1",
         "friendsofsymfony/jsrouting-bundle": "^2.5",
         "liip/imagine-bundle": "^2.2",
         "sensio/framework-extra-bundle": "^5.1",
