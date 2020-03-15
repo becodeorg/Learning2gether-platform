@@ -30,6 +30,7 @@ class MarkdownParserExtension extends AbstractExtension
     {
         /**
          * Improve the html generated from the markdown code.
+         * doc: https://github.com/pixeline/parsedown-extra-plugin
          */
         $parsedown = new ParsedownExtraPlugin();
         $parsedown->setSafeMode(true);
