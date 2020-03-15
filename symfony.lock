@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -125,6 +128,9 @@
         "files": [
             "config/routes/fos_js_routing.yaml"
         ]
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v2.4.39"
     },
     "imagine/imagine": {
         "version": "1.2.3"
