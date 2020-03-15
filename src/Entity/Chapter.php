@@ -6,6 +6,7 @@ use App\Domain\Breadcrumb;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ChapterRepository")
@@ -47,6 +48,14 @@ class Chapter
      * @ORM\JoinColumn(nullable=false)
      */
     private $quiz;
+
+    /**
+     * @var integer $position
+     *
+     * @Gedmo\SortablePosition
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="progress", orphanRemoval=true)
@@ -154,18 +163,18 @@ class Chapter
 
     public function getTitle(Language $language)
     {
-        foreach ($this->getTranslations() AS $translation) {
+        foreach ($this->getTranslations() as $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getTitle();//change this line if needed when copied
+                return $translation->getTitle(); //change this line if needed when copied
             }
         }
     }
 
     public function getTrTitle(string $langCode): ?string
     {
-        foreach ($this->getTranslations() AS $translation) {
+        foreach ($this->getTranslations() as $translation) {
             if ($translation->getLanguage()->getCode() === $langCode) {
-                return $translation->getTitle();//change this line if needed when copied
+                return $translation->getTitle(); //change this line if needed when copied
             }
         }
         return 'Not defined';
@@ -173,9 +182,9 @@ class Chapter
 
     public function getDescription(Language $language)
     {
-        foreach ($this->getTranslations() AS $translation) {
+        foreach ($this->getTranslations() as $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getDescription();//change this line if needed when copied
+                return $translation->getDescription(); //change this line if needed when copied
             }
         }
     }
@@ -214,16 +223,16 @@ class Chapter
         return $this;
     }
 
-    public function getFirstPage() : ChapterPage
+    public function getFirstPage(): ChapterPage
     {
-        if(count($this->getPages()) === 0) {
+        if (count($this->getPages()) === 0) {
             throw new \DomainException('Chapter does not contain any pages');
         }
 
         return $this->getPages()[0];
     }
 
-    public function getDashboardBreadcrumbs(Language $language) : array
+    public function getDashboardBreadcrumbs(Language $language): array
     {
         $breadcrumbs = $this->getLearningModule()->getDashboardBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb(
@@ -235,19 +244,19 @@ class Chapter
         return $breadcrumbs;
     }
 
-    public function getEditBreadcrumbs(Language $language) : array
+    public function getEditBreadcrumbs(Language $language): array
     {
         $breadcrumbs = $this->getLearningModule()->getEditBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb(
             'Edit Chapter',
             'create_chapter',
-            ['module' => $this->getLearningModule()->getId() , 'chapter' => $this->getId()]
+            ['module' => $this->getLearningModule()->getId(), 'chapter' => $this->getId()]
         );
 
         return $breadcrumbs;
     }
 
-    public function getLearnerBreadcrumbs(Language $language) : array
+    public function getLearnerBreadcrumbs(Language $language): array
     {
         $breadcrumbs = $this->getLearningModule()->getLearnerBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb(
@@ -259,7 +268,7 @@ class Chapter
         return $breadcrumbs;
     }
 
-    public function getForumBreadcrumbs(Language $language, Category $category) : array
+    public function getForumBreadcrumbs(Language $language, Category $category): array
     {
         $breadcrumbs = $this->getLearningModule()->getForumBreadcrumbs($language, $category);
         $breadcrumbs[] = new Breadcrumb(
@@ -269,5 +278,21 @@ class Chapter
         );
 
         return $breadcrumbs;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+    /**
+     * @param int $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 }

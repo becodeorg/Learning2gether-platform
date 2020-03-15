@@ -34,3 +34,19 @@ body{
 
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
  */
+
+
+ /* Draggable interface */
+ [draggable] {
+  user-select: none;
+  -webkit-user-drag: element;
+  cursor: move;
+}
+table.sortable {
+  i.fa.fa-arrows {
+      color: #999;
+  }
+  tr.over {
+      border: 1px dashed red;
+  }
+}

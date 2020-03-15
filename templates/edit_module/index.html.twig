@@ -13,7 +13,7 @@
 {% block body %}
     <div class="example-wrapper">
         <h1 class="title-css">{{ 'Edit Learning Module' | trans }}</h1>
-        <div class="container my-3">
+        <table class="container my-3">
 
             <section class="module-cube">
                 <h3>{{ 'Title' | trans }} {{ 'and' | trans }} {{ 'description' | trans }} </h3>
@@ -59,9 +59,18 @@
                 </div>
             </section>
 
+<table class="sortable">
+<thead>
+<tr>
+<th>chapter</th>
+<th>position</th>
+</tr>
+</thead>
+<tbody>
             {% for chapter in module.chapters %}
-
-                <section class="module-cube">
+<tr draggable="true" rel="{{ chapter.id }}">
+<td>
+                <section class="module-cube" draggable="true" rel="{{ chapter.id }}">
                     <span>{{ 'chapter' |trans }} nr: {{ chapter.chapterNumber }}</span><br>
                     <span>{{ 'chapter' |trans }} {{ 'title' |trans }}: {{ chapter.title(english) }}</span><br>
                     <a class="btn-deletequestion button_2 deleteHover float-right"
@@ -71,9 +80,13 @@
                        href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">{{ 'Edit Chapter' |trans }}</a>
                     <a class="p-1 btn btn-skills button_8 buttonNavBox"
                        href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">{{ 'Edit Quiz' |trans }}</a>
-                </section>
 
+                </section>
+</td><td><div>position: {{ chapter.position }}</div></td>
+</tr>
             {% endfor %}
+</tbody>
+</table>
 
             <div class="text-center">
                 {{ form_start(addNewChapterBtn) }}

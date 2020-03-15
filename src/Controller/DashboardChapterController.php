@@ -40,4 +40,22 @@ class DashboardChapterController extends AbstractController
             'languagecount' => $languageCount,
         ]);
     }
+
+    /**
+     * Resorts an item using it's doctrine sortable property
+     * @Route("partner/dashboard/chapter/sort/{id}/{position}", name="dashboard_chapter_sort", requirements={"chapter"= "\d+"})
+     * @param integer $id
+     * @param integer $position
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function sortAction($id, $position)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $chapter = $em->getRepository(Chapter::class)->find($id);
+        $chapter->setPosition($position);
+        $em->persist($chapter);
+        $em->flush();
+        $request = new Request();
+        return $this->index($request, $chapter);
+    }
 }
