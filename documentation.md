@@ -56,6 +56,10 @@ I suggest you just make the accounts for them when you are there, just make them
 
 ## Local development environement
 
+```
+COMPOSER_MEMORY_LIMIT=-1 composer install
+```
+
 see: https://symfony.com/doc/current/setup/symfony_server.html
 
 1. [Install Symfony binary](https://symfony.com/download)
