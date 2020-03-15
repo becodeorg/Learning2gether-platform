@@ -79,7 +79,7 @@ var adminNs =
                 // do the ajax call to update the database
                 fetch('/partner/dashboard/chapter/sort/' + entityId + '/' + endPosition)
                     .then(function (res) {
-                        $("table.sortable tbody").replaceWith($(res).find("table.sortable tbody"));
+                        // $("table.sortable tbody").replaceWith($(res).find("table.sortable tbody"));
 
                     }).then(function () {
                         adminNs.initDraggableEntityRows();
