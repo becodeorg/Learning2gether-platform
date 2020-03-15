@@ -41,12 +41,18 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
   user-select: none;
   -webkit-user-drag: element;
   cursor: move;
+  background-color:white;
 }
 table.sortable {
   i.fa.fa-arrows {
       color: #999;
   }
   tr.over {
-      border: 1px dashed red;
+      border: 3px dashed rgba(0,191,165,.04);
+      background-color: rgba(0,191,165,.04);
   }
+}
+.beingDragged{
+  box-shadow: 10px 10px 16px -1px rgba(0,0,0,0.23);
+
 }

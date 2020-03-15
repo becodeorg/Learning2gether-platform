@@ -19,7 +19,7 @@ class ChapterRepository extends ServiceEntityRepository
         parent::__construct($registry, Chapter::class);
     }
 
-    public function getChapterAndChildrenAsArray(Chapter $chapter) : array
+    public function getChapterAndChildrenAsArray(Chapter $chapter): array
     {
         // FIXME this query returns an empty array if any child is missing
         // for example, if there is a quiz without any questions or any questions without an answer
@@ -31,7 +31,7 @@ class ChapterRepository extends ServiceEntityRepository
         return $query->getArrayResult();
     }
 
-    public function getChapterQuizAsArray(Chapter $chapter) : array
+    public function getChapterQuizAsArray(Chapter $chapter): array
     {
         // FIXME this query returns an empty array if any child is missing
         // for example, if there is a quiz without any questions or any questions without an answer
@@ -43,7 +43,7 @@ class ChapterRepository extends ServiceEntityRepository
         return $query->getArrayResult();
     }
 
-    public function getChapterAsArray(Chapter $chapter) : array
+    public function getChapterAsArray(Chapter $chapter): array
     {
         // FIXME this query returns an empty array if any child is missing
         // for example, if there is a quiz without any questions or any questions without an answer
@@ -55,7 +55,7 @@ class ChapterRepository extends ServiceEntityRepository
         return $query->getArrayResult();
     }
 
-    public function getQuizAsArray(Chapter $chapter) : array
+    public function getQuizAsArray(Chapter $chapter): array
     {
         // FIXME this query returns an empty array if any child is missing
         // for example, if there is a quiz without any questions or any questions without an answer

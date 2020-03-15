@@ -51,7 +51,8 @@ class DashboardChapterController extends AbstractController
     public function sortAction($id, $position)
     {
         $em = $this->getDoctrine()->getManager();
-        $chapter = $em->getRepository(Chapter::class)->find($id);
+        $chapter = $this->getDoctrine()->getRepository(Chapter::class)->find($id);
+
         $chapter->setPosition($position);
         $em->persist($chapter);
         $em->flush();

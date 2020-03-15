@@ -47,13 +47,13 @@ class LearningModule
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Chapter", mappedBy="learningModule", orphanRemoval=true ,cascade={"persist"})
-     * @ORM\OrderBy({"chapterNumber" = "ASC"})
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     private $chapters;
 
-    public function __construct(string $badge='', string $image='', string $type=null, bool $isPublished = false)
+    public function __construct(string $badge = '', string $image = '', string $type = null, bool $isPublished = false)
     {
-        if($type === null) {
+        if ($type === null) {
             $type = LearningModuleType::hard();
         }
 
@@ -142,9 +142,9 @@ class LearningModule
 
     public function getTitle(Language $language)
     {
-        foreach ($this->getTranslations() AS $translation) {
+        foreach ($this->getTranslations() as $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getTitle();//change this line if needed when copied
+                return $translation->getTitle(); //change this line if needed when copied
             }
         }
     }
@@ -160,9 +160,9 @@ class LearningModule
      */
     public function getDescription(Language $language): string
     {
-        foreach ($this->getTranslations() AS $translation) {
+        foreach ($this->getTranslations() as $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getDescription();//change this line if needed when copied
+                return $translation->getDescription(); //change this line if needed when copied
             }
         }
         return 'Error: Language not found';
@@ -179,7 +179,7 @@ class LearningModule
     public function addChapter(Chapter $chapter): self
     {
         if (!$this->chapters->contains($chapter)) {
-            if($chapter->getChapterNumber() === 0) {
+            if ($chapter->getChapterNumber() === 0) {
                 //we don't have a chapter number yet - create one based on the last chapter number + 1
                 $chapter->setChapterNumber($this->fetchLastChapterNumber() + 1);
             }
@@ -197,12 +197,12 @@ class LearningModule
         return $this;
     }
 
-    private function fetchLastChapterNumber() : int
+    private function fetchLastChapterNumber(): int
     {
         $lastChapterNumber = 0;
         /** @var Chapter $chapter */
-        foreach($this->chapters AS $chapter) {
-            if($chapter->getChapterNumber() > $lastChapterNumber) {
+        foreach ($this->chapters as $chapter) {
+            if ($chapter->getChapterNumber() > $lastChapterNumber) {
                 $lastChapterNumber = $chapter->getChapterNumber();
             }
         }
@@ -210,17 +210,17 @@ class LearningModule
     }
 
     /** @return UserChapter|array[] */
-    public function getUserChapters(User $user) : array
+    public function getUserChapters(User $user): array
     {
         $chaptersDone = $user->getProgressByLearningModule($this);
 
         $foundCurrentChapter = false;
 
         $listChapters = [];
-        foreach($this->getChapters() AS $chapter) {
+        foreach ($this->getChapters() as $chapter) {
             $status = isset($chaptersDone[$chapter->getId()]);
 
-            if(!$status && !$foundCurrentChapter) {
+            if (!$status && !$foundCurrentChapter) {
                 $status = true;
                 $foundCurrentChapter = true;
             }
@@ -231,7 +231,7 @@ class LearningModule
         return $listChapters;
     }
 
-    public function getDashboardBreadcrumbs(Language $language) : array
+    public function getDashboardBreadcrumbs(Language $language): array
     {
         return [
             new Breadcrumb(
@@ -242,18 +242,18 @@ class LearningModule
         ];
     }
 
-    public function getEditBreadcrumbs(Language $language) : array
+    public function getEditBreadcrumbs(Language $language): array
     {
         return [
             new Breadcrumb(
                 'Edit Module',
                 'edit_module',
-            ['module' => $this->getId()]
+                ['module' => $this->getId()]
             )
         ];
     }
 
-    public function getLearnerBreadcrumbs(Language $language) : array
+    public function getLearnerBreadcrumbs(Language $language): array
     {
         return [
             new Breadcrumb(
@@ -264,7 +264,7 @@ class LearningModule
         ];
     }
 
-    public function getForumBreadcrumbs(Language $language, Category $category) : array
+    public function getForumBreadcrumbs(Language $language, Category $category): array
     {
         return [
             new Breadcrumb(

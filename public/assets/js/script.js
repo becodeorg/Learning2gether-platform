@@ -32,6 +32,7 @@ var adminNs =
         var entityId; // the id (key) of the entity
         function handleDragStart(e) {
             dragSrcEl = this;
+            dragSrcEl.classList.add('beingDragged');
             entityId = $(this).attr('rel');
             dragSrcEl.style.opacity = '0.4';
             parent = dragSrcEl.parentNode;
@@ -108,6 +109,8 @@ var adminNs =
         function handleDragEnd(e) {
             //console.log('drag end: '+ e.target);
             this.style.opacity = '1';  // this / e.target is the source node.
+            this.classList.remove('beingDragged');
+
             [].forEach.call(rows, function (row) {
                 row.classList.remove('over');
             });

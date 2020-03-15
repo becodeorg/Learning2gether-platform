@@ -28,6 +28,7 @@ class LearningModuleRepository extends ServiceEntityRepository
         $dql = 'SELECT l, c, ct, ctl, p, pt, ptl, q, qq, qqt, qqtl, qa, qat, qatl FROM App\Entity\LearningModule l JOIN l.chapters c JOIN c.translations ct JOIN ct.language ctl JOIN c.pages p JOIN p.translations pt JOIN pt.language ptl JOIN c.quiz q JOIN q.quizQuestions qq JOIN qq.translations qqt JOIN qqt.language qqtl JOIN qq.answers qa JOIN qa.translations qat JOIN qat.language qatl WHERE l.id = :id';
         $query = $em->createQuery($dql);
         $query->setParameter(':id', $module->getId());
+
         return $query->getArrayResult();
     }
 
