@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0550a66919a3a300958c33aa3d46d74",
+    "content-hash": "c829c627f4b09e3458adcdce420ce79f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -5970,6 +5970,49 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2020-01-21T11:09:03+00:00"
+        },
+        {
+            "name": "taufik-nurrohman/parsedown-extra-plugin",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pixeline/parsedown-extra-plugin.git",
+                "reference": "3f3b36bfbea2a9da8c2310203ba03e5b81177a7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pixeline/parsedown-extra-plugin/zipball/3f3b36bfbea2a9da8c2310203ba03e5b81177a7e",
+                "reference": "3f3b36bfbea2a9da8c2310203ba03e5b81177a7e",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown-extra": "~0.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ParsedownExtraPlugin": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taufik Nurrohman",
+                    "homepage": "https://github.com/taufik-nurrohman/parsedown-extra-plugin"
+                }
+            ],
+            "description": "Configurable Markdown to HTML converter with Parsedown Extra.",
+            "homepage": "https://github.com/taufik-nurrohman/parsedown-extra-plugin",
+            "keywords": [
+                "markdown",
+                "markdown extra",
+                "parsedown",
+                "parser"
+            ],
+            "time": "2020-03-13T02:32:19+00:00"
         },
         {
             "name": "twig/twig",

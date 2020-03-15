@@ -569,6 +569,9 @@
     "symfony/yaml": {
         "version": "v4.3.5"
     },
+    "taufik-nurrohman/parsedown-extra-plugin": {
+        "version": "v1.2.0"
+    },
     "twig/twig": {
         "version": "v2.12.0"
     },
