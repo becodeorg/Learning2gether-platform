@@ -55,6 +55,15 @@ sudo ./bin/console l2g:upgrade-partner $emailadres
 I'm using MAMP PRO but apparently Symfony has built-in tools.
 
 Create a "l2g" mysql database with a user and password.
+
+Put the credentials in the `.env` file.
+
+Then
+
+```
+php bin/console doctrine:migrations:migrate
+```
+
 Then import the dependencies via composer.
 
 ```
