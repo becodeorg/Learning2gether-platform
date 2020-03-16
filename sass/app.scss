@@ -1,58 +1,59 @@
-@import "./variables/_variables";
+@import './variables/_variables';
 
 @mixin box-shadow {
-  -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-body{
+body {
   color: $offblack;
 }
 
-@import "./base/_base.scss";
-@import "./layout/_learninghub.scss";
-@import "./layout/_meeting_place.scss";
-@import "./layout/_template.scss";
-@import "./layout/_chapter.scss";
-@import "./layout/_login.scss";
-@import "./layout/_chapterquiz.scss";
-@import "./layout/_modal.scss";
-@import "./layout/_profile.scss";
-@import "./layout/_forum.scss";
-@import "./layout/_partnermainscreen.scss";
-@import "./layout/_create_module.scss";
-@import "./layout/_quiz.scss";
-@import "./layout/_category.scss";
-@import "./layout/_topic.scss";
-@import "./layout/_question.scss";
+@import './base/_base.scss';
+@import './layout/_learninghub.scss';
+@import './layout/_meeting_place.scss';
+@import './layout/_template.scss';
+@import './layout/_chapter.scss';
+@import './layout/_login.scss';
+@import './layout/_chapterquiz.scss';
+@import './layout/_modal.scss';
+@import './layout/_profile.scss';
+@import './layout/_forum.scss';
+@import './layout/_partnermainscreen.scss';
+@import './layout/_create_module.scss';
+@import './layout/_quiz.scss';
+@import './layout/_category.scss';
+@import './layout/_topic.scss';
+@import './layout/_question.scss';
 
-.custom-file-input{
-  opacity:1;
+.custom-file-input {
+  opacity: 1;
 }
 /*
 
 To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
  */
 
+/* Draggable interface */
 
- /* Draggable interface */
- [draggable] {
-  user-select: none;
-  -webkit-user-drag: element;
-  cursor: move;
-  background-color:white;
-}
-table.sortable {
-  i.fa.fa-arrows {
-      color: #999;
+.sortable {
+  li {
+    transition: all 0.5s;
+    cursor: move;
   }
-  tr.over {
-      border: 3px dashed rgba(0,191,165,.04);
-      background-color: rgba(0,191,165,.04);
+  .ghost {
+    opacity: 0.5;
+    background: #c8ebfb;
+    border-color: #c8ebfb;
+  }
+  .chosen {
+    background-color: #ffff99;
   }
 }
-.beingDragged{
-  box-shadow: 10px 10px 16px -1px rgba(0,0,0,0.23);
-
+.ui-meta-label {
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #444;
+  font-weight: 300;
 }

@@ -59,20 +59,14 @@
                 </div>
             </section>
 
-<table class="sortable">
-<thead>
-<tr>
-<th>chapter</th>
-<th>position</th>
-</tr>
-</thead>
-<tbody>
+<ol id="js-sortable-chapters" class="sortable list-group">
             {% for chapter in module.chapters %}
-<tr draggable="true" rel="{{ chapter.id }}">
-<td>
-                <section class="module-cube" draggable="true" rel="{{ chapter.id }}">
-                    <span>{{ 'chapter' |trans }} nr: {{ chapter.chapterNumber }}</span><br>
-                    <span>{{ 'chapter' |trans }} {{ 'title' |trans }}: {{ chapter.title(english) }}</span><br>
+            <li  class="list-group-item" data-id="{{ chapter.id }}">
+                <section class="module-cube">
+                <p style="clear:both;opacity:.1; float:right">#{{ chapter.chapterNumber }}</p>
+
+                    <span class="ui-meta-label">{{ 'chapter' |trans }} #{{ chapter.position+1 }}</span><br>
+                    <h4>{{ chapter.title(english) }}</h4><br>
                     <a class="btn-deletequestion button_2 deleteHover float-right"
                        href="{{ path('delete_chapter', {module: module.id, chapter: chapter.id, return: 'flow'}) }}">{{ 'Delete
                     Chapter' |trans }}</a>
@@ -80,13 +74,10 @@
                        href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">{{ 'Edit Chapter' |trans }}</a>
                     <a class="p-1 btn btn-skills button_8 buttonNavBox"
                        href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">{{ 'Edit Quiz' |trans }}</a>
-
                 </section>
-</td><td><div>position: {{ chapter.position }}</div></td>
-</tr>
+</li>
             {% endfor %}
-</tbody>
-</table>
+</ol>
 
             <div class="text-center">
                 {{ form_start(addNewChapterBtn) }}
