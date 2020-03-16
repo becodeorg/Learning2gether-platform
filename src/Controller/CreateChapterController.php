@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Chapter;
+use App\Entity\ChapterPage;
 use App\Entity\Language;
 use App\Entity\LearningModule;
 use App\Form\EditChapterTranslationsType;
@@ -24,14 +25,14 @@ class CreateChapterController extends AbstractController
     {
         // get the english chapter translation from the db
         $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
-        $englishTranslation = $chapter->getTranslations()->filter(static function ($entry) use ($english){
-            return in_array($entry->getLanguage()->getCode(), (array)$english->getCode() , true);
+        $englishTranslation = $chapter->getTranslations()->filter(static function ($entry) use ($english) {
+            return in_array($entry->getLanguage()->getCode(), (array) $english->getCode(), true);
         });
 
         $chapterTranslationForm = $this->createForm(EditChapterTranslationsType::class, $englishTranslation[0]);
         $chapterTranslationForm->handleRequest($request);
 
-        if ($chapterTranslationForm->isSubmitted() && $chapterTranslationForm->isValid()){
+        if ($chapterTranslationForm->isSubmitted() && $chapterTranslationForm->isValid()) {
             $chapterTranslation = $chapterTranslationForm->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($chapterTranslation);

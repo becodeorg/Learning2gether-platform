@@ -6,6 +6,7 @@ use App\Domain\Breadcrumb;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ChapterPageRepository")
@@ -30,10 +31,19 @@ class ChapterPage
     private $translations;
 
     /**
+     * @var integer $position
+     *
+     * @Gedmo\SortablePosition
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Chapter", inversedBy="pages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $chapter;
+
 
     public function __construct(int $pageNumber, Chapter $chapter)
     {
@@ -98,34 +108,50 @@ class ChapterPage
 
     public function getTitle(Language $language)
     {
-        foreach ($this->getTranslations() AS $translation) {
+        foreach ($this->getTranslations() as $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getTitle();//change this line if needed when copied
+                return $translation->getTitle(); //change this line if needed when copied
             }
         }
     }
 
     public function getContent(Language $language)
     {
-        foreach ($this->getTranslations() AS $translation) {
+        foreach ($this->getTranslations() as $translation) {
             if ($translation->getLanguage()->getName() === $language->getName()) {
-                return $translation->getContent();//change this line if needed when copied
+                return $translation->getContent(); //change this line if needed when copied
             }
         }
     }
 
 
-    public function getDashboardBreadcrumbs(Language $language) : array
+    public function getDashboardBreadcrumbs(Language $language): array
     {
         $breadcrumbs = $this->getChapter()->getDashboardBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb('Edit page');
         return $breadcrumbs;
     }
 
-    public function getEditBreadcrumbs(Language $language) : array
+    public function getEditBreadcrumbs(Language $language): array
     {
         $breadcrumbs = $this->getChapter()->getEditBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb('Edit Page');
         return $breadcrumbs;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 }

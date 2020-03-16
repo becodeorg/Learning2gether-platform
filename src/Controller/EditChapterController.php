@@ -34,7 +34,7 @@ class EditChapterController extends AbstractController
             'code' => $_GET['lang']
         ]);
 
-        if ($language === null){
+        if ($language === null) {
             return $this->redirectToRoute('partner');
         }
 
@@ -58,5 +58,33 @@ class EditChapterController extends AbstractController
             'chapter' => $chapter,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * Resorts an item using it's doctrine sortable property
+     * @Route("/partner/page/sort/{id}/{position}", name="dashboard_chapter_sort", requirements={})
+     * @param integer $id
+     * @param integer $position
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function sortAction($id, $position)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $page = $em->getRepository(ChapterPage::class)->find($id);
+        if (is_null($page)) {
+            return new Response(
+                "id: $id returns nothing",
+                404
+            );
+        }
+        $page->setPosition($position);
+        $em->persist($page);
+        $em->flush();
+
+        return new Response(
+            "Page $id moved to position : $position",
+            Response::HTTP_OK
+        );
     }
 }

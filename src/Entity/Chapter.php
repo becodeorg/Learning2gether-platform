@@ -38,7 +38,7 @@ class Chapter
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ChapterPage", mappedBy="chapter", orphanRemoval=true,cascade={"persist"})
-     * @ORM\OrderBy({"pageNumber" = "ASC"})
+     * @ORM\OrderBy({"position" = "ASC"})
      *
      */
     private $pages;
@@ -236,7 +236,7 @@ class Chapter
     {
         $breadcrumbs = $this->getLearningModule()->getDashboardBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb(
-            'Chapter',
+            'Chapter [ ' . $language->getName() . ']',
             'dashboard_chapter',
             ['chapter' => $this->getId()]
         );
@@ -248,7 +248,7 @@ class Chapter
     {
         $breadcrumbs = $this->getLearningModule()->getEditBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb(
-            'Edit Chapter',
+            'Edit Chapter [ ' . $language->getName() . '] ',
             'create_chapter',
             ['module' => $this->getLearningModule()->getId(), 'chapter' => $this->getId()]
         );

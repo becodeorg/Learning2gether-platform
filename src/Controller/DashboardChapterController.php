@@ -51,15 +51,13 @@ class DashboardChapterController extends AbstractController
     public function sortAction($id, $position)
     {
         $em = $this->getDoctrine()->getManager();
-        // $productCategory = $em->getRepository('CommonContentBundle:ProductCategory')->find($id);
 
         $chapter = $em->getRepository(Chapter::class)->find($id);
-
         $chapter->setPosition($position);
+
         $em->persist($chapter);
         $em->flush();
-        //  $request = new Request();
-        // return $this->index($request, $chapter);
+
         return new Response(
             'All ok!',
             Response::HTTP_OK

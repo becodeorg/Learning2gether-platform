@@ -2,9 +2,9 @@ greeting: salut
 Please sign in: Veuillez vous connecter
 Sign in: se connecter
 Welcome to the homepage: Bienvenue sur la page d'accueil
-language test : fr. Cette page est en anglais
-Login: Login
-Logout:
+language test: fr. Cette page est en anglais
+Login: Connexion
+Logout: Déconnexion
 Register: S’inscrire
 Email: Email
 Password: Mot de passe
@@ -16,7 +16,7 @@ Welcome to: Bienvenue sur
 Learn more: En savoir plus
 Forgot your password?: Mot de passe oublié?
 No account yet?: Pas encore de compte?
-Already have an account? :
+Already have an account?: Vous avez déjà un compte ?
 Search: Rechercher
 Search results: Résultats de la recherche
 Learning Hub: Le learning Hub
