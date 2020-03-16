@@ -1,6 +1,6 @@
 # Documentation
 
-Current Symfony version: `Symfony 4.4.2`
+Current Symfony version: `Symfony 4.3.11`
 
 to check:
 
