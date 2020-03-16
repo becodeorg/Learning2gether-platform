@@ -19,7 +19,7 @@ ssh -i ./path/to/learning2gether-platform.pem ubuntu@platform.learning2gether.or
 Once on the server, switch to the www-data user
 
 ```
-sudo -u www-data sh
+sudo -u www-data bash
 ```
 
 (use CTRL+D to exit and switch back to the ubuntu user)
@@ -37,10 +37,6 @@ sudo -u www-data git pull
 ```bash
 sudo ./bin/console l2g:upgrade-partner $emailadres
 ```
-
-They have to login again to have this work. I just checked that this command works.
-
-I suggest you just make the accounts for them when you are there, just make them register, pick their own password and then you upgrade them with the command line.
 
 ### Clear cache
 
