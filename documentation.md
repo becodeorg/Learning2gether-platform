@@ -52,9 +52,27 @@ sudo ./bin/console l2g:upgrade-partner $emailadres
 
 ## Local development environement
 
+I'm using MAMP PRO but apparently Symfony has built-in tools.
+
+Create a "l2g" mysql database with a user and password.
+Then import the dependencies via composer.
+
 ```
 COMPOSER_MEMORY_LIMIT=-1 composer install
 ```
+
+### CSS updates
+
+```
+cd /into/project/root/folder
+sass --watch sass/app.scss:public/assets/css/app.css
+```
+
+### JS updates
+
+Plain old javascript, to be included in `base.html.twig` or directly in `/public/assets/js/script.js`
+
+### Symfony tools (untried)
 
 see: https://symfony.com/doc/current/setup/symfony_server.html
 
