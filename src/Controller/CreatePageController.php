@@ -45,6 +45,7 @@ class CreatePageController extends AbstractController
                     $page->addTranslation($emptyTranslation);
                 }
             }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($page);
             $em->flush();

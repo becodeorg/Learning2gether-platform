@@ -62,7 +62,7 @@ class EditChapterController extends AbstractController
 
     /**
      * Resorts an item using it's doctrine sortable property
-     * @Route("/partner/page/sort/{id}/{position}", name="dashboard_chapter_sort", requirements={})
+     * @Route("/partner/page/sort/{id}/{position}", name="dashboard_chapter_page_sort", requirements={"id"= "\d+"})
      * @param integer $id
      * @param integer $position
      * @return \Symfony\Component\HttpFoundation\Response
@@ -70,12 +70,11 @@ class EditChapterController extends AbstractController
     public function sortAction($id, $position)
     {
         $em = $this->getDoctrine()->getManager();
-
         $page = $em->getRepository(ChapterPage::class)->find($id);
-        if (is_null($page)) {
-            return new Response(
-                "id: $id returns nothing",
-                404
+
+        if (!$page) {
+            throw $this->createNotFoundException(
+                'No page found for id ' . $id
             );
         }
         $page->setPosition($position);

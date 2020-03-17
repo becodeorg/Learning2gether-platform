@@ -32,8 +32,7 @@ class ChapterPage
 
     /**
      * @var integer $position
-     *
-     * @Gedmo\SortablePosition
+     * @Gedmo\SortablePosition()
      * @ORM\Column(name="position", type="integer")
      */
     private $position;
@@ -44,12 +43,12 @@ class ChapterPage
      */
     private $chapter;
 
-
-    public function __construct(int $pageNumber, Chapter $chapter)
+    public function __construct(int $pageNumber, Chapter $chapter, int $position)
     {
         $this->translations = new ArrayCollection();
         $this->pageNumber = $pageNumber;
         $this->chapter = $chapter;
+        $this->position = $position;
     }
 
     public function getId(): ?int
@@ -139,19 +138,15 @@ class ChapterPage
         return $breadcrumbs;
     }
 
-    /**
-     * @return int
-     */
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    /**
-     * @param int $position
-     */
-    public function setPosition($position)
+    public function setPosition(int $position): self
     {
         $this->position = $position;
+
+        return $this;
     }
 }
