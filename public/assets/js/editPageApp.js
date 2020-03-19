@@ -1,5 +1,8 @@
 // create new editor, on default it binds itself to the first textarea on the page
-let editor = new SimpleMDE();
+let editor = new SimpleMDE({
+    autoDownloadFontAwesome: true,
+    autosave: true
+});
 
 // bool for eventlisteners
 let removeEventsForImageUploader = false;
@@ -31,7 +34,7 @@ editor.toolbar.push(
                 cm.replaceSelection('!!{embed}(' + videoId + ')');
             }
         },
-        className: "fa fa-youtube",
+        className: "fa fa-youtube-play",
         title: "Youtube",
     },
     {

@@ -21,8 +21,7 @@
 						</div>
 						<div class="modal-body">
 							<a class="btn btn-success" href="{{ path('upload_content') }}">{{ 'Upload an image' | trans }}</a><br/>
-							<strong>{{ 'You have to reload the page for images to appear in this window, use the save button to
-                                store any changes.' | trans }}</strong>
+							<strong>{{ 'You have to reload the page for images to appear in this window, use the save button to store any changes.' | trans }}</strong>
 							<hr>
 							{% for image in imagesAll %}
 								<img class="imageClick" src="{{ asset('uploads/' ~ image.src) }}" width="200px" alt="{{ image.name }}">
@@ -54,8 +53,7 @@
 			</div>
 			<div class="row mb-4">
 				<div class="col">
-					<a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('create_chapter', {'chapter': chapter.id, 'module': module.id}) }}">{{ 'Back to
-                    chapter' | trans }}</a>
+					<a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('create_chapter', {'chapter': chapter.id, 'module': module.id}) }}">{{ 'Back to chapter' | trans }}</a>
 				</div>
 			</div>
 
