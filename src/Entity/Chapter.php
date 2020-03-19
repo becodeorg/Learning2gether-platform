@@ -62,11 +62,6 @@ class Chapter
      */
     private $users;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $position2;
-
     public function __construct(LearningModule $learningModule)
     {
         $this->translations = new ArrayCollection();
@@ -299,17 +294,5 @@ class Chapter
     public function setPosition($position)
     {
         $this->position = $position;
-    }
-
-    public function getPosition2(): ?int
-    {
-        return $this->position2;
-    }
-
-    public function setPosition2(int $position2): self
-    {
-        $this->position2 = $position2;
-
-        return $this;
     }
 }
