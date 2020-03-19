@@ -2,7 +2,7 @@ greeting: Hola
 Please sign in: Por favor, registrese
 Sign in: registrarse
 Welcome to the homepage: Bienvenido a la pagina principal
-language test : es. Esta pagina esta en español
+language test: es. Esta pagina esta en español
 Login: Acceso
 Logout:
 Register: Registro
@@ -16,7 +16,7 @@ Welcome to: Bienvenido a
 Learn more: Aprende más
 Forgot your password?: ¿Has olvidado la contraseña?
 No account yet?: ¿Aún no tienes una cuenta?
-Already have an account? :
+Already have an account?:
 Search: Buscar
 Search results: Resultados de la búsqueda
 Learning Hub: Centro de aprendizaje
@@ -29,7 +29,7 @@ My profile: Mi perfil
 Forum: Foro
 Meeting place: Lugar de encuentro
 Chapters: Capítulos
-Chapter:  Capítulo
+Chapter: Capítulo
 Course: Curso
 Start: Empezar
 Start this chapter: Empieza este capítulo
@@ -95,3 +95,12 @@ Your email was not found in the system: Tu correo no se encontró en el sistema
 Where digital and soft skills meet.: Donde habilidades digitales y sociales se encuentran
 Navigate through the Learning Modules and find the right training for you to advance your skills: Busca en nuestros módulos y encuentra el curso adecuado para mejorar tus habilidades
 Navigate through the forum, ask your questions, share your knowledge and experience with your peers.: Navega en el foro, haz preguntas, comparte tus conocimentos y experiencias con tus compañeros.
+Learning Module Dashboard:
+Create a new module:
+Go to forum page:
+Translations:
+Edit:
+Check:
+Status:
+overview:
+Published:

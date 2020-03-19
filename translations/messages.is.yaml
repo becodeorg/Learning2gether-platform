@@ -2,7 +2,7 @@ greeting: Halló
 Please sign in: Vinsamlegast skráðu þig inn
 Sign in: Skráðu þig inn
 Welcome to the homepage: Verið velkomin á heimasíðuna
-language test : is. Þessi síða er í IJslands
+language test: is. Þessi síða er í IJslands
 Login: Innskráning
 Logout:
 Register: Nýsráning
@@ -16,7 +16,7 @@ Welcome to: Velkomin í
 Learn more: Sjá nánar
 Forgot your password?: Gleymt lykilorð?
 No account yet?: Ertu ekki með reikning?
-Already have an account? :
+Already have an account?:
 Search: Leita
 Search results: leitarniðurstöður
 Learning Hub: Námskerfi
@@ -29,7 +29,7 @@ My profile: Prófíllinn minn
 Forum: Vettvangur
 Meeting place: Fundarstaður
 Chapters: Kaflar
-Chapter:  Kafli
+Chapter: Kafli
 Course: Námskeið
 Start: Byrja
 Start this chapter: Byrja þennan kafla
@@ -95,3 +95,12 @@ Your email was not found in the system: Netfangið þitt fannst ekki í kerfinu
 Where digital and soft skills meet.: Þar sem stafræn og mjúk færni mætast
 Navigate through the Learning Modules and find the right training for you to advance your skills: Farðu í gegnum námsaðferðirnar og finndu rétta þjálfun fyrir þig til að efla færni þína
 Navigate through the forum, ask your questions, share your knowledge and experience with your peers.: Skoðaðu vettvanginn, spurðu spurninga, deildu þekkingu og reynslu með jafningjum
+Learning Module Dashboard:
+Create a new module:
+Go to forum page:
+Translations:
+Edit:
+Check:
+Status:
+overview:
+Published:

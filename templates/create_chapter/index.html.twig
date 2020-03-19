@@ -15,7 +15,17 @@
 
 {% block body %}
 	<div class="example-wrapper">
-		<h1 class="title-css">{{ 'New Chapter Creation' | trans }}</h1>
+
+		{% if chapter.title(app.user.language) %}
+			<h1 class="title-css">
+				<span class="ui-meta-label">{{'You are editing Chapter:' | trans}}</span><br>
+				{{chapter.title(app.user.language) }}</h1>
+		{% else %}
+			<h1 class="title-css">{{ 'New Chapter Creation' | trans }}</h1>
+
+		{% endif %}
+
+
 		<div class="container my-3">
 			<div class="row">
 				<p class="mod-step">{{ 'Edit the chapters English title and description' | trans }}</p>
@@ -39,10 +49,11 @@
 				{% for page in chapter.pages %}
 					<li class="list-group-item" data-id="{{ page.id }}" data-module="{{ module.id}}">
 						<section class="module-cube">
-							<span>{{ 'Page nr' | trans }}:
-								{{ loop.index }}</span><br>
-							<h4>{{ 'Page title' | trans }}:
-								{{ page.title(english) }}</h4><br>
+							<p style="clear:both;opacity:.1; float:right">#{{ loop.index }}</p>
+
+							<span class="ui-meta-label">{{ 'Page' |trans }}
+								#{{ page.position+1 }}</span><br>
+							<h4>{{ page.title(english) }}</h4><br>
 							<a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">
 								{{ 'Edit Page' | trans }}</a>
 							<a class="btn-deletequestion button_2 deleteHover float-right" onclick="return confirm('Are you sure you want to delete this page?')" href="{{ path('delete_page', {module: module.id, chapter: chapter.id, page: page.id, return: 'flow'}) }}">
