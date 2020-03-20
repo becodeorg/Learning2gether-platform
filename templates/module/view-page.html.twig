@@ -1,32 +1,39 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ page.getTitle(language) }}{% endblock %}
+{% block title %}
+	{{ page.getTitle(language) }}
+{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a></li>
-    {% for crumb in page.chapter.learnerBreadcrumbs(app.user.language) %}
-        {{ include('partials/breadcrumbs.html.twig') }}
-    {% endfor %}
+	<li class="breadcrumb-item">
+		<a class="crumb crumb-link" href="{{ path('portal') }}">{{ 'Learning Hub'|trans }}</a>
+	</li>
+	{% for crumb in page.chapter.learnerBreadcrumbs(app.user.language) %}
+		{{ include('partials/breadcrumbs.html.twig') }}
+	{% endfor %}
 {% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
+	<div class="example-wrapper">
 
-    <div class="markdown card">
+		<div class="markdown card html-content">
 
-    {{ page.getContent(language) | parsedown | youtube | raw }}
+			{{ page.getContent(language) | raw }}
 
-    {% if pageManager.previous() != null %}
-    <a class="markdownlink prev" href="{{ path('module_view_page',
-        {'chapterPage': pageManager.previous().getId()}) }}"><button class=" button button_2 centerbutton">{{ 'Previous' | trans }}</button></a>
-    {% endif %}
+			{% if pageManager.previous() != null %}
+				<a class="markdownlink prev" href="{{ path('module_view_page', {'chapterPage': pageManager.previous().getId()}) }}">
+					<button class=" button button_2 centerbutton">{{ 'Previous' | trans }}</button>
+				</a>
+			{% endif %}
 
-    {% if pageManager.isLast() %}
-        <a class="markdownlink next" href="{{ path('quiz_show_user',
-            {'quiz': page.getChapter().getQuiz().getId()}) }}"><button class=" button button_2 centerbutton">{{ 'Start quiz' | trans }}</button></a>
-    {% else %}
-        <a class="markdownlink next" href="{{ path('module_view_page',
-            {'chapterPage': pageManager.next().getId()}) }}"><button class=" button button_2 centerbutton">{{ 'Next' | trans }}</button></a>
-    {% endif %}
-    </div>
-</div>
+			{% if pageManager.isLast() %}
+				<a class="markdownlink next" href="{{ path('quiz_show_user', {'quiz': page.getChapter().getQuiz().getId()}) }}">
+					<button class=" button button_2 centerbutton">{{ 'Start quiz' | trans }}</button>
+				</a>
+			{% else %}
+				<a class="markdownlink next" href="{{ path('module_view_page', {'chapterPage': pageManager.next().getId()}) }}">
+					<button class=" button button_2 centerbutton">{{ 'Next' | trans }}</button>
+				</a>
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}

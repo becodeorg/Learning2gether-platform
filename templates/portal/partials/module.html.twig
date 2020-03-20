@@ -1,11 +1,13 @@
 <div class="card text-center">
-    <div class="card-body">
-        {% if module.image != '' %}
-        <img class="card-img-top" src="{{ asset(module.image | imagine_filter('thumb')) }}" alt="Circle image" style="width: 78px;">
-        {% endif %}
+	<div class="card-body">
+		{% if module.image != '' %}
+			<img class="card-img-top" src="{{ asset(module.image | imagine_filter('thumb')) }}" alt="Circle image" style="width: 78px;">
+		{% endif %}
 
-        <h5 class="card-title pt-5">{{ module.title(language) }}</h5>
-        <p class="card-text text-muted">{{ module.description(language) }}</p>
-        <a href="{{ path('module', { module : module.id}) }}" class="btn btn-default button_3">{{ label | trans }}</a>
-    </div>
+		<h5 class="card-title pt-5">{{ module.title(language) }}</h5>
+		<div class="card-text text-left">
+			{{ module.description(language)  | raw }}
+		</div>
+		<a href="{{ path('module', { module : module.id}) }}" class="btn btn-default button_3">{{ label | trans }}</a>
+	</div>
 </div>

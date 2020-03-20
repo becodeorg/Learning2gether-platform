@@ -34,7 +34,7 @@
 			<section class="module-cube">
 				{{ form_start(chapterTranslationForm) }}
 				{{ form_row(chapterTranslationForm.title) }}
-				{{ form_row(chapterTranslationForm.description) }}
+				{{ form_row(chapterTranslationForm.description,  {'attr': {'class': 'js-richtexteditor-minimal'}}) }}
 				<button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' | trans }}</button>
 				{{ form_end(chapterTranslationForm) }}
 			</section>
@@ -69,4 +69,8 @@
 				<a class="p-1 button btn-skills button_3" href="{{ path('quiz_show', {id: chapter.quiz.id}) }}">{{ 'Edit Quiz' | trans }}</a>
 			</div>
 		</div>
+
+
+		<script src="/assets/js/ckeditor5/build/ckeditor.js"></script>
+		<script src="/assets/js/l2g-ckeditor.js"></script>
 	{% endblock %}

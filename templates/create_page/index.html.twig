@@ -38,7 +38,7 @@
 			<input type="hidden" name="position" value="{{ chapter.pages|length+1}}">
 
 			{{ form_row(form.title) }}
-			{{ form_row(form.content) }}
+			{{ form_row(form.content, {'attr': {'class': 'js-richtexteditor'}}) }}
 			<div class="text-center">
 				<button class="p-3 btn btn-skills button_8 buttonNavBox" value="exit" name="button">{{ 'Save' | trans }}
 					&
@@ -54,6 +54,6 @@
 	<br>
 
 	<script src="/assets/js/ckeditor5/build/ckeditor.js"></script>
-	<script src="/assets/js/l2g-ckeditor.js.php?lang={{ app.user.language.code }}"></script>
+	<script src="/assets/js/l2g-ckeditor.js"></script>
 
 {% endblock %}

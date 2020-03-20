@@ -1184,4 +1184,24 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
   color: #444;
   font-weight: 300; }
 
+.ck-editor__editable_inline {
+  min-height: 400px; }
+
+.card-body {
+  padding: 2rem; }
+  .card-body li {
+    margin-bottom: 10px; }
+
+.card-text {
+  text-align: left; }
+
+.html-content figure {
+  border: 1px solid #DDD;
+  padding: 10px;
+  font-size: 80%; }
+.html-content img {
+  max-width: 100%; }
+.html-content .image-style-side {
+  float: right; }
+
 /*# sourceMappingURL=app.css.map */

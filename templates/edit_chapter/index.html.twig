@@ -1,30 +1,42 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}{{ 'Edit' | trans }}-{{ 'Chapter' | trans }}{% endblock %}
+{% block title %}
+	{{ 'Edit' | trans }}-{{ 'Chapter' | trans }}
+{% endblock %}
 
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a></li>
-    {% for crumb in chapter.editBreadcrumbs(app.user.language) %}
-            {{ include('partials/breadcrumbs.html.twig') }}
-        {% endfor %}
+	<li class="breadcrumb-item">
+		<a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a>
+	</li>
+	{% for crumb in chapter.editBreadcrumbs(app.user.language) %}
+		{{ include('partials/breadcrumbs.html.twig') }}
+	{% endfor %}
 {% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1 class="title-css">{{ 'Edit Chapter' | trans }}</h1>
-        <div class="example-wrapper">
-            <h3>{{ 'Currently editing' | trans }}: {{ 'Module' | trans }} {{ module.id }}, {{ 'Chapter' | trans }} {{ chapter.chapterNumber }}</h3>
+	<div class="example-wrapper">
+		<h1 class="title-css">{{ 'Edit Chapter' | trans }}</h1>
+		<div class="example-wrapper">
+			<h3>{{ 'Currently editing' | trans }}:
+				{{ 'Module' | trans }}
+				{{ module.id }},
+				{{ 'Chapter' | trans }}
+				{{ chapter.chapterNumber }}</h3>
 
-            <section class="module-cube">
-                {{ form_start(form) }}
-                {{ form_row(form.title) }}
-                {{ form_row(form.description) }}
-            </section>
+			<section class="module-cube">
+				{{ form_start(form) }}
+				{{ form_row(form.title) }}
+				{{ form_row(form.description,  {'attr': {'class': 'js-richtexteditor-minimal'}}) }}
+			</section>
 
-            <button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' | trans }}</button>
-            {{ form_end(form) }}
-        </div>
-    </div>
+			<button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' | trans }}</button>
+			{{ form_end(form) }}
+		</div>
+	</div>
+
+
+	<script src="/assets/js/ckeditor5/build/ckeditor.js"></script>
+	<script src="/assets/js/l2g-ckeditor.js"></script>
 {% endblock %}

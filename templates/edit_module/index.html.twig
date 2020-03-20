@@ -1,94 +1,100 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'Edit' | trans }}-{{ 'Module' | trans }}{% endblock %}
+{% block title %}
+	{{ 'Edit' | trans }}-{{ 'Module' | trans }}
+{% endblock %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a>
-    </li>
-    {% for crumb in module.editBreadcrumbs(app.user.language) %}
-        {{ include('partials/breadcrumbs.html.twig') }}
-    {% endfor %}
+	<li class="breadcrumb-item">
+		<a class="crumb crumb-link" href="{{ path('dashboard') }}">{{ 'Dashboard' | trans }}</a>
+	</li>
+	{% for crumb in module.editBreadcrumbs(app.user.language) %}
+		{{ include('partials/breadcrumbs.html.twig') }}
+	{% endfor %}
 {% endblock %}
 
 {% block body %}
-    <div class="example-wrapper">
-        <h1 class="title-css">{{ 'Edit Learning Module' | trans }}</h1>
-        <table class="container my-3">
+	<div class="example-wrapper">
+		<h1 class="title-css">{{ 'Edit Learning Module' | trans }}</h1>
+		<table class="container my-3">
 
-            <section class="module-cube">
-                <h3>{{ 'Title' | trans }} {{ 'and' | trans }} {{ 'description' | trans }} </h3>
-                {{ form_start(moduleTLForm) }}
-                {{ form_row(moduleTLForm.title) }}
-                {{ form_row(moduleTLForm.description) }}
-                <button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' | trans }}</button>
-                {{ form_end(moduleTLForm) }}
-            </section>
+			<section class="module-cube">
+				<h3>{{ 'Title' | trans }}
+					{{ 'and' | trans }}
+					{{ 'description' | trans }}
+				</h3>
+				{{ form_start(moduleTLForm) }}
+				{{ form_row(moduleTLForm.title) }}
+				{{ form_row(moduleTLForm.description ,  {'attr': {'class': 'js-richtexteditor-minimal'}}) }}
+				<button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' | trans }}</button>
+				{{ form_end(moduleTLForm) }}
+			</section>
 
-            <section class="module-cube">
-                <h3>{{ 'Badge' |trans }} & {{ 'type' |trans }}</h3>
-                {{ form_start(moduleForm) }}
-                {{ form_row(moduleForm.badge) }}
-                {{ form_row(moduleForm.type) }}
-                <button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' |trans }}</button>
-                {{ form_end(moduleForm) }}
-            </section>
+			<section class="module-cube">
+				<h3>{{ 'Badge' |trans }}
+					&
+					{{ 'type' |trans }}</h3>
+				{{ form_start(moduleForm) }}
+				{{ form_row(moduleForm.badge) }}
+				{{ form_row(moduleForm.type) }}
+				<button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' |trans }}</button>
+				{{ form_end(moduleForm) }}
+			</section>
 
-            <section class="module-cube">
-                <div class="row">
-                    <div class="col">
-                        {{ form_start(moduleImageForm) }}
-                        <h3>{{ 'Change module image' |trans }}</h3>
-                        <h6 class="text-muted">{{ 'Allowed filetypes' | trans }}: .jpg, .gif and .png</h6>
+			<section class="module-cube">
+				<div class="row">
+					<div class="col">
+						{{ form_start(moduleImageForm) }}
+						<h3>{{ 'Change module image' |trans }}</h3>
+						<h6 class="text-muted">{{ 'Allowed filetypes' | trans }}: .jpg, .gif and .png</h6>
 
-                        {{ form_widget(moduleImageForm.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
-                        {{ form_errors(moduleImageForm.upload) }}
-                        <button class="mt-2 p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' |trans }}</button>
+						{{ form_widget(moduleImageForm.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
+						{{ form_errors(moduleImageForm.upload) }}
+						<button class="mt-2 p-1 btn btn-skills button_8 buttonNavBox">{{ 'Update' |trans }}</button>
 
-                        {{ form_end(moduleImageForm) }}
-                    </div>
-                    <div class="col">
-                        <p>{{ 'Image preview' | trans }}</p>
-                        <img style="width: 180px;" class="uploadPreview" src="#" alt="">
-                    </div>
-                    <div class="col">
-                        <p>{{ 'Current image' | trans }}</p>
-                        {% if module.image %}
-                            <img style="width: 180px;" src="{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="{{ module.image }}">
-                        {% endif %}
-                    </div>
-                </div>
-            </section>
+						{{ form_end(moduleImageForm) }}
+					</div>
+					<div class="col">
+						<p>{{ 'Image preview' | trans }}</p>
+						<img style="width: 180px;" class="uploadPreview" src="#" alt="">
+					</div>
+					<div class="col">
+						<p>{{ 'Current image' | trans }}</p>
+						{% if module.image %}
+							<img style="width: 180px;" src="{{ asset(module.image | imagine_filter('learningModuleImage')) }}" alt="{{ module.image }}">
+						{% endif %}
+					</div>
+				</div>
+			</section>
 
-<ol id="js-sortable-chapters" class="sortable list-group">
-            {% for chapter in module.chapters %}
-            <li  class="list-group-item" data-id="{{ chapter.id }}">
-                <section class="module-cube">
-                <p style="clear:both;opacity:.1; float:right">#{{ chapter.chapterNumber }}</p>
+			<ol id="js-sortable-chapters" class="sortable list-group">
+				{% for chapter in module.chapters %}
+					<li class="list-group-item" data-id="{{ chapter.id }}">
+						<section class="module-cube">
+							<p style="clear:both;opacity:.1; float:right">#{{ chapter.chapterNumber }}</p>
 
-                    <span class="ui-meta-label">{{ 'chapter' |trans }} #{{ chapter.position+1 }}</span><br>
-                    <h4>{{ chapter.title(english) }}</h4><br>
-                    <a class="btn-deletequestion button_2 deleteHover float-right"
-                       href="{{ path('delete_chapter', {module: module.id, chapter: chapter.id, return: 'flow'}) }}">{{ 'Delete
+							<span class="ui-meta-label">{{ 'chapter' |trans }}
+								#{{ chapter.position+1 }}</span><br>
+							<h4>{{ chapter.title(english) }}</h4><br>
+							<a class="btn-deletequestion button_2 deleteHover float-right" href="{{ path('delete_chapter', {module: module.id, chapter: chapter.id, return: 'flow'}) }}">{{ 'Delete
                     Chapter' |trans }}</a>
-                    <a class="p-1 btn btn-skills button_8 buttonNavBox"
-                       href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">{{ 'Edit Chapter' |trans }}</a>
-                    <a class="p-1 btn btn-skills button_8 buttonNavBox"
-                       href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">{{ 'Edit Quiz' |trans }}</a>
-                </section>
-</li>
-            {% endfor %}
-</ol>
+							<a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('create_chapter', {module: module.id, chapter: chapter.id}) }}">{{ 'Edit Chapter' |trans }}</a>
+							<a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('quiz_show', {'id' : chapter.quiz.id}) }}">{{ 'Edit Quiz' |trans }}</a>
+						</section>
+					</li>
+				{% endfor %}
+			</ol>
 
-            <div class="text-center">
-                {{ form_start(addNewChapterBtn) }}
-                <button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Add a Chapter' |trans }}</button>
-                {{ form_end(addNewChapterBtn) }}
-            </div>
-        </div>
-    </div>
+			<div class="text-center">
+				{{ form_start(addNewChapterBtn) }}
+				<button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Add a Chapter' |trans }}</button>
+				{{ form_end(addNewChapterBtn) }}
+			</div>
+		</div>
+	</div>
 
-    <script src="{{ asset('assets/js/UploaderPreviewScript.js') }}"></script>
+	<script src="{{ asset('assets/js/UploaderPreviewScript.js') }}"></script>
 
+	<script src="/assets/js/ckeditor5/build/ckeditor.js"></script>
+	<script src="/assets/js/l2g-ckeditor.js"></script>
 {% endblock %}
-
-

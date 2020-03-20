@@ -65,3 +65,33 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
 .ck-editor__editable_inline {
   min-height: 400px;
 }
+
+.card-body {
+  padding: 2rem;
+
+  li {
+    margin-bottom: 10px;
+  }
+}
+
+.card-text {
+  text-align: left;
+
+}
+
+.html-content {
+
+  figure {
+    border: 1px solid #DDD;
+    padding: 10px;
+    font-size: 80%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .image-style-side {
+    float: right;
+  }
+}
