@@ -108,12 +108,6 @@
     "egulias/email-validator": {
         "version": "2.1.11"
     },
-    "erusev/parsedown": {
-        "version": "1.7.0"
-    },
-    "erusev/parsedown-extra": {
-        "version": "0.8.1"
-    },
     "fig/link-util": {
         "version": "1.0.0"
     },
@@ -574,9 +568,6 @@
     },
     "symfony/yaml": {
         "version": "v4.3.5"
-    },
-    "taufik-nurrohman/parsedown-extra-plugin": {
-        "version": "v1.2.0"
     },
     "twig/twig": {
         "version": "v2.12.0"
