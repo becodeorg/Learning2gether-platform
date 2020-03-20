@@ -23,7 +23,7 @@ ClassicEditor.create(document.querySelector('.js-richtexteditor'), {
             'redo'
         ]
     },
-    language: '<?= $lang ?>',
+    language: 'en',
     image: {
         toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
     },
