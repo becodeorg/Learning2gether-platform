@@ -62,10 +62,6 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
   font-weight: 300;
 }
 
-.ck-editor__editable_inline {
-  min-height: 400px;
-}
-
 .card-body {
   padding: 2rem;
 
@@ -79,7 +75,7 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
 
 }
 
-.html-content {
+.ck-content {
 
   figure {
     border: 1px solid #DDD;
@@ -93,5 +89,49 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
 
   .image-style-side {
     float: right;
+  }
+
+  & .image-style-side,
+  & .image-style-align-left,
+  & .image-style-align-center,
+  & .image-style-align-right {
+    max-width: 50%;
+  }
+
+  & .image-style-side {
+    float: right;
+    margin-left: var(--ck-image-style-spacing);
+  }
+
+  & .image-style-align-left {
+    float: left;
+    margin-right: var(--ck-image-style-spacing);
+  }
+
+  & .image-style-align-center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  & .image-style-align-right {
+    float: right;
+    margin-left: var(--ck-image-style-spacing);
+  }
+
+  & .media {
+    /* Don't allow floated content overlap the media.
+    https://github.com/ckeditor/ckeditor5-media-embed/issues/53 */
+    clear: both;
+
+    /* Make sure there is some space between the content and the media. */
+    margin: 1em 0;
+
+    /* Make sure media is not overriden with Bootstrap default `flex` value.
+    See: https://github.com/ckeditor/ckeditor5/issues/1373. */
+    display: block;
+
+    /* Give the media some minimal width in the content to prevent them
+    from being "squashed" in tight spaces, e.g. in table cells (#44) */
+    min-width: 15em;
   }
 }
