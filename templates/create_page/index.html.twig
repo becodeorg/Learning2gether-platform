@@ -77,11 +77,46 @@
 	</div>
 	<br>
 
-	<!-- markdown editor -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-	<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-	<!-- /markdown editor -->
 
-	<script src="{{ asset('assets/js/editPageApp.js') }}"></script>
+	<script src="/assets/js/ckeditor5/build/ckeditor.js"></script>
+	<script>
+		ClassicEditor.create(document.querySelector('#edit_page_translation_content'), {
+
+toolbar: {
+items: [
+'heading',
+'|',
+'bold',
+'italic',
+'link',
+'bulletedList',
+'numberedList',
+'horizontalLine',
+'|',
+'indent',
+'outdent',
+'|',
+'imageUpload',
+'blockQuote',
+'mediaEmbed',
+'|',
+'undo',
+'redo'
+]
+},
+language: 'en',
+image: {
+toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
+},
+licenseKey: ''
+
+}).then(editor => {
+window.editor = editor;
+
+
+}).catch(error => {
+console.error(error);
+});
+	</script>
 
 {% endblock %}

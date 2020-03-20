@@ -7,6 +7,7 @@ use App\Entity\Image;
 use App\Form\ImageUploaderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,15 +23,19 @@ class UploadContentController extends AbstractController
         $uploader = $this->createForm(ImageUploaderType::class);
         $uploader->handleRequest($request);
 
-        if ($uploader->isSubmitted() && $uploader->isValid()){
+        if ($uploader->isSubmitted() && $uploader->isValid()) {
             //get upload dir
             $imageManager = new ImageManager();
             $imageManager->fixUploadsFolder($this->getParameter('uploads_directory'), $this->getParameter('public_directory'));
-            $newImage = $imageManager->createImage($uploader->getData()['upload'], $this->getUser(), $this->getParameter('uploads_directory'),'content');
+            $newImage = $imageManager->createImage($uploader->getData()['upload'], $this->getUser(), $this->getParameter('uploads_directory'), 'content');
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($newImage);
             $em->flush();
+
+            //if ($request->isXmlHttpRequest()) {
+
+            // }
         }
 
         $imagesAll = $this->getDoctrine()->getRepository(Image::class)->findAll();
