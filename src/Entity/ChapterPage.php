@@ -134,7 +134,11 @@ class ChapterPage
     public function getEditBreadcrumbs(Language $language): array
     {
         $breadcrumbs = $this->getChapter()->getEditBreadcrumbs($language);
-        $breadcrumbs[] = new Breadcrumb('Edit Page');
+        $breadcrumbs[] = new Breadcrumb(
+            'Page: ' . $this->getTitle($language) . ' (' . $language->getCode() . ') ',
+            'edit_page',
+            ['module' => $this->getChapter()->getLearningModule()->getId(), 'chapter' => $this->getChapter()->getId()]
+        );
         return $breadcrumbs;
     }
 

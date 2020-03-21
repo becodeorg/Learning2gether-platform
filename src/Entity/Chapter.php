@@ -236,7 +236,7 @@ class Chapter
     {
         $breadcrumbs = $this->getLearningModule()->getDashboardBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb(
-            'Chapter [ ' . $language->getName() . ']',
+            'Chapter :' . $this->getTitle($language) . ' (' . $language->getCode() . ') ',
             'dashboard_chapter',
             ['chapter' => $this->getId()]
         );
@@ -248,7 +248,7 @@ class Chapter
     {
         $breadcrumbs = $this->getLearningModule()->getEditBreadcrumbs($language);
         $breadcrumbs[] = new Breadcrumb(
-            'Edit Chapter [ ' . $language->getName() . '] ',
+            'Chapter ' . $this->getTitle($language) . ' (' . $language->getCode() . ') ',
             'create_chapter',
             ['module' => $this->getLearningModule()->getId(), 'chapter' => $this->getId()]
         );

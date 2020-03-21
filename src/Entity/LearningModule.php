@@ -246,7 +246,7 @@ class LearningModule
     {
         return [
             new Breadcrumb(
-                'Edit Module [ ' . $language->getName() . '] ',
+                'Edit ' . $this->getTitle($language) . ' (' . $language->getCode() . ') ',
                 'edit_module',
                 ['module' => $this->getId()]
             )
