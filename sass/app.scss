@@ -75,7 +75,13 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
 
 }
 
+@import 'layout/ckeditor';
+
 .ck-content {
+
+  padding: 50px;
+  margin: 50px;
+  font-family: 'Noto Serif', serif;
 
   figure {
     border: 1px solid #DDD;
@@ -85,37 +91,6 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
 
   img {
     max-width: 100%;
-  }
-
-  .image-style-side {
-    float: right;
-  }
-
-  & .image-style-side,
-  & .image-style-align-left,
-  & .image-style-align-center,
-  & .image-style-align-right {
-    max-width: 50%;
-  }
-
-  & .image-style-side {
-    float: right;
-    margin-left: var(--ck-image-style-spacing);
-  }
-
-  & .image-style-align-left {
-    float: left;
-    margin-right: var(--ck-image-style-spacing);
-  }
-
-  & .image-style-align-center {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  & .image-style-align-right {
-    float: right;
-    margin-left: var(--ck-image-style-spacing);
   }
 
   & .media {
@@ -134,4 +109,12 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
     from being "squashed" in tight spaces, e.g. in table cells (#44) */
     min-width: 15em;
   }
+
+}
+
+.breadcrumb {
+  font-size: 88%;
+  background: white;
+  border-bottom: 1px solid #EEE;
+
 }

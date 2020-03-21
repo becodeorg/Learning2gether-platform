@@ -1,120 +1,113 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <title>{% block title %}Learning2gether{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    {% block stylesheets %}{% endblock %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- CHIVO FONT -->
-    <link href="https://fonts.googleapis.com/css?family=Chivo:300,400,700,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
+		<title>
+			{% block title %}Learning2gether
+			{% endblock %}
+		</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> {% block stylesheets %}{% endblock %}
+		<link
+		rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<!-- CHIVO FONT -->
+		<link href="https://fonts.googleapis.com/css?family=Chivo:300,400,700,900&display=swap" rel="stylesheet">
+		<link
+		href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!-- STYLESHEET -->
-    <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
-    <script src="https://kit.fontawesome.com/c1a3a3bd8a.js" crossorigin="anonymous"></script>
-    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('assets/img/favicon.ico') }}' />
-</head>
-<body>
-<div id="screen" class="gone"></div>
-<div class="navwrap">
-    <nav class="navbar navbar-expand-md navbar-dark bg nav-bar-color">
-        <!-- LOGO   -->
+		<!-- STYLESHEET -->
+		<link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+		<script src="https://kit.fontawesome.com/c1a3a3bd8a.js" crossorigin="anonymous"></script>
+		<link rel='shortcut icon' type='image/x-icon' href='{{ asset('assets/img/favicon.ico') }}'/>
+	</head>
+	<body>
+		<div id="screen" class="gone"></div>
+		<div class="navwrap">
+			<nav
+				class="navbar navbar-expand-md navbar-dark bg nav-bar-color">
+				<!-- LOGO   -->
 
-        <a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('assets/img/lightlogo-15.png') }}" height="50px" alt="logo"></a>
+				<a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('assets/img/lightlogo-15.png') }}" height="50px" alt="logo"></a>
 
-        <!-- HAMBURGER ICON BUTTON   -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+				<!-- HAMBURGER ICON BUTTON   -->
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-        <div class="collapse navbar-collapse nav-bar-collapse" id="navbarTogglerDemo02">
+				<div class="collapse navbar-collapse nav-bar-collapse" id="navbarTogglerDemo02">
 
-            {% set searchbar = searchbar.getSearchbar() %}
-            {{ form_start(searchbar, {'attr': {'class': 'form-inline my-2 my-lg-0'}}) }}
-            {{ form_widget(searchbar.keywords, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Search'}}) }}
-            </form>
+					{% set searchbar = searchbar.getSearchbar() %}
+					{{ form_start(searchbar, {'attr': {'class': 'form-inline my-2 my-lg-0'}}) }}
+					{{ form_widget(searchbar.keywords, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Search'}}) }}
+				</form>
 
-            <!-- LINKS   -->
+				<!-- LINKS   -->
 
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                <li class="nav-item active hubnav">
-                    <a class="nav-link"
-                       data-toggle="tooltip" data-placement="right" title="{{ 'Portal' | trans }}"
-                       href="{{ path('portal') }}"><img height="25px"
-                                                                         src="{{ asset('assets/img/lightlogo-09.png') }}"
-                                                                         alt="{{ 'Portal' | trans }}"><span
-                                class="sr-only">(current)</span></a>
-                </li>
+				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+					<li class="nav-item active hubnav">
+						<a class="nav-link" data-toggle="tooltip" data-placement="right" title="{{ 'Portal' | trans }}" href="{{ path('portal') }}"><img height="25px" src="{{ asset('assets/img/lightlogo-09.png') }}" alt="{{ 'Portal' | trans }}"><span class="sr-only">(current)</span>
+						</a>
+					</li>
 
 
+					<li class="nav-item formnav">
+						<a class="nav-link" data-toggle="tooltip" data-placement="right" title="{{ 'Meetingplace' | trans }}" href="{{ path('forum') }}"><img height="25px" src="{{ asset('assets/img/lightlogo-10.png') }}" alt="{{ 'Meetingplace' | trans }}"></a>
+					</li>
 
-                <li class="nav-item formnav">
-                    <a class="nav-link"
-                       data-toggle="tooltip" data-placement="right" title="{{ 'Meetingplace' | trans }}"
-                       href="{{ path('forum') }}"><img height="25px"
-                                                                        src="{{ asset('assets/img/lightlogo-10.png') }}"
-                                                                        alt="{{ 'Meetingplace' | trans }}"></a>
-                </li>
+					<li class="nav-item profilenav">
+						<div class="nav-link" id="profiledrop"><img data-toggle="tooltip" data-placement="right" title="{{ 'Profile' | trans }}" height="25px" src="{{ asset('assets/img/lightlogo-11.png') }}" alt="{{ 'Profile' | trans }}"></div>
+						<div id="reveal" class="gone">
+							<a class="nav-link" href="{{ path('profile') }}">{{ 'My profile' | trans }}</a>
+							<a class="nav-link" href="{{ path('app_logout') }}">{{ 'Logout' | trans }}</a>
+						</div>
+					</li>
 
-                <li class="nav-item profilenav">
-                    <div class="nav-link" id="profiledrop"><img data-toggle="tooltip" data-placement="right" title="{{ 'Profile' | trans }}" height="25px" src="{{ asset('assets/img/lightlogo-11.png') }}"
-                                               alt="{{ 'Profile' | trans }}"></div>
-                    <div id="reveal" class="gone">
-                        <a class="nav-link" href="{{ path('profile') }}">{{ 'My profile' | trans }}</a>
-                        <a class="nav-link" href="{{ path('app_logout') }}">{{ 'Logout' | trans }}</a>
-                    </div>
-                </li>
+					<li class="nav-item dropdown">
+						{{ include('language_switcher/_switcher.html.twig') }}
+						{# have switcherForm in the header of every page#}
+					</li>
+				</ul>
 
-                <li class="nav-item dropdown">
-                    {{ include('language_switcher/_switcher.html.twig') }} {# have switcherForm in the header of every page#}
-                </li>
-            </ul>
-
-        </div>
-    </nav>
-</div>
-{% for type, messages in app.session.flashbag.all() %}
-    {% for message in messages %}
-        {% if type == 'error' %}{% set type = 'danger' %}{% endif %}
-        <div class="alert alert-{{ type }}" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endfor %}
-<ol class="breadcrumb bg-transparent text-muted">
-    {% block breadcrumbs %}{% endblock %}
+			</div>
+		</nav>
+	</body>
+</html></div>{% for type, messages in app.session.flashbag.all() %}
+{% for message in messages %}
+	{% if type == 'error' %}
+		{% set type = 'danger' %}
+	{% endif %}
+	<div class="alert alert-{{ type }}" role="alert">
+		{{ message }}
+	</div>
+{% endfor %}{% endfor %}<ol class="breadcrumb text-muted"> {% block breadcrumbs %}{% endblock %}
 </ol>
 {% block body %}{% endblock %}
 {% block javascripts %}{% endblock %}
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-        <script src="{{ asset('assets/js/script.js') }}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="{{ asset('assets/js/script.js') }}"></script>
 
-<script>$('[data-toggle="tooltip"]').tooltip();</script>
-
-<script src="https://cdn.jsdelivr.net/gh/pixeline/portable-github-issues-form/bundle.js" ></script>
 <script>
-const token1 = 'cc1dbf5013d73be5c2d';
+	$('[data-toggle="tooltip"]').tooltip();
+</script>
+
+<script src="https://cdn.jsdelivr.net/gh/pixeline/portable-github-issues-form/bundle.js"></script>
+<script>
+	const token1 = 'cc1dbf5013d73be5c2d';
 const token2 = '85d47c532c62ca33283ef';
-var githubForm =  new GithubIssueForm({ 'token': token1+token2, 'useragent': 'portable-github-issues-form', 'repository': 'becodeorg/Learning2gether-platform', 'milestone': null });
+var githubForm = new GithubIssueForm({
+'token': token1 + token2,
+'useragent': 'portable-github-issues-form',
+'repository': 'becodeorg/Learning2gether-platform',
+'milestone': null
+});
 githubForm.inject();
 Issue.inject();
-</script>
-</body>
-</html>
+</script></body></html>
