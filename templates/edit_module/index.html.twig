@@ -56,7 +56,11 @@
 					</div>
 					<div class="col">
 						<p>{{ 'Image preview' | trans }}</p>
-						<img style="width: 180px;" class="uploadPreview" src="#" alt="">
+						<img style="width: 180px;" class="uploadPreview" src="{{ asset('assets/img/transparent.png') }}" alt="">
+						<p>
+							<small>{{ 'Maximum File size' |trans}}:
+								{{ max_upload() }}</small>
+						</p>
 					</div>
 					<div class="col">
 						<p>{{ 'Current image' | trans }}</p>

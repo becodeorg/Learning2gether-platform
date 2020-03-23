@@ -1,24 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UploadContentController!{% endblock %}
+{% block title %}Hello UploadContentController!
+{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
-        <div class="row">
-                <div class="col">
-                        {{ form_start(uploader) }}
-                        {{ form_row(uploader.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
-                        <button class="btn btn-skills">{{ 'Upload' | trans }}</button>
-                        {{ form_end(uploader) }}
-                </div>
-            <div class="col">
-                <img style="height: 180px" class="uploadPreview" src="#" alt="">
-            </div>
-        </div>
-    <div class="container border border-dark">
-        {% for image in imagesAll %}
-            <img src="{{ asset(image.src | imagine_filter('learningModuleImage')) }}" width="200px" alt="{{ image.name }}">
-        {% endfor %}
-    </div>
-</div>
+	<div class="example-wrapper">
+		<div class="row">
+			<div class="col">
+				{{ form_start(uploader) }}
+				{{ form_row(uploader.upload, { 'attr': {'onchange': 'previewFile()'} }) }}
+				<button class="btn btn-skills">{{ 'Upload' | trans }}</button>
+				{{ form_end(uploader) }}
+			</div>
+			<div class="col">
+				<img style="width: 180px;" class="uploadPreview" src="{{ asset('assets/img/transparent.png') }}" alt="">
+				<p>
+					<small>{{ 'Maximum File size' |trans}}:
+						{{ max_upload() }}</small>
+				</p>
+			</div>
+		</div>
+		<div class="container border border-dark">
+			{% for image in imagesAll %}
+				<img src="{{ asset(image.src | imagine_filter('learningModuleImage')) }}" width="200px" alt="{{ image.name }}">
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}

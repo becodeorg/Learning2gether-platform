@@ -1,56 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'Create Module' | trans }}{% endblock %}
+{% block title %}
+	{{ 'Create Module' | trans }}
+{% endblock %}
 
 {#{% block breadcrumbs %}#}
 {#        <li class="breadcrumb-item"><a class="crumb crumb-link" href="{{ path('dashboard') }}">Dashboard</a></li>#}
 {#{% endblock %}#}
 
-{% block body %}
+	{% block body %}
 
-    <section class="container my-3 example-wrapper">
+		<section class="container my-3 example-wrapper"> <h1 class="title-css">{{ 'New Learning Module Creation' | trans }}</h1>
 
-        <h1 class="title-css">{{ 'New Learning Module Creation' | trans }}</h1>
+		<div class="row">
+			<p class="mod-step">{{ 'Step 1: To create a new module, please fill in the english title and description' | trans }}
+			</p>
+		</div>
 
-        <div class="row">
-            <p class="mod-step">{{ 'Step 1: To create a new module, please fill in the english title and description' | trans }} </p>
-        </div>
+		{{ form_start(form) }}
 
-        {{ form_start(form) }}
+		<section class="module-cube">
+			{{ form_row(form.translations) }}
+		</section>
 
-        <section class="module-cube">
-            {{ form_row(form.translations) }}
-        </section>
+		<div class="row">
+			<p class="mod-step">{{ 'Step 2: Assign a badge and select the module type.' | trans }}</p>
+			<p class="mod-step-partial">*Please note this requires visiting
+				<a href="https://badgr.com/">Badgr.com</a>
+				and creating an account. There after you can obtain a hash, which functions as a unique id for a badge
+								                associated with the new Learning Module.</p>
+		</div>
 
-        <div class="row">
-            <p class="mod-step">{{ 'Step 2: Assign a badge and select the module type.' | trans }}</p>
-            <p class="mod-step-partial">*Please note this requires visiting <a href="https://badgr.com/">Badgr.com</a>
-                and creating an account. There after you can obtain a hash, which functions as a unique id for a badge
-                associated with the new Learning Module.</p>
-        </div>
+		<section class="module-cube">
+			{{ form_row(form.badge) }}
+			{{ form_row(form.type) }}
 
-        <section class="module-cube">
-            {{ form_row(form.badge) }}
-            {{ form_row(form.type) }}
+			<div class="row">
+				<div class="col">
+					{{ form_row(form.image , { 'attr': {'onchange': 'previewFile()'} }) }}
+					{{ form_errors(form) }}
+				</div>
+				<div class="col">
+					<p>{{ 'Image preview' | trans }}</p>
+					<img style="width: 180px;" class="uploadPreview" src="{{ asset('assets/img/transparent.png') }}" alt="">
+					<p>
+						<small>{{ 'Maximum File size' |trans}}:
+							{{ max_upload() }}</small>
+					</p>
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col">
-                    {{ form_row(form.image , { 'attr': {'onchange': 'previewFile()'} }) }}
-                    {{ form_errors(form) }}
-                </div>
-                <div class="col">
-                    <p>{{ 'Image preview' | trans }}</p>
-                    <img style="width: 180px;" class="uploadPreview" src="#" alt="">
-                </div>
-            </div>
+		</section>
+		<div class="text-center">
+			<button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Save & add Chapter' | trans }}</button>
+		</div>
+		{{ form_end(form) }}
+	</section>
 
-        </section>
-        <div class="text-center">
-            <button class="p-1 btn btn-skills button_8 buttonNavBox">{{ 'Save & add Chapter' | trans }}</button>
-        </div>
-        {{ form_end(form) }}
-    </section>
-
-    <script src="{{ asset('assets/js/UploaderPreviewScript.js') }}"></script>
+	<script src="{{ asset('assets/js/UploaderPreviewScript.js') }}"></script>
 
 {% endblock %}
