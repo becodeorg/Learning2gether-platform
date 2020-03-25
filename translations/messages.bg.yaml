@@ -4,9 +4,9 @@ Sign in: Впиши се
 Welcome to the homepage: Добре дошли в началната страница
 language test : bg. Тази страница е на български език
 Login: Вход
-Logout:
+Logout: Изход
 Register: Регистрация
-Email: Email
+Email: Имейл
 Password: Парола
 Re-enter password: Въведете паролата отново
 Name: Име
@@ -16,7 +16,7 @@ Welcome to: Добре дошли
 Learn more: Научете повече
 Forgot your password?: Забравена парола?
 No account yet?: Нямате профил?
-Already have an account? :
+Already have an account? : Вече имате профил?
 Search: Търсене
 Search results: Резултати от търсенето
 Learning Hub: Обучителен хъб
@@ -42,10 +42,10 @@ Back to forum: Обратно към форума
 Chapter info: Информация за урока
 Passed: Браво! Преминахте успешно теста
 Try again: Опитайте отново
-Your result is: Вашият резултат е
+Your result is: Вашият резултат е: 
 Submit: Потвърди
 You’re almost there. Give it another shot!: Почти успяхте, опитайте отново!
-Successfully earned your …. badge!: Спечелихте Вашта значка!
+Successfully earned your …. badge!: Спечелихте Вашта значка! ….
 Congratulations, you completed chapter !: Поздравления, успешно завършите този урок!
 Congratulations, you passed the quiz!: Поздравления, успешно преминахте теста!
 Congratulations, you completed your module!: Поздравления, успешно завършихте обучителния модул!
@@ -61,7 +61,7 @@ Topic: Тема
 Topics: Теми
 Question: Въпрос
 Questions: Въпросите
-Question(s): Въпрос(ие) 
+Question(s): Въпрос(и) 
 View answers: Виж отговорите
 View questions: Виж въпросите
 Title: Заглавие
