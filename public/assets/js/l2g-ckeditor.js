@@ -24,6 +24,9 @@ ClassicEditor.create(document.querySelector('.js-richtexteditor'), {
         ]
     },
     language: 'en',
+    link: {
+        addTargetToExternalLinks: true
+    },
     image: {
         toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
     },
@@ -56,6 +59,9 @@ ClassicEditor.create(document.querySelector('.js-richtexteditor-minimal'), {
         ]
     },
     language: '<?= $lang ?>',
+    link: {
+        addTargetToExternalLinks: true
+    },
     image: {
         toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
     },
