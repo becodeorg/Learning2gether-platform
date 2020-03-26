@@ -86,3 +86,9 @@ if (document.getElementById('js-sortable-pages')) {
     });
 
 }
+
+// Links to open on new window
+document.querySelectorAll(".ck-content a").forEach(
+    function (el) {
+        el.target = "_blank";
+    });
