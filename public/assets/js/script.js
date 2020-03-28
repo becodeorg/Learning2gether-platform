@@ -88,7 +88,7 @@ if (document.getElementById('js-sortable-pages')) {
 }
 
 // Links to open on new window
-document.querySelectorAll(".ck-content a").forEach(
+document.querySelectorAll(".ck-content a:not(.prev):not(.next)").forEach(
     function (el) {
         el.target = "_blank";
     });

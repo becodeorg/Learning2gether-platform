@@ -1490,4 +1490,15 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
   background: white;
   border-bottom: 1px solid #EEE; }
 
+.pagination {
+  display: block; }
+  .pagination a.prev,
+  .pagination a.next {
+    position: relative;
+    display: inline; }
+  .pagination a.prev {
+    float: left; }
+  .pagination a.next {
+    float: right; }
+
 /*# sourceMappingURL=app.css.map */

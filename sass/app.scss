@@ -118,3 +118,21 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
   border-bottom: 1px solid #EEE;
 
 }
+
+.pagination {
+  display: block;
+
+  a.prev,
+  a.next {
+    position: relative;
+    display: inline;
+  }
+
+  a.prev {
+    float: left;
+  }
+
+  a.next {
+    float: right;
+  }
+}
