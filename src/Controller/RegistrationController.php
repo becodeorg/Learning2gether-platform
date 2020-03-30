@@ -17,6 +17,15 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
 {
+
+
+    /**
+     * @Route("/register", name="en_register")
+     */
+    public function registerInEnglish()
+    {
+        return $this->redirectToRoute('app_register');
+    }
     /**
      * @Route("/{_locale}/register", name="app_register")
      */
@@ -49,7 +58,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $defaultLang= $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'EN']);
+            $defaultLang = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
             $user->setLanguage($defaultLang);
 
             // TODO pass null to database to get automatic timestamp
@@ -57,14 +66,6 @@ class RegistrationController extends AbstractController
             $user->setCreated($dateTime);
 
             $entityManager = $this->getDoctrine()->getManager();
-
-//            if($request->files->get('registration_form')['avatar']){
-//            $imageManager = new ImageManager();
-//            $newImage = $imageManager->createImage($request->files->get('registration_form')['avatar'], $user, $this->getParameter('uploads_directory'), 'avatar');
-//            $user->setAvatar($newImage->getSrc());
-//            $entityManager->persist($newImage);
-//            }
-
             $entityManager->persist($user);
             $entityManager->flush();
 

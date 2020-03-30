@@ -34,8 +34,8 @@ class AppAuthAuthenticator extends AbstractFormLoginAuthenticator
         EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
-        UserPasswordEncoderInterface $passwordEncoder)
-    {
+        UserPasswordEncoderInterface $passwordEncoder
+    ) {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
@@ -95,7 +95,7 @@ class AppAuthAuthenticator extends AbstractFormLoginAuthenticator
 
         //redirect the user to either portal or the partner homepage
         $routeName = 'portal';
-        if($token->getUser()->isPartner()) {
+        if ($token->getUser()->isPartner()) {
             $routeName = 'partner';
         }
 
@@ -112,14 +112,18 @@ class AppAuthAuthenticator extends AbstractFormLoginAuthenticator
         // $_SESSION['_sf2_attributes']['_security.last_username']; // string, used to login
         // find the user from the database who has this email
         // then from that user, get language -> get code
-        if(!isset($_SESSION['_sf2_attributes']['_security.last_username'])) {
+        if (!isset($_SESSION['_sf2_attributes']['_security.last_username'])) {
             //user just registered so we don't have the username yet
             //but it doesn't matter because we configured his language based on his cookie anyway.
             return;
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $_SESSION['_sf2_attributes']['_security.last_username']]);
-        $userLangCode = mb_strtolower($user->getLanguage()->getCode());
+        if (is_null($user)) {
+            $userLangCode = 'en';
+        } else {
+            $userLangCode = mb_strtolower($user->getLanguage()->getCode());
+        }
 
         $request->setLocale($userLangCode);
         setcookie('language', $userLangCode, time() + self::ONE_YEAR, '/', $_SERVER['HTTP_HOST']);
