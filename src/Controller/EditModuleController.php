@@ -35,12 +35,12 @@ class EditModuleController extends AbstractController
     public function index(Request $request, LearningModule $module): Response
     {
         $english = $this->getDoctrine()->getRepository(Language::class)->findOneBy(['code' => 'en']);
-        $englishTranslation = $module->getTranslations()->filter(static function ($entry) use ($english){
-            return in_array($entry->getLanguage()->getCode(), (array)$english->getCode() , true);
+        $englishTranslation = $module->getTranslations()->filter(static function ($entry) use ($english) {
+            return in_array($entry->getLanguage()->getCode(), (array) $english->getCode(), true);
         });
 
-        $moduleForm = $this->createForm(EditModuleType::class, $module);
-        $moduleForm->handleRequest($request);
+        $moduleTypeForm = $this->createForm(EditModuleType::class, $module);
+        $moduleTypeForm->handleRequest($request);
 
         $moduleTLForm = $this->createForm(EditModuleTranslationsType::class, $englishTranslation[0]);
         $moduleTLForm->handleRequest($request);
@@ -51,22 +51,21 @@ class EditModuleController extends AbstractController
         $moduleImageForm = $this->createForm(ImageUploaderType::class);
         $moduleImageForm->handleRequest($request);
 
-        if ($moduleForm->isSubmitted() && $moduleForm->isValid()) {
+        if ($moduleTypeForm->isSubmitted() && $moduleTypeForm->isValid()) {
             $badgr = new Badgr();
             try {
                 $badgr->getImage($this->getUser(), $module->getBadge());
-                $module = $moduleForm->getData();
+                $module = $moduleTypeForm->getData();
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($module);
                 $em->flush();
                 $this->addFlash('success', 'Changes saved!');
-            }
-            catch(ClientException $e) {
-                $this->addFlash('error', 'This is an invalid badge hash!');
+            } catch (ClientException $e) {
+                $this->addFlash('error', 'This is an invalid badge hash!' . $e->getMessage());
             }
         }
 
-        if ($moduleTLForm->isSubmitted() && $moduleTLForm->isValid()){
+        if ($moduleTLForm->isSubmitted() && $moduleTLForm->isValid()) {
             $moduleTL = $moduleTLForm->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($moduleTL);
@@ -74,7 +73,7 @@ class EditModuleController extends AbstractController
             $this->addFlash('success', 'Changes saved!');
         }
 
-        if ($addNewChapterBtn->isSubmitted() && $addNewChapterBtn->isValid()){
+        if ($addNewChapterBtn->isSubmitted() && $addNewChapterBtn->isValid()) {
             $languageAll = $this->getDoctrine()->getRepository(Language::class)->findAll();
             $newChapter = new Chapter($module);
             $newChapter = $this->makeChapterTranslations($newChapter, $languageAll);
@@ -87,30 +86,29 @@ class EditModuleController extends AbstractController
             return $this->redirectToRoute('create_chapter', ['module' => $module->getId(), 'chapter' => $newChapter->getId()]);
         }
 
-        if ($moduleImageForm->isSubmitted() && $moduleImageForm->isValid()){
+        if ($moduleImageForm->isSubmitted() && $moduleImageForm->isValid()) {
             $imageManager = new ImageManager();
 
             /* @var User $user */
             $user = $this->getUser();
 
             $prevImage = $this->getDoctrine()->getRepository(Image::class)->findOneBy(['type' => 'module', 'src' => $module->getImage()]);
-            if ($prevImage !== null){
+            if ($prevImage !== null) {
                 $module = $imageManager->changeModuleImage($moduleImageForm->getData()['upload'], $prevImage, $module, $user, $this->getParameter('uploads_directory'));
                 $this->flushUpdatedModule($module);
             } else {
-                $newImage = $imageManager->createImage($moduleImageForm->getData()['upload'], $user, $this->getParameter('uploads_directory'),'module');
+                $newImage = $imageManager->createImage($moduleImageForm->getData()['upload'], $user, $this->getParameter('uploads_directory'), 'module');
                 $module->setImage($newImage->getSrc());
                 $this->flushNewImage($newImage);
                 $this->flushUpdatedModule($module);
             }
-
         }
 
         return $this->render('edit_module/index.html.twig', [
             'module' => $module,
             'english' => $english,
             'addNewChapterBtn' => $addNewChapterBtn->createView(),
-            'moduleForm' => $moduleForm->createView(),
+            'moduleForm' => $moduleTypeForm->createView(),
             'moduleTLForm' => $moduleTLForm->createView(),
             'moduleImageForm' => $moduleImageForm->createView(),
         ]);

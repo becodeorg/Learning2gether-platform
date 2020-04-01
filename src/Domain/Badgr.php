@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Domain;
@@ -10,8 +11,8 @@ use Symfony\Component\HttpClient\HttpClient;
 class Badgr
 {
     // TODO add these constants to a config file
-    private const BADGR_PASSWORD = 'LearningSoMuchTogether';
-    private const BADGR_USERNAME = 'koen@becode.org';
+    private const BADGR_PASSWORD = 'InCodeWeTrust!';
+    private const BADGR_USERNAME = 'learning2gether@becode.org';
     private const BADGR_API = 'https://api.badgr.io';
 
     private $refreshToken;
@@ -61,7 +62,7 @@ class Badgr
     {
         //give the badge to email
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('POST', self::BADGR_API.'/v2/badgeclasses/' . $learningModule->getBadge() . '/assertions', [
+        $response = $httpClient->request('POST', self::BADGR_API . '/v2/badgeclasses/' . $learningModule->getBadge() . '/assertions', [
             'headers' => [
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->accessToken,
@@ -87,7 +88,7 @@ class Badgr
         //get badges from email user
         $httpClient = HttpClient::create();
         foreach ($badges as &$badgeKey) {
-            $response = $httpClient->request('GET', self::BADGR_API.'/v2/badgeclasses/' . $badgeKey, [
+            $response = $httpClient->request('GET', self::BADGR_API . '/v2/badgeclasses/' . $badgeKey, [
                 'headers' => [
                     'Accept' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->accessToken,
