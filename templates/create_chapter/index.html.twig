@@ -47,12 +47,13 @@
 			<ol id="js-sortable-pages" class="sortable list-group">
 
 				{% for page in chapter.pages %}
-					<li class="list-group-item" data-id="{{ page.id }}" data-module="{{ module.id}}">
+					<li class="list-group-item" data-id="{{ page.id }}" data-module="{{ module.id}}" data-chapter="{{ chapter.id}}">
 						<section class="module-cube">
 							<p style="clear:both;opacity:.1; float:right">#{{ loop.index }}</p>
 
-							<!-- <span class="ui-meta-label">{{ 'Page' |trans }}
-															#{{ page.position+1 }}</span><br> -->
+							<span class="ui-meta-label">{{ 'Page' |trans }}
+								#{{ page.position+1 }}</span><br>
+							<span class="ui-meta-label">ID: #{{ page.id }}</span><br>
 							<h4>{{ page.title(english) }}</h4><br>
 							<a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">
 								{{ 'Edit Page' | trans }}</a>
@@ -70,7 +71,10 @@
 			</div>
 		</div>
 
-
+		<div id="js-block-ui" class="hidden">
+			<div class="overlay"></div>
+			<p>Saving, please wait...</p>
+		</div>
 		<script src="/assets/js/ckeditor5/build/ckeditor.js"></script>
 		<script src="/assets/js/l2g-ckeditor.js"></script>
 	{% endblock %}

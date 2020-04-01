@@ -5,8 +5,8 @@ namespace App\Entity;
 use App\Domain\Breadcrumb;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ChapterPageRepository")
@@ -38,6 +38,7 @@ class ChapterPage
     private $position;
 
     /**
+     * @Gedmo\SortableGroup
      * @ORM\ManyToOne(targetEntity="App\Entity\Chapter", inversedBy="pages")
      * @ORM\JoinColumn(nullable=false)
      */

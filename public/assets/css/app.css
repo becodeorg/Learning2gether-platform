@@ -1501,4 +1501,33 @@ To sass watch ->  sass --watch sass/app.scss:public/assets/css/app.css
   .pagination a.next {
     float: right; }
 
+/* block ui */
+#js-block-ui {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; }
+  #js-block-ui.hidden {
+    display: none; }
+  #js-block-ui .overlay {
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: .5; }
+  #js-block-ui p {
+    position: absolute;
+    top: 45%;
+    left: 33%;
+    background: white;
+    padding: 5px 20px;
+    color: black;
+    font-size: 30px;
+    margin: 0 auto;
+    display: block;
+    max-width: 66%;
+    text-align: center; }
+
 /*# sourceMappingURL=app.css.map */

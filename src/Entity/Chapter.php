@@ -37,6 +37,7 @@ class Chapter
     private $learningModule;
 
     /**
+     * @Gedmo\SortableGroup
      * @ORM\OneToMany(targetEntity="App\Entity\ChapterPage", mappedBy="chapter", orphanRemoval=true,cascade={"persist"})
      * @ORM\OrderBy({"position" = "ASC"})
      *
