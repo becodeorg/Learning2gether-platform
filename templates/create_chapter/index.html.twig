@@ -51,8 +51,8 @@
 						<section class="module-cube">
 							<p style="clear:both;opacity:.1; float:right">#{{ loop.index }}</p>
 
-							<span class="ui-meta-label">{{ 'Page' |trans }}
-								#{{ page.position+1 }}</span><br>
+							<!-- <span class="ui-meta-label">{{ 'Page' |trans }}
+															#{{ page.position+1 }}</span><br> -->
 							<h4>{{ page.title(english) }}</h4><br>
 							<a class="p-1 btn btn-skills button_8 buttonNavBox" href="{{ path('edit_page', {module: module.id, chapter: chapter.id, page: page.id, lang: 'en', return: 'flow'}) }}">
 								{{ 'Edit Page' | trans }}</a>
