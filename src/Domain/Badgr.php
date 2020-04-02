@@ -11,8 +11,10 @@ use Symfony\Component\HttpClient\HttpClient;
 class Badgr
 {
     // TODO add these constants to a config file
-    private const BADGR_PASSWORD = 'InCodeWeTrust!';
-    private const BADGR_USERNAME = 'learning2gether@becode.org';
+    // private const BADGR_PASSWORD = 'InCodeWeTrust!';
+    // private const BADGR_USERNAME = 'learning2gether@becode.org';
+    private const BADGR_PASSWORD = 'Jeanne001';
+    private const BADGR_USERNAME = 'alexandre@becode.org';
     private const BADGR_API = 'https://api.badgr.io';
 
     private $refreshToken;
@@ -77,6 +79,24 @@ class Badgr
         ]);
 
         $user->addBadge($learningModule);
+    }
+
+    public function checkIfBadgeExists($badgeKey)
+    {
+        $httpClient = HttpClient::create();
+        $response = $httpClient->request('GET', self::BADGR_API . '/v2/badgeclasses/' . $badgeKey, [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->accessToken,
+            ]
+        ]);
+
+        if (200 !== $response->getStatusCode()) {
+            // handle the HTTP request error (e.g. retry the request)
+            return $response->getContent();
+        } else {
+            return true;
+        }
     }
 
     public function getAllBadges(array $badges, User $user): array

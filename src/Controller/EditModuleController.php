@@ -54,14 +54,15 @@ class EditModuleController extends AbstractController
         if ($moduleTypeForm->isSubmitted() && $moduleTypeForm->isValid()) {
             $badgr = new Badgr();
             try {
-                $badgr->getImage($this->getUser(), $module->getBadge());
+                // $badgrResponse = $badgr->getImage($this->getUser(), $module->getBadge());
+                $badgrResponse = $badgr->checkIfBadgeExists($module->getBadge());
                 $module = $moduleTypeForm->getData();
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($module);
                 $em->flush();
-                $this->addFlash('success', 'Changes saved!');
+                $this->addFlash('success', 'Changes saved! (badgr response: ');
             } catch (ClientException $e) {
-                $this->addFlash('error', 'This is an invalid badge hash!' . $e->getMessage());
+                $this->addFlash('error', 'This is an invalid badge. Error: ' . $e->getMessage());
             }
         }
 
