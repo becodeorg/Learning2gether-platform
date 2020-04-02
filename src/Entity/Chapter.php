@@ -31,13 +31,13 @@ class Chapter
     private $translations;
 
     /**
+     * @Gedmo\SortableGroup
      * @ORM\ManyToOne(targetEntity="App\Entity\LearningModule", inversedBy="chapters")
      * @ORM\JoinColumn(nullable=false)
      */
     private $learningModule;
 
     /**
-     * @Gedmo\SortableGroup
      * @ORM\OneToMany(targetEntity="App\Entity\ChapterPage", mappedBy="chapter", orphanRemoval=true,cascade={"persist"})
      * @ORM\OrderBy({"position" = "ASC"})
      *
