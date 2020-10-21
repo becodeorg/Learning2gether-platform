@@ -4,8 +4,8 @@ Sign in: Skráðu þig inn
 Welcome to the homepage: Verið velkomin á heimasíðuna
 language test: is. Þessi síða er í IJslands
 Login: Innskráning
-Logout:
-Register: Nýsráning
+Logout: Útskráning
+Register: Nýskráning
 Email: Tölvupóstur
 Password: Lykilorð
 Re-enter password: Sláðu aftur inn lykilorð
@@ -16,7 +16,7 @@ Welcome to: Velkomin í
 Learn more: Sjá nánar
 Forgot your password?: Gleymt lykilorð?
 No account yet?: Ertu ekki með reikning?
-Already have an account?:
+Already have an account?: Átt þú þegar reikning?
 Search: Leita
 Search results: leitarniðurstöður
 Learning Hub: Námskerfi
@@ -26,7 +26,7 @@ Language: Tungumál
 Follow this course: Fylgja þessu námskeiði
 Profile: Prófíll
 My profile: Prófíllinn minn
-Forum: Vettvangur
+Forum: Umræðuborð
 Meeting place: Fundarstaður
 Chapters: Kaflar
 Chapter: Kafli
@@ -40,7 +40,7 @@ Previous: Fyrri
 Back to chapter: Til baka í kafla
 Back to forum: Til baka í vettvangur
 Chapter info: Upplýsingar um kafla
-Passed: Náðir
+Passed: Próf staðist
 Try again: Reyndu aftur
 Your result is: Niðursatða þín er
 Submit: Senda inn
@@ -71,7 +71,7 @@ Back to: Til baka til
 Post: Færsla
 Answer: Svar
 Answers: Svör
-Answer(s): Svar(r)
+Answer(s): Svar(svör)
 Badge: Merki
 Badges: Merki
 Your courses: Námskeiðin þín
@@ -95,42 +95,42 @@ Your email was not found in the system: Netfangið þitt fannst ekki í kerfinu
 Where digital and soft skills meet.: Þar sem stafræn og mjúk færni mætast
 Navigate through the Learning Modules and find the right training for you to advance your skills: Farðu í gegnum námsaðferðirnar og finndu rétta þjálfun fyrir þig til að efla færni þína
 Navigate through the forum, ask your questions, share your knowledge and experience with your peers.: Skoðaðu vettvanginn, spurðu spurninga, deildu þekkingu og reynslu með jafningjum
-Learning Module Dashboard:
-Create a new module:
-Go to forum page:
-Translations:
-Edit:
-Check:
-Status:
-overview:
-Published:
-Follow this chapter:
-all:
-soft:
-hard:
-SOFT:
-HARD:
-Locked:
-Edit Learning Module:
-and:
-description:
-type:
-Select type:
-Change module image:
-Allowed filetypes:
-Image preview:
-Maximum File size:
-Current image:
-chapter:
-Edit Chapter:
-Add a Chapter:
-New Chapter Creation:
-Edit the chapter's English title and description:
-Restart this course:
-Unpublished:
-Portal:
-Meetingplace:
-Your completed courses:
-Active courses unlocked percentage:
-Your badges:
-Select skillset:
+Learning Module Dashboard: Stjórnborð námseiningar
+Create a new module: Stofna nýja einingu
+Go to forum page: Fara á umræðuborð
+Translations: Þýðingar
+Edit: Breyta
+Check: Athuga
+Status: Staða
+overview: yfirlit
+Published: Útgefið
+Follow this chapter: Fylgja þessum kafla
+all: allt
+soft: mjúk
+hard: hörð
+SOFT: MJÚK
+HARD: HÖRÐ
+Locked: Læst
+Edit Learning Module: Breyta námseiningu
+and: og
+description: lýsing
+type: tegund
+Select type: Velja tegund 
+Change module image: Breyta mynd námseiningar
+Allowed filetypes: Leyfilegar skráargerðir
+Image preview: Forskoðun myndar
+Maximum File size: Hámarksstærð skráar 
+Current image: Valin mynd
+chapter: kafli
+Edit Chapter: Breyta kafla
+Add a Chapter: Bæta við kafla
+New Chapter Creation: Stofna nýjan kafla
+Edit the chapter's English title and description: Breyta enskum titli og lýsingu kafla
+Restart this course: Hefja námskeið frá byrjun
+Unpublished: Óútgefið
+Portal: Gátt
+Meetingplace: Fundarstaður
+Your completed courses: Lokin námskeið
+Active courses unlocked percentage: Framvinda virkra námskeiða
+Your badges: Þín merki
+Select skillset: Veldu færni
